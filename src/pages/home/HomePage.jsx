@@ -1,0 +1,69 @@
+import { Navigation } from "../../components/navigation/Navigation"
+import { useEffect, useState } from "react";
+import { Box, IconButton } from "@mui/material";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ScrollToTopOnMount from "../../components/navigation/BackToTop";
+
+import HomePageBody from "./HomePageBody"
+
+
+export const HomePage = () => {
+
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const pageHeight = document.documentElement.scrollHeight;
+      const threshold = pageHeight / 15;
+      setShowBackToTop(scrollPosition > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <><Navigation /><Box className="main-container">
+      <ScrollToTopOnMount />
+      <main style={{ backgroundColor: "#c7eef2" }}>
+        <HomePageBody />
+
+        {/* Back to Top Button */}
+        <div
+          style={{
+            opacity: showBackToTop ? 1 : 0,
+            transition: "opacity 0.3s ease-in-out",
+            position: "fixed",
+            bottom: 20,
+            right: 20,
+            width: "60px",
+            height: "60px",
+          }}
+        >
+          <IconButton
+            onClick={scrollToTop}
+            style={{
+              backgroundColor: "#ffcc00",
+              color: "#fff",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <KeyboardArrowUpIcon />
+          </IconButton>
+        </div>
+      </main>
+    </Box></>
+  );
+}

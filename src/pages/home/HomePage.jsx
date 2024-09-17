@@ -1,11 +1,11 @@
-import { Navigation } from "../../components/navigation/Navigation"
 import { useEffect, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import ScrollToTopOnMount from "../../components/navigation/BackToTop";
+import ScrollToTopOnMount from "../../layouts/components/navigation/BackToTop";
 
-import HomePageBody from "./HomePageBody"
-
+import { Navigation } from "../../layouts/components/navigation/Navigation"
+import { Footer } from "../../layouts/components/footer/Footer"
+import { HomePageBody } from "./HomePageBody"
 
 export const HomePage = () => {
 
@@ -34,11 +34,14 @@ export const HomePage = () => {
   };
 
   return (
-    <><Navigation /><Box className="main-container">
+    <>
+    <Navigation />
+    <HomePageBody />
+    <Footer />
+
+        <Box className="main-container">
       <ScrollToTopOnMount />
       <main style={{ backgroundColor: "#c7eef2" }}>
-        <HomePageBody />
-
         {/* Back to Top Button */}
         <div
           style={{

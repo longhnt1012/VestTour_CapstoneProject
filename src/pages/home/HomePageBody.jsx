@@ -6,7 +6,7 @@ export function HomePageBody() {
   return (
     <div className="slider-area position-relative">
     <div className="slider-active">
-        <div className="single-slider position-relative hero-overly slider-height2  d-flex align-items-center" styled={{h1_hero}}>
+        <div className="single-slider position-relative hero-overly slider-height  d-flex align-items-center slick-slide slick-current slick-active" style={{ backgroundImage: `url(${h1_hero})`, marginTop: '80px' }}>
             <div className="container">
              <div className="row">
                  <div className="col-xl-6 col-lg-6">

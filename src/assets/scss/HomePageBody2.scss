@@ -1,0 +1,99 @@
+.categories-area {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    position: relative;
+    @media screen and (min-width: 768px) and (max-width: 991px){
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+    @media screen and (min-width: 576px) and (max-width: 767px){
+        padding-top: 65px;
+        padding-bottom: 0px;
+    }
+    @media (max-width: 575px){
+        padding-top: 65px;
+        padding-bottom: px;
+    }
+    &::before {
+        position: absolute;
+        content: "";
+        width: 50px;
+        height: 100%;
+        background: #fff;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        @media screen and (min-width: 1200px) and (max-width: 1600px){
+            width: 21px;
+        }
+        @media screen and (min-width: 992px) and (max-width: 1199px){
+            position: unset;
+        }
+        @media screen and (min-width: 768px) and (max-width: 991px){
+            position: unset;
+        }
+        @media screen and (min-width: 576px) and (max-width: 767px){
+            position: unset;
+        }
+        @media (max-width: 575px){
+            position: unset;
+        }
+    }
+
+    .single-cat{
+        transition: all 0.4s;
+        z-index: 1;
+        .cat-icon{
+            img{
+                margin-bottom: 26px;
+                display: block;
+            }
+        }
+        .cat-cap{
+            h5{
+                font-size: 24px;
+                font-weight: 600;
+                margin-bottom: 19px;
+                display: block;
+                text-transform: capitalize;
+                @media screen and (min-width: 992px) and (max-width: 1199px){
+                    font-size: 17px;
+                }
+                @media screen and (min-width: 576px) and (max-width: 767px){
+                    font-size: 25px;
+                }
+                @media (max-width: 575px){
+                    font-size: 25px;
+                }
+            }
+            p{
+                color: #101A31;
+                font-size: 14px;
+                line-height: 1.9;
+                @media screen and (min-width: 576px) and (max-width: 767px){
+                    font-size: 15px;
+
+                }
+            }
+            a{
+                color: #1c165c;
+                font-size: 16px;
+                font-weight: 600;
+                transition: all 0.2s;
+            }
+        }
+
+
+        // Hover Effect In single 
+        &:hover{
+            .cat-cap{
+                h5{
+                    color: #000;
+                }
+
+            }
+       }
+    }
+}
+
+ 

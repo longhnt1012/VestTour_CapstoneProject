@@ -6,7 +6,7 @@ export const Navigation = () => {
   return (
     <div className='header-area header_area'>
         <div className='main-header'>
-            <div className='header-bottom header-sticky'>
+            <div className='header-bottom header-sticky sticky-bar'>
                 <div className='logo'>
                     <img src={logo} alt="logo" />
                 </div>
@@ -15,14 +15,14 @@ export const Navigation = () => {
                     <div className="main-menu f-right d-none d-lg-block">
                         <nav> 
                             <ul id="navigation">                                                                                                                                     
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="services.html">Services</a></li>
-                                <li><a href="blog.html">Blog</a>
+                                <li><a href="">Home</a></li>
+                                <li><a href="">About</a></li>
+                                <li><a href="">Services</a>
                                     <ul className="submenu">
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog_details.html">Blog Details</a></li>
-                                        <li><a href="elements.html">Elements</a></li>
+                                        <li><a href="">Service 1</a></li>
+                                        <li><a href="">Service 2</a></li>
+                                        <li><a href="">Service 3</a></li>
+                                        <li><a href="">Service 4</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="contact.html">Contact</a></li>

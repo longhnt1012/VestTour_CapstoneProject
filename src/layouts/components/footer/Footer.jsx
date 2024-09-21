@@ -80,7 +80,7 @@ export const Footer = () => {
           <div className="col-xl-12 ">
             <div className="footer-copy-right text-right">
               <p>
-                Copyright &copy;
+                &copy;
                 {new Date().getFullYear()} <i className="fa fa-heart" aria-hidden="true"></i>{" "}
               </p>
             </div>

@@ -1,0 +1,20 @@
+.quote-carousel {
+    margin-top: 40px;
+    background-color: #181515; /* Black background */
+    color: #fff; /* White text */
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #ccc; /* Optional border */
+  
+    .quote {
+      font-size: 1.5rem; /* Quote text size */
+      font-style: italic;
+      margin: 0; /* Remove default margin for better spacing */
+  
+      .author {
+        font-size: 1.2rem; /* Author text size */
+        color: #fff; /* Keep author text white */
+        margin-top: 10px; /* Space between quote and author */
+      }
+    }
+  }

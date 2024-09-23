@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./QuoteCarousel.scss"; // Create this file for styling
 
 const quotes = [
@@ -36,7 +36,7 @@ const QuoteCarousel = () => {
   return (
     <div className="quote-carousel">
       <div className="quote">
-        <p>"{quotes[currentIndex].text}"</p>
+        <p>{quotes[currentIndex].text}</p>
         <p className="author">- {quotes[currentIndex].author}</p>
       </div>
     </div>

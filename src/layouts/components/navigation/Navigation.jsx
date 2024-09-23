@@ -1,6 +1,7 @@
 import '../../../assets/scss/Navigation.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../../assets/img/logo/logo.png';
+import { Link } from 'react-router-dom';
 
 export const Navigation = () => {
   return (

@@ -1,6 +1,8 @@
-import { BookingPage } from "../pages/booking/BookingPage";
+import BookingPage from "../pages/booking/BookingPage";
 import { ProductPage } from "../pages/product/productPage";
 import { HomePage } from "../pages/home/homePage";
+import SignIn from "../pages/signIn/signIn";
+import SignUp from "../pages/signUp/signUp";
 
 export const routes = [
     {
@@ -15,5 +17,13 @@ export const routes = [
     {
         path: "/products",
         element: <ProductPage />
+    },
+    {
+        path:"/signin",
+        element: <SignIn />
+    },
+    {
+        path:"/signup",
+        element: <SignUp />
     }
 ]

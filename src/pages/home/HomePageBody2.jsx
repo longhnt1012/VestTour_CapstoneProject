@@ -4,17 +4,37 @@ import '../../assets/scss/HomePageBody2.scss';
 export const HomePageBody2 = () => {
   return (
     <div>
-      {/* Tailor House Section */}
-      <section className="visit-tailor-area fix mt-margin">
-        <div className="tailor-offers"></div>
-        <div className="tailor-details">
-          <h2>About our<br />tailor house</h2>
-          <p className="pera-top">Introduction about the tailor house.</p>
-          <p className="pera-bottom">More details about the tailor house.</p>
-          <a href="#" className="btn">More About Us</a>
+      {/* About tailor */}
+      <div className="sec sec-about">
+        <div className="all">
+          <div className="about-left">
+            <div className="sec-title">
+              <h3 className='tt-txt'>
+                <span className='tt-sub'>About</span>
+                Tailor
+              </h3>
+            </div>
+            <div className="article-cont about-article">
+              <p>
+                &ldquo;<strong>Personal Tailoring</strong>&rdquo; is a service that tailors cut, design and sew clothes according to
+                detailed customer&apos; specifications. The advantage of <strong>personal tailoring</strong> is that the customer 
+                participates in choosing the fabric; design and color, to ensure the clothes will fit 
+                their bodies and even their personality. <strong>Personal tailoring</strong> is usually 
+                done by in-house tailors. In general, <strong>personal tailoring</strong> describes a high
+                degree of &ldquo;customization&rdquo; and involvement of customers.
+              </p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div className="about-right">
+            <img style={{width: '498px', height: '698px'}} src="https://adongsilk.com/wp-content/uploads/2018/05/about-img.png" alt="" />
+          </div>
         </div>
-      </section>
-
+      </div>
       {/* Wedding Collection Section */}
       <section className="kban sec k-sec">
         <div className="decor-sec">

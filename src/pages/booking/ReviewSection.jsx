@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./ReviewSection.scss"; // Ensure this file is linked
 
 const reviews = [

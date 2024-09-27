@@ -8,6 +8,8 @@ import { Footer } from "../../layouts/components/footer/Footer"
 import { HomePageBody } from "./HomePageBody"
 import { HomePageBody1 } from "./HomePageBody1";
 import { HomePageBody2 } from "./HomePageBody2";
+import { HomePageBody3 } from "./HomePageBody3";
+import { HomePageBody4 } from "./HomePageBody4";
 
 export const HomePage = () => {
 
@@ -41,6 +43,8 @@ export const HomePage = () => {
     <HomePageBody />
     <HomePageBody1 />
     <HomePageBody2 />
+    <HomePageBody3 />
+    <HomePageBody4 />
     <Footer />
 
         <Box className="main-container">

@@ -8,9 +8,9 @@ import d from '../../assets/img/elements/d.jpg';
 export function HomePageBody() {
   const [slideIndex, setSlideIndex] = useState(0);
   const slides = [
-    { src: a, caption: 'Caption Text' },
-    { src: a2, caption: 'Caption Two' },
-    { src: d, caption: 'Caption Three' }
+    { src: a},
+    { src: a2},
+    { src: d}
   ];
 
   // Function to handle next/prev buttons
@@ -52,20 +52,23 @@ export function HomePageBody() {
       {/* Three equally sized divs */}
       <div className="col-lg-4 col-md-4 col-sm-4">
         <div className="client-div">
-          <h3>Client 1</h3>
-          <p>Some information about client 1.</p>
+          <a href="#">
+            <img src="https://adongsilk.com/wp-content/uploads/2024/03/wedding-suits-in-hoi-an.jpg" alt="" style={{width: '100%', display: 'block'}}/>
+          </a>
         </div>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-4">
         <div className="client-div">
-          <h3>Client 2</h3>
-          <p>Some information about client 2.</p>
+          <a href="#">
+            <img src="https://adongsilk.com/wp-content/uploads/2024/03/wedding-suits-in-hoi-an.jpg" alt="" style={{width: '100%', display: 'block'}}/>
+          </a>
         </div>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-4">
         <div className="client-div">
-          <h3>Client 3</h3>
-          <p>Some information about client 3.</p>
+        <a href="#">
+            <img src="https://adongsilk.com/wp-content/uploads/2024/03/wedding-suits-in-hoi-an.jpg" alt="" style={{width: '100%', display: 'block'}}/>
+          </a>
         </div>
       </div>
     </div>

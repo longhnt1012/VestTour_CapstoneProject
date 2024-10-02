@@ -128,7 +128,9 @@ export const Footer = () => {
         </div>
     </div>
 </div>
-    <div className='footer'>
+
+<section>
+<div className='footer'>
         <div className="ft-inner">
             <div className="all">
                 <div id="mona_contact-2" className="Mona_contact">
@@ -171,6 +173,7 @@ export const Footer = () => {
             </div>
         </div>
     </div>
+</section>
 </>
   )
 }

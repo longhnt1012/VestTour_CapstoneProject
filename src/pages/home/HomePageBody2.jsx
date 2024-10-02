@@ -23,8 +23,13 @@ export const HomePageBody2 = () => {
                 done by in-house tailors. In general, <strong>personal tailoring</strong> describes a high
                 degree of &ldquo;customization&rdquo; and involvement of customers.
               </p>
-              <p></p>
-              <p></p>
+              <p>Established in 1998, <strong>TAILOR</strong> is a leader in bespoke personal tailoring in Vietnam. It has earned a global reputation
+                for delivering modern, stylish, high quality garments that fit all body types, perfectly.
+              </p>
+              <p>Passing down a 50-year tradition of high couture in big city from the North from the South of Vietnam, famous for its silk weaving
+                sine 400 years, <strong> Tailor</strong> is now the &ldquo;nation of needlework&rdquo; - reflecting
+                the tranquility and tradition of hospitability of beautiful Vietnam.
+              </p>
               <p></p>
               <p>&nbsp;</p>
               <p>&nbsp;</p>
@@ -53,7 +58,7 @@ export const HomePageBody2 = () => {
                   </h2>
                 </div>
                 <div className="kban-txt">
-                  Elevate your wardrobe with the timeless allure and distinguished charm of the Classic Elegance Collection.
+                  <p>Elevate your wardrobe with the timeless allure and distinguished charm of the Classic Elegance Collection.</p>
                 </div>
                 <div className="kban-btn mt-20">
                   <a href="https://adongsilk.com/lists/wedding/" className="btn primary-btn">

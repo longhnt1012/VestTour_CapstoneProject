@@ -127,7 +127,7 @@ const BookingPage = () => {
 
           {/* Subway Access */}
           <div className="subway-access">
-            <h3>Subway Access</h3>
+            <h3>Showroom's Address</h3>
             <div className="subway-icons">
               <span className="subway-icon f">F</span>
               <span className="subway-icon g">G</span>

@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../../assets/scss/Footer.scss';
+import '../footer/Footer.scss';
 
 
 export const Footer = () => {
@@ -165,13 +165,13 @@ export const Footer = () => {
                 </div>
             </div>
         </div>
-        <div className="sys ceter-txt">
+        {/* <div className="sys ceter-txt">
             <div className="all">
                 <div className="coppyright">
-                    <p>�� 2021 Mona. All rights reserved.</p>
+                    <p>�� All rights reserved.</p>
                 </div>
             </div>
-        </div>
+        </div> */}
     </div>
 </section>
 </>

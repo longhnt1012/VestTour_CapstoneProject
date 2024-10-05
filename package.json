@@ -19,6 +19,7 @@
     "@mui/icons-material": "^6.1.0",
     "@mui/material": "^6.1.0",
     "app-theme": "^0.0.2",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
     "lucide-react": "^0.446.0",

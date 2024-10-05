@@ -1,4 +1,5 @@
-import '../../assets/scss/HomePageBody1.scss';
+import '../home/HomePageBody1.scss';
+
 
 
 export const HomePageBody1 = () => {

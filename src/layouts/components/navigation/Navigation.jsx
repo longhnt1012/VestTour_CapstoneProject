@@ -1,4 +1,4 @@
-import '../../../assets/scss/Navigation.scss';
+import '../navigation/Navigation.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../../assets/img/logo/logo.png';
 

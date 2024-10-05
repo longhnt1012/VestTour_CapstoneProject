@@ -1,6 +1,11 @@
 import BookingPage from "../pages/booking/BookingPage";
+<<<<<<< Updated upstream
 import { ProductPage } from "../pages/product/ProductPage";
 import { HomePage } from "../pages/home/homePage";
+=======
+import ProductPage from "../pages/product/ProductPage";
+import HomePage from "../pages/home/HomePage";
+>>>>>>> Stashed changes
 import SignIn from "../pages/signIn/signIn";
 import SignUp from "../pages/signUp/signUp";
 import Checkout from "../pages/checkout/Checkout";
@@ -35,5 +40,6 @@ export const routes = [
     {
         path:"/signup",
         element: <SignUp />
-    }
+    },
+    
 ]

@@ -5,12 +5,17 @@ import SignIn from "../pages/signIn/signIn";
 import SignUp from "../pages/signUp/signUp";
 import Checkout from "../pages/checkout/Checkout";
 import Fabric from "../pages/fabric/Fabric";
+import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard"
 
 export const routes = [
     {
         path: "/",
         element: <HomePage />,
         exact: true
+    },
+    {
+        path: "/manager",
+        element: <ManagerDashboard />
     },
     {
         path: "/booking",

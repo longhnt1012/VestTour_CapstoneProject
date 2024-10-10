@@ -17,7 +17,7 @@ export const HomePageBody4 = () => {
                 <div className="kpart-main">
                     <div className='kpart-slide kpart-slide-js slick-initialized slick-slider' id='kpart-slide-js'>
                         <div className="slick-list draggable">
-                            <div className="slick-track">
+                            <div className="slick-track-banner">
                                 <div className="slider-item slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style={{ width: '100%' }} tabIndex="0">
                                     <div className="kpart-item">
                                         <a href="https://www.trustpilot.com/review/adongsilk.com" target="_blank" rel="noopener noreferrer" tabIndex="0">

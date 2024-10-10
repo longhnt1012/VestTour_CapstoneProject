@@ -11,7 +11,7 @@ import { HomePageBody2 } from "./HomePageBody2";
 import { HomePageBody3 } from "./HomePageBody3";
 import { HomePageBody4 } from "./HomePageBody4";
 
-export const HomePage = () => {
+const HomePage = () => {
 
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -75,6 +75,12 @@ export const HomePage = () => {
           </IconButton>
         </div>
       </main>
-    </Box></>
+    </Box>
+    </>
   );
+
 }
+
+export default HomePage;
+
+

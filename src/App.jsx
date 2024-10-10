@@ -1,5 +1,4 @@
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { routes } from "./routes/paths";
 
 function App() {
@@ -7,7 +6,15 @@ function App() {
     <Router>
       <Routes>
         {routes.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
+          <Route key={index} path={route.path} element={route.element}>
+            {route.children && route.children.map((childRoute, childIndex) => (
+              <Route 
+                key={childIndex} 
+                path={childRoute.path} 
+                element={childRoute.element} 
+              />
+            ))}
+          </Route>
         ))}
       </Routes>
     </Router>

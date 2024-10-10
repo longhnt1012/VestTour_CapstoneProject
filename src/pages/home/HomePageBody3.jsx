@@ -1,4 +1,4 @@
-import '../../assets/scss/HomePageBody3.scss';
+import '../home/HomePageBody3.scss';
 
 export const HomePageBody3 = () => {
   return (

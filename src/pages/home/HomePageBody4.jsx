@@ -1,6 +1,6 @@
 
+import '../home/HomePageBody4.scss';
 
-import '../../assets/scss/HomePageBody4.scss';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faTripadvisor } from '@fortawesome/free-brands-svg-icons';
 

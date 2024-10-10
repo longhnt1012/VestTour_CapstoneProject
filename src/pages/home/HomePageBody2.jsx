@@ -1,5 +1,5 @@
 
-import '../../assets/scss/HomePageBody2.scss';
+import '../home/HomePageBody2.scss';
 
 export const HomePageBody2 = () => {
   return (

@@ -9,7 +9,6 @@ import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard";
 
 export const routes = [
   {
-    path: "/",
     element: <HomePage />,
     exact: true,
   },
@@ -41,4 +40,8 @@ export const routes = [
     path: "/signup",
     element: <SignUp />,
   },
-];
+=======
+import CustomSuit from "../pages/customsuit/CustomSuit";
+import CustomFabric from "../pages/customSuit/custom/CustomFabric";
+import CustomStyle from "../pages/customSuit/custom/CustomStyle";
+import CustomLining from "../pages/customSuit/custom/CustomLining";

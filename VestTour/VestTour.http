@@ -1,0 +1,6 @@
+@VestTour_HostAddress = http://localhost:5083
+
+GET {{VestTour_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

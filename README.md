@@ -3,13 +3,6 @@
 ## Project Description
 VestTour - A Platform for Booking, Tailoring, and Shipping Custom Vests for Tourists Across Vietnam.
 
-## Main Features
-- Đặt lịch hẹn may đo vest.
-- Chọn loại vải, kiểu dáng và lớp lót.
-- Quản lý đơn hàng và theo dõi trạng thái đơn hàng.
-- Giao diện người dùng thân thiện và dễ sử dụng.
-- Tích hợp thanh toán trực tuyến.
-
 ## Công Nghệ Sử Dụng
 - **Frontend**: React, SCSS
 - **Backend**: ASP.NET Core
@@ -24,4 +17,4 @@ VestTour - A Platform for Booking, Tailoring, and Shipping Custom Vests for Tour
 ## Cài đặt
 1. Clone repository này:
    ```bash
-   git clone 
+   git clone https://github.com/longhnt1012/VestTour_CapstoneProject.git

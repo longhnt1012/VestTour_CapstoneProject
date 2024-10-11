@@ -6,7 +6,7 @@ import SignUp from "../pages/signUp/signUp";
 import Checkout from "../pages/checkout/Checkout";
 import Fabric from "../pages/fabric/Fabric";
 import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard";
-
+import StaffManagement from "../pages/managerdashboard/StaffManagement";
 export const routes = [
   {
     path: "/",
@@ -16,6 +16,13 @@ export const routes = [
   {
     path: "/manager",
     element: <ManagerDashboard />,
+    children: [
+      {
+        path: "staff-management", // This will be /manager/staff-management
+        element: <StaffManagement />,
+      },
+      // Add other children routes here if needed
+    ],
   },
   {
     path: "/booking",

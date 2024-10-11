@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
 using System.Collections.Generic;
@@ -25,6 +26,23 @@ namespace SEVestTourAPI.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("parent/{parentId}")]
+        public async Task<ActionResult<List<Category>>> GetCategoriesByParentId(int parentId)
+        {
+            try {
+                var categories = await _categoryRepository.GetAllParentID(parentId);
+
+                if (categories == null || categories.Count == 0)
+                {
+                    return NotFound(); // 404 Not Found if no categories found
+                }
+
+                return Ok(categories); // 200 OK with the list of categories
+            }catch{
+                return BadRequest();
+            }
+            
+        }
         // GET: api/Category/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryModel>> GetCategory(int id)

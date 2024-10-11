@@ -13,5 +13,7 @@ namespace SEVestTourAPI.Services
         Task UpdateCategoryAsync(int id, CategoryModel category);   // Update a category
         Task DeleteCategoryAsync(int categoryId);                   // Delete a category
         
+
+        public Task<List<CategoryModel>> GetAllParentID(int categoryId);
     }
 }

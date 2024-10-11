@@ -65,8 +65,10 @@ namespace SEVestTourAPI.Services
             }
         }
 
-      
-
-        
+        public async Task<List<CategoryModel>> GetAllParentID(int categoryId)
+        {
+           var parenCategoriesID= await _context.Categories.Where(c=> c.CategoryParentId== categoryId).ToListAsync();
+            return _mapper.Map<List<CategoryModel>>(parenCategoriesID);
+        }
     }
 }

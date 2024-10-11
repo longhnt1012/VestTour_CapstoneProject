@@ -7,6 +7,11 @@ import Checkout from "../pages/checkout/Checkout";
 import Fabric from "../pages/fabric/Fabric";
 import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard";
 import StaffManagement from "../pages/managerdashboard/StaffManagement";
+import CustomSuit from "../pages/customsuit/CustomSuit";
+import CustomFabric from "../pages/customSuit/custom/CustomFabric";
+import CustomStyle from "../pages/customSuit/custom/CustomStyle";
+import CustomLining from "../pages/customSuit/custom/CustomLining";
+
 export const routes = [
   {
     element: <HomePage />,
@@ -47,8 +52,4 @@ export const routes = [
     path: "/signup",
     element: <SignUp />,
   },
-=======
-import CustomSuit from "../pages/customsuit/CustomSuit";
-import CustomFabric from "../pages/customSuit/custom/CustomFabric";
-import CustomStyle from "../pages/customSuit/custom/CustomStyle";
-import CustomLining from "../pages/customSuit/custom/CustomLining";
+];

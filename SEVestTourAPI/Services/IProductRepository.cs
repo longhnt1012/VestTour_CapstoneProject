@@ -6,10 +6,10 @@ namespace SEVestTourAPI.Services
 {
     public interface IProductRepository
     {
-        Task<List<ProductModel>> GetAllProductsAsync();             
-        Task<ProductModel?> GetProductByIdAsync(int productId);      
-        Task<int> AddProductAsync(ProductModel product);            
-        Task UpdateProductAsync(int id, ProductModel product);       
+        Task<List<ProductModel>> GetAllProductsAsync();
+        Task<ProductModel?> GetProductByIdAsync(int productId);
+        Task<int> AddProductAsync(ProductModel product);
+        Task UpdateProductAsync(int id, ProductModel product);
         Task DeleteProductAsync(int productId);
         Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId);
     }

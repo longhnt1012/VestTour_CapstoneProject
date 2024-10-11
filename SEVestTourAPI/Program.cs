@@ -60,6 +60,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ILiningRepository, LiningRepository>();
 builder.Services.AddScoped<IFabricRepository, FabricRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddCors(co => co.AddDefaultPolicy(policy=> 
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));

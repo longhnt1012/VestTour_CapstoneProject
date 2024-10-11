@@ -76,18 +76,19 @@ namespace SEVestTourAPI.Services
                                      OrderID = p.OrderId,
                                      FabricName = f != null ? f.FabricName : null,
                                      LiningName = l != null ? l.LiningName : null,
-
-                                     StyleOptions = (from pso in _context.ProductStyleOptions
-                                                     join so in _context.StyleOptions on pso.StyleOptionId equals so.StyleOptionId
-                                                     where pso.ProductId == p.ProductId
-                                                     select new StyleOptionModel
-                                                     {
-                                                       //no style nem
-                                                       StyleOptionId=so.StyleOptionId,
-                                                         OptionType = so.OptionType,
-                                                         OptionValue = so.OptionValue
-                                                     }).ToList()
                                  }).FirstOrDefaultAsync();
+            if (product != null)
+            {
+                product.StyleOptions = await (from pso in _context.ProductStyleOptions
+                                              join so in _context.StyleOptions on pso.StyleOptionId equals so.StyleOptionId
+                                              where pso.ProductId == product.ProductID
+                                              select new StyleOptionModel
+                                              {
+                                                  StyleOptionId = so.StyleOptionId,
+                                                  OptionType = so.OptionType,
+                                                  OptionValue = so.OptionValue
+                                              }).ToListAsync();
+            }
 
             return product;
         }

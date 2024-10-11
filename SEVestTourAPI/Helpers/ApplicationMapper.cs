@@ -27,6 +27,8 @@ namespace SEVestTourAPI.Helpers
             CreateMap<Lining, LiningModel>().ReverseMap();
             CreateMap<BankingAccount, BankingAccountModel>().ReverseMap();
             CreateMap<Payment, PaymentModel>().ReverseMap();
+            CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<Product,ProductDetailsModel>().ReverseMap();
         }
     }
 }

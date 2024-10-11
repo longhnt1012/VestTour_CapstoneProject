@@ -60,6 +60,9 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ILiningRepository, LiningRepository>();
 builder.Services.AddScoped<IFabricRepository, FabricRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddCors(co => co.AddDefaultPolicy(policy=> 
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));
@@ -95,7 +98,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors();
 app.MapControllers();
 
 app.Run();

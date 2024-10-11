@@ -59,6 +59,7 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ILiningRepository, LiningRepository>();
 builder.Services.AddScoped<IFabricRepository, FabricRepository>();
+builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));

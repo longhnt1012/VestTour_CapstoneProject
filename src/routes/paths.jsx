@@ -6,6 +6,11 @@ import SignUp from "../pages/signUp/signUp";
 import Checkout from "../pages/checkout/Checkout";
 import Fabric from "../pages/fabric/Fabric";
 import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard";
+import StaffManagement from "../pages/managerdashboard/StaffManagement";
+import CustomSuit from "../pages/customsuit/CustomSuit";
+import CustomFabric from "../pages/customSuit/custom/CustomFabric";
+import CustomStyle from "../pages/customSuit/custom/CustomStyle";
+import CustomLining from "../pages/customSuit/custom/CustomLining";
 
 export const routes = [
   {
@@ -15,6 +20,13 @@ export const routes = [
   {
     path: "/manager",
     element: <ManagerDashboard />,
+    children: [
+      {
+        path: "staff-management", // This will be /manager/staff-management
+        element: <StaffManagement />,
+      },
+      // Add other children routes here if needed
+    ],
   },
   {
     path: "/booking",
@@ -40,8 +52,4 @@ export const routes = [
     path: "/signup",
     element: <SignUp />,
   },
-=======
-import CustomSuit from "../pages/customsuit/CustomSuit";
-import CustomFabric from "../pages/customSuit/custom/CustomFabric";
-import CustomStyle from "../pages/customSuit/custom/CustomStyle";
-import CustomLining from "../pages/customSuit/custom/CustomLining";
+];

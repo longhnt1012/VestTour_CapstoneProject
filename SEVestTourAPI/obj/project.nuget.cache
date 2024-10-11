@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5eQjyReoAXPqG1Kg88SpxfFD9Ri7btS5r+qfTix2QP2dOs65zGQG2PGIZEoTQ8vzmcGo46qN0R9QFiwwQF4aZQ==",
+  "dgSpecHash": "/QXXV/N7ArJaa6Ce+OFe0aKlidoDNmiGlFT4zxdzv2AIsfBjLA71FneKlJcGb90shw0HCyEQgyLMkgR53HfMpA==",
   "success": true,
-  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\SEVestTourAPI.csproj",
+  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_API\\SEVestTourAPI\\SEVestTourAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

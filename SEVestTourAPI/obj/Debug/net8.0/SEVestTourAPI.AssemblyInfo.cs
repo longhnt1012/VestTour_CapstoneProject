@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SEVestTourAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1720dc2212d9098b99b1586a79f12a2886f3847d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0140d44ba4bee1e640fae378bab35b4c41e77041")]
 [assembly: System.Reflection.AssemblyProductAttribute("SEVestTourAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SEVestTourAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

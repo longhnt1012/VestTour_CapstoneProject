@@ -1,8 +1,20 @@
-# React + Vite
+# VestTourCapstone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description
+VestTour - A Platform for Booking, Tailoring, and Shipping Custom Vests for Tourists Across Vietnam.
 
-Currently, two official plugins are available:
+## Công Nghệ Sử Dụng
+- **Frontend**: React, SCSS
+- **Backend**: ASP.NET Core
+- **Cơ sở dữ liệu**: SQL Server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Thành viên
+- **Huỳnh Ngọc Thành Long** - Leader, Back-end
+- **Lê Hoàng Giang** - Front-end
+- **Lê Anh Tuấn** - Front-end
+- **Trần Minh Nhựt** - Backend
+
+## Cài đặt
+1. Clone repository này:
+   ```bash
+   git clone https://github.com/longhnt1012/VestTour_CapstoneProject.git

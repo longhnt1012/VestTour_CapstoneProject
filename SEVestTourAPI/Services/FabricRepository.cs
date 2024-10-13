@@ -57,5 +57,12 @@ namespace SEVestTourAPI.Services
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<FabricModel>> GetFabricByTagAsync(string tag)
+        {
+            var fabrics = await _context.Fabrics!
+                                .Where(f => f.Tag != null && f.Tag.Contains(tag))
+                                .ToListAsync();
+            return _mapper.Map<List<FabricModel>>(fabrics);
+        }
     }
 }

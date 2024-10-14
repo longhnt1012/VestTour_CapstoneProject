@@ -7,9 +7,10 @@ namespace SEVestTourAPI.Services
 {
     public interface IUserRepository
     {
-        public Task<User?> GetUserByEmailAndPasswordAsync(string email, string password);  // For login
-        public Task<bool> IsEmailTakenAsync(string email);  // Check if email is already taken
-        public Task<UserModel?> GetUserByIdAsync(int userId);          // Get user by ID
+        public Task<User?> GetUserByEmailAndPasswordAsync(string email, string password); 
+        public Task<bool> IsEmailTakenAsync(string email);
+   
+        public Task<UserModel?> GetUserByIdAsync(int userId);          
         public Task<List<UserModel>> GetAllUsersAsync();               
         public Task<int> AddUserAsync(UserModel user);                
         public Task UpdateUserAsync(int id, UserModel user);           

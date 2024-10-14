@@ -32,9 +32,8 @@ namespace SEVestTourAPI.Services
         {
             return await _context.Users.AnyAsync(u => u.Email == email);
         }
+      
 
-        // Add a new user
-        // Validate all fields before adding a new user
         public async Task<int> AddUserAsync(UserModel user)
         {
             ValidateUserFields(user);

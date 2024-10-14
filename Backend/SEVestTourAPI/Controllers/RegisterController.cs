@@ -52,7 +52,7 @@ namespace VestTourApi.Controllers
             {
                 return BadRequest(Error.EmailTaken);
             }
-            if (await _userRepository.IsEmailTakenAsync(registerModel.Phone))
+            if (!UserValidate.IsValidPhone(registerModel.Phone))
             {
                 return BadRequest(Error.InvalidPhone);
             }

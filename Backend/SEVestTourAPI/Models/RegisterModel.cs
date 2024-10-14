@@ -17,14 +17,15 @@ namespace SEVestTourAPI.Models
         public DateOnly Dob { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone is required.")]
-        [RegularExpression(@"^(\+84|0[3|5|7|8|9])+([0-9]{8})\b", ErrorMessage = "Invalid phone number.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "RoleID is required.")]
         public int RoleID { get; set; }
+        
+
+        [Required(ErrorMessage = "Phone is required.")]
+        public string? Phone { get; set; }
     }
 }

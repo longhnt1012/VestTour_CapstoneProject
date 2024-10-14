@@ -12,8 +12,8 @@ namespace SEVestTourAPI.Services
         public Task UpdateFabricAsync(int id,  FabricModel model);
 
         public Task DeleteFabricAsync(int fabricId);
+        Task<List<FabricModel>> GetFabricByTagAsync(string tag);
 
-         
 
     }
 }

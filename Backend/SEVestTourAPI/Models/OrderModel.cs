@@ -30,5 +30,6 @@ namespace SEVestTourAPI.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
+        public decimal? TotalPrice { get; set; }
     }
 }

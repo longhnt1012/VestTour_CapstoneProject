@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\SEVestTourAPI.csproj": {}
+    "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj": {}
   },
   "projects": {
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\SEVestTourAPI.csproj": {
+    "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\SEVestTourAPI.csproj",
+        "projectUniqueName": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj",
         "projectName": "SEVestTourAPI",
-        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\SEVestTourAPI.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\SEVestTourAPI\\obj\\",
+        "projectPath": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -48,6 +53,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[13.0.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Facebook": {
+              "target": "Package",
+              "version": "[8.0.10, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -121,7 +130,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

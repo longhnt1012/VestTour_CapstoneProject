@@ -45,6 +45,26 @@ namespace SEVestTourAPI.Controllers
             return Ok(product);
         }
 
+        [HttpGet("code/{productCode}")]
+        public async Task<IActionResult> GetProductByCode(string productCode)
+        {
+            var product = await _productRepository.GetProductByCodeAsync(productCode);
+            if (product == null)
+            {
+                return NotFound("Product not found.");
+            }
+            return Ok(product);
+        }
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await _productRepository.GetProductsByCategoryIdAsync(categoryId);
+            if (products == null || products.Count == 0)
+            {
+                return NotFound("No products found for this category.");
+            }
+            return Ok(products);
+        }
 
         [HttpPost]
         //[Authorize(Roles = "admin")]
@@ -69,6 +89,17 @@ namespace SEVestTourAPI.Controllers
             await _productRepository.DeleteProductAsync(id);
             return NoContent();
         }
-        
+        [HttpGet("products/custom-false")]
+        public async Task<IActionResult> GetProductsWithIsCustomFalse()
+        {
+            var products = await _productRepository.GetProductsWithIsCustomFalseAsync();
+            if (products == null || products.Count == 0)
+            {
+                return NotFound("No products found with IsCustom = false.");
+            }
+
+            return Ok(products);
+        }
+
     }
 }

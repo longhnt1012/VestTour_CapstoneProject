@@ -21,7 +21,7 @@ public partial class StyleOption
 
     [StringLength(100)]
     public string? OptionValue { get; set; }
-
+    public decimal? Price { get; set; }
     [ForeignKey("StyleId")]
     [InverseProperty("StyleOptions")]
     public virtual Style? Style { get; set; }

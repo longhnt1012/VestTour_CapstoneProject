@@ -36,6 +36,8 @@ public partial class User
     public string Password { get; set; } = null!;
 
     public bool IsConfirmed { get; set; }
+    public string Status { get; set; }
+    public string? Phone { get; set; }
 
     [InverseProperty("User")]
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();

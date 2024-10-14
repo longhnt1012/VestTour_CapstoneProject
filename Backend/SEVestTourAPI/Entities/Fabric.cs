@@ -25,6 +25,7 @@ public partial class Fabric
     [Column("ImageURL")]
     [StringLength(255)]
     public string? ImageUrl { get; set; }
+    public string? Tag {  get; set; }
 
     [InverseProperty("Fabric")]
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();

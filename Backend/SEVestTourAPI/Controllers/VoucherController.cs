@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+using SEVestTourAPI.Message;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,10 +34,26 @@ namespace SEVestTourAPI.Controllers
 
             if (voucher == null)
             {
-                return NotFound();
+                return NotFound(new { Message = Error.VoucherNotFound });
             }
 
             return Ok(voucher);
+        }
+
+        // GET: api/Voucher/valid
+        [HttpGet("valid")]
+        public async Task<ActionResult<IEnumerable<VoucherModel>>> GetValidVouchers()
+        {
+            var validVouchers = await _voucherRepository.GetValidVouchersAsync();
+            return Ok(validVouchers);
+        }
+
+        // GET: api/Voucher/pattern
+        [HttpGet("pattern")]
+        public async Task<ActionResult<IEnumerable<VoucherModel>>> GetVouchersByPattern()
+        {
+            var patternVouchers = await _voucherRepository.GetVouchersByPatternAsync();
+            return Ok(patternVouchers);
         }
 
         // POST: api/Voucher
@@ -44,7 +61,11 @@ namespace SEVestTourAPI.Controllers
         public async Task<ActionResult<int>> CreateVoucher(VoucherModel voucherModel)
         {
             var newVoucherId = await _voucherRepository.AddVoucherAsync(voucherModel);
-            return CreatedAtAction(nameof(GetVoucher), new { id = newVoucherId }, newVoucherId);
+            if (newVoucherId > 0)
+            {
+                return CreatedAtAction(nameof(GetVoucher), new { id = newVoucherId }, new { Message = Success.VoucherAdded, VoucherId = newVoucherId });
+            }
+            return BadRequest(new { Message = Error.VoucherAddFailed });
         }
 
         // PUT: api/Voucher/5
@@ -53,17 +74,17 @@ namespace SEVestTourAPI.Controllers
         {
             if (id != voucherModel.VoucherId)
             {
-                return BadRequest("Voucher ID mismatch.");
+                return BadRequest(new { Message = Error.VoucherUpdateFailed });
             }
 
             var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);
             if (existingVoucher == null)
             {
-                return NotFound();
+                return NotFound(new { Message = Error.VoucherNotFound });
             }
 
             await _voucherRepository.UpdateVoucherAsync(id, voucherModel);
-            return NoContent();
+            return Ok(new { Message = Success.VoucherUpdated });
         }
 
         // DELETE: api/Voucher/5
@@ -73,11 +94,11 @@ namespace SEVestTourAPI.Controllers
             var voucher = await _voucherRepository.GetVoucherByIdAsync(id);
             if (voucher == null)
             {
-                return NotFound();
+                return NotFound(new { Message = Error.VoucherNotFound });
             }
 
             await _voucherRepository.DeleteVoucherAsync(id);
-            return NoContent();
+            return Ok(new { Message = Success.VoucherDeleted });
         }
 
         // GET: api/Voucher/code/ABCD1234
@@ -88,7 +109,7 @@ namespace SEVestTourAPI.Controllers
 
             if (voucher == null)
             {
-                return NotFound();
+                return NotFound(new { Message = Error.VoucherNotFound });
             }
 
             return Ok(voucher);

@@ -2,11 +2,9 @@
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-
+using SEVestTourAPI.Message;
 
 namespace SEVestTourAPI.Controllers
 {
@@ -23,7 +21,7 @@ namespace SEVestTourAPI.Controllers
 
         // GET: api/user
         [HttpGet]
-        
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
         {
             var users = await _userRepository.GetAllUsersAsync();
@@ -32,23 +30,25 @@ namespace SEVestTourAPI.Controllers
 
         // GET: api/user/{id}
         [HttpGet("{id}")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound(Error.UserNotFound);
             }
             return Ok(user);
         }
 
         // POST: api/user
         [HttpPost]
+       // [Authorize(Roles = "admin,manager")]
         public async Task<ActionResult<int>> AddUser([FromBody] UserModel userModel)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(Error.InvalidModelState);
             }
 
             var newUserId = await _userRepository.AddUserAsync(userModel);
@@ -57,22 +57,23 @@ namespace SEVestTourAPI.Controllers
 
         // PUT: api/user/{id}
         [HttpPut("{id}")]
+        //[Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserModel userModel)
         {
             if (id != userModel.UserId)
             {
-                return BadRequest("User ID mismatch.");
+                return BadRequest(Error.UserIdMismatch);
             }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(Error.InvalidModelState);
             }
 
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound(Error.UserNotFound);
             }
 
             await _userRepository.UpdateUserAsync(id, userModel);
@@ -81,16 +82,32 @@ namespace SEVestTourAPI.Controllers
 
         // DELETE: api/user/{id}
         [HttpDelete("{id}")]
+       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound(Error.UserNotFound);
             }
 
             await _userRepository.DeleteUserAsync(id);
             return NoContent();
+        }
+
+        // PUT: api/user/{id}/status
+        [HttpPut("{id}/status")]
+       // [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
+        {
+            var user = await _userRepository.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound(Error.UserNotFound);
+            }
+
+            await _userRepository.UpdateUserStatusAsync(id, status);
+            return Ok(Success.StatusUpdated);
         }
     }
 }

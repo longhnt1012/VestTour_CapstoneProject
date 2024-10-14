@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+using SEVestTourAPI.Message;
 
 namespace SEVestTourAPI.Controllers
 {
@@ -15,6 +16,7 @@ namespace SEVestTourAPI.Controllers
         {
             _fabricRepo = repo;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllFabrics()
         {
@@ -24,7 +26,7 @@ namespace SEVestTourAPI.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest(Error.FabricNotFound);
             }
         }
 
@@ -34,19 +36,27 @@ namespace SEVestTourAPI.Controllers
             try
             {
                 var fabric = await _fabricRepo.GetFabricModelByIdAsync(id);
-                return fabric == null ? NotFound() : Ok(fabric);
+                return fabric == null ? NotFound(Error.FabricNotFound) : Ok(fabric);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest(Error.FabricNotFound);
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> AddNewFabric(FabricModel model)
         {
-            var newFabricID = await _fabricRepo.AddFabricAsync(model);
-            var fabric = await _fabricRepo.GetFabricModelByIdAsync(newFabricID);
-            return fabric == null ? NotFound() : Ok(fabric);
+            try
+            {
+                var newFabricID = await _fabricRepo.AddFabricAsync(model);
+                var fabric = await _fabricRepo.GetFabricModelByIdAsync(newFabricID);
+                return fabric == null ? NotFound(Error.FabricAddFailed) : Ok(fabric);
+            }
+            catch
+            {
+                return BadRequest(Error.FabricAddFailed);
+            }
         }
 
         [HttpPut("{id}")]
@@ -56,22 +66,15 @@ namespace SEVestTourAPI.Controllers
             {
                 if (id != model.FabricId)
                 {
-                    return NotFound();
-                }
-                if (id != null)
-                {
-                    await _fabricRepo.UpdateFabricAsync(id, model);
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
+                    return BadRequest(Error.FabricNotFound);
                 }
 
+                await _fabricRepo.UpdateFabricAsync(id, model);
+                return Ok(Success.FabricUpdated);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest(Error.FabricUpdateFailed);
             }
         }
 
@@ -80,20 +83,27 @@ namespace SEVestTourAPI.Controllers
         {
             try
             {
-
-                if (id != null)
-                {
-                    await _fabricRepo.DeleteFabricAsync(id);
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                await _fabricRepo.DeleteFabricAsync(id);
+                return Ok(Success.FabricDeleted);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest(Error.FabricDeleteFailed);
+            }
+        }
+
+        // New method to get fabrics by tag
+        [HttpGet("tag/{tag}")]
+        public async Task<IActionResult> GetFabricsByTag(string tag)
+        {
+            try
+            {
+                var fabrics = await _fabricRepo.GetFabricByTagAsync(tag);
+                return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
+            }
+            catch
+            {
+                return BadRequest(Error.FabricNotFound);
             }
         }
     }

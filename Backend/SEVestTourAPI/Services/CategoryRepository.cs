@@ -64,11 +64,16 @@ namespace SEVestTourAPI.Services
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<List<CategoryModel>> GetAllParentID(int categoryId)
+        public async Task<List<CategoryModel>> GetCategoriesByParentIdAsync(int parentId)
         {
-           var parenCategoriesID= await _context.Categories.Where(c=> c.CategoryParentId== categoryId).ToListAsync();
-            return _mapper.Map<List<CategoryModel>>(parenCategoriesID);
+            var categories = await _context.Categories
+                .Where(c => c.CategoryParentId == parentId)
+                .ToListAsync();
+
+            return _mapper.Map<List<CategoryModel>>(categories);
         }
+
+
+
     }
 }

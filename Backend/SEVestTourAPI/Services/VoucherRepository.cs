@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SEVestTourAPI.Services
@@ -68,6 +69,27 @@ namespace SEVestTourAPI.Services
         {
             var voucher = await _context.Vouchers!.FirstOrDefaultAsync(v => v.VoucherCode == code);
             return _mapper.Map<VoucherModel>(voucher);
+        }
+        // Get valid vouchers (DateStart <= Now <= DateEnd)
+        public async Task<List<VoucherModel>> GetValidVouchersAsync()
+        {
+            var now = DateOnly.FromDateTime(DateTime.UtcNow);
+            var validVouchers = await _context.Vouchers!
+                .Where(v => v.DateStart <= now && v.DateEnd >= now)
+                .ToListAsync();
+
+            return _mapper.Map<List<VoucherModel>>(validVouchers);
+        }
+
+        // Get vouchers matching the pattern FREESHIPxx or BIGSALEXx
+        public async Task<List<VoucherModel>> GetVouchersByPatternAsync()
+        {
+            var voucherPattern = @"^(FREESHIP\d{2}|BIGSALE\d{2})$";
+            var vouchers = await _context.Vouchers!
+                .Where(v => Regex.IsMatch(v.VoucherCode!, voucherPattern))
+                .ToListAsync();
+
+            return _mapper.Map<List<VoucherModel>>(vouchers);
         }
     }
 }

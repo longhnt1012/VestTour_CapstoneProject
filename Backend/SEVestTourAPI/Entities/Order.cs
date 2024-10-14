@@ -36,6 +36,7 @@ public partial class Order
 
     [StringLength(50)]
     public string? Status { get; set; }
+    public decimal? TotalPrice { get; set; }
 
     [InverseProperty("Order")]
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();

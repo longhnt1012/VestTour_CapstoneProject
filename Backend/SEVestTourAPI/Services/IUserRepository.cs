@@ -10,10 +10,12 @@ namespace SEVestTourAPI.Services
         public Task<User?> GetUserByEmailAndPasswordAsync(string email, string password);  // For login
         public Task<bool> IsEmailTakenAsync(string email);  // Check if email is already taken
         public Task<UserModel?> GetUserByIdAsync(int userId);          // Get user by ID
-        public Task<List<UserModel>> GetAllUsersAsync();               // Get all users
-        public Task<int> AddUserAsync(UserModel user);                 // Add new user
-        public Task UpdateUserAsync(int id, UserModel user);           // Update user
-        public Task DeleteUserAsync(int userId);                       // Delete user
-        public Task<string?> GetUserRoleAsync(int userId);            // Get user role by user ID
+        public Task<List<UserModel>> GetAllUsersAsync();               
+        public Task<int> AddUserAsync(UserModel user);                
+        public Task UpdateUserAsync(int id, UserModel user);           
+        public Task DeleteUserAsync(int userId);                      
+        public Task<string?> GetUserRoleAsync(int userId);
+        Task UpdateUserStatusAsync(int userId, string status);
+        
     }
 }

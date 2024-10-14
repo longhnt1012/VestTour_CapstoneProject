@@ -19,6 +19,8 @@
         public string Password { get; set; } = null!;
 
         public bool IsConfirmed { get; set; }
-        
+        public string Status { get; set; }
+        public string? Phone { get; set; }
+
     }
 }

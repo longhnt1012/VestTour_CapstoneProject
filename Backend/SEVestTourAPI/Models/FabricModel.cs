@@ -21,6 +21,8 @@ namespace SEVestTourAPI.Models
         [Column("ImageURL")]
         [StringLength(255)]
         public string? ImageUrl { get; set; }
+        public string? Tag { get; set; }
+
 
     }
 }

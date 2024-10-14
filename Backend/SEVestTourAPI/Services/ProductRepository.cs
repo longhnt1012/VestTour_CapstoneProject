@@ -29,7 +29,13 @@ namespace SEVestTourAPI.Services
             var product = await _context.Products.FindAsync(productId);
             return _mapper.Map<ProductModel?>(product);
         }
-
+        public async Task<List<ProductModel>> GetProductsByCategoryIdAsync(int categoryId)
+        {
+            var products = await _context.Products
+                                         .Where(p => p.CategoryId == categoryId)
+                                         .ToListAsync();
+            return _mapper.Map<List<ProductModel>>(products);
+        }
         public async Task<int> AddProductAsync(ProductModel productModel)
         {
             var product = _mapper.Map<Product>(productModel);
@@ -57,8 +63,21 @@ namespace SEVestTourAPI.Services
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<ProductModel?> GetProductByCodeAsync(string productCode)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductCode == productCode);
+            return _mapper.Map<ProductModel?>(product);
+        }
+        public async Task<List<ProductModel>> GetProductsWithIsCustomFalseAsync()
+        {
+            var products = await _context.Products
+                                         .Where(p => p.IsCustom == false)
+                                         .ToListAsync();
+            return _mapper.Map<List<ProductModel>>(products);
+        }
         public async Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId)
         {
+            // Load scalar properties (excluding the collection)
             var product = await (from p in _context.Products
                                  join f in _context.Fabrics on p.FabricId equals f.FabricId into pf
                                  from f in pf.DefaultIfEmpty()
@@ -76,22 +95,26 @@ namespace SEVestTourAPI.Services
                                      OrderID = p.OrderId,
                                      FabricName = f != null ? f.FabricName : null,
                                      LiningName = l != null ? l.LiningName : null,
+                                     StyleOptions = new List<StyleOptionModel>() // Initialize empty for now
                                  }).FirstOrDefaultAsync();
-            if (product != null)
+
+            if (product == null)
             {
-                product.StyleOptions = await (from pso in _context.ProductStyleOptions
-                                              join so in _context.StyleOptions on pso.StyleOptionId equals so.StyleOptionId
-                                              where pso.ProductId == product.ProductID
-                                              select new StyleOptionModel
-                                              {
-                                                  StyleOptionId = so.StyleOptionId,
-                                                  OptionType = so.OptionType,
-                                                  OptionValue = so.OptionValue
-                                              }).ToListAsync();
+                return null;
             }
+
+            // Load the collection separately
+            product.StyleOptions = await (from pso in _context.ProductStyleOptions
+                                          join so in _context.StyleOptions on pso.StyleOptionId equals so.StyleOptionId
+                                          where pso.ProductId == productId
+                                          select new StyleOptionModel
+                                          {
+                                              StyleOptionId = so.StyleOptionId,
+                                              OptionType = so.OptionType,
+                                              OptionValue = so.OptionValue
+                                          }).ToListAsync();
 
             return product;
         }
-
     }
-}
+    }

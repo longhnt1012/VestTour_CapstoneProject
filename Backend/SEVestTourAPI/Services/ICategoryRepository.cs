@@ -7,13 +7,11 @@ namespace SEVestTourAPI.Services
 {
     public interface ICategoryRepository
     {
-        Task<CategoryModel?> GetCategoryByIdAsync(int categoryId);  // Get category by ID
-        Task<List<CategoryModel>> GetAllCategoriesAsync();          // Get all categories
-        Task<int> AddCategoryAsync(CategoryModel category);         // Add a new category
-        Task UpdateCategoryAsync(int id, CategoryModel category);   // Update a category
-        Task DeleteCategoryAsync(int categoryId);                   // Delete a category
-        
-
-        public Task<List<CategoryModel>> GetAllParentID(int categoryId);
+        Task<CategoryModel?> GetCategoryByIdAsync(int categoryId);  
+        Task<List<CategoryModel>> GetAllCategoriesAsync();          
+        Task<int> AddCategoryAsync(CategoryModel category);         
+        Task UpdateCategoryAsync(int id, CategoryModel category);  
+        Task DeleteCategoryAsync(int categoryId);
+        Task<List<CategoryModel>> GetCategoriesByParentIdAsync(int parentId);
     }
 }

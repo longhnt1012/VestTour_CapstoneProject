@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Services;
-using Microsoft.AspNetCore.Authorization;
 using SEVestTourAPI.Models;
-
+using SEVestTourAPI.ValidationHelpers;
+using SEVestTourAPI.Message;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace VestTourApi.Controllers
 {
@@ -26,13 +28,34 @@ namespace VestTourApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Check if email is taken
-            if (await _userRepository.IsEmailTakenAsync(registerModel.Email))
+            if (string.IsNullOrWhiteSpace(registerModel.Name) || registerModel.Name.Length < 5 || registerModel.Name.Length > 25)
             {
-                return BadRequest("Email is already taken.");
+                return BadRequest(Error.InvalidName);
             }
 
-            // Create new user and register
+            if (!UserValidate.IsValidGender(registerModel.Gender))
+            {
+                return BadRequest(Error.InvalidGender);
+            }
+
+            if (!UserValidate.IsValidEmail(registerModel.Email))
+            {
+                return BadRequest(Error.InvalidEmail);
+            }
+
+            if (!UserValidate.IsValidPassword(registerModel.Password))
+            {
+                return BadRequest(Error.InvalidPassword);
+            }
+
+            if (await _userRepository.IsEmailTakenAsync(registerModel.Email))
+            {
+                return BadRequest(Error.EmailTaken);
+            }
+            if (await _userRepository.IsEmailTakenAsync(registerModel.Phone))
+            {
+                return BadRequest(Error.InvalidPhone);
+            }
             var newUser = new UserModel
             {
                 Name = registerModel.Name,
@@ -42,12 +65,19 @@ namespace VestTourApi.Controllers
                 RoleId = registerModel.RoleID,
                 Email = registerModel.Email,
                 Password = registerModel.Password,
-                IsConfirmed = true
+                Status = "active", // Setting default status
+                IsConfirmed = true,
+                Phone = registerModel.Phone
             };
 
-            await _userRepository.AddUserAsync(newUser);
+            var result = await _userRepository.AddUserAsync(newUser);
 
-            return Ok("User registered successfully.");
+            if (result > 0)
+            {
+                return Ok(Success.RegistrationSuccess);
+            }
+
+            return BadRequest(Error.RegistrationFailed);
         }
     }
 }

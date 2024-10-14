@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
 using System.Collections.Generic;
@@ -25,23 +24,18 @@ namespace SEVestTourAPI.Controllers
             var categories = await _categoryRepository.GetAllCategoriesAsync();
             return Ok(categories);
         }
-
+        // GET: api/Category/parent/3
         [HttpGet("parent/{parentId}")]
-        public async Task<ActionResult<List<Category>>> GetCategoriesByParentId(int parentId)
+        public async Task<ActionResult<IEnumerable<CategoryModel>>> GetCategoriesByParentId(int parentId)
         {
-            try {
-                var categories = await _categoryRepository.GetAllParentID(parentId);
+            var categories = await _categoryRepository.GetCategoriesByParentIdAsync(parentId);
 
-                if (categories == null || categories.Count == 0)
-                {
-                    return NotFound(); // 404 Not Found if no categories found
-                }
-
-                return Ok(categories); // 200 OK with the list of categories
-            }catch{
-                return BadRequest();
+            if (categories == null || categories.Count == 0)
+            {
+                return NotFound();
             }
-            
+
+            return Ok(categories);
         }
         // GET: api/Category/5
         [HttpGet("{id}")]

@@ -30,7 +30,9 @@ public partial class Product
 
     [Column("OrderID")]
     public int? OrderId { get; set; }
-
+    public bool IsCustom { get; set; }
+    public string? ImgURL { get; set; }
+    public decimal? Price { get; set; }
     [ForeignKey("CategoryId")]
     [InverseProperty("Products")]
     public virtual Category? Category { get; set; }

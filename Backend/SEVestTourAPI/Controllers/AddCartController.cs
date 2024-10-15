@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
+using SEVestTourAPI.Repository.Interface;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,26 +15,44 @@ namespace SEVestTourAPI.Controllers
 
         public AddCartController(IAddCartRepository addCartRepository)
         {
+            
             _addCartRepository = addCartRepository;
         }
 
         [HttpGet("mycart")]
         public async Task<ActionResult<List<CartItemModel>>> ViewUserCart()
         {
+            try
+            {
+                var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
+
+                var cartItems = await _addCartRepository.GetUserCartAsync(userId);
+
+                return Ok(cartItems);
+            }
+            catch
+            {
+                return BadRequest();
+            }
             
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-
-            var cartItems = await _addCartRepository.GetUserCartAsync(userId);
-
-            return Ok(cartItems);
+           
         }
 
        [HttpPost("addtocart/{productId}")]
         public async Task<IActionResult> AddToCart(int productId)
         {
+            try
+            {
+
+            
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _addCartRepository.AddToCartAsync(userId, productId);
             return Ok("Product added to cart.");
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         

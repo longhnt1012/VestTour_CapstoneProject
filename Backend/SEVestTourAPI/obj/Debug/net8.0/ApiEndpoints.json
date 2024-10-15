@@ -922,16 +922,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SEVestTourAPI.Controllers.ProductController",
-    "Method": "GetProductsWithIsCustomFalse",
-    "RelativePath": "api/Product/products/custom-false",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "VestTourApi.Controllers.RegisterController",
     "Method": "Register",
     "RelativePath": "api/Register",

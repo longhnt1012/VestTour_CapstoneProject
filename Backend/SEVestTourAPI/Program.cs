@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Helpers;
-using SEVestTourAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using SEVestTourAPI.Repository.Interface;
+using SEVestTourAPI.Repository.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 

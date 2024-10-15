@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
+using SEVestTourAPI.Repository.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

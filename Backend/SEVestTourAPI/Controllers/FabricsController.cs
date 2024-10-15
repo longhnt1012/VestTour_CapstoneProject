@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
 using SEVestTourAPI.Message;
+using SEVestTourAPI.Repository.Interface;
 
 namespace SEVestTourAPI.Controllers
 {

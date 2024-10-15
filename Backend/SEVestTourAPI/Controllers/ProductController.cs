@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
+using SEVestTourAPI.Repository;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

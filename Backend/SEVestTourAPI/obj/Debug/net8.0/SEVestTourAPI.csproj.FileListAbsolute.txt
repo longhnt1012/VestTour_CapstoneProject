@@ -296,3 +296,4 @@ D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Deb
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Debug\net8.0\SEVestTourAPI.genruntimeconfig.cache
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Debug\net8.0\ref\SEVestTourAPI.dll
 D:\SECapstone\SEVestTourAPI\SEVestTourAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll

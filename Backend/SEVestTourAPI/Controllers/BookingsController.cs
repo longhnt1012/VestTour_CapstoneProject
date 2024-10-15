@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
+using SEVestTourAPI.Repository.Interface;
 
 namespace SEVestTourAPI.Controllers
 {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SEVestTourAPI.Message;
+using SEVestTourAPI.Repository.Interface;
 
 namespace SEVestTourAPI.Controllers
 {

@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
-using SEVestTourAPI.Repository.Interface;
 
-namespace SEVestTourAPI.Repository.Implementation
+namespace SEVestTourAPI.Services
 {
     public class BookingRepository : IBookingRepository
     {
@@ -21,20 +20,23 @@ namespace SEVestTourAPI.Repository.Implementation
         public async Task<int> AddNewBookingAsync(BookingModel booking)
         {
 
-            var newBooking = _mapper.Map<Booking>(booking);
+            var newBooking= _mapper.Map<Booking>(booking);
             _context.Bookings!.Add(newBooking);
             await _context.SaveChangesAsync();
 
             return newBooking.BookingId;
-
+          
 
         }
-
+        public async Task<int> GetTotalBookingCountAsync()
+        {
+            return await _context.Bookings!.CountAsync();
+        }
         public async Task DeleteBookingAsync(int id)
         {
             var deleteBooking = _context.Bookings!.SingleOrDefault(bo => bo.BookingId == id);
-
-            if (deleteBooking != null)
+           
+            if(deleteBooking != null)
             {
                 _context.Bookings.Remove(deleteBooking);
                 await _context.SaveChangesAsync();
@@ -43,7 +45,7 @@ namespace SEVestTourAPI.Repository.Implementation
 
         public async Task<List<BookingModel>> GetAllBooking()
         {
-            var bookings = await _context.Bookings!.ToListAsync();
+            var bookings= await _context.Bookings!.ToListAsync();
             return _mapper.Map<List<BookingModel>>(bookings);
         }
 
@@ -55,7 +57,7 @@ namespace SEVestTourAPI.Repository.Implementation
 
         public async Task UpdateBooking(int id, BookingModel model)
         {
-            if (id == model.BookingId)
+           if(id == model.BookingId)
             {
                 var updateBooking = _mapper.Map<Booking>(model);
                 _context.Bookings!.Update(updateBooking);

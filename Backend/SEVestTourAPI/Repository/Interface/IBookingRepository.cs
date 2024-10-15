@@ -1,6 +1,6 @@
 ﻿using SEVestTourAPI.Models;
 
-namespace SEVestTourAPI.Repository.Interface
+namespace SEVestTourAPI.Services
 {
     public interface IBookingRepository
     {
@@ -11,5 +11,6 @@ namespace SEVestTourAPI.Repository.Interface
 
         public Task<int> AddNewBookingAsync(BookingModel booking);
         public Task DeleteBookingAsync(int id);
+        Task<int> GetTotalBookingCountAsync();
     }
 }

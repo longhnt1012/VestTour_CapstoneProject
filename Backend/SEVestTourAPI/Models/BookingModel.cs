@@ -23,5 +23,8 @@ namespace SEVestTourAPI.Models
 
         
         public int? StoreId { get; set; }
+        public string? GuestName { get; set; }
+        public string? GuestEmail { get; set; }
+        public string? GuestPhone { get; set; }
     }
 }

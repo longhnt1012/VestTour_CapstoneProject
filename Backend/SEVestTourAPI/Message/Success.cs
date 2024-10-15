@@ -11,5 +11,10 @@
         public const string VoucherAdded = "Voucher added successfully.";
         public const string VoucherUpdated = "Voucher updated successfully.";
         public const string VoucherDeleted = "Voucher deleted successfully.";
+        // Order-related success messages
+        public const string OrderAdded = "Order added successfully.";
+        public const string OrderUpdated = "Order updated successfully.";
+        public const string OrderDeleted = "Order deleted successfully.";
+        public const string OrderShipped = "Order shipped successfully.";
     }
 }

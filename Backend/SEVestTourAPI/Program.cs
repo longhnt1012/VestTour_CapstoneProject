@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using SEVestTourAPI.Repository.Interface;
 using SEVestTourAPI.Repository.Implementation;
+using SEVestTourAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +56,7 @@ builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IShipperPartnerRepository, ShipperPartnerRepository>();
 builder.Services.AddScoped<IStyleRepository, StyleRepository>();
-builder.Services.AddScoped<IStyleOptionRepository,StyleOptionRepository>();
+builder.Services.AddScoped<IStyleOptionRepository, StyleOptionRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ILiningRepository, LiningRepository>();
@@ -64,7 +65,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
-builder.Services.AddCors(co => co.AddDefaultPolicy(policy=> 
+builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));

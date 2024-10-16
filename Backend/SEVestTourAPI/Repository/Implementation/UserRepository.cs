@@ -84,7 +84,7 @@ namespace SEVestTourAPI.Repository.Implementation
             {
                 throw new ArgumentException(Error.InvalidGender);
             }
-
+             
             if (!UserValidate.IsValidPhone(user.Phone))
             {
                 throw new ArgumentException(Error.InvalidPhone);

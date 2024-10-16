@@ -210,6 +210,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SEVestTourAPI.Controllers.BookingsController",
+    "Method": "GetTotalBookingCount",
+    "RelativePath": "api/Bookings/count",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SEVestTourAPI.Controllers.BookingsController",
+    "Method": "CreateBookingForLoggedInUser",
+    "RelativePath": "api/Bookings/create-for-loggedin-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "SEVestTourAPI.Models.BookingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SEVestTourAPI.Controllers.CategoryController",
     "Method": "GetCategories",
     "RelativePath": "api/Category",
@@ -919,6 +945,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SEVestTourAPI.Controllers.ProductController",
+    "Method": "GetProductsWithIsCustomFalse",
+    "RelativePath": "api/Product/products/custom-false",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

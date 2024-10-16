@@ -21,7 +21,7 @@ namespace SEVestTourAPI.ValidationHelpers
 
          public static bool IsValidGender(string gender)
         {
-            return gender == "Nam" || gender == "Nu";
+            return gender == "Male" || gender == "Female";
         }
         public static bool IsValidPhone(string? phone)
         {

@@ -9159,24 +9159,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\MSI\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj",
+      "projectUniqueName": "C:\\Users\\MSI\\Desktop\\capstonepro\\VestTour_CapstoneProject\\Backend\\SEVestTourAPI\\SEVestTourAPI.csproj",
       "projectName": "SEVestTourAPI",
-      "projectPath": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\SEVestTourAPI.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\SECapstone\\SEVestTourAPI\\SEVestTourAPI\\obj\\",
+      "projectPath": "C:\\Users\\MSI\\Desktop\\capstonepro\\VestTour_CapstoneProject\\Backend\\SEVestTourAPI\\SEVestTourAPI.csproj",
+      "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MSI\\Desktop\\capstonepro\\VestTour_CapstoneProject\\Backend\\SEVestTourAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9288,7 +9283,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

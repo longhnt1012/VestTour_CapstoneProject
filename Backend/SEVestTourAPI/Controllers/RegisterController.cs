@@ -65,7 +65,7 @@ namespace VestTourApi.Controllers
                 RoleId = registerModel.RoleID,
                 Email = registerModel.Email,
                 Password = registerModel.Password,
-                Status = "active", // Setting default status
+                Status = "Active", // Setting default status
                 IsConfirmed = true,
                 Phone = registerModel.Phone
             };

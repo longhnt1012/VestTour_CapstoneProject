@@ -28,7 +28,9 @@ public partial class Booking
 
     [Column("StoreID")]
     public int? StoreId { get; set; }
-
+    public string? GuestName { get; set; }
+    public string? GuestEmail { get; set; }
+    public string? GuestPhone { get; set; }
     [ForeignKey("StoreId")]
     [InverseProperty("Bookings")]
     public virtual Store? Store { get; set; }

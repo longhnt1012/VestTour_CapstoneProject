@@ -11,5 +11,6 @@ namespace SEVestTourAPI.Services
 
         public Task<int> AddNewBookingAsync(BookingModel booking);
         public Task DeleteBookingAsync(int id);
+        Task<int> GetTotalBookingCountAsync();
     }
 }

@@ -55,7 +55,8 @@ namespace VestTourApi.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, userRole ?? "customer"), // Assuming role is customer for now
-                new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.UserId.ToString()), // đay nè . gọi nó ra
+
             };
 
             var token = new JwtSecurityToken(

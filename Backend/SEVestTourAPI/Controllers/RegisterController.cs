@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SEVestTourAPI.Services;
 using SEVestTourAPI.Models;
 using SEVestTourAPI.ValidationHelpers;
 using SEVestTourAPI.Message;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using SEVestTourAPI.Repository.Interface;
 
 namespace VestTourApi.Controllers
 {
@@ -52,10 +52,7 @@ namespace VestTourApi.Controllers
             {
                 return BadRequest(Error.EmailTaken);
             }
-            if (!UserValidate.IsValidPhone(registerModel.Phone))
-            {
-                return BadRequest(Error.InvalidPhone);
-            }
+
             var newUser = new UserModel
             {
                 Name = registerModel.Name,
@@ -65,9 +62,8 @@ namespace VestTourApi.Controllers
                 RoleId = registerModel.RoleID,
                 Email = registerModel.Email,
                 Password = registerModel.Password,
-                Status = "Active", // Setting default status
-                IsConfirmed = true,
-                Phone = registerModel.Phone
+                Status = "active", // Setting default status
+                IsConfirmed = true
             };
 
             var result = await _userRepository.AddUserAsync(newUser);

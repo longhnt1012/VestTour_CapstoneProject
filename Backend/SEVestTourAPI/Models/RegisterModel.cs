@@ -23,9 +23,5 @@ namespace SEVestTourAPI.Models
 
         [Required(ErrorMessage = "RoleID is required.")]
         public int RoleID { get; set; }
-        
-
-        [Required(ErrorMessage = "Phone is required.")]
-        public string? Phone { get; set; }
     }
 }

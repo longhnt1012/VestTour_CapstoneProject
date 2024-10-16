@@ -296,6 +296,7 @@ D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Deb
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Debug\net8.0\SEVestTourAPI.genruntimeconfig.cache
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\obj\Debug\net8.0\ref\SEVestTourAPI.dll
 D:\SECapstone\SEVestTourAPI\SEVestTourAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+<<<<<<< HEAD
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\bin\Debug\net8.0\appsettings.json
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\bin\Debug\net8.0\SEVestTourAPI.exe
@@ -445,3 +446,6 @@ C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\obj\Debug\net8.0\SEVestTourAPI.pdb
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\obj\Debug\net8.0\SEVestTourAPI.genruntimeconfig.cache
 C:\Users\MSI\Desktop\capstonepro\VestTour_CapstoneProject\Backend\SEVestTourAPI\obj\Debug\net8.0\ref\SEVestTourAPI.dll
+=======
+D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_API\SEVestTourAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+>>>>>>> d68d5923004c61df1e8b8b004636b94327a213c0

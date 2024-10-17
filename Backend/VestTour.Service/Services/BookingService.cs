@@ -1,0 +1,164 @@
+﻿using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+using VestTour.Service.Interface;
+using VestTour.Constants;
+using VestTour.Services;
+
+public class BookingService : IBookingService
+{
+    private readonly IBookingRepository _bookingRepository;
+    private readonly IUserRepository _userRepo; // Add IUserRepository for user details
+
+    public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo)
+    {
+        _bookingRepository = bookingRepository;
+        _userRepo = userRepo; // Initialize IUserRepository
+    }
+
+    public async Task<ServiceResponse<BookingModel?>> GetBookingByIdAsync(int bookingId)
+    {
+        var response = new ServiceResponse<BookingModel?>();
+
+        if (bookingId <= 0)
+        {
+            response.Success = false;
+            response.Message = Error.InvalidBookingId; // Use a constant from Error class
+            return response;
+        }
+
+        var booking = await _bookingRepository.GetBookingById(bookingId);
+        if (booking == null)
+        {
+            response.Success = false;
+            response.Message = Error.BookingNotFound; // Use a constant from Error class
+        }
+        else
+        {
+            response.Data = booking;
+        }
+
+        return response;
+    }
+
+    public async Task<ServiceResponse<List<BookingModel>>> GetAllBookingsAsync()
+    {
+        var response = new ServiceResponse<List<BookingModel>>();
+        var bookings = await _bookingRepository.GetAllBooking();
+
+        if (bookings == null || !bookings.Any())
+        {
+            response.Success = false;
+            response.Message = Error.NoBookingsFound; // Use a constant from Error class
+        }
+        else
+        {
+            response.Data = bookings;
+        }
+
+        return response;
+    }
+
+    public async Task<ServiceResponse<int>> AddBookingAsync(BookingModel booking)
+    {
+        var response = new ServiceResponse<int>();
+
+        if (string.IsNullOrEmpty(booking.GuestName))
+        {
+            response.Success = false;
+            response.Message = Error.InvalidGuestName; // Use a constant from Error class
+            return response;
+        }
+
+        var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
+        response.Data = newBookingId;
+        response.Message = Success.BookingCreated; // Use a constant from Success class
+        return response;
+    }
+
+    public async Task<ServiceResponse> UpdateBookingAsync(int id, BookingModel booking)
+    {
+        var response = new ServiceResponse();
+
+        if (id <= 0 || string.IsNullOrEmpty(booking.GuestName))
+        {
+            response.Success = false;
+            response.Message = Error.InvalidInputData;
+            return response;
+        }
+
+        await _bookingRepository.UpdateBooking(id, booking);
+        response.Message = Success.BookingUpdated;
+        return response;
+    }
+
+    public async Task<ServiceResponse> DeleteBookingAsync(int bookingId)
+    {
+        var response = new ServiceResponse();
+
+        if (bookingId <= 0)
+        {
+            response.Success = false;
+            response.Message = Error.InvalidBookingId; // Use a constant from Error class
+            return response;
+        }
+
+        await _bookingRepository.DeleteBookingAsync(bookingId);
+        response.Message = Success.BookingDeleted; // Use a constant from Success class
+        return response;
+    }
+
+    public async Task<ServiceResponse<int>> GetTotalBookingCountAsync()
+    {
+        var response = new ServiceResponse<int>();
+
+        var totalBookings = await _bookingRepository.GetTotalBookingCountAsync();
+        response.Data = totalBookings;
+        return response;
+    }
+
+    // New method for creating booking for logged-in user
+    public async Task<ServiceResponse<BookingModel>> CreateBookingForLoggedInUserAsync(int userId, BookingModel model)
+    {
+        var response = new ServiceResponse<BookingModel>();
+
+        // Fetch user details from repository
+        var user = await _userRepo.GetUserByIdAsync(userId);
+        if (user == null)
+        {
+            response.Success = false;
+            response.Message = Error.UserNotFound; // Use a constant from Error class
+            return response;
+        }
+
+        // Create the booking with user details
+        var newBooking = new BookingModel
+        {
+            UserId = user.UserId,
+            BookingDate = model.BookingDate,
+            Time = model.Time,
+            Note = model.Note,
+            Status = model.Status ?? "on-going",
+            StoreId = model.StoreId,
+            GuestName = user.Name,
+            GuestEmail = user.Email,
+            GuestPhone = user.Phone
+        };
+
+        var newBookingId = await _bookingRepository.AddNewBookingAsync(newBooking);
+        var booking = await _bookingRepository.GetBookingById(newBookingId);
+
+        if (booking == null)
+        {
+            response.Success = false;
+            response.Message = Error.BookingCreateFailed; // Add an appropriate error message
+        }
+        else
+        {
+            response.Data = booking;
+            response.Message = Success.BookingCreated;
+        }
+
+        return response; // Ensure the response is returned in all cases
+    }
+
+}

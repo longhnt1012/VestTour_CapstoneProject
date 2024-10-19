@@ -1,0 +1,116 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using VestTour.Repository.Models;
+using VestTour.Service.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace VestTour.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OrdersController : ControllerBase
+    {
+        private readonly IOrderService _orderService;
+
+        public OrdersController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrder()
+        {
+            try
+            {
+                var orders = await _orderService.GetAllOrdersAsync();
+                return Ok(orders);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderByID(int id)
+        {
+            try
+            {
+                var order = await _orderService.GetOrderByIdAsync(id);
+                return Ok(order);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Order not found.");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewOrder(OrderModel order)
+        {
+            try
+            {
+                var newOrderID = await _orderService.CreateOrderAsync(order);
+                var newOrder = await _orderService.GetOrderByIdAsync(newOrderID);
+                return CreatedAtAction(nameof(GetOrderByID), new { id = newOrderID }, newOrder);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder(int id, OrderModel order)
+        {
+            try
+            {
+                await _orderService.UpdateOrderAsync(id, order);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Order not found.");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        // Thêm các phương thức mới
+        [HttpGet("total")]
+        public async Task<IActionResult> GetTotalOrders()
+        {
+            try
+            {
+                var totalOrders = await _orderService.GetTotalOrdersAsync();
+                return Ok(totalOrders);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        
+
+        [HttpGet("store/{storeId}")]
+        public async Task<IActionResult> GetOrdersByStoreId(int storeId)
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersByStoreIdAsync(storeId);
+                return Ok(orders);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+    }
+}

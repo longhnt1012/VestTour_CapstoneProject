@@ -1,6 +1,4 @@
-﻿Drop Database VestTourDB
-
-CREATE DATABASE VestTourDB;
+﻿CREATE DATABASE VestTourDB;
 GO
 
 USE VestTourDB;
@@ -9,22 +7,45 @@ CREATE TABLE [Role] (
     RoleID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     RoleName NVARCHAR(100)  NOT NULL
 );
+INSERT INTO Role (RoleName)
+VALUES 
+    ('admin'),
+    ('staff'),
+    ('customer'),
+    ('store manager');
+	
 CREATE TABLE [User] (
     UserID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     Name NVARCHAR(255)  NOT NULL,
     Gender NVARCHAR(10),
     Address NVARCHAR(255),
     DOB DATE,
-	Phone VARCHAR(11),
 	RoleID INT FOREIGN KEY REFERENCES [Role](RoleID)  NOT NULL, 
     Email NVARCHAR(255) UNIQUE  NOT NULL,
     Password NVARCHAR(255)  NOT NULL,
-    IsConfirmed BIT  NOT NULL,
-	Status VARCHAR(50))
+    IsConfirmed BIT  NOT NULL
      -- Now each user can have one role
-	 
+);
+-------------------------------------------------------------------------------CAI NAY NE NHAAAAA--------------------------
+ALTER TABLE [User]
+ADD Phone VARCHAR(11);
+UPDATE [User] SET Phone='0911945965'
+--------------------------------------------------------------------------------------------HET ROI
+------------THEM COLUMN STATUS
+ALTER TABLE [User]
+ADD [Status] VARCHAR(50);
+UPDATE [User] SET [Status]='active'
+INSERT INTO [User] (Name, Gender, Address, DOB, RoleID, Email, Password,IsConfirmed)
+VALUES 
+    ('Thanh Long', 'Nam', '111 Tran Hung Dao St', '2001-01-01', 1, 'admin123@gmail.com', '123456',1),
+	('Minh Nhut', 'Nu', 'S606B Vinhome GrandPark , Nguyen Xien St, Thu Duc city', '2002-02-15', 3, 'customer111@gmail.com', '111111',1),
+    ('Nguyen Van A', 'Nam', '222 Le Loi St, Ho Chi Minh City', '1998-05-20', 2, 'staff1@gmail.com', 'staffpass1', 1),
+    ('Tran Thi B', 'Nu', '333 Hai Ba Trung St, Da Nang', '1999-07-15', 2, 'staff2@gmail.com', 'staffpass2', 1),
+	('Hoang Van E', 'Nam', '666 Ly Thuong Kiet St, Nha Trang', '1996-03-30', 4, 'manager2@gmail.com', 'managerpass2', 1);
 
-
+INSERT INTO [User] (Name, Gender, Address, DOB, RoleID, Email, Password,IsConfirmed)
+VALUES 
+	('Hoang Thien Phuc', 'Nam', '243 Tran Hung Dao St, Long Xuyen City, An Giang', '2002-07-15', 3, 'phuchoang@gmail.com', '123',1);
 
 -- Table: Measurement
 CREATE TABLE Measurement (
@@ -42,6 +63,10 @@ CREATE TABLE Measurement (
     Thigh DECIMAL(5,2),
     PantsLength DECIMAL(5,2)
 );
+INSERT INTO [Measurement] 
+(UserID, Weight, Height, Neck, Hip, Waist, Armhole, Biceps, PantsWaist, Crotch, Thigh, PantsLength) 
+VALUES 
+(2, 75.00, 175.00, 40.00, 95.00, 85.00, 45.00, 35.00, 90.00, 30.00, 55.00, 100.00);
 
 -- Table: Store
 DROP TABLE IF EXISTS Store;
@@ -54,6 +79,10 @@ CREATE TABLE Store (
     ContactNumber VARCHAR(20),
    
 );
+INSERT INTO [Store] (UserID,Name,Address,ContactNumber)
+VALUES 
+	(4,'Vest pro',' 441/2/2G Quang Trung, P.10, Q.Gò Vấp, TP.HCM','0169136419');
+
 
 -- Table: Voucher
 CREATE TABLE Voucher (
@@ -66,6 +95,10 @@ CREATE TABLE Voucher (
     DateEnd DATE
 );
 
+INSERT INTO Voucher (Status, VoucherCode, [Description], DiscountNumber, DateStart, DateEnd)
+VALUES 
+    ('On going', 'FREESHIP20', 'Discount 20% shipping fee. 20 years anniversary', 0.2, '2024-09-29', '2024-09-30');
+
 -- Table: Booking
 DROP TABLE IF EXISTS Booking;
 GO
@@ -76,10 +109,14 @@ CREATE TABLE Booking (
     Time TIME,
     Note NVARCHAR(255),
     Status NVARCHAR(50),
-    --VoucherID INT FOREIGN KEY REFERENCES Voucher(VoucherID),
     StoreID INT FOREIGN KEY REFERENCES Store(StoreID)
 );
-
+ALTER TABLE Booking
+ADD GuestName NVARCHAR(255);
+ALTER TABLE Booking
+ADD GuestEmail VARCHAR(255);
+ALTER TABLE Booking
+ADD GuestPhone VARCHAR(11);
 
 
 -- Table: StoreAccounts
@@ -99,6 +136,10 @@ CREATE TABLE ShipperPartner(
 	Status NVARCHAR(50),
 
 )
+INSERT INTO ShipperPartner (ShipperPartnerName, Phone, Company, Status)
+VALUES
+	('Le Hong Ngoc','0914721438','VNEXPRESS','Success');
+
 
 -- Table: BankingAccount
 DROP TABLE IF EXISTS BankingAccount;
@@ -133,13 +174,29 @@ CREATE TABLE [Order] (
    ShipperPartnerID INT FOREIGN KEY REFERENCES ShipperPartner(ShipperPartnerID),
     OrderDate DATE,
     ShippedDate DATE,
-	TotalPrice DECIMAL(10,2),
     Note NVARCHAR(255),
-    Paid BIT NOT NULL,
-	Status NVARCHAR(50)
-);
+    Paid BIT NOT NULL, --pending  --paid
+	Status NVARCHAR(50) --on going
+); 
+-------------CHAY CAI NAY THOI --------------------
+ALTER TABLE [Order]
+ADD TotalPrice DECIMAL(10,2);
 
+-- Insert into BankingAccount
+INSERT INTO BankingAccount (AccountNumber, AccountName, Bank)
+VALUES ('123456789', 'Tran Dinh Nam', 'ABC Bank');
 
+-- Insert into Payment
+INSERT INTO Payment (BankingAccountID, UserID, Method, PaymentDate, PaymentDetails, Status)
+VALUES 
+(1, 2, 'Visa Card', '2024-10-18', 'Payment for order #2', 'Completed')
+(1, 6, 'Momo', '2024-10-11', 'Payment for order #6', 'Completed')
+
+-- Insert into [Order]
+INSERT INTO [Order] (PaymentID, StoreID, VoucherID, ShipperPartnerID, OrderDate, ShippedDate, Note, Paid, Status,TotalPrice)
+VALUES 
+(2, 1, 1, 1, '2024-10-03', '2024-10-18', 'Urgent delivery', 1, 'Shipped',600),
+(3, 1, 1, 1, '2024-10-03', '2024-10-18', 'Ship COD', 1, 'Shipped',300);
 
 
 -- Table: Fabric
@@ -147,133 +204,23 @@ CREATE TABLE Fabric (
     FabricID INT PRIMARY KEY IDENTITY(1,1),
     FabricName NVARCHAR(255),
     Price DECIMAL(10,2),
-	Description NVARCHAR(255),
-    ImageURL NVARCHAR(255),
-	Tag NVARCHAR(255),
-);
-
-
-
--- Table: Style
-CREATE TABLE Style (
-    StyleID INT PRIMARY KEY IDENTITY(1,1),
-    StyleName NVARCHAR(255),
-    Description NVARCHAR(255)
-);
--- Insert styles into Style table
-
--- Table: StyleOption
-CREATE TABLE StyleOption (
-    StyleOptionID INT PRIMARY KEY IDENTITY(1,1),
-	StyleID INT FOREIGN KEY REFERENCES Style(StyleID),
-    OptionType NVARCHAR(100),
-    OptionValue NVARCHAR(100),
-	Price DECIMAL(10,2)
-);
-
--- Table: Lining
-CREATE TABLE Lining (
-    LiningID INT PRIMARY KEY IDENTITY(1,1),
-    LiningName NVARCHAR(255),
+    Description NVARCHAR(255),
     ImageURL NVARCHAR(255)
+	
 );
-
--- Table: Category
-CREATE TABLE Category (
-    CategoryID INT PRIMARY KEY IDENTITY(1,1),
-	CategoryParentID INT,
-    Name NVARCHAR(255),
-    ImageURL NVARCHAR(255),
-    Description NVARCHAR(255)
-    
-);
-
--- Table: Product
-DROP TABLE IF EXISTS Product;
-GO
-CREATE TABLE Product (
-    ProductID INT PRIMARY KEY IDENTITY(1,1),
-    ProductCode NVARCHAR(100),
-    MeasurementID INT FOREIGN KEY REFERENCES Measurement(MeasurementID),
-    CategoryID INT FOREIGN KEY REFERENCES Category(CategoryID),
-    FabricID INT FOREIGN KEY REFERENCES Fabric(FabricID),
-    LiningID INT FOREIGN KEY REFERENCES Lining(LiningID),
-	OrderID INT FOREIGN KEY REFERENCES [Order](OrderID),
-	ImgURL NVARCHAR(255),
-	Price DECIMAL(10,2),
-	IsCustom BIT,
-);
+-------------UPDATE FABRIC TABLE
+ALTER TABLE Fabric
+ADD Tag NVARCHAR(255);
 
 
-
---Table : ProductStyleOption 
-DROP TABLE IF EXISTS ProductStyleOption;
-GO
-CREATE TABLE ProductStyleOption (
-	ProductID INT FOREIGN KEY REFERENCES Product(ProductID),
-	StyleOptionID INT FOREIGN KEY REFERENCES StyleOption(StyleOptionID)
-)
-
--- Table: OrderDetail
-DROP TABLE IF EXISTS OrderDetail;
-GO
-
-DROP TABLE IF EXISTS Feedback;
-GO
-CREATE TABLE Feedback (
-    FeedbackID INT PRIMARY KEY IDENTITY(1,1),
-    Comment NVARCHAR(255),
-    Rating INT CHECK (Rating >= 1 AND Rating <= 5),
-    Response NVARCHAR(255),
-    DateSubmitted DATE,
-    UserID INT FOREIGN KEY REFERENCES [User](UserID),
-    OrderID INT FOREIGN KEY REFERENCES [Order](OrderID)
-);
-
--------------------Insert Role------------------
-
-INSERT INTO Role (RoleName)
-VALUES 
-    ('admin'),
-    ('staff'),
-    ('customer'),
-    ('store manager');
--------------Update USER-----------------
-INSERT INTO [User] (Name, Gender, Address, DOB, RoleID, Email,Phone, Password,IsConfirmed,Status)
-VALUES 
-    ('Thanh Long', 'Nam', '111 Tran Hung Dao St', '2001-01-01', 1, 'admin123@gmail.com','0903315375', '123456',1,'active'),
-	('Minh Nhut', 'Nu', 'S606B Vinhome GrandPark , Nguyen Xien St, Thu Duc city', '2002-02-15', 3, 'customer111@gmail.com','0911945965', '111111',1,'active'),
-    ('Nguyen Van A', 'Nam', '222 Le Loi St, Ho Chi Minh City', '1998-05-20', 2, 'staff1@gmail.com','0903312344', 'staffpass1', 1,'active'),
-    ('Tran Thi B', 'Nu', '333 Hai Ba Trung St, Da Nang', '1999-07-15', 2, 'staff2@gmail.com','0903312322' ,'staffpass2', 1,'active'),
-	('Hoang Van E', 'Nam', '666 Ly Thuong Kiet St, Nha Trang', '1996-03-30', 4, 'manager2@gmail.com','0903312333', 'managerpass2', 1,'active');
-INSERT INTO [User] (Name, Gender, Address, DOB, RoleID, Email,Phone, Password,IsConfirmed,Status)
-VALUES 
-	('Hoang Thien Phuc', 'Nam', '243 Tran Hung Dao St, Long Xuyen City, An Giang', '2002-07-15', 3, 'phuchoang@gmail.com','0903315344', '123',1,'active');
-
----------Insert Store------------
-INSERT INTO [Store] (UserID,Name,Address,ContactNumber)
-VALUES 
-	(4,'Vest pro',' 441/2/2G Quang Trung, P.10, Q.Gò Vấp, TP.HCM','0169136419');
-----------Insert Voucher----------------
-
-INSERT INTO Voucher (Status, VoucherCode, [Description], DiscountNumber, DateStart, DateEnd)
-VALUES 
-    ('On going', 'FREESHIP20', 'Discount 20% shipping fee. 20 years anniversary', 0.2, '2024-09-29', '2024-09-30');
-
------------------------Insert ShipperPartner---------------------------
-
-INSERT INTO ShipperPartner (ShipperPartnerName, Phone, Company, Status)
-VALUES
-	('Le Hong Ngoc','0914721438','VNEXPRESS','Success');
-
----------------Insert Measurement----------------
-INSERT INTO [Measurement] 
-(UserID, Weight, Height, Neck, Hip, Waist, Armhole, Biceps, PantsWaist, Crotch, Thigh, PantsLength) 
-VALUES 
-(2, 75.00, 175.00, 40.00, 95.00, 85.00, 45.00, 35.00, 90.00, 30.00, 55.00, 100.00);
------------------Insert Fabrics------------
-
-
+UPDATE Fabric SET Tag = 'Premium'
+UPDATE Fabric
+SET Tag = 'New'
+WHERE FabricID % 3 = 0;
+UPDATE Fabric
+SET Tag = 'Sale'
+WHERE FabricID % 7 = 0;
+--------------------------------
 INSERT INTO Fabric (FabricName, Price, Description) VALUES
 ('577', 350, '100% Wool'),
 ('576', 350, '100% Wool'),
@@ -383,23 +330,55 @@ INSERT INTO Fabric (FabricName, Price, Description) VALUES
 ('723', 350, '100% Wool'),
 ('39', 270, '85% Wool . 10% Cashmere'),
 ('665', 220, '85% Wool . 10% Cashmere');
-------------------Insert Fabric----------------
-UPDATE Fabric SET Tag = 'Premium'
-UPDATE Fabric
-SET Tag = 'New'
-WHERE FabricID % 3 = 0;
-UPDATE Fabric
-SET Tag = 'Sale'
-WHERE FabricID % 7 = 0;
 
+UPDATE Fabric
+SET ImageURL = CASE FabricID
+	WHEN 1 THEN 'https://www.skillshare.com/blog/wp-content/uploads/2024/07/QDfyOOeEnmY1FTVzdlkiJQJyC6wcH-Z6MssXzygnrPmB8ed5PG1O9clFzPsZi90ckgU-C-TgcTf-3oWlHdVcJmsPgK7zUzOg_IHx9_bKJosfZ7M0GFihWip-OINpM1hW1hYy2ej.png'
+    WHEN 2 THEN 'https://a.storyblok.com/f/165154/1456x816/c0fa2fe609/02_-cotton-fabric.png/m/'
+    WHEN 3 THEN 'https://cdn.shopify.com/s/files/1/0573/2689/5255/files/20230419_172105_480x480.jpg?v=1699502117'
+    WHEN 4 THEN 'https://s3.eu-west-2.amazonaws.com/files.sewport.com/fabrics-directory/what-is-crepe-fabric-properties-how-its-made-and-where/Casa%20Collection%20Crepe%20Fabric.jpg'
+    WHEN 5 THEN 'https://www.shutterstock.com/shutterstock/videos/1074764369/thumb/1.jpg?ip=x480'
+    WHEN 6 THEN 'https://www.skillshare.com/blog/wp-content/uploads/2024/07/Ilcn6Yf8n_eSzzMcAh_X2shvPYaITPLjVezcCnZS3CLVDD6p_eiI1po-HuXDsWUbE6BdCT1OgQJ3SRM-xSpSB-2qstFjyo6lLVl047D2QQfu-7iXLByEgZw3r9LlEXFUShLiUDfi.png'
+    WHEN 7 THEN 'http://t1.gstatic.com/images?q=tbn:ANd9GcSDlDq0BtL2KNyghOj5GsWHc1ZH2s9_xGdnODoZwCnpIaTo8k-O'
+    WHEN 8 THEN 'https://lindleygeneralstore.ca/cdn/shop/products/1014-1467_2f057ec1-1981-41dc-842d-345d6037ce1b.jpg?v=1570153375&width=432'
+    WHEN 9 THEN 'https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcSpMB7eCfnezGjv7wI9dZ9uPRhcmfxr1bW5wh-McT6XvelYXNn8vlUD9p_YQwjmfTyC'
+	WHEN 10 THEN 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1OIrpNsmc3-xKTA09moAN-BM_EX1KOfz5frimjq-a-Ha2uRGmhayL8FjZ0_VHu22mj-8&usqp=CAU'
+	WHEN 11 THEN 'https://brydenapparel.com/wp-content/uploads/2023/07/Georgette-Fabric-4.jpg'
+    WHEN 12 THEN 'https://images.squarespace-cdn.com/content/v1/5d5c66a4dc77140001f49b0d/fda98968-2f53-4110-9901-5bbd91d04855/tawna+lawn.jpg'
+    WHEN 13 THEN 'https://cdn.britannica.com/34/123834-050-45AF15D2/Cotton-corduroy.jpg'
+    WHEN 14 THEN 'https://www.tradeuno.com/cdn/shop/files/IMG_E8323.jpg?v=1697199814&width=1946'
+    ELSE ImageURL
+END
+WHERE FabricID IN (2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14);
 
-----------------Insert Style----------
+-- Table: Style
+CREATE TABLE Style (
+    StyleID INT PRIMARY KEY IDENTITY(1,1),
+    StyleName NVARCHAR(255),
+    Description NVARCHAR(255)
+);
+-- Insert styles into Style table
 INSERT INTO Style (StyleName, Description) VALUES
 ('Jacket', 'Various jacket styles and options'),
 ('Pants', 'Various pants styles and options'),
 ('Vest', 'Various vest styles and options');
+SELECT DISTINCT SO.OptionType
+FROM StyleOption SO
+JOIN Style S ON SO.StyleID = S.StyleID
+WHERE S.StyleName = 'Jacket';
+-- Table: StyleOption
+CREATE TABLE StyleOption (
+    StyleOptionID INT PRIMARY KEY IDENTITY(1,1),
+	StyleID INT FOREIGN KEY REFERENCES Style(StyleID),
+    OptionType NVARCHAR(100),
+    OptionValue NVARCHAR(100)
+);
 
--------------- Insert Style Options----------
+-----------------------------------------------------------------------------------------CHAY CAI NAY NE
+ALTER TABLE StyleOption
+ADD Price DECIMAL(10,2)
+UPDATE StyleOption SET Price = 74 WHERE StyleOptionID=56
+-------------------------------------------------------------------------------------------HET
 -- Insert options for Jacket
 INSERT INTO StyleOption (StyleID, OptionType, OptionValue) VALUES
 (1, 'Style', 'single-breasted 1 button'),
@@ -464,11 +443,22 @@ INSERT INTO StyleOption (StyleID, OptionType, OptionValue) VALUES
 (3, 'vest', '2 piece suit'),
 (3, 'vest', '3 piece suit');
 
-UPDATE StyleOption SET Price = 74 WHERE StyleOptionID=56
+-- Table: Lining
+CREATE TABLE Lining (
+    LiningID INT PRIMARY KEY IDENTITY(1,1),
+    LiningName NVARCHAR(255),
+    ImageURL NVARCHAR(255)
+);
 
-
------------------------Insert Categories--------------
-
+-- Table: Category
+CREATE TABLE Category (
+    CategoryID INT PRIMARY KEY IDENTITY(1,1),
+	CategoryParentID INT,
+    Name NVARCHAR(255),
+    ImageURL NVARCHAR(255),
+    Description NVARCHAR(255)
+    
+);
 -- Inserting Parent Categories
 INSERT INTO [Category] (Name, CategoryParentID) VALUES ('Men', NULL);
 INSERT INTO [Category] (Name, CategoryParentID) VALUES ('Women', NULL);
@@ -497,27 +487,68 @@ INSERT INTO [Category] (Name, CategoryParentID) VALUES ('Bridesmaid', (SELECT Ca
 -- Inserting Child Categories for 'Accessories'
 INSERT INTO [Category] (Name, CategoryParentID) VALUES ('Ties', (SELECT CategoryID FROM [Category] WHERE Name = 'Accessories'));
 
---------------Insert Product------------
 
+-- Table: Product
+DROP TABLE IF EXISTS Product;
+GO
+CREATE TABLE Product (
+    ProductID INT PRIMARY KEY IDENTITY(1,1),
+    ProductCode NVARCHAR(100),
+    MeasurementID INT FOREIGN KEY REFERENCES Measurement(MeasurementID),
+    CategoryID INT FOREIGN KEY REFERENCES Category(CategoryID),
+    FabricID INT FOREIGN KEY REFERENCES Fabric(FabricID),
+    LiningID INT FOREIGN KEY REFERENCES Lining(LiningID),
+	OrderID INT FOREIGN KEY REFERENCES [Order](OrderID)
+);
+ALTER TABLE Product
+ADD IsCustom BIT ;
+ALTER TABLE Product
+ADD ImgURL NVARCHAR(255) ;
+ALTER TABLE Product
+ADD Price DECIMAL(10,2) ;
+---------------------------------------------------------------------------------------CHAY CAI NAY NE---------------------------------------
 INSERT INTO Product (ProductCode, MeasurementID, CategoryID, FabricID, LiningID, OrderID,IsCustom,ImgURL,Price) 
-VALUES ('PRD024', 1, 2, 3, 4, null,1,null,350);
+VALUES ('PRD024', 1, 2, 3, 4, 1,1,null,350);
 INSERT INTO Product (ProductCode, MeasurementID, CategoryID, FabricID, LiningID, OrderID,IsCustom,ImgURL,Price) 
-VALUES ('PRD124', null, 10, 5, 2, null,0,'https://product.hstatic.net/1000366669/product/281_10d743a5dba14ca2b79a8a8ddf2697ab_master.jpg',550);
-INSERT INTO Product (ProductCode, MeasurementID, CategoryID, FabricID, LiningID, OrderID,IsCustom,ImgURL,Price) 
-VALUES ('PRD124', null, 10, 12, 1, null,0,'https://product.hstatic.net/1000333436/product/av308_6c3c0413bdbb4219867b85c4dd87a4c1_master.jpg',550);
-INSERT INTO Product (ProductCode, MeasurementID, CategoryID, FabricID, LiningID, OrderID,IsCustom,ImgURL,Price) 
-VALUES ('PRD124', null, 10, 12, 1, null,0,'https://product.hstatic.net/1000333436/product/txvn25_6e73bac970a64f8190b4c971df1d3f14_master.jpg',550);
+VALUES ('PRD124', null, 10, 5, 2, 1,0,'https://product.hstatic.net/1000366669/product/281_10d743a5dba14ca2b79a8a8ddf2697ab_master.jpg',550);
 
-
--------------- Insert Product StyleOptions Nếu lỗi vô table coi lại product ID-------
 
 INSERT INTO ProductStyleOption (ProductId, StyleOptionId) VALUES
-(7, 1),  
-(7, 4),  
+(8, 1),  
+(8, 4),  
 (8, 7),
-(8, 9);
+(8, 9);  
+------------------------------------------------------------------------------------------------------------------------------------------------HET
+--  bảng ProductStyleOption
+--Table : ProductStyleOption 
+DROP TABLE IF EXISTS ProductStyleOption;
+GO
+CREATE TABLE ProductStyleOption (
+    ProductId INT NOT NULL,
+    StyleOptionId INT NOT NULL,
+    PRIMARY KEY (ProductId, StyleOptionId),
+    FOREIGN KEY (ProductId) REFERENCES Product(ProductID),
+    FOREIGN KEY (StyleOptionId) REFERENCES StyleOption(StyleOptionID)
+);
 
------------------ Insert Lining----------
+-- Table: OrderDetail
+DROP TABLE IF EXISTS OrderDetail;
+GO
+
+DROP TABLE IF EXISTS Feedback;
+GO
+CREATE TABLE Feedback (
+    FeedbackID INT PRIMARY KEY IDENTITY(1,1),
+    Comment NVARCHAR(255),
+    Rating INT CHECK (Rating >= 1 AND Rating <= 5),
+    Response NVARCHAR(255),
+    DateSubmitted DATE,
+    UserID INT FOREIGN KEY REFERENCES [User](UserID),
+    OrderID INT FOREIGN KEY REFERENCES [Order](OrderID)
+);
+INSERT INTO Feedback (Comment, Rating,Response,DateSubmitted,UserID,OrderID)
+VALUES ('Best vest ever',5,'fshđmfhgf','2024-11-10',2,1)
+
 INSERT INTO Lining (LiningName, ImageUrl)
 VALUES 
 ('Silk Lining', 'https://example.com/images/silk_lining.jpg'),
@@ -550,6 +581,14 @@ VALUES
 ('Gabardine Lining', 'https://example.com/images/gabardine_lining.jpg'),
 ('Denim Lining', 'https://example.com/images/denim_lining.jpg'),
 ('Canvas Lining', 'https://example.com/images/canvas_lining.jpg');
+
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

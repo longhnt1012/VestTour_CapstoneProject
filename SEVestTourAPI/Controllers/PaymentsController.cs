@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/PaymentsController.cs
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+========
+using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Controllers/PaymentsController.cs
 
-namespace SEVestTourAPI.Controllers
+namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -8,7 +8,7 @@ namespace VestTour.Services
         public Task<BookingModel> GetBookingById(int id);
 
         public Task UpdateBooking(int id, BookingModel model);
-
+        Task UpdateBookingStatusAsync(int bookingId, string status);
         public Task<int> AddNewBookingAsync(BookingModel booking);
         public Task DeleteBookingAsync(int id);
         Task<int> GetTotalBookingCountAsync();

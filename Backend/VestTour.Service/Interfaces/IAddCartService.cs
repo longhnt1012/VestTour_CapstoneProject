@@ -8,7 +8,8 @@ namespace VestTour.Service.Interfaces
     {
         Task AddToCartAsync(int userId, int productId);
         Task RemoveFromCartAsync(int userId, int productId);
-        Task<List<CartItemModel>> GetUserCartAsync(int userId);
+
+        Task<CartModel> GetUserCartAsync(int userId);
         Task DecreaseQuantityAsync(int userId, int productId);
         Task IncreaseQuantityAsync(int userId, int productId);
     }

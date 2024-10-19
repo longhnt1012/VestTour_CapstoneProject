@@ -1,6 +1,11 @@
-﻿using SEVestTourAPI.Models;
+﻿using VestTour.Domain.Enums;
+using VestTour.Repository.Models;
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/IFabricRepository.cs
 namespace SEVestTourAPI.Services
+========
+namespace VestTour.Repository.Interface
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Interfaces/IFabricRepository.cs
 {
     public interface IFabricRepository
     {
@@ -12,7 +17,7 @@ namespace SEVestTourAPI.Services
         public Task UpdateFabricAsync(int id,  FabricModel model);
 
         public Task DeleteFabricAsync(int fabricId);
-        Task<List<FabricModel>> GetFabricByTagAsync(string tag);
+        Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag);
 
 
     }

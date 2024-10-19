@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Domain.Entities;
 
 [Table("Voucher")]
 [Index("VoucherCode", Name = "UQ__Voucher__7F0ABCA98F441C47", IsUnique = true)]

@@ -1,27 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/StoreController.cs
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+========
+using VestTour.Repository.Models;
+using VestTour.Service.Interfaces;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Controllers/StoreController.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SEVestTourAPI.Controllers
+namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private readonly IStoreRepository _storeRepository;
+        private readonly IStoreService _storeService;
 
-        public StoreController(IStoreRepository storeRepository)
+        public StoreController(IStoreService storeService)
         {
-            _storeRepository = storeRepository;
+            _storeService = storeService;
         }
 
         // GET: api/Store
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StoreModel>>> GetStores()
         {
-            var stores = await _storeRepository.GetAllStoresAsync();
+            var stores = await _storeService.GetAllStoresAsync();
             return Ok(stores);
         }
 
@@ -29,13 +34,11 @@ namespace SEVestTourAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<StoreModel>> GetStore(int id)
         {
-            var store = await _storeRepository.GetStoreByIdAsync(id);
-
+            var store = await _storeService.GetStoreByIdAsync(id);
             if (store == null)
             {
                 return NotFound();
             }
-
             return Ok(store);
         }
 
@@ -43,7 +46,7 @@ namespace SEVestTourAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> CreateStore(StoreModel storeModel)
         {
-            var newStoreId = await _storeRepository.AddStoreAsync(storeModel);
+            var newStoreId = await _storeService.CreateStoreAsync(storeModel);
             return CreatedAtAction(nameof(GetStore), new { id = newStoreId }, newStoreId);
         }
 
@@ -55,14 +58,7 @@ namespace SEVestTourAPI.Controllers
             {
                 return BadRequest("Store ID mismatch.");
             }
-
-            var existingStore = await _storeRepository.GetStoreByIdAsync(id);
-            if (existingStore == null)
-            {
-                return NotFound();
-            }
-
-            await _storeRepository.UpdateStoreAsync(id, storeModel);
+            await _storeService.UpdateStoreAsync(id, storeModel);
             return NoContent();
         }
 
@@ -70,13 +66,7 @@ namespace SEVestTourAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStore(int id)
         {
-            var store = await _storeRepository.GetStoreByIdAsync(id);
-            if (store == null)
-            {
-                return NotFound();
-            }
-
-            await _storeRepository.DeleteStoreAsync(id);
+            await _storeService.DeleteStoreAsync(id);
             return NoContent();
         }
     }

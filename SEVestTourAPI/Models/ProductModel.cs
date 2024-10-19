@@ -1,4 +1,4 @@
-﻿namespace SEVestTourAPI.Models
+﻿namespace VestTour.Repository.Models
 {
     public class ProductModel
     {
@@ -10,7 +10,13 @@
         public int? LiningID { get; set; }
         public int? OrderID { get; set; }
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Models/ProductModel.cs
         
+========
+        public bool IsCustom { get; set; }
+        public string? ImgURL { get; set; }
+        public decimal Price { get; set; }
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Models/ProductModel.cs
     }
 
 }

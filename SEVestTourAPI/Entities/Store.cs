@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Domain.Entities;
 
 [Table("Store")]
 public partial class Store

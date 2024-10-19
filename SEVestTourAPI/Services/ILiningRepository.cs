@@ -1,6 +1,10 @@
-﻿using SEVestTourAPI.Models;
+﻿using VestTour.Repository.Models;
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/ILiningRepository.cs
 namespace SEVestTourAPI.Services
+========
+namespace VestTour.Repository.Interface
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Interfaces/ILiningRepository.cs
 {
     public interface ILiningRepository
     {

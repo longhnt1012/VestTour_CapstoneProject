@@ -1,35 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/StyleController.cs
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+========
+using VestTour.Service.Interfaces;
+using VestTour.Repository.Models;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Controllers/StyleController.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SEVestTourAPI.Controllers
+namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StyleController : ControllerBase
     {
-        private readonly IStyleRepository _styleRepository;
+        private readonly IStyleService _styleService;
 
-        public StyleController(IStyleRepository styleRepository)
+        public StyleController(IStyleService styleService)
         {
-            _styleRepository = styleRepository;
+            _styleService = styleService;
         }
 
-        // GET: api/style
         [HttpGet]
         public async Task<ActionResult<List<StyleModel>>> GetAllStyles()
         {
-            var styles = await _styleRepository.GetAllStylesAsync();
+            var styles = await _styleService.GetAllStylesAsync();
             return Ok(styles);
         }
 
-        // GET: api/style/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<StyleModel>> GetStyleById(int id)
         {
-            var style = await _styleRepository.GetStyleByIdAsync(id);
+            var style = await _styleService.GetStyleByIdAsync(id);
             if (style == null)
             {
                 return NotFound();
@@ -37,15 +40,13 @@ namespace SEVestTourAPI.Controllers
             return Ok(style);
         }
 
-        // POST: api/style
         [HttpPost]
         public async Task<ActionResult<int>> AddStyle(StyleModel styleModel)
         {
-            var newStyleId = await _styleRepository.AddStyleAsync(styleModel);
+            var newStyleId = await _styleService.AddStyleAsync(styleModel);
             return CreatedAtAction(nameof(GetStyleById), new { id = newStyleId }, newStyleId);
         }
 
-        // PUT: api/style/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStyle(int id, StyleModel styleModel)
         {
@@ -54,15 +55,14 @@ namespace SEVestTourAPI.Controllers
                 return BadRequest();
             }
 
-            await _styleRepository.UpdateStyleAsync(id, styleModel);
+            await _styleService.UpdateStyleAsync(id, styleModel);
             return NoContent();
         }
 
-        // DELETE: api/style/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStyle(int id)
         {
-            await _styleRepository.DeleteStyleAsync(id);
+            await _styleService.DeleteStyleAsync(id);
             return NoContent();
         }
     }

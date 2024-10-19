@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Domain.Entities;
 
 [Table("Order")]
 public partial class Order
@@ -36,6 +36,12 @@ public partial class Order
 
     [StringLength(50)]
     public string? Status { get; set; }
+<<<<<<<< Updated upstream:SEVestTourAPI/Entities/Order.cs
+========
+
+    [Column(TypeName = "decimal(10, 2)")]
+    public decimal? TotalPrice { get; set; }
+>>>>>>>> Stashed changes:Backend/VestTour.Domain/Entities/Order.cs
 
     [InverseProperty("Order")]
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();

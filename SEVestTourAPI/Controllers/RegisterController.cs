@@ -1,3 +1,4 @@
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/RegisterController.cs
 ﻿using Microsoft.AspNetCore.Mvc;
 using SEVestTourAPI.Services;
 using SEVestTourAPI.Models;
@@ -5,52 +6,51 @@ using SEVestTourAPI.ValidationHelpers;
 using SEVestTourAPI.Message;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+========
+﻿using VestTour.Repository.Interface;
+using VestTour.Repository.Models;
+using System.Threading.Tasks;
+using VestTour.ValidationHelpers;
+using VestTour.Repository.Constants;
+using VestTour.Service.Interface;
+>>>>>>>> Stashed changes:Backend/VestTour.Service/Services/RegisterService.cs
 
-namespace VestTourApi.Controllers
+namespace VestTour.Service.Services
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RegisterController : ControllerBase
+    public class RegisterService : IRegisterService
     {
         private readonly IUserRepository _userRepository;
 
-        public RegisterController(IUserRepository userRepository)
+        public RegisterService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+        public async Task<string> RegisterUserAsync(RegisterModel registerModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (string.IsNullOrWhiteSpace(registerModel.Name) || registerModel.Name.Length < 5 || registerModel.Name.Length > 25)
             {
-                return BadRequest(Error.InvalidName);
+                return Error.InvalidName;
             }
 
             if (!UserValidate.IsValidGender(registerModel.Gender))
             {
-                return BadRequest(Error.InvalidGender);
+                return Error.InvalidGender;
             }
 
             if (!UserValidate.IsValidEmail(registerModel.Email))
             {
-                return BadRequest(Error.InvalidEmail);
+                return Error.InvalidEmail;
             }
 
             if (!UserValidate.IsValidPassword(registerModel.Password))
             {
-                return BadRequest(Error.InvalidPassword);
+                return Error.InvalidPassword;
             }
 
             if (await _userRepository.IsEmailTakenAsync(registerModel.Email))
             {
-                return BadRequest(Error.EmailTaken);
+                return Error.EmailTaken;
             }
 
             var newUser = new UserModel
@@ -59,21 +59,21 @@ namespace VestTourApi.Controllers
                 Gender = registerModel.Gender,
                 Address = registerModel.Address,
                 Dob = registerModel.Dob,
-                RoleId = registerModel.RoleID,
                 Email = registerModel.Email,
                 Password = registerModel.Password,
-                Status = "active", // Setting default status
-                IsConfirmed = true
+                Status = "active",  // Set default status
+                IsConfirmed = true,
+                RoleId = 2          // Set default role as Customer (RoleID = 2)
             };
 
             var result = await _userRepository.AddUserAsync(newUser);
 
             if (result > 0)
             {
-                return Ok(Success.RegistrationSuccess);
+                return Success.RegistrationSuccess;
             }
 
-            return BadRequest(Error.RegistrationFailed);
+            return Error.RegistrationFailed;
         }
     }
 }

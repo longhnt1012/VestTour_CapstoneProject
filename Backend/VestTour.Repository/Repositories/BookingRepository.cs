@@ -42,6 +42,17 @@ namespace VestTour.Services
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task UpdateBookingStatusAsync(int bookingId, string status)
+        {
+            var booking = await _context.Bookings.FindAsync(bookingId);
+
+            if (booking != null)
+            {
+                booking.Status = status; 
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
 
         public async Task<List<BookingModel>> GetAllBooking()
         {

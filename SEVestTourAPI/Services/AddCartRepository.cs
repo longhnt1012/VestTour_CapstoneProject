@@ -1,26 +1,41 @@
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/AddCartRepository.cs
 ﻿using SEVestTourAPI.Models;
+========
+﻿using VestTour.Repository.Interface;
+using VestTour.Repository.Models;
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/AddCartRepository.cs
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/AddCartRepository.cs
 namespace SEVestTourAPI.Services
 {
     public class AddCartRepository : IAddCartRepository
     {
        
+========
+namespace VestTour.Repository.Implementation
+{
+    public class AddCartRepository : IAddCartRepository
+    {
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/AddCartRepository.cs
         private static Dictionary<int, List<CartItemModel>> userCarts = new Dictionary<int, List<CartItemModel>>();
 
-        public async Task AddToCartAsync(int userId, int productId)
+        public async Task AddToCartAsync(int userId, CartItemModel cartItem)
         {
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/AddCartRepository.cs
            
 
+========
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/AddCartRepository.cs
             if (!userCarts.ContainsKey(userId))
             {
                 userCarts[userId] = new List<CartItemModel>();
             }
 
             var cart = userCarts[userId];
-            var existingItem = cart.FirstOrDefault(c => c.ProductId == productId);
+            var existingItem = cart.FirstOrDefault(c => c.ProductId == cartItem.ProductId);
 
             if (existingItem != null)
             {
@@ -28,7 +43,7 @@ namespace SEVestTourAPI.Services
             }
             else
             {
-                cart.Add(new CartItemModel { ProductId = productId, Quantity = 1 });
+                cart.Add(cartItem);
             }
 
             await Task.CompletedTask;
@@ -58,6 +73,13 @@ namespace SEVestTourAPI.Services
             }
 
             return new List<CartItemModel>(); 
+        }
+
+        // Method to update the cart after changing quantities
+        public async Task UpdateCartAsync(int userId, List<CartItemModel> updatedCart)
+        {
+            userCarts[userId] = updatedCart;
+            await Task.CompletedTask;
         }
     }
 }

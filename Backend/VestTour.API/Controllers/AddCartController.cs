@@ -19,12 +19,13 @@ namespace VestTour.API.Controllers
         }
 
         [HttpGet("mycart")]
-        public async Task<ActionResult<List<CartItemModel>>> ViewUserCart()
+        public async Task<ActionResult<CartModel>> ViewUserCart()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            var cartItems = await _addCartService.GetUserCartAsync(userId);
-            return Ok(cartItems);
+            var cart = await _addCartService.GetUserCartAsync(userId);
+            return Ok(cart);
         }
+
 
         [HttpPost("addtocart/{productId}")]
         public async Task<IActionResult> AddToCart(int productId)

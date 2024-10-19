@@ -1,4 +1,4 @@
-﻿namespace SEVestTourAPI.Models
+﻿namespace VestTour.Repository.Models
 {
     public class VoucherModel
     {

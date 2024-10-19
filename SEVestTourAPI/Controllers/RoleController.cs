@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/RoleController.cs
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+========
+using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Controllers/RoleController.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SEVestTourAPI.Controllers
+namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

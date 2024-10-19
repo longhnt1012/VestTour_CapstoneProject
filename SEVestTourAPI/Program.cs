@@ -1,3 +1,4 @@
+<<<<<<<< Updated upstream:SEVestTourAPI/Program.cs
 using Microsoft.EntityFrameworkCore;
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Helpers;
@@ -6,14 +7,31 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+========
+﻿using Microsoft.EntityFrameworkCore;
+using VestTour.Domain.Entities;
+using VestTour.Repository.Mapper;
+using VestTour.Repository.Implementation;
+using VestTour.Repository.Interface;
+using VestTour.Service.Interface;
+using VestTour.Services;
+using VestTour.Repository.Data;
+using AutoMapper;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using VestTour.Service.Interfaces;
+using VestTour.Service.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using VestTour.Service.Common;
+using VestTour.Service.Implementation;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Program.cs
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-
+// Cấu hình dịch vụ
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -23,7 +41,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 
-    // Add JWT Bearer authentication to Swagger
+    // Thêm xác thực Bearer cho Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -34,10 +52,13 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Enter 'Bearer' followed by space and your JWT token."
     });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            new OpenApiSecurityScheme {
-                Reference = new OpenApiReference {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
                     Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
                 }
@@ -46,6 +67,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+// Thêm các dịch vụ cần thiết
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMeasurementRepository, MeasurementRepository>();
@@ -61,32 +84,74 @@ builder.Services.AddScoped<ILiningRepository, LiningRepository>();
 builder.Services.AddScoped<IFabricRepository, FabricRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
+<<<<<<<< Updated upstream:SEVestTourAPI/Program.cs
+========
+
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IAddCartService, AddCartService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFabricService, FabricService>();
+builder.Services.AddScoped<IMeasurementService, MeasurementService>();
+builder.Services.AddScoped<IOrderService,OrderService>();
+builder.Services.AddScoped<IStyleOptionService, StyleOptionService>();
+builder.Services.AddScoped<IStyleService, StyleService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IShipperPartnerService, ShipperPartnerService>();
+builder.Services.AddScoped<IStoreService, StoreService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>();
+builder.Services.AddScoped<IRegisterService, RegisterService>();
+builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+>>>>>>>> Stashed changes:Backend/VestTour.API/Program.cs
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+// ... thêm các dịch vụ khác tương tự
+
+// Cấu hình JWT
+var jwtSettings = new JWTSettings();
+builder.Configuration.GetSection("Jwt").Bind(jwtSettings);
+if (string.IsNullOrEmpty(jwtSettings.JWTSecretKey))
+{
+    throw new ArgumentNullException(nameof(jwtSettings.JWTSecretKey), "JWT secret key cannot be null or empty.");
+}
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.JWTSecretKey))
+    };
+});
+
+// Thêm dịch vụ AutoMapper
+builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+
+// Thêm CORS
+builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+// Cấu hình DbContext
+builder.Services.AddDbContext<VestTourDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 
 builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Cấu hình middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -1,11 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/StoreRepository.cs
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SEVestTourAPI.Services
+========
+using VestTour.Repository.Models;
+using VestTour.Domain.Entities;
+using VestTour.Repository.Interface;
+using VestTour.Repository.Data;
+namespace VestTour.Repository.Implementation
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/StoreRepository.cs
 {
     public class StoreRepository : IStoreRepository
     {

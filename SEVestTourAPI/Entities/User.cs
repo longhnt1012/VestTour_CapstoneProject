@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Domain.Entities;
 
 [Table("User")]
 [Index("Email", Name = "UQ__User__A9D10534ACC7C52F", IsUnique = true)]
@@ -36,7 +36,19 @@ public partial class User
     public string Password { get; set; } = null!;
 
     public bool IsConfirmed { get; set; }
+<<<<<<<< Updated upstream:SEVestTourAPI/Entities/User.cs
 	public string Status { get; set; }
+========
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Status { get; set; }
+
+    [StringLength(11)]
+    [Unicode(false)]
+    public string? Phone { get; set; }
+
+>>>>>>>> Stashed changes:Backend/VestTour.Domain/Entities/User.cs
     [InverseProperty("User")]
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
@@ -55,4 +67,6 @@ public partial class User
 
     [InverseProperty("User")]
     public virtual ICollection<Store> Stores { get; set; } = new List<Store>();
+
+   
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SEVestTourAPI.Models
+namespace VestTour.Repository.Models
 {
     public class PaymentModel
     {

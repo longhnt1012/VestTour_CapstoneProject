@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SEVestTourAPI.ValidationHelpers
+namespace VestTour.ValidationHelpers
 {
     public static class MeasurementValidate
     {

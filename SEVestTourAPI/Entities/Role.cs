@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Domain.Entities;
 
 [Table("Role")]
-public partial class Role
+public partial class Role 
 {
     [Key]
     [Column("RoleID")]

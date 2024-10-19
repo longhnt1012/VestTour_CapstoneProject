@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using VestTour.Domain.Entities;
 
-namespace SEVestTourAPI.Entities;
+namespace VestTour.Repository.Data;
 
 public partial class VestTourDbContext : DbContext
 {
@@ -35,8 +36,6 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<ProductStyleOption> ProductStyleOptions { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<ShipperPartner> ShipperPartners { get; set; }
@@ -46,13 +45,16 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<Style> Styles { get; set; }
 
     public virtual DbSet<StyleOption> StyleOptions { get; set; }
+ 
 
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Voucher> Vouchers { get; set; }
+    
 
-   
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-33UM2VQ;Database=VestTourDB;User Id=sa;Password=12345;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,7 +81,9 @@ public partial class VestTourDbContext : DbContext
         {
             entity.HasKey(e => e.FabricId).HasName("PK__Fabric__3B1819CC0660D146");
         });
-
+        modelBuilder.Entity<Fabric>()
+            .Property(f => f.Tag)
+            .HasConversion<string>();
         modelBuilder.Entity<Feedback>(entity =>
         {
             entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__6A4BEDF674B6B0CB");
@@ -136,13 +140,23 @@ public partial class VestTourDbContext : DbContext
             entity.HasOne(d => d.Measurement).WithMany(p => p.Products).HasConstraintName("FK__Product__Measure__1F98B2C1");
 
             entity.HasOne(d => d.Order).WithMany(p => p.Products).HasConstraintName("FK__Product__OrderID__236943A5");
-        });
 
-        modelBuilder.Entity<ProductStyleOption>(entity =>
-        {
-            entity.HasOne(d => d.Product).WithMany().HasConstraintName("FK__ProductSt__Produ__25518C17");
-
-            entity.HasOne(d => d.StyleOption).WithMany().HasConstraintName("FK__ProductSt__Style__2645B050");
+            entity.HasMany(d => d.StyleOptions).WithMany(p => p.Products)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProductStyleOption",
+                    r => r.HasOne<StyleOption>().WithMany()
+                        .HasForeignKey("StyleOptionId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__ProductSt__Style__3D2915A8"),
+                    l => l.HasOne<Product>().WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__ProductSt__Produ__3C34F16F"),
+                    j =>
+                    {
+                        j.HasKey("ProductId", "StyleOptionId").HasName("PK__ProductS__E965E6E3EF272F97");
+                        j.ToTable("ProductStyleOption");
+                    });
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -188,7 +202,8 @@ public partial class VestTourDbContext : DbContext
             entity.HasKey(e => e.VoucherId).HasName("PK__Voucher__3AEE79C19ABBAB49");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

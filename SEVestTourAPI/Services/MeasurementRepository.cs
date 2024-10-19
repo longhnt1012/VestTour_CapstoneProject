@@ -1,11 +1,22 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/MeasurementRepository.cs
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
+========
+using VestTour.Domain.Entities;
+using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/MeasurementRepository.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Repository.Data;
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/MeasurementRepository.cs
 namespace SEVestTourAPI.Services
+========
+namespace VestTour.Repository.Implementation
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/MeasurementRepository.cs
 {
     public class MeasurementRepository : IMeasurementRepository
     {

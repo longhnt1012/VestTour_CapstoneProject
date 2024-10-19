@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using VestTour.Domain.Enums;
 
-namespace SEVestTourAPI.Models
+namespace VestTour.Repository.Models
 {
     public class FabricModel
     {
@@ -21,7 +22,7 @@ namespace SEVestTourAPI.Models
         [Column("ImageURL")]
         [StringLength(255)]
         public string? ImageUrl { get; set; }
-        public string? Tag { get; set; }
+        public FabricEnums? Tag { get; set; }
 
 
     }

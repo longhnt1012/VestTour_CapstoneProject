@@ -1,8 +1,12 @@
-﻿using SEVestTourAPI.Models;
+﻿using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/IStyleRepository.cs
 namespace SEVestTourAPI.Services
+========
+namespace VestTour.Repository.Interface
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Interfaces/IStyleRepository.cs
 {
     public interface IStyleRepository
     {

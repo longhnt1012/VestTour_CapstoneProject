@@ -1,9 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/LiningRepository.cs
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 
 namespace SEVestTourAPI.Services
+========
+using VestTour.Domain.Entities;
+using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+using VestTour.Repository.Data;
+
+namespace VestTour.Repository.Implementation
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/LiningRepository.cs
 {
     public class LiningRepository : ILiningRepository
     {

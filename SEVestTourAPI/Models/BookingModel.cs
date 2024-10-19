@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SEVestTourAPI.Models
+namespace VestTour.Repository.Models
 {
     public class BookingModel
     {

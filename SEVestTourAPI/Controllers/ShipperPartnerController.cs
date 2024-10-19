@@ -1,27 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<<< Updated upstream:SEVestTourAPI/Controllers/ShipperPartnerController.cs
 using SEVestTourAPI.Models;
 using SEVestTourAPI.Services;
+========
+using VestTour.Repository.Models;
+using VestTour.Service.Interfaces;
+>>>>>>>> Stashed changes:Backend/VestTour.API/Controllers/ShipperPartnerController.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SEVestTourAPI.Controllers
+namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ShipperPartnerController : ControllerBase
     {
-        private readonly IShipperPartnerRepository _shipperPartnerRepository;
+        private readonly IShipperPartnerService _shipperPartnerService;
 
-        public ShipperPartnerController(IShipperPartnerRepository shipperPartnerRepository)
+        public ShipperPartnerController(IShipperPartnerService shipperPartnerService)
         {
-            _shipperPartnerRepository = shipperPartnerRepository;
+            _shipperPartnerService = shipperPartnerService;
         }
 
         // GET: api/ShipperPartner
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ShipperPartnerModel>>> GetShipperPartners()
         {
-            var shipperPartners = await _shipperPartnerRepository.GetAllShipperPartnersAsync();
+            var shipperPartners = await _shipperPartnerService.GetAllShipperPartnersAsync();
             return Ok(shipperPartners);
         }
 
@@ -29,13 +34,11 @@ namespace SEVestTourAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ShipperPartnerModel>> GetShipperPartner(int id)
         {
-            var shipperPartner = await _shipperPartnerRepository.GetShipperPartnerByIdAsync(id);
-
+            var shipperPartner = await _shipperPartnerService.GetShipperPartnerByIdAsync(id);
             if (shipperPartner == null)
             {
                 return NotFound();
             }
-
             return Ok(shipperPartner);
         }
 
@@ -43,7 +46,7 @@ namespace SEVestTourAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> CreateShipperPartner(ShipperPartnerModel shipperPartnerModel)
         {
-            var newShipperPartnerId = await _shipperPartnerRepository.AddShipperPartnerAsync(shipperPartnerModel);
+            var newShipperPartnerId = await _shipperPartnerService.CreateShipperPartnerAsync(shipperPartnerModel);
             return CreatedAtAction(nameof(GetShipperPartner), new { id = newShipperPartnerId }, newShipperPartnerId);
         }
 
@@ -55,14 +58,7 @@ namespace SEVestTourAPI.Controllers
             {
                 return BadRequest("Shipper Partner ID mismatch.");
             }
-
-            var existingShipperPartner = await _shipperPartnerRepository.GetShipperPartnerByIdAsync(id);
-            if (existingShipperPartner == null)
-            {
-                return NotFound();
-            }
-
-            await _shipperPartnerRepository.UpdateShipperPartnerAsync(id, shipperPartnerModel);
+            await _shipperPartnerService.UpdateShipperPartnerAsync(id, shipperPartnerModel);
             return NoContent();
         }
 
@@ -70,13 +66,7 @@ namespace SEVestTourAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShipperPartner(int id)
         {
-            var shipperPartner = await _shipperPartnerRepository.GetShipperPartnerByIdAsync(id);
-            if (shipperPartner == null)
-            {
-                return NotFound();
-            }
-
-            await _shipperPartnerRepository.DeleteShipperPartnerAsync(id);
+            await _shipperPartnerService.DeleteShipperPartnerAsync(id);
             return NoContent();
         }
     }

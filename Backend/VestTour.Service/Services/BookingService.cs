@@ -1,8 +1,9 @@
 ﻿using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Service.Interface;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using VestTour.Services;
+using VestTour.Domain.Enums;
 
 public class BookingService : IBookingService
 {
@@ -12,7 +13,31 @@ public class BookingService : IBookingService
     public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo)
     {
         _bookingRepository = bookingRepository;
-        _userRepo = userRepo; // Initialize IUserRepository
+        _userRepo = userRepo; 
+    }
+    public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
+    {
+        var response = new ServiceResponse();
+
+        if (bookingId <= 0)
+        {
+            response.Success = false;
+            response.Message = Error.InvalidBookingId; // Sử dụng thông báo lỗi đã định nghĩa
+            return response;
+        }
+
+        // Kiểm tra xem trạng thái có hợp lệ không
+        if (string.IsNullOrEmpty(status) || !Enum.TryParse<BookingEnums>(status, true, out _))
+        {
+            response.Success = false;
+            response.Message = "Status is not valid. Please provide a valid status."; // Thông báo lỗi tùy chỉnh
+            return response;
+        }
+
+        // Tiến hành cập nhật trạng thái
+        await _bookingRepository.UpdateBookingStatusAsync(bookingId, status);
+        response.Message = Success.StatusUpdated; // Sử dụng thông báo thành công
+        return response;
     }
 
     public async Task<ServiceResponse<BookingModel?>> GetBookingByIdAsync(int bookingId)
@@ -25,6 +50,7 @@ public class BookingService : IBookingService
             response.Message = Error.InvalidBookingId; // Use a constant from Error class
             return response;
         }
+        
 
         var booking = await _bookingRepository.GetBookingById(bookingId);
         if (booking == null)
@@ -65,13 +91,16 @@ public class BookingService : IBookingService
         if (string.IsNullOrEmpty(booking.GuestName))
         {
             response.Success = false;
-            response.Message = Error.InvalidGuestName; // Use a constant from Error class
+            response.Message = Error.InvalidGuestName; // Sử dụng thông báo lỗi đã định nghĩa
             return response;
         }
 
+        // Đặt trạng thái mặc định là "Pending"
+        booking.Status = BookingEnums.Pending.ToString();
+
         var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
         response.Data = newBookingId;
-        response.Message = Success.BookingCreated; // Use a constant from Success class
+        response.Message = Success.BookingCreated; // Sử dụng thông báo thành công
         return response;
     }
 
@@ -127,7 +156,7 @@ public class BookingService : IBookingService
         {
             response.Success = false;
             response.Message = Error.UserNotFound; // Use a constant from Error class
-            return response;
+            return response; // Return response if user not found
         }
 
         // Create the booking with user details
@@ -137,7 +166,7 @@ public class BookingService : IBookingService
             BookingDate = model.BookingDate,
             Time = model.Time,
             Note = model.Note,
-            Status = model.Status ?? "on-going",
+            Status = BookingEnums.Pending.ToString(), // Set default status to "Pending"
             StoreId = model.StoreId,
             GuestName = user.Name,
             GuestEmail = user.Email,
@@ -155,10 +184,11 @@ public class BookingService : IBookingService
         else
         {
             response.Data = booking;
-            response.Message = Success.BookingCreated;
+            response.Message = Success.BookingCreated; // Use a constant from Success class
         }
 
-        return response; // Ensure the response is returned in all cases
+        // Return the response regardless of success or failure
+        return response;
     }
 
 }

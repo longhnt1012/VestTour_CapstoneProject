@@ -1,11 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+<<<<<<<< Updated upstream:SEVestTourAPI/Services/ShipperPartnerRepository.cs
 using SEVestTourAPI.Entities;
 using SEVestTourAPI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SEVestTourAPI.Services
+========
+using VestTour.Domain.Entities;
+using VestTour.Repository.Models;
+using VestTour.Repository.Interface;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using VestTour.Repository.Data;
+namespace VestTour.Repository.Implementation
+>>>>>>>> Stashed changes:Backend/VestTour.Repository/Repositories/ShipperPartnerRepository.cs
 {
     public class ShipperPartnerRepository : IShipperPartnerRepository
     {
@@ -61,6 +71,28 @@ namespace SEVestTourAPI.Services
                 _context.ShipperPartners!.Remove(shipperPartner);
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task<int> GetTotalShipperPartnersAsync()
+        {
+            return await _context.ShipperPartners!.CountAsync(); // Đếm số lượng shipper partners
+        }
+
+        // Get shipper partners by name
+        public async Task<List<ShipperPartnerModel>> GetShipperPartnersByNameAsync(string name)
+        {
+            var shipperPartners = await _context.ShipperPartners!
+                .Where(sp => sp.ShipperPartnerName.Contains(name))
+                .ToListAsync();
+            return _mapper.Map<List<ShipperPartnerModel>>(shipperPartners);
+        }
+
+        // Get shipper partners by company
+        public async Task<List<ShipperPartnerModel>> GetShipperPartnersByCompanyAsync(string company)
+        {
+            var shipperPartners = await _context.ShipperPartners!
+                .Where(sp => sp.Company.Contains(company))
+                .ToListAsync();
+            return _mapper.Map<List<ShipperPartnerModel>>(shipperPartners);
         }
     }
 }

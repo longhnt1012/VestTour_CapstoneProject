@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace SEVestTourAPI.ValidationHelpers
+namespace VestTour.ValidationHelpers
 {
     public class StringValidate
     {

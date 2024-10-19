@@ -57,7 +57,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[VestTour.Repository.Models.CartItemModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "VestTour.Repository.Models.CartModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -262,6 +262,27 @@
       {
         "Name": "model",
         "Type": "VestTour.Repository.Models.BookingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
+    "Method": "UpdateBookingStatus",
+    "RelativePath": "api/Booking/status/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -1684,7 +1705,7 @@
       },
       {
         "Name": "userModel",
-        "Type": "VestTour.Repository.Models.UserModel",
+        "Type": "VestTour.Repository.Models.UpdateUserModel",
         "IsRequired": true
       }
     ],

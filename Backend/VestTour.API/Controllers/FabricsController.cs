@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using VestTour.Repository.Interface;
 using VestTour.Domain.Enums; // Add this using directive
 

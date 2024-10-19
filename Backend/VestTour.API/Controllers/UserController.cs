@@ -3,7 +3,7 @@ using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
 
 namespace VestTour.API.Controllers
@@ -56,29 +56,31 @@ namespace VestTour.API.Controllers
         }
 
         // PUT: api/user/{id}
+        // PUT: api/user/{id}
         [HttpPut("{id}")]
-        //[Authorize(Roles = "customer")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserModel userModel)
+       // [Authorize(Roles = "customer")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserModel userModel)
         {
-            if (id != userModel.UserId)
-            {
-                return BadRequest(Error.UserIdMismatch);
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(Error.InvalidModelState);
             }
 
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
+            try
+            {
+                await _userService.UpdateUserAsync(id, userModel);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound(Error.UserNotFound);
             }
-
-            await _userService.UpdateUserAsync(id, userModel);
-            return NoContent();
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         // DELETE: api/user/{id}
         [HttpDelete("{id}")]
@@ -95,19 +97,30 @@ namespace VestTour.API.Controllers
             return NoContent();
         }
 
-        // PUT: api/user/{id}/status
         [HttpPut("{id}/status")]
-        //[Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                return BadRequest(Error.InvalidUserStatus);
+            }
+
+            try
+            {
+                await _userService.UpdateUserStatusAsync(id, status);
+                return Ok(Success.StatusUpdated);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound(Error.UserNotFound);
             }
-
-            await _userService.UpdateUserStatusAsync(id, status);
-            return Ok(Success.StatusUpdated);
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+
     }
 }

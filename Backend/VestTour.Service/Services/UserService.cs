@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using VestTour.ValidationHelpers;
+using VestTour.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace VestTour.Service.Services
 {
@@ -38,17 +40,7 @@ namespace VestTour.Service.Services
             return await _userRepository.AddUserAsync(user);
         }
 
-        public async Task UpdateUserAsync(int id, UserModel user)
-        {
-            if (id != user.UserId)
-            {
-                throw new ArgumentException("User ID mismatch.");
-            }
-
-            ValidateUserFields(user); // Add validation here
-            await _userRepository.UpdateUserAsync(id, user);
-        }
-
+        
         public async Task DeleteUserAsync(int userId)
         {
             await _userRepository.DeleteUserAsync(userId);
@@ -61,15 +53,23 @@ namespace VestTour.Service.Services
 
         public async Task UpdateUserStatusAsync(int userId, string status)
         {
+            // Validate the status by checking if it's a valid enum value
+            if (!Enum.TryParse<StatusEnums>(status, true, out var parsedStatus))
+            {
+                throw new ArgumentException(Error.InvalidUserStatus);
+            }
+
             var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
-                throw new ArgumentException("User not found.");
+                throw new KeyNotFoundException("User not found.");
             }
 
-            user.Status = status;
-            await _userRepository.UpdateUserAsync(userId, user);
+            // Update the user's status
+            user.Status = parsedStatus.ToString(); // Convert enum to string
+            await _userRepository.UpdateUserStatusAsync(userId, user.Status);
         }
+
 
         // Helper method to validate user fields
         private void ValidateUserFields(UserModel user)
@@ -89,7 +89,7 @@ namespace VestTour.Service.Services
                 throw new ArgumentException(Error.InvalidName);
             }
 
-            if (!string.IsNullOrEmpty(user.Gender) && !UserValidate.IsValidGender(user.Gender))
+            if (!Enum.TryParse<GenderEnums>(user.Gender, true, out var gender) || gender == GenderEnums.Unknown)
             {
                 throw new ArgumentException(Error.InvalidGender);
             }
@@ -99,5 +99,46 @@ namespace VestTour.Service.Services
                 throw new ArgumentException(Error.InvalidPhone);
             }
         }
+
+        // Validation for updating user fields
+        private void ValidateUpdateUserFields(UpdateUserModel user)
+        {
+            if (!UserValidate.IsValidEmail(user.Email))
+            {
+                throw new ArgumentException(Error.InvalidEmail);
+            }
+
+            if (!UserValidate.IsValidName(user.Name))
+            {
+                throw new ArgumentException(Error.InvalidName);
+            }
+
+            if (!Enum.TryParse<GenderEnums>(user.Gender, true, out var gender) || gender == GenderEnums.Unknown)
+            {
+                throw new ArgumentException(Error.InvalidGender);
+            }
+
+            if (!UserValidate.IsValidPhone(user.Phone))
+            {
+                throw new ArgumentException(Error.InvalidPhone);
+            }
+        }
+
+
+        public async Task UpdateUserAsync(int id, UpdateUserModel updateUserModel)
+        {
+            ValidateUpdateUserFields(updateUserModel);
+
+            var existingUser = await _userRepository.GetUserByIdAsync(id);
+            if (existingUser == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            await _userRepository.UpdateUserAsync(id, updateUserModel);
+        }
+
+
+
     }
 }

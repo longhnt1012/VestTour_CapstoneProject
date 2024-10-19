@@ -4,6 +4,7 @@ namespace VestTour.Service.Interface
 {
     public interface IBookingService
     {
+        Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status);
         Task<ServiceResponse<BookingModel?>> GetBookingByIdAsync(int bookingId);
         Task<ServiceResponse<List<BookingModel>>> GetAllBookingsAsync();
         Task<ServiceResponse<int>> AddBookingAsync(BookingModel booking);

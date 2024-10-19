@@ -1,9 +1,6 @@
 ﻿using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace VestTour.Services
 {
@@ -41,12 +38,13 @@ namespace VestTour.Services
             await _addCartRepository.RemoveFromCartAsync(userId, productId);
         }
 
-        public async Task<List<CartItemModel>> GetUserCartAsync(int userId)
+        public async Task<CartModel> GetUserCartAsync(int userId)
         {
-            return await _addCartRepository.GetUserCartAsync(userId);
+            var UserID = userId;
+            var cartItems = await _addCartRepository.GetUserCartAsync(userId);
+            return new CartModel { CartItems = cartItems };
         }
 
-        // Method to decrease quantity by 1
         public async Task DecreaseQuantityAsync(int userId, int productId)
         {
             var cartItems = await _addCartRepository.GetUserCartAsync(userId);
@@ -59,7 +57,6 @@ namespace VestTour.Services
             await _addCartRepository.UpdateCartAsync(userId, cartItems);
         }
 
-        // Method to increase quantity by 1
         public async Task IncreaseQuantityAsync(int userId, int productId)
         {
             var cartItems = await _addCartRepository.GetUserCartAsync(userId);

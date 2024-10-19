@@ -95,7 +95,14 @@ namespace VestTour.Repository.Implementation
             var fabrics = await fabricsQuery.ToListAsync();
             return _mapper.Map<List<FabricModel>>(fabrics);
         }
+        public async Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description)
+        {
+            var fabrics = await _context.Fabrics
+                                        .Where(f => f.Description.Contains(description)) // Sử dụng Contains để tìm kiếm từ khóa
+                                        .ToListAsync();
 
+            return _mapper.Map<List<FabricModel>>(fabrics);
+        }
 
     }
 

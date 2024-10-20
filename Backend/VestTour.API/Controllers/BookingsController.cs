@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
-using VestTour.Repository.Constants;
+using VestTour.Constants;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -100,17 +100,6 @@ public class BookingController : ControllerBase
         }
         return Ok(new { Message = response.Message });
     }
-    [HttpPut("status/{bookingId}")]
-    public async Task<IActionResult> UpdateBookingStatus(int bookingId, [FromBody] string status)
-    {
-        var response = await _bookingService.UpdateBookingStatusAsync(bookingId, status);
-        if (!response.Success)
-        {
-            return BadRequest(new { Message = response.Message });
-        }
-        return Ok(new { Message = response.Message });
-    }
-
 
     [HttpGet("count")]
     public async Task<IActionResult> GetTotalBookingCount()

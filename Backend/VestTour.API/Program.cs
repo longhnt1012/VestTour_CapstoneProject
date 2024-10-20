@@ -136,7 +136,12 @@ builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 
 builder.Services.AddAuthorization();
-
+//dang ki paypalclient
+builder.Services.AddSingleton(x => new PaypalClient(
+            builder.Configuration["PaypalOptions:AppId"],
+            builder.Configuration["PaypalOptions:AppSecret"],
+            builder.Configuration["PaypalOptions:Mode"]
+    ));
 var app = builder.Build();
 
 // Cấu hình middleware

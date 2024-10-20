@@ -10,7 +10,6 @@ namespace VestTour.Repository.Mapper
         {
             
             CreateMap<User, UserModel>().ReverseMap();
-            CreateMap<User, UpdateUserModel>().ReverseMap();
             CreateMap<User, LoginModel>().ReverseMap();
             CreateMap<User, RegisterModel>().ReverseMap();
             CreateMap<Role, RoleModel>().ReverseMap();

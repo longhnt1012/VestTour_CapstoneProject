@@ -83,24 +83,19 @@ namespace VestTour.Repository.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums tag)
+        public async Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag) // Use nullable enum
         {
-            var fabrics = await _context.Fabrics
-                                        .Where(f => f.Tag == tag)
-                                        .ToListAsync();
+            var fabricsQuery = _context.Fabrics.AsQueryable();
 
-            // This will map the enum as a string in the response
+            if (tag.HasValue) // Check if tag is not null
+            {
+                fabricsQuery = fabricsQuery.Where(f => f.Tag == tag.Value); // Use Value to access the enum
+            }
+
+            var fabrics = await fabricsQuery.ToListAsync();
             return _mapper.Map<List<FabricModel>>(fabrics);
         }
 
-        public async Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description)
-        {
-            var fabrics = await _context.Fabrics
-                                        .Where(f => f.Description.Contains(description)) // Sử dụng Contains để tìm kiếm từ khóa
-                                        .ToListAsync();
-
-            return _mapper.Map<List<FabricModel>>(fabrics);
-        }
 
     }
 

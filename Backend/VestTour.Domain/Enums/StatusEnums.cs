@@ -8,8 +8,8 @@ namespace VestTour.Domain.Enums
 {
 	public enum StatusEnums
 	{
-		Active,
-		Deactive
-        
-    }
+		OnGoing,
+		Done,
+		Cancel
+	}
 }

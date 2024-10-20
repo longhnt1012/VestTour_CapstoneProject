@@ -46,14 +46,10 @@ namespace VestTour.Services
             await _fabricRepo.DeleteFabricAsync(id);
         }
 
-        public async Task<List<FabricModel>> GetFabricsByTagAsync(FabricEnums tag)
+        public async Task<List<FabricModel>> GetFabricsByTagAsync(FabricEnums? tag)
         {
             var fabrics = await _fabricRepo.GetFabricByTagAsync(tag);
             return fabrics.Count > 0 ? fabrics : throw new KeyNotFoundException("No fabrics found for the specified tag");
-        }
-        public async Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description)
-        {
-            return await _fabricRepo.GetFabricsByDescriptionAsync(description);
         }
     }
 }

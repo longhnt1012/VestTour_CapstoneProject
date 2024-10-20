@@ -57,7 +57,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "VestTour.Repository.Models.CartModel",
+        "Type": "System.Collections.Generic.List\u00601[[VestTour.Repository.Models.CartItemModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -262,27 +262,6 @@
       {
         "Name": "model",
         "Type": "VestTour.Repository.Models.BookingModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BookingController",
-    "Method": "UpdateBookingStatus",
-    "RelativePath": "api/Booking/status/{bookingId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bookingId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "status",
-        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -504,22 +483,6 @@
   },
   {
     "ContainingType": "VestTour.Controllers.FabricsController",
-    "Method": "GetAllFabricByDescription",
-    "RelativePath": "api/Fabrics/search",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "description",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.Controllers.FabricsController",
     "Method": "GetFabricsByTag",
     "RelativePath": "api/Fabrics/tag/{tag}",
     "HttpMethod": "GET",
@@ -529,7 +492,7 @@
       {
         "Name": "tag",
         "Type": "System.String",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1721,7 +1684,7 @@
       },
       {
         "Name": "userModel",
-        "Type": "VestTour.Repository.Models.UpdateUserModel",
+        "Type": "VestTour.Repository.Models.UserModel",
         "IsRequired": true
       }
     ],

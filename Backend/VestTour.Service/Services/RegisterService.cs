@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using VestTour.ValidationHelpers;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
-using VestTour.Domain.Entities;
-using VestTour.Domain.Enums;
 
 namespace VestTour.Service.Services
 {
@@ -25,9 +23,9 @@ namespace VestTour.Service.Services
                 return Error.InvalidName;
             }
 
-            if (!Enum.TryParse<GenderEnums>(registerModel.Gender, true, out var gender) || gender == GenderEnums.Unknown)
+            if (!UserValidate.IsValidGender(registerModel.Gender))
             {
-                throw new ArgumentException(Error.InvalidGender);
+                return Error.InvalidGender;
             }
 
             if (!UserValidate.IsValidEmail(registerModel.Email))

@@ -43,18 +43,10 @@ namespace VestTour.Repository.Implementation
             return newUser.UserId;
         }
 
-        public async Task UpdateUserAsync(int id, UpdateUserModel userModel)
+        public async Task UpdateUserAsync(int id, UserModel user)
         {
-            var existingUser = await _context.Users.FindAsync(id);
-            if (existingUser == null)
-            {
-                throw new KeyNotFoundException("User not found.");
-            }
-
-            // Update the fields in the existing user
-            _mapper.Map(userModel, existingUser);
-
-            _context.Users.Update(existingUser);
+            var updateUser = _mapper.Map<User>(user);
+            _context.Users.Update(updateUser);
             await _context.SaveChangesAsync();
         }
 
@@ -88,21 +80,7 @@ namespace VestTour.Repository.Implementation
 
             return user?.Role?.RoleName;
         }
-        public async Task UpdateUserStatusAsync(int userId, string status)
-        {
-            var existingUser = await _context.Users.FindAsync(userId);
-            if (existingUser == null)
-            {
-                throw new KeyNotFoundException("User not found.");
-            }
-
-            // Update the user's status based on the passed string (already validated in service)
-            existingUser.Status = status;
-
-            _context.Users.Update(existingUser);
-            await _context.SaveChangesAsync();
-        }
-
+       
 
     }
 }

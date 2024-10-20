@@ -13,7 +13,7 @@ namespace VestTour.Service.Interfaces
         Task<UserModel?> GetUserByIdAsync(int userId);
         Task<List<UserModel>> GetAllUsersAsync();
         Task<int> AddUserAsync(UserModel user);
-        Task UpdateUserAsync(int id, UpdateUserModel user);
+        Task UpdateUserAsync(int id, UserModel user);
         Task DeleteUserAsync(int userId);
         Task<string?> GetUserRoleAsync(int userId);
         Task UpdateUserStatusAsync(int userId, string status);

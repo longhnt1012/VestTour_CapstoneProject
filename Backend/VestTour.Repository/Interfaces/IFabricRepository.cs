@@ -13,8 +13,8 @@ namespace VestTour.Repository.Interface
         public Task UpdateFabricAsync(int id, FabricModel model);
 
         public Task DeleteFabricAsync(int fabricId);
-        Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums tag);
+        Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag);
 
-        Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description);
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Service.Interface;
-using VestTour.Repository.Constants;
+using VestTour.Constants;
 
 public class CategoryService : ICategoryService
 {

@@ -34,6 +34,5 @@
         public const string BookingDeleted = "Booking deleted successfully.";
         public const string BookingRetrieved = "Booking retrieved successfully.";
         public const string TotalBookingsRetrieved = "Total bookings retrieved successfully.";
-         public const string BookingStatusUpdated = "Booking status has been successfully updated.";
     }
 }

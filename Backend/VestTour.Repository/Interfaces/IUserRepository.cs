@@ -12,8 +12,7 @@ namespace VestTour.Repository.Interface
         Task<UserModel?> GetUserByIdAsync(int userId);          // Get user by ID
         Task<List<UserModel>> GetAllUsersAsync();                // Get all users
         Task<int> AddUserAsync(UserModel user);                  // Add a new user
-        Task UpdateUserAsync(int id, UpdateUserModel user);
-        Task UpdateUserStatusAsync(int userId, string status);// Update an existing user
+        Task UpdateUserAsync(int id, UserModel user);            // Update an existing user
         Task DeleteUserAsync(int userId);                         // Delete a user by ID
         Task<string?> GetUserRoleAsync(int userId);
 

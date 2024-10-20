@@ -7,4 +7,5 @@
         public decimal Price { get; set; }
         public decimal PriceTotal => Price * Quantity;
     }
+    
 }

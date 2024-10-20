@@ -15,6 +15,7 @@ namespace VestTour.Service.Interfaces
         Task<int> AddNewFabricAsync(FabricModel model);
         Task UpdateFabricAsync(int id, FabricModel model);
         Task DeleteFabricAsync(int id);
-        Task<List<FabricModel>> GetFabricsByTagAsync(FabricEnums? tag);
+        Task<List<FabricModel>> GetFabricsByTagAsync(FabricEnums tag);
+        Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description);
     }
 }

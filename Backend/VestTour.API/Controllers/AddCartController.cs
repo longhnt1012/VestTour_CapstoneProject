@@ -4,8 +4,6 @@ using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VestTour.Service.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.API.Controllers
 {
@@ -14,21 +12,20 @@ namespace VestTour.API.Controllers
     public class AddCartController : ControllerBase
     {
         private readonly IAddCartService _addCartService;
-        private readonly PaypalClient _paypalClient;
 
-        public AddCartController(IAddCartService addCartService, PaypalClient paypalClient)
+        public AddCartController(IAddCartService addCartService)
         {
             _addCartService = addCartService;
-            _paypalClient = paypalClient;
         }
 
         [HttpGet("mycart")]
-        public async Task<ActionResult<List<CartItemModel>>> ViewUserCart()
+        public async Task<ActionResult<CartModel>> ViewUserCart()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            var cartItems = await _addCartService.GetUserCartAsync(userId);
-            return Ok(cartItems);
+            var cart = await _addCartService.GetUserCartAsync(userId);
+            return Ok(cart);
         }
+
 
         [HttpPost("addtocart/{productId}")]
         public async Task<IActionResult> AddToCart(int productId)
@@ -61,16 +58,5 @@ namespace VestTour.API.Controllers
             await _addCartService.DecreaseQuantityAsync(userId, productId);
             return Ok("Product quantity decreased.");
         }
-
-        [HttpGet("total/{userId}")]
-        public async Task<IActionResult> GetTotalPrice(int userId)
-        {
-            var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
-            return Ok(totalPrice);
-        }
-
-        [Authorize]
-        [HttpPost("/Cart/create-paypal-order")]
-        public IActionResult
     }
 }

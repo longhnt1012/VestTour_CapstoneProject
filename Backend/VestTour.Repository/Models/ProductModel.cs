@@ -12,7 +12,7 @@
 
         public bool IsCustom { get; set; }
         public string? ImgURL { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
     }
 
 }

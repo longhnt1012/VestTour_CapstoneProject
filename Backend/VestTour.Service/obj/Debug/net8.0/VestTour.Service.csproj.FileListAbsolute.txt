@@ -15,21 +15,3 @@ D:\SECapstone\VestTour\VestTour.Service\obj\Debug\net8.0\VestTour.Service.dll
 D:\SECapstone\VestTour\VestTour.Service\obj\Debug\net8.0\refint\VestTour.Service.dll
 D:\SECapstone\VestTour\VestTour.Service\obj\Debug\net8.0\VestTour.Service.pdb
 D:\SECapstone\VestTour\VestTour.Service\obj\Debug\net8.0\ref\VestTour.Service.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.deps.json
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.pdb
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Repository.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Repository.pdb
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Domain.pdb
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.csproj.AssemblyReference.cache
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.GeneratedMSBuildEditorConfig.editorconfig
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.AssemblyInfoInputs.cache
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.AssemblyInfo.cs
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.csproj.CoreCompileInputs.cache
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.sourcelink.json
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.csproj.CopyComplete
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\refint\VestTour.Service.dll
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.pdb
-D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\ref\VestTour.Service.dll

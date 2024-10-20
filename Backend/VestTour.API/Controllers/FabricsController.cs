@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
-using VestTour.Constants;
+using VestTour.Repository.Constants;
 using VestTour.Repository.Interface;
 using VestTour.Domain.Enums; // Add this using directive
 
@@ -94,12 +94,18 @@ namespace VestTour.Controllers
         }
 
         // New method to get fabrics by tag
-        [HttpGet("tag/{tag?}")]
-        public async Task<IActionResult> GetFabricsByTag(FabricEnums? tag) // Tag is now nullable
+        [HttpGet("tag/{tag}")]
+        public async Task<IActionResult> GetFabricsByTag(string tag)
         {
             try
             {
-                var fabrics = await _fabricRepo.GetFabricByTagAsync(tag); // Pass the nullable tag
+                // Convert string to enum
+                if (!Enum.TryParse<FabricEnums>(tag, true, out var fabricTag))
+                {
+                    return BadRequest("Invalid tag value.");
+                }
+
+                var fabrics = await _fabricRepo.GetFabricByTagAsync(fabricTag);
                 return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
             }
             catch
@@ -107,6 +113,21 @@ namespace VestTour.Controllers
                 return BadRequest(Error.FabricNotFound);
             }
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> GetAllFabricByDescription([FromQuery] string description)
+        {
+            try
+            {
+                var fabrics = await _fabricRepo.GetFabricsByDescriptionAsync(description);
+                return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
+            }
+            catch
+            {
+                return BadRequest(Error.FabricNotFound);
+            }
+        }
+
 
     }
 }

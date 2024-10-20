@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using VestTour.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace VestTour.Repository.Models
 {
@@ -22,7 +23,11 @@ namespace VestTour.Repository.Models
         [Column("ImageURL")]
         [StringLength(255)]
         public string? ImageUrl { get; set; }
-        public FabricEnums? Tag { get; set; }
+        public string Tag => Enum.GetName(typeof(FabricEnums), this.TagEnum); // Add this
+
+        // Keep the enum value in the model
+        [JsonIgnore]
+        public FabricEnums TagEnum { get; set; }
 
 
     }

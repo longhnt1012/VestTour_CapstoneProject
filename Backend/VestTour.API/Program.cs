@@ -20,6 +20,7 @@ using VestTour.Service.Implementation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Cấu hình dịch vụ
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -150,11 +151,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors();
+
 app.MapControllers();
 
 app.Run();

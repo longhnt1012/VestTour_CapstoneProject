@@ -4,6 +4,7 @@
     {
         // User-related errors
         public const string InvalidEmail = "Invalid email format.";
+        public const string InvalidUserStatus = "Invalid user status";
         public const string InvalidPassword = "Password must be between 6 and 18 characters.";
         public const string InvalidName = "Name must be between 5 and 25 characters.";
         public const string EmailTaken = "Email is already taken.";
@@ -51,6 +52,9 @@
         public const string BookingCreateFailed = "Booking create failed.";
         public const string NoBookingsFound = "No bookings found.";
         public const string InvalidGuestName = "Guest name cannot be empty.";
-       
+        public const string InvalidBookingStatus = "The booking status is invalid.";
+        public const string UpdateStatusFailed = "Failed to update booking status.";
+        //Bang product 
+        public const string ProductNotFound = "Product not found.";
     }
 }

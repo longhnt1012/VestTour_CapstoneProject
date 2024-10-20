@@ -3,6 +3,7 @@ using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Repository.Constants;
 
 namespace VestTour.Controllers
 {
@@ -121,7 +122,7 @@ namespace VestTour.Controllers
             var products = await _productService.GetProductsWithIsCustomFalseAsync();
             if (products == null || products.Count == 0)
             {
-                return NotFound("No products found with IsCustom = false.");
+                return NotFound(Error.ProductNotFound);
             }
 
             return Ok(products);

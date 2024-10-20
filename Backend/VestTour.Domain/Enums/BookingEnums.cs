@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace VestTour.Domain.Enums
 {
-	public enum StatusEnums
+	public enum BookingEnums
 	{
-		Active,
-		Deactive
-        
+		Pending,
+		Cancel,
+        Confirmed,   
+        Completed
     }
 }

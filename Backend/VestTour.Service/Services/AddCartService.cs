@@ -1,9 +1,6 @@
 ﻿using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace VestTour.Services
 {
@@ -17,7 +14,7 @@ namespace VestTour.Services
             _addCartRepository = addCartRepository;
             _productService = productService;
         }
-       
+
         public async Task AddToCartAsync(int userId, int productId)
         {
             var product = await _productService.GetProductByIdAsync(productId);
@@ -28,12 +25,9 @@ namespace VestTour.Services
 
             var cartItem = new CartItemModel
             {
-                
                 ProductId = productId,
                 Price = product.Price,
                 Quantity = 1
-                
-                
             };
 
             await _addCartRepository.AddToCartAsync(userId, cartItem);
@@ -44,12 +38,13 @@ namespace VestTour.Services
             await _addCartRepository.RemoveFromCartAsync(userId, productId);
         }
 
-        public async Task<List<CartItemModel>> GetUserCartAsync(int userId)
+        public async Task<CartModel> GetUserCartAsync(int userId)
         {
-            return await _addCartRepository.GetUserCartAsync(userId);
+            var UserID = userId;
+            var cartItems = await _addCartRepository.GetUserCartAsync(userId);
+            return new CartModel { CartItems = cartItems };
         }
 
-        // Method to decrease quantity by 1
         public async Task DecreaseQuantityAsync(int userId, int productId)
         {
             var cartItems = await _addCartRepository.GetUserCartAsync(userId);
@@ -62,7 +57,6 @@ namespace VestTour.Services
             await _addCartRepository.UpdateCartAsync(userId, cartItems);
         }
 
-        // Method to increase quantity by 1
         public async Task IncreaseQuantityAsync(int userId, int productId)
         {
             var cartItems = await _addCartRepository.GetUserCartAsync(userId);
@@ -73,14 +67,6 @@ namespace VestTour.Services
             }
 
             await _addCartRepository.UpdateCartAsync(userId, cartItems);
-        }
-
-        public async Task<decimal> GetTotalPriceAsync(int userID)
-        {
-            var cart = await GetUserCartAsync(userID);
-
-            var totalPrice= cart.Sum(item => item.Price * item.Quantity);
-            return totalPrice;
         }
     }
 }

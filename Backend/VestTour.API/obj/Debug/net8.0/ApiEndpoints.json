@@ -57,7 +57,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[VestTour.Repository.Models.CartItemModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "VestTour.Repository.Models.CartModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -262,6 +262,27 @@
       {
         "Name": "model",
         "Type": "VestTour.Repository.Models.BookingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
+    "Method": "UpdateBookingStatus",
+    "RelativePath": "api/Booking/status/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -483,6 +504,22 @@
   },
   {
     "ContainingType": "VestTour.Controllers.FabricsController",
+    "Method": "GetAllFabricByDescription",
+    "RelativePath": "api/Fabrics/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "description",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.FabricsController",
     "Method": "GetFabricsByTag",
     "RelativePath": "api/Fabrics/tag/{tag}",
     "HttpMethod": "GET",
@@ -492,7 +529,7 @@
       {
         "Name": "tag",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -766,6 +803,22 @@
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "GetOrderDetail",
+    "RelativePath": "api/Orders/{orderId}/details",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
     "Method": "GetOrdersByStoreId",
     "RelativePath": "api/Orders/store/{storeId}",
     "HttpMethod": "GET",
@@ -788,6 +841,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "GetOrdersByUserId",
+    "RelativePath": "api/Orders/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1684,7 +1753,7 @@
       },
       {
         "Name": "userModel",
-        "Type": "VestTour.Repository.Models.UserModel",
+        "Type": "VestTour.Repository.Models.UpdateUserModel",
         "IsRequired": true
       }
     ],

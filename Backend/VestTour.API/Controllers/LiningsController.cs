@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
+using VestTour.Repository.Constants;
 
 namespace VestTour.Controllers
 {
@@ -63,7 +64,7 @@ namespace VestTour.Controllers
                 if (id != null)
                 {
                     await _liningRepo.UpdateLiningAsync(id, model);
-                    return Ok();
+                    return Ok(Success.SuccessUpdateLining);
                 }
                 else
                 {
@@ -83,7 +84,7 @@ namespace VestTour.Controllers
                 if (id != null)
                 {
                     await _liningRepo.DeleteLiningAsync(id);
-                    return Ok();
+                    return Ok(Success.SuccessDeleteLining);
                 }
                 else
                 {

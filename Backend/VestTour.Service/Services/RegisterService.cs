@@ -53,9 +53,10 @@ namespace VestTour.Service.Services
                 Dob = registerModel.Dob,
                 Email = registerModel.Email,
                 Password = registerModel.Password,
-                Status = "active",  // Set default status
+                Status = "active",  
+                Phone = registerModel.Phone,
                 IsConfirmed = true,
-                RoleId = 2          // Set default role as Customer (RoleID = 2)
+                RoleId = 3       
             };
 
             var result = await _userRepository.AddUserAsync(newUser);

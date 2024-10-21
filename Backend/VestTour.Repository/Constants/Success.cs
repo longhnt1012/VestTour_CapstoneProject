@@ -9,9 +9,17 @@
         public const string UserDeleted = "User deleted successfully.";
         public const string StatusUpdated = "User status updated successfully.";
         // Fabric-related success messages
-        public const string FabricAdded = "Fabric added successfully.";
-        public const string FabricUpdated = "Fabric updated successfully.";
-        public const string FabricDeleted = "Fabric deleted successfully.";
+        public const string FabricAdded = "Fabric successfully added.";
+        public const string FabricUpdated = "Fabric successfully updated.";
+        public const string FabricDeleted = "Fabric successfully deleted.";
+        // Category-related success messages
+        public const string CategoryAdded = "Category successfully added.";
+        public const string CategoryUpdated = "Category successfully updated.";
+        public const string CategoryDeleted = "Category successfully deleted.";
+        // Measurement-related success messages
+        public const string MeasurementAdded = "Measurement successfully added.";
+        public const string MeasurementUpdated = "Measurement successfully updated.";
+        public const string MeasurementDeleted = "Measurement successfully deleted.";
 
         // Voucher-related success messages
         public const string VoucherAdded = "Voucher added successfully.";
@@ -23,11 +31,12 @@
         public const string OrderUpdated = "Order updated successfully.";
         public const string OrderDeleted = "Order deleted successfully.";
         public const string OrderShipped = "Order has been shipped successfully.";
+        //Lining 
+        public const string SuccessDeleteLining = "Lining Deleted Successfully";
+        public const string SuccessUpdateLining = "Lining updated Successfully";
 
-        // Category-related success messages
-        public const string CategoryAdded = "Category added successfully.";
-        public const string CategoryUpdated = "Category updated successfully.";
-        public const string CategoryDeleted = "Category deleted successfully.";
+
+
 
         public const string BookingCreated = "Booking created successfully.";
         public const string BookingUpdated = "Booking updated successfully.";

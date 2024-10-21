@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using VestTour.Service.Common;
 using VestTour.Service.Implementation;
+using VestTour.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +92,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShipperPartnerService, ShipperPartnerService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
+//builder.Services.AddScoped<ILiningService,ILiningService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));

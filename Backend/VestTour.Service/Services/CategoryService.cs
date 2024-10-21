@@ -30,18 +30,18 @@ public class CategoryService : ICategoryService
             if (category == null)
             {
                 response.Success = false;
-                response.Message = $"{Error.CategoryNotFound}: {categoryId}"; // More context
+                response.Message = $"{Error.CategoryNotFound}: {categoryId}"; 
             }
             else
             {
                 response.Data = category;
-                response.Success = true; // Indicate success
+                response.Success = true; 
             }
         }
         catch (Exception ex)
         {
             response.Success = false;
-            response.Message = $"An error occurred: {ex.Message}"; // Handle unexpected errors
+            response.Message = $"An error occurred: {ex.Message}";
         }
 
         return response;

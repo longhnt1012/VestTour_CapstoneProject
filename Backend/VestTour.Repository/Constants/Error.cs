@@ -16,10 +16,13 @@
         public const string InvalidModelState = "Invalid model state.";
         public const string InvalidDobFormat = "Invalid Date of Birth format. Please use MM-DD-YYYY.";
         // Fabric-related errors
+        public const string InvalidFabricId = "Invalid Fabric ID.";
         public const string FabricNotFound = "Fabric not found.";
         public const string FabricAddFailed = "Failed to add fabric.";
         public const string FabricUpdateFailed = "Failed to update fabric.";
         public const string FabricDeleteFailed = "Failed to delete fabric.";
+        public const string InvalidInputData = "Invalid input data.";
+        
         // bang voucher
         public const string VoucherNotFound = "Voucher not found.";
         public const string VoucherAddFailed = "Failed to add voucher.";
@@ -36,15 +39,15 @@
         public const string OrderAlreadyShipped = "Order has already been shipped and cannot be modified.";
 
         // Category-related errors
+        public const string InvalidParentCategoryId = "Invalid parent category ID.";
         public const string InvalidCategoryId = "Invalid Category ID.";
         public const string CategoryNotFound = "Category not found.";
-        public const string InvalidCategoryName = "Category name cannot be empty.";
         public const string NoCategoriesFound = "No categories found.";
-        public const string InvalidParentCategoryId = "Invalid Parent Category ID.";
+        public const string InvalidCategoryName = "Invalid Category name.";
         public const string CategoryIDmismatch = "Category ID mismatch.";
         // Additional errors
         public const string UnknownError = "An unknown error occurred. Please try again.";
-        public const string InvalidInputData = "Invalid input data. Please check your request.";
+       
 
         //Booking error
         public const string InvalidBookingId = "The booking ID is invalid.";
@@ -56,5 +59,14 @@
         public const string UpdateStatusFailed = "Failed to update booking status.";
         //Bang product 
         public const string ProductNotFound = "Product not found.";
+
+        //Measurement table
+
+        public const string InvalidMeasurementId = "Invalid Measurement ID.";
+        public const string MeasurementNotFound = "Measurement not found.";
+        //Lining table
+       
+        public const string FailedDeleteLining = "Lining Deleted failed";
+        public const string LiningNotFound = "Lining not found";
     }
 }

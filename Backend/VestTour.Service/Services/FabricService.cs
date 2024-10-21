@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using VestTour.Domain.Enums;
+﻿using VestTour.Domain.Enums;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
-using VestTour.Service.Interfaces;
+using VestTour.Service.Interface;
 
-namespace VestTour.Services
+namespace VestTour.Service.Implementation
 {
     public class FabricService : IFabricService
     {
@@ -21,39 +19,29 @@ namespace VestTour.Services
             return await _fabricRepo.GetAllFabricsAsync();
         }
 
-        public async Task<FabricModel> GetFabricByIdAsync(int id)
+        public async Task<FabricModel> GetFabricByIdAsync(int fabricId)
         {
-            var fabric = await _fabricRepo.GetFabricModelByIdAsync(id);
-            return fabric ?? throw new KeyNotFoundException("Fabric not found");
+            return await _fabricRepo.GetFabricByIdAsync(fabricId);
         }
 
-        public async Task<int> AddNewFabricAsync(FabricModel model)
+        public async Task<int> AddFabricAsync(FabricModel model)
         {
             return await _fabricRepo.AddFabricAsync(model);
         }
 
         public async Task UpdateFabricAsync(int id, FabricModel model)
         {
-            if (id != model.FabricId)
-            {
-                throw new ArgumentException("Fabric ID mismatch");
-            }
             await _fabricRepo.UpdateFabricAsync(id, model);
         }
 
-        public async Task DeleteFabricAsync(int id)
+        public async Task DeleteFabricAsync(int fabricId)
         {
-            await _fabricRepo.DeleteFabricAsync(id);
+            await _fabricRepo.DeleteFabricAsync(fabricId);
         }
 
-        public async Task<List<FabricModel>> GetFabricsByTagAsync(FabricEnums tag)
-        {
-            var fabrics = await _fabricRepo.GetFabricByTagAsync(tag);
-            return fabrics.Count > 0 ? fabrics : throw new KeyNotFoundException("No fabrics found for the specified tag");
-        }
-        public async Task<List<FabricModel>> GetFabricsByDescriptionAsync(string description)
-        {
-            return await _fabricRepo.GetFabricsByDescriptionAsync(description);
-        }
+        //public async Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag)
+        //{
+        //    return await _fabricRepo.GetFabricByTagAsync(tag);
+        //}
     }
 }

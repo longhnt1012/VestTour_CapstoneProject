@@ -503,38 +503,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.FabricsController",
-    "Method": "GetAllFabricByDescription",
-    "RelativePath": "api/Fabrics/search",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "description",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.Controllers.FabricsController",
-    "Method": "GetFabricsByTag",
-    "RelativePath": "api/Fabrics/tag/{tag}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tag",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "VestTour.Controllers.LiningsController",
     "Method": "GetAllLining",
     "RelativePath": "api/Linings",

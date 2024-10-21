@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Constants;
-using VestTour.Repository.Interface;
-using VestTour.Domain.Enums; // Add this using directive
+using VestTour.Service.Interface;
+using VestTour.Domain.Enums;
 
 namespace VestTour.Controllers
 {
@@ -11,11 +10,11 @@ namespace VestTour.Controllers
     [ApiController]
     public class FabricsController : ControllerBase
     {
-        private readonly IFabricRepository _fabricRepo;
+        private readonly IFabricService _fabricService;
 
-        public FabricsController(IFabricRepository repo)
+        public FabricsController(IFabricService fabricService)
         {
-            _fabricRepo = repo;
+            _fabricService = fabricService;
         }
 
         [HttpGet]
@@ -23,7 +22,7 @@ namespace VestTour.Controllers
         {
             try
             {
-                return Ok(await _fabricRepo.GetAllFabricsAsync());
+                return Ok(await _fabricService.GetAllFabricsAsync());
             }
             catch
             {
@@ -36,22 +35,30 @@ namespace VestTour.Controllers
         {
             try
             {
-                var fabric = await _fabricRepo.GetFabricModelByIdAsync(id);
-                return fabric == null ? NotFound(Error.FabricNotFound) : Ok(fabric);
+                var fabric = await _fabricService.GetFabricByIdAsync(id);
+                if (fabric == null)
+                {
+                    return NotFound("Fabric not found.");
+                }
+                return Ok(fabric);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest(Error.FabricNotFound);
+                // Log the error for debugging purposes
+                Console.WriteLine($"Error retrieving fabric with ID {id}: {ex.Message}");
+                return StatusCode(500, "Internal server error.");
             }
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> AddNewFabric(FabricModel model)
         {
             try
             {
-                var newFabricID = await _fabricRepo.AddFabricAsync(model);
-                var fabric = await _fabricRepo.GetFabricModelByIdAsync(newFabricID);
+                var newFabricID = await _fabricService.AddFabricAsync(model);
+                var fabric = await _fabricService.GetFabricByIdAsync(newFabricID);
                 return fabric == null ? NotFound(Error.FabricAddFailed) : Ok(fabric);
             }
             catch
@@ -65,12 +72,12 @@ namespace VestTour.Controllers
         {
             try
             {
-                if (id != model.FabricId)
+                if (id != model.FabricID)
                 {
                     return BadRequest(Error.FabricNotFound);
                 }
 
-                await _fabricRepo.UpdateFabricAsync(id, model);
+                await _fabricService.UpdateFabricAsync(id, model);
                 return Ok(Success.FabricUpdated);
             }
             catch
@@ -84,7 +91,7 @@ namespace VestTour.Controllers
         {
             try
             {
-                await _fabricRepo.DeleteFabricAsync(id);
+                await _fabricService.DeleteFabricAsync(id);
                 return Ok(Success.FabricDeleted);
             }
             catch
@@ -93,41 +100,18 @@ namespace VestTour.Controllers
             }
         }
 
-        // New method to get fabrics by tag
-        [HttpGet("tag/{tag}")]
-        public async Task<IActionResult> GetFabricsByTag(string tag)
-        {
-            try
-            {
-                // Convert string to enum
-                if (!Enum.TryParse<FabricEnums>(tag, true, out var fabricTag))
-                {
-                    return BadRequest("Invalid tag value.");
-                }
-
-                var fabrics = await _fabricRepo.GetFabricByTagAsync(fabricTag);
-                return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
-            }
-            catch
-            {
-                return BadRequest(Error.FabricNotFound);
-            }
-        }
-
-        [HttpGet("search")]
-        public async Task<IActionResult> GetAllFabricByDescription([FromQuery] string description)
-        {
-            try
-            {
-                var fabrics = await _fabricRepo.GetFabricsByDescriptionAsync(description);
-                return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
-            }
-            catch
-            {
-                return BadRequest(Error.FabricNotFound);
-            }
-        }
-
-
+        //[HttpGet("tag/{tag?}")]
+        //public async Task<IActionResult> GetFabricsByTag(FabricEnums? tag)
+        //{
+        //    try
+        //    {
+        //        var fabrics = await _fabricService.GetFabricByTagAsync(tag);
+        //        return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest(Error.FabricNotFound);
+        //    }
+        //}
     }
 }

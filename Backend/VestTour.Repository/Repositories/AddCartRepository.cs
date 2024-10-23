@@ -18,7 +18,8 @@ namespace VestTour.Repository.Implementation
             }
 
             var cart = userCarts[userId];
-            var existingItem = cart.FirstOrDefault(c => c.ProductId == cartItem.ProductId);
+            // Tìm kiếm theo thuộc tính của CustomProduct, ví dụ như ProductCode
+            var existingItem = cart.FirstOrDefault(c => c.CustomProduct.ProductCode == cartItem.CustomProduct.ProductCode);
 
             if (existingItem != null)
             {
@@ -29,15 +30,25 @@ namespace VestTour.Repository.Implementation
                 cart.Add(cartItem);
             }
 
+            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
+        }
+        public async Task RemoveAllFromCartAsync(int userId)
+        {
+            if (userCarts.ContainsKey(userId))
+            {
+                userCarts[userId].Clear(); // Xóa tất cả sản phẩm trong giỏ hàng
+            }
+
             await Task.CompletedTask;
         }
 
-        public async Task RemoveFromCartAsync(int userId, int productId)
+        public async Task RemoveFromCartAsync(int userId, string productCode) // Thay đổi tham số từ int sang string
         {
             if (userCarts.ContainsKey(userId))
             {
                 var cart = userCarts[userId];
-                var existingItem = cart.FirstOrDefault(c => c.ProductId == productId);
+                // Tìm kiếm theo ProductCode
+                var existingItem = cart.FirstOrDefault(c => c.CustomProduct.ProductCode == productCode);
 
                 if (existingItem != null)
                 {
@@ -45,7 +56,7 @@ namespace VestTour.Repository.Implementation
                 }
             }
 
-            await Task.CompletedTask;
+            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
         }
 
         public async Task<List<CartItemModel>> GetUserCartAsync(int userId)
@@ -58,11 +69,11 @@ namespace VestTour.Repository.Implementation
             return new List<CartItemModel>();
         }
 
-        // Method to update the cart after changing quantities
+        // Phương thức cập nhật giỏ hàng sau khi thay đổi số lượng
         public async Task UpdateCartAsync(int userId, List<CartItemModel> updatedCart)
         {
             userCarts[userId] = updatedCart;
-            await Task.CompletedTask;
+            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
         }
     }
 }

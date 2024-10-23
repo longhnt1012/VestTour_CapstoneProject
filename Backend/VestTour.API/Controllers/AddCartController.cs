@@ -27,36 +27,60 @@ namespace VestTour.API.Controllers
         }
 
 
-        [HttpPost("addtocart/{productId}")]
-        public async Task<IActionResult> AddToCart(int productId)
+        [HttpPost("addtocart")]
+        public async Task<IActionResult> AddToCart([FromBody] CustomProductModel customProduct)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _addCartService.AddToCartAsync(userId, productId);
+            await _addCartService.AddToCartAsync(userId, customProduct);
             return Ok("Product added to cart.");
         }
 
-        [HttpDelete("removefromcart/{productId}")]
-        public async Task<IActionResult> RemoveFromCart(int productId)
+
+        [HttpDelete("removefromcart/{productCode}")]
+        public async Task<IActionResult> RemoveFromCart(string productCode)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _addCartService.RemoveFromCartAsync(userId, productId);
+            await _addCartService.RemoveFromCartAsync(userId, productCode);
             return Ok("Product removed from cart.");
         }
 
-        [HttpPost("increase/{productId}")]
-        public async Task<IActionResult> IncreaseQuantity(int productId)
+        [HttpPost("increase/{productCode}")]
+        public async Task<IActionResult> IncreaseQuantity(string productCode)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _addCartService.IncreaseQuantityAsync(userId, productId);
+            await _addCartService.IncreaseQuantityAsync(userId, productCode);
             return Ok("Product quantity increased.");
         }
 
-        [HttpPost("decrease/{productId}")]
-        public async Task<IActionResult> DecreaseQuantity(int productId)
+        [HttpPost("decrease/{productCode}")]
+        public async Task<IActionResult> DecreaseQuantity(string productCode)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _addCartService.DecreaseQuantityAsync(userId, productId);
+            await _addCartService.DecreaseQuantityAsync(userId, productCode);
             return Ok("Product quantity decreased.");
         }
+        [HttpPost("confirmorder")]
+        public async Task<IActionResult> ConfirmOrder()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name)); // Lấy ID người dùng từ token
+            try
+            {
+                await _addCartService.ConfirmOrderAsync(userId);
+                return Ok("Order confirmed successfully.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message); // Trả về thông báo không tìm thấy nếu không có sản phẩm
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message); // Trả về thông báo lỗi nếu giỏ hàng trống
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message); // Trả về lỗi máy chủ nếu có lỗi khác
+            }
+        }
+
     }
 }

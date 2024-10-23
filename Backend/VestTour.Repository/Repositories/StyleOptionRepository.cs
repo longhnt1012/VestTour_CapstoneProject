@@ -16,7 +16,11 @@ namespace VestTour.Repository.Implementation
             _context = context;
             _mapper = mapper;
         }
-
+        public async Task<decimal?> GetStyleOptionPriceByIdAsync(int styleOptionId)
+        {
+            var styleOption = await _context.StyleOptions.FirstOrDefaultAsync(so => so.StyleOptionId == styleOptionId);
+            return styleOption?.Price;
+        }
         // Get all style options
         public async Task<List<StyleOptionModel>> GetAllStyleOptionsAsync()
         {

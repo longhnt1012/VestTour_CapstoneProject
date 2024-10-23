@@ -47,7 +47,7 @@ namespace VestTour.Service.Implementation
         {
             // Logic: kiểm tra hợp lệ hoặc xử lý bổ sung trước khi thêm sản phẩm
             if (string.IsNullOrEmpty(product.ProductCode))
-                throw new ArgumentException("Product name cannot be empty.");
+                throw new ArgumentException("Product code cannot be empty.");
 
             return await _productRepository.AddProductAsync(product);
         }
@@ -85,5 +85,9 @@ namespace VestTour.Service.Implementation
 
             return productDetails;
         }
+        //public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
+        //{
+        //    await _productRepository.AddStyleOptionToProductAsync(productId, styleOptionId);
+        //}
     }
 }

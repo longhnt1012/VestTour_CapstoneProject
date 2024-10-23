@@ -2,14 +2,14 @@
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "AddToCart",
-    "RelativePath": "api/AddCart/addtocart/{productId}",
+    "RelativePath": "api/AddCart/addtocart",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "productId",
-        "Type": "System.Int32",
+        "Name": "customProduct",
+        "Type": "CustomProductModel",
         "IsRequired": true
       }
     ],
@@ -17,15 +17,25 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "ConfirmOrder",
+    "RelativePath": "api/AddCart/confirmorder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "DecreaseQuantity",
-    "RelativePath": "api/AddCart/decrease/{productId}",
+    "RelativePath": "api/AddCart/decrease/{productCode}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "productId",
-        "Type": "System.Int32",
+        "Name": "productCode",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -34,14 +44,14 @@
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "IncreaseQuantity",
-    "RelativePath": "api/AddCart/increase/{productId}",
+    "RelativePath": "api/AddCart/increase/{productCode}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "productId",
-        "Type": "System.Int32",
+        "Name": "productCode",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -70,14 +80,14 @@
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "RemoveFromCart",
-    "RelativePath": "api/AddCart/removefromcart/{productId}",
+    "RelativePath": "api/AddCart/removefromcart/{productCode}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "productId",
-        "Type": "System.Int32",
+        "Name": "productCode",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

@@ -47,12 +47,21 @@ namespace VestTour.Repository.Implementation
         // Update an existing voucher
         public async Task UpdateVoucherAsync(int id, VoucherModel voucherModel)
         {
-            if (id == voucherModel.VoucherId)
+            var existingVoucher = await _context.Vouchers!.FindAsync(id);
+            if (existingVoucher == null)
             {
-                var updateVoucher = _mapper.Map<Voucher>(voucherModel);
-                _context.Vouchers!.Update(updateVoucher);
-                await _context.SaveChangesAsync();
+                throw new KeyNotFoundException($"Voucher with ID {id} not found.");
             }
+
+            // Update properties
+            existingVoucher.Status = voucherModel.Status;
+            existingVoucher.VoucherCode = voucherModel.VoucherCode;
+            existingVoucher.Description = voucherModel.Description;
+            existingVoucher.DiscountNumber = voucherModel.DiscountNumber;
+            existingVoucher.DateStart = voucherModel.DateStart;
+            existingVoucher.DateEnd = voucherModel.DateEnd;
+
+            await _context.SaveChangesAsync();
         }
 
         // Delete a voucher by ID

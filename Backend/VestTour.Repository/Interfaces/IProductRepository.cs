@@ -13,4 +13,5 @@ public interface IProductRepository
     Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId);
     Task<List<ProductModel>> GetProductsByCategoryIdAsync(int categoryId);
     Task<List<ProductModel>> GetProductsWithIsCustomFalseAsync();
+   // Task AddStyleOptionToProductAsync(int productId, int styleOptionId);
 }

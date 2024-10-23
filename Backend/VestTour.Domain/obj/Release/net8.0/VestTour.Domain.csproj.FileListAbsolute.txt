@@ -1,0 +1,14 @@
+D:\SECapstone\VestTour\VestTour.Domain\bin\Release\net8.0\VestTour.Domain.deps.json
+D:\SECapstone\VestTour\VestTour.Domain\bin\Release\net8.0\VestTour.Domain.runtimeconfig.json
+D:\SECapstone\VestTour\VestTour.Domain\bin\Release\net8.0\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\bin\Release\net8.0\VestTour.Domain.pdb
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.csproj.AssemblyReference.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.AssemblyInfoInputs.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.AssemblyInfo.cs
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.csproj.CoreCompileInputs.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\refint\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.pdb
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\VestTour.Domain.genruntimeconfig.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Release\net8.0\ref\VestTour.Domain.dll

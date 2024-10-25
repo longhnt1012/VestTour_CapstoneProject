@@ -30,6 +30,10 @@ namespace VestTour.Repository.Mapper
             CreateMap<Payment, PaymentModel>().ReverseMap();
             CreateMap<Product, ProductDetailsModel>().ReverseMap();
             CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<ProductStyleOptionModel, ProductStyleOption>()
+            .ForMember(dest => dest.Product, opt => opt.Ignore())
+            .ForMember(dest => dest.StyleOption, opt => opt.Ignore());
+
         }
     }
 }

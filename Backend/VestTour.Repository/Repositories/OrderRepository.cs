@@ -32,17 +32,39 @@ namespace VestTour.Repository.Implementation
             return _mapper.Map<List<OrderModel>>(orders);
         }
 
-        public async Task<OrderModel?> GetOrderByIdAsync(int orderID)
-        {
-            var order = await _context.Orders!.FindAsync(orderID);
-            return _mapper.Map<OrderModel>(order);
-        }
-
+       
         public async Task UpdateOrderAsync(int id, OrderModel order)
         {
             var updateOrder = _mapper.Map<Order>(order);
             _context.Orders!.Update(updateOrder);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId)
+        {
+            var orders = await _context.Orders!
+                .Include(o => o.Products) 
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+
+            return _mapper.Map<List<OrderModel>>(orders);
+        }
+
+        public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
+        {
+            var order = await _context.Orders!
+                .Include(o => o.Products) 
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            return _mapper.Map<OrderModel>(order);
+        }
+        public async Task<OrderModel?> GetOrderByIdAsync(int orderId)
+        {
+            var order = await _context.Orders!
+                .Include(o => o.Products) // Make sure to include the products
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            return _mapper.Map<OrderModel>(order);
+        }
+
     }
 }

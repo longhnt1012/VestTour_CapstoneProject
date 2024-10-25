@@ -71,5 +71,14 @@ namespace VestTour.Service.Implementation
             var allOrders = await _orderRepository.GetAllOrderAsync();
             return allOrders.FindAll(o => o.StoreId == storeId);
         }
+        public async Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _orderRepository.GetOrdersByUserIdAsync(userId);
+        }
+
+        public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
+        {
+            return await _orderRepository.GetOrderDetailByIdAsync(orderId);
+        }
     }
 }

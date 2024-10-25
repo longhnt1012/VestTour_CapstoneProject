@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VestTour.Domain.Entities;
 
 namespace VestTour.Repository.Models
 {
     public class OrderModel
     {
         public int OrderId { get; set; }
+        public int? UserID { get; set; }
         public int? PaymentId { get; set; }
         public int? StoreId { get; set; }
         public int? VoucherId { get; set; }
@@ -19,6 +21,8 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
+        public decimal? TotalPrice => Products.Sum(p => p.Price ?? 0m);
+
     }
 }

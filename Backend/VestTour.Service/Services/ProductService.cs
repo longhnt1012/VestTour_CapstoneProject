@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
+using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 
@@ -9,10 +11,11 @@ namespace VestTour.Service.Implementation
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-
-        public ProductService(IProductRepository productRepository)
+        private readonly IProductStyleOptionRepository _productStyleOptionRepository;
+        public ProductService(IProductRepository productRepository,IProductStyleOptionRepository productStyleOptionRepository)
         {
             _productRepository = productRepository;
+            _productStyleOptionRepository = productStyleOptionRepository;
         }
 
         public async Task<List<ProductModel>> GetAllProductsAsync()
@@ -85,9 +88,17 @@ namespace VestTour.Service.Implementation
 
             return productDetails;
         }
-        //public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
-        //{
-        //    await _productRepository.AddStyleOptionToProductAsync(productId, styleOptionId);
-        //}
+        public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
+        {
+            // Tạo và lưu ProductStyleOption vào database
+            var productStyleOption = new ProductStyleOptionModel
+            {
+                ProductId = productId,
+                StyleOptionId = styleOptionId
+            };
+
+            await _productStyleOptionRepository.AddAsync(productStyleOption);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using VestTour.Repository.Implementation;
+﻿using VestTour.Domain.Entities;
+using VestTour.Repository.Implementation;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
@@ -116,11 +117,11 @@ namespace VestTour.Services
                 };
 
                 // Lưu sản phẩm vào bảng sản phẩm
-                await _productService.AddProductAsync(productToAdd);
-                //foreach (var pickedOption in customProduct.PickedStyleOptions)
-                //{
-                //    await _productService.AddStyleOptionToProductAsync(productId, pickedOption.StyleOptionID);
-                //}
+                var productId = await _productService.AddProductAsync(productToAdd);
+                foreach (var pickedOption in customProduct.PickedStyleOptions)
+                {
+                    await _productService.AddStyleOptionToProductAsync(productId, pickedOption.StyleOptionID);
+                }
             }
 
             // Xóa các sản phẩm đã được xác nhận khỏi giỏ hàng

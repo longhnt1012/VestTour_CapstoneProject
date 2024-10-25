@@ -92,7 +92,6 @@ namespace VestTour.Repository.Implementation
                                      CategoryID = p.CategoryId,
                                      FabricID = p.FabricId,
                                      LiningID = p.LiningId,
-                                     OrderID = p.OrderId,
                                      FabricName = f != null ? f.FabricName : null,
                                      LiningName = l != null ? l.LiningName : null,
                                      // Directly load the StyleOptions using the navigation property

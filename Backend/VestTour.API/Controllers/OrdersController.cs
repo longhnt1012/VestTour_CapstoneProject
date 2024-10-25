@@ -81,6 +81,35 @@ namespace VestTour.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetOrdersByUserId(int userId)
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersByUserIdAsync(userId);
+                return Ok(orders);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("{orderId}/details")]
+        public async Task<IActionResult> GetOrderDetail(int orderId)
+        {
+            try
+            {
+                var orderDetails = await _orderService.GetOrderDetailByIdAsync(orderId);
+                if (orderDetails == null)
+                    return NotFound("Order not found.");
+                return Ok(orderDetails);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
         // Thêm các phương thức mới
         [HttpGet("total")]

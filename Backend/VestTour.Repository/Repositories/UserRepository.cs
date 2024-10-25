@@ -37,7 +37,7 @@ namespace VestTour.Repository.Implementation
         public async Task<int> AddUserAsync(UserModel user)
         {
             var newUser = _mapper.Map<User>(user);
-            newUser.Status = "Active"; // Default status for new users
+            newUser.Status = "active"; // Default status for new users
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return newUser.UserId;

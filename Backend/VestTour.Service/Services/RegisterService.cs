@@ -53,7 +53,7 @@ namespace VestTour.Service.Services
                 Password = registerModel.Password,
                 Status = "active",  // Set default status
                 IsConfirmed = true,
-                RoleId = 2          // Set default role as Customer (RoleID = 2)
+                RoleId = 3       // Set default role as Customer (RoleID = 2)
             };
 
             var result = await _userRepository.AddUserAsync(newUser);

@@ -8,7 +8,7 @@ namespace VestTour.Repository.Models
     {
         [Key]
         [Column("FabricID")]
-        public int FabricId { get; set; }
+        public int FabricID { get; set; }
 
         [StringLength(255)]
         public string? FabricName { get; set; }

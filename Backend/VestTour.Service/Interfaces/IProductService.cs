@@ -15,5 +15,7 @@ namespace VestTour.Service.Interfaces
         Task DeleteProductAsync(int id);
         Task<List<ProductModel>> GetProductsWithIsCustomFalseAsync();
         Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId);
+        Task AddStyleOptionToProductAsync(int productId, int styleOptionId);
     }
+
 }

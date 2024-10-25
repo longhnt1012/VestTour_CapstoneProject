@@ -15,7 +15,7 @@ public partial class VestTourDbContext : DbContext
         : base(options)
     {
     }
-
+    public virtual DbSet<ProductStyleOption> ProductStyleOptions { get; set; }
     public virtual DbSet<BankingAccount> BankingAccounts { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -262,6 +262,20 @@ public partial class VestTourDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
         });
+        modelBuilder.Entity<ProductStyleOption>()
+            .HasKey(pso => new { pso.ProductId, pso.StyleOptionId });  // Composite key
+
+        modelBuilder.Entity<ProductStyleOption>()
+            .HasOne(pso => pso.Product)
+            .WithMany(p => p.ProductStyleOptions)
+            .HasForeignKey(pso => pso.ProductId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+        modelBuilder.Entity<ProductStyleOption>()
+            .HasOne(pso => pso.StyleOption)
+            .WithMany(so => so.ProductStyleOptions)
+            .HasForeignKey(pso => pso.StyleOptionId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         modelBuilder.Entity<Product>(entity =>
         {

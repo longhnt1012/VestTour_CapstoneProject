@@ -66,10 +66,10 @@ namespace VestTour.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVoucher(int id, VoucherModel voucherModel)
         {
-            if (id != voucherModel.VoucherId)
-            {
-                return BadRequest(new { Message = Error.VoucherUpdateFailed });
-            }
+            //if (id != voucherModel.VoucherId)
+            //{
+            //    return BadRequest(new { Message = Error.VoucherUpdateFailed });
+            //}
 
             var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);
             if (existingVoucher == null)

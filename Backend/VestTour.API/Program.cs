@@ -17,11 +17,12 @@ using Microsoft.Extensions.Configuration;
 using VestTour.Service.Common;
 using VestTour.Service.Implementation;
 using VestTour.Services.Interfaces;
+using VestTour.Repository.Interfaces;
+using VestTour.Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cấu hình dịch vụ
-
+// Configure services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -32,7 +33,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 
-    // Thêm xác thực Bearer cho Swagger
+    // Add Bearer authentication to Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -59,7 +60,11 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Thêm các dịch vụ cần thiết
+// Register HTTP client for GHTK service
+builder.Services.AddHttpClient<ShippingService>();
+
+
+// Register necessary services
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMeasurementRepository, MeasurementRepository>();
@@ -77,7 +82,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
+builder.Services.AddScoped<IProductStyleOptionRepository, ProductStyleOptionRepository>();
 
+//builder.Services.AddScoped<ITokenService, TokenService>();
+//builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IAddCartService, AddCartService>();
@@ -85,29 +93,41 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFabricService, FabricService>();
 builder.Services.AddScoped<IMeasurementService, MeasurementService>();
-builder.Services.AddScoped<IOrderService,OrderService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IStyleOptionService, StyleOptionService>();
 builder.Services.AddScoped<IStyleService, StyleService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShipperPartnerService, ShipperPartnerService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
-//builder.Services.AddScoped<ILiningService,ILiningService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
+// Add PayPal Client service
+builder.Services.AddSingleton(x => new PaypalClient(
+    builder.Configuration["PaypalOptions:AppId"],
+    builder.Configuration["PaypalOptions:AppSecret"],
+    builder.Configuration["PaypalOptions:Mode"]
+));
+
+// Add CORS policy
 builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+// Configure DbContext
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
-builder.Services.AddAutoMapper(typeof(ApplicationMapper));
-// ... thêm các dịch vụ khác tương tự
 
-// Cấu hình JWT
+// Add AutoMapper
+builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+
+// JWT Configuration
 var jwtSettings = new JWTSettings();
 builder.Configuration.GetSection("Jwt").Bind(jwtSettings);
 if (string.IsNullOrEmpty(jwtSettings.JWTSecretKey))
 {
     throw new ArgumentNullException(nameof(jwtSettings.JWTSecretKey), "JWT secret key cannot be null or empty.");
 }
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -127,37 +147,20 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Thêm dịch vụ AutoMapper
-builder.Services.AddAutoMapper(typeof(ApplicationMapper));
-
-// Thêm CORS
-builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
-    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
-// Cấu hình DbContext
-builder.Services.AddDbContext<VestTourDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
-
 builder.Services.AddAuthorization();
-//dang ki paypalclient
-builder.Services.AddSingleton(x => new PaypalClient(
-            builder.Configuration["PaypalOptions:AppId"],
-            builder.Configuration["PaypalOptions:AppSecret"],
-            builder.Configuration["PaypalOptions:Mode"]
-    ));
+
 var app = builder.Build();
 
-// Cấu hình middleware
+// Configure middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

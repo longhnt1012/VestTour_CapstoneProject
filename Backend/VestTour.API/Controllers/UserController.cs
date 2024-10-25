@@ -58,7 +58,7 @@ namespace VestTour.API.Controllers
         // PUT: api/user/{id}
         // PUT: api/user/{id}
         [HttpPut("{id}")]
-       // [Authorize(Roles = "customer")]
+        // [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -97,8 +97,10 @@ namespace VestTour.API.Controllers
             return NoContent();
         }
 
+        // PUT: api/user/{id}/status
+        // PUT: api/user/{id}/status
         [HttpPut("{id}/status")]
-       // [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
         {
             if (string.IsNullOrWhiteSpace(status))

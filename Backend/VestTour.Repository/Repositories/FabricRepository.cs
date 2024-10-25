@@ -21,7 +21,11 @@ namespace VestTour.Repository.Implementation
             _context = context;
             _mapper = mapper;
         }
-
+        public async Task<decimal?> GetFabricPriceByIdAsync(int fabricId)
+        {
+            var fabric = await _context.Fabrics.FirstOrDefaultAsync(f => f.FabricId == fabricId);
+            return fabric?.Price;
+        }
         public async Task<int> AddFabricAsync(FabricModel model)
         {
             if (model == null)

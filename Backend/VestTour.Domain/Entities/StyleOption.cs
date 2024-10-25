@@ -18,4 +18,6 @@ public partial class StyleOption
     public virtual Style? Style { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public ICollection<ProductStyleOption> ProductStyleOptions { get; set; }
+
 }

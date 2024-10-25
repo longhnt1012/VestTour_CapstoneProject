@@ -6,6 +6,7 @@ namespace VestTour.Repository.Interface
 {
     public interface IStyleOptionRepository
     {
+        Task<decimal?> GetStyleOptionPriceByIdAsync(int styleOptionId);
         Task<List<StyleOptionModel>> GetAllStyleOptionsAsync();      // Get all style options
         Task<StyleOptionModel?> GetStyleOptionByIdAsync(int id);    // Get style option by ID
         Task<int> AddStyleOptionAsync(StyleOptionModel styleOption); // Add a new style option

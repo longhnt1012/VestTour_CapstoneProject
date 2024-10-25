@@ -64,5 +64,12 @@ namespace VestTour.Repository.Implementation
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<MeasurementModel?> GetMeasurementByUserIdAsync(int userId)
+        {
+            var measurement = await _context.Measurements!
+                .FirstOrDefaultAsync(m => m.UserId == userId);
+            return _mapper.Map<MeasurementModel>(measurement);
+        }
+
     }
 }

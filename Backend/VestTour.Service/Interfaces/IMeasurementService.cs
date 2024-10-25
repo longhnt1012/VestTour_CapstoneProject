@@ -6,6 +6,7 @@ namespace VestTour.Service.Interfaces
 {
     public interface IMeasurementService
     {
+        Task<MeasurementModel?> GetMeasurementByUserIdAsync(int userId);
         Task<List<MeasurementModel>> GetAllMeasurementsAsync();
         Task<MeasurementModel?> GetMeasurementByIdAsync(int measurementId);
         Task<int> AddMeasurementAsync(MeasurementModel measurementModel);

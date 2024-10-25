@@ -77,5 +77,20 @@ namespace VestTour.Controllers
                 return NotFound("Measurement not found.");
             }
         }
+        // GET: api/Measurement/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<MeasurementModel>> GetMeasurementByUserId(int userId)
+        {
+            try
+            {
+                var measurement = await _measurementService.GetMeasurementByUserIdAsync(userId);
+                return Ok(measurement);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Measurement not found for this user.");
+            }
+        }
+
     }
 }

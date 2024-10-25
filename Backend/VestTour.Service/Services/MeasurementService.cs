@@ -54,5 +54,14 @@ namespace VestTour.Service.Implementation
 
             await _measurementRepository.DeleteMeasurementAsync(id);
         }
+        public async Task<MeasurementModel?> GetMeasurementByUserIdAsync(int userId)
+        {
+            var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId);
+            if (measurement == null)
+                throw new KeyNotFoundException("Measurement not found for this user.");
+
+            return measurement;
+        }
+
     }
 }

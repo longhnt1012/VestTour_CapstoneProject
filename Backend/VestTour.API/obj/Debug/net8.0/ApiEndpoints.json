@@ -717,6 +717,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.MeasurementController",
+    "Method": "GetMeasurementByUserId",
+    "RelativePath": "api/Measurement/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Repository.Models.MeasurementModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "VestTour.Controllers.OrdersController",
     "Method": "GetAllOrder",
     "RelativePath": "api/Orders",

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VestTour.Repository.Models;
 using VestTour.Repository.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Interface;
+using VestTour.Repository.Models;
 
 namespace VestTour.Controllers
 {
@@ -62,24 +62,21 @@ namespace VestTour.Controllers
             return BadRequest(new { Message = Error.VoucherAddFailed });
         }
 
+        
         // PUT: api/Voucher/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVoucher(int id, VoucherModel voucherModel)
+        public async Task<IActionResult> UpdateVoucher(int id, UpdateVoucherModel updateVoucherModel)
         {
-            //if (id != voucherModel.VoucherId)
-            //{
-            //    return BadRequest(new { Message = Error.VoucherUpdateFailed });
-            //}
-
             var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);
             if (existingVoucher == null)
             {
                 return NotFound(new { Message = Error.VoucherNotFound });
             }
 
-            await _voucherRepository.UpdateVoucherAsync(id, voucherModel);
+            await _voucherRepository.UpdateVoucherAsync(id, updateVoucherModel);
             return Ok(new { Message = Success.VoucherUpdated });
         }
+
 
         // DELETE: api/Voucher/5
         [HttpDelete("{id}")]
@@ -95,7 +92,7 @@ namespace VestTour.Controllers
             return Ok(new { Message = Success.VoucherDeleted });
         }
 
-        // GET: api/Voucher/code/ABCD1234
+        // GET: api/Voucher/code/
         [HttpGet("code/{code}")]
         public async Task<ActionResult<VoucherModel>> GetVoucherByCode(string code)
         {

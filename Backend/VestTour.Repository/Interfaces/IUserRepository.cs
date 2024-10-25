@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using VestTour.Repository.Models;
 using VestTour.Domain.Entities;
+using VestTour.Repository.Models;
 
 namespace VestTour.Repository.Interface
 {
     public interface IUserRepository
     {
+        Task<List<UserModel>> GetUsersByRoleIdAsync(int roleId);
         Task<User?> GetUserByEmailAndPasswordAsync(string email, string password);  // For login
         Task<bool> IsEmailTakenAsync(string email);  // Check if email is already taken
         Task<UserModel?> GetUserByIdAsync(int userId);          // Get user by ID

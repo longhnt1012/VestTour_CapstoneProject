@@ -1,6 +1,6 @@
-﻿using VestTour.Repository.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Repository.Models;
 
 namespace VestTour.Repository.Interface
 {

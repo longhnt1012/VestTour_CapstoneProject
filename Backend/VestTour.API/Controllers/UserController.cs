@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
+using VestTour.Repository.Models;
 
 namespace VestTour.API.Controllers
 {
@@ -121,6 +121,13 @@ namespace VestTour.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        // GET: api/user/role/4
+        [HttpGet("role/{roleId:int}")]
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetUsersByRole(int roleId)
+        {
+            var users = await _userService.GetUsersByRoleAsync(roleId);
+            return Ok(users);
         }
 
 

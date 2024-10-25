@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using VestTour.Repository.Models;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Data;
+using VestTour.Repository.Models;
 namespace VestTour.Repository.Implementation
 {
     public class StoreRepository : IStoreRepository

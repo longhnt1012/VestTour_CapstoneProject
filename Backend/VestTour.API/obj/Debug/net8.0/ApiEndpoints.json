@@ -1319,6 +1319,38 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetAvailableServices",
+    "RelativePath": "api/Shipping/available-services",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.ShippingModel.ShippingRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "CalculateShippingFee",
+    "RelativePath": "api/Shipping/calculate-fee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.ShippingModel.ShippingFeeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
     "Method": "GetDistricts",
     "RelativePath": "api/Shipping/districts",
     "HttpMethod": "POST",
@@ -1341,6 +1373,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetWards",
+    "RelativePath": "api/Shipping/wards",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "districtId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1801,6 +1849,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "GetUsersByRole",
+    "RelativePath": "api/User/role/{roleId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.UserModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "VestTour.Controllers.VoucherController",
     "Method": "GetVouchers",
     "RelativePath": "api/Voucher",
@@ -1886,8 +1960,8 @@
         "IsRequired": true
       },
       {
-        "Name": "voucherModel",
-        "Type": "VestTour.Repository.Models.VoucherModel",
+        "Name": "updateVoucherModel",
+        "Type": "VestTour.Repository.Models.UpdateVoucherModel",
         "IsRequired": true
       }
     ],

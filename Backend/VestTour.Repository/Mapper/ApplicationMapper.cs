@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using VestTour.Repository.Models;
 using VestTour.Domain.Entities;
+using VestTour.Repository.Models;
+using VestTour.Repository.Models;
 
 namespace VestTour.Repository.Mapper
 {

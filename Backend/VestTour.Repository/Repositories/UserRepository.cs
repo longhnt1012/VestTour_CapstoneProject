@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Domain.Entities;
-using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Repository.Models;
 
 namespace VestTour.Repository.Implementation
 {
@@ -18,6 +18,13 @@ namespace VestTour.Repository.Implementation
         {
             _context = context;
             _mapper = mapper;
+        }
+        public async Task<List<UserModel>> GetUsersByRoleIdAsync(int roleId)
+        {
+            var users = await _context.Users
+                .Where(u => u.RoleId == roleId)
+                .ToListAsync();
+            return _mapper.Map<List<UserModel>>(users);
         }
 
         public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)

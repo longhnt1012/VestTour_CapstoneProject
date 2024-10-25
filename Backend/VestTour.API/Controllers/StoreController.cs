@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Repository.Models;
 
 namespace VestTour.Controllers
 {

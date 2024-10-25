@@ -8,7 +8,7 @@ namespace VestTour.Domain.Enums
 {
 	public enum VoucherEnums
 	{
-		Valid,
+		OnGoing,
 		Expired
 		
 	}

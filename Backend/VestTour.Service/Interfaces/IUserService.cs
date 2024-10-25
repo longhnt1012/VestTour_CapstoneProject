@@ -10,6 +10,7 @@ namespace VestTour.Service.Interfaces
 {
     public interface IUserService
     {
+        Task<List<UserModel>> GetUsersByRoleAsync(int roleId);
         Task<UserModel?> GetUserByIdAsync(int userId);
         Task<List<UserModel>> GetAllUsersAsync();
         Task<int> AddUserAsync(UserModel user);

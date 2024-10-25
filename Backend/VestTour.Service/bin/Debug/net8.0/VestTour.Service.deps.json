@@ -940,6 +940,7 @@
           "Microsoft.EntityFrameworkCore": "8.0.10",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.10",
+          "Newtonsoft.Json": "13.0.3",
           "VestTour.Domain": "1.0.0"
         },
         "runtime": {

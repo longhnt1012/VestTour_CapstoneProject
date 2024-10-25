@@ -11,7 +11,7 @@ namespace VestTour.Service.Interfaces
         Task<List<VoucherModel>> GetValidVouchersAsync();
        // Task<List<VoucherModel>> GetVouchersByPatternAsync();
         Task<int> CreateVoucherAsync(VoucherModel voucherModel);
-        Task UpdateVoucherAsync(int id, VoucherModel voucherModel);
+        Task UpdateVoucherAsync(int id, UpdateVoucherModel updateVoucherModel);
         Task DeleteVoucherAsync(int id);
         Task<VoucherModel?> GetVoucherByCodeAsync(string code);
     }

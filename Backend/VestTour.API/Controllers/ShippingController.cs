@@ -41,6 +41,14 @@ namespace VestTour.API.Controllers
             var services = await _shippingService.GetAvailableServicesAsync(request.ShopId, request.FromDistrict, request.ToDistrict);
             return Ok(services);
         }
+        [HttpPost("calculate-fee")]
+        public async Task<IActionResult> CalculateShippingFee([FromBody] ShippingFeeRequestModel request)
+        {
+            var shippingFee = await _shippingService.CalculateShippingFeeAsync(request);
+            return Ok(shippingFee);
+        }
+
+
 
     }
 }

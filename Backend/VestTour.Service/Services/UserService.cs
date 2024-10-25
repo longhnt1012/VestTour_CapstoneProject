@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using VestTour.Repository.Constants;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
-using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using VestTour.ValidationHelpers;
 using VestTour.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using VestTour.Repository.Models;
 
 namespace VestTour.Service.Services
 {
@@ -136,6 +136,10 @@ namespace VestTour.Service.Services
             }
 
             await _userRepository.UpdateUserAsync(id, updateUserModel);
+        }
+        public async Task<List<UserModel>> GetUsersByRoleAsync(int roleId)
+        {
+            return await _userRepository.GetUsersByRoleIdAsync(roleId);
         }
 
 

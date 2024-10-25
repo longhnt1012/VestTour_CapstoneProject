@@ -12,11 +12,16 @@ namespace VestTour.Repository.Models.ShippingModel
         public int DistrictID { get; set; }
         public string WardName { get; set; }
         public List<string> NameExtension { get; set; }
-        public bool IsEnable { get; set; }
+        public int IsEnable { get; set; }
         public bool CanUpdateCOD { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public int Status { get; set; }
+       
+      
+        public int SupportType { get; set; }
+        public int PickType { get; set; }
+        public int DeliverType { get; set; }
+       
+       
     }
+
 
 }

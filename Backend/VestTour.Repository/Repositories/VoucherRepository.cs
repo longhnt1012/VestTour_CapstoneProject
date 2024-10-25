@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Domain.Entities;
-using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Data;
+using VestTour.Repository.Models;
 namespace VestTour.Repository.Implementation
 {
     public class VoucherRepository : IVoucherRepository
@@ -45,7 +45,7 @@ namespace VestTour.Repository.Implementation
         }
 
         // Update an existing voucher
-        public async Task UpdateVoucherAsync(int id, VoucherModel voucherModel)
+        public async Task UpdateVoucherAsync(int id, UpdateVoucherModel voucherUpdateModel)
         {
             var existingVoucher = await _context.Vouchers!.FindAsync(id);
             if (existingVoucher == null)
@@ -53,16 +53,29 @@ namespace VestTour.Repository.Implementation
                 throw new KeyNotFoundException($"Voucher with ID {id} not found.");
             }
 
-            // Update properties
-            existingVoucher.Status = voucherModel.Status;
-            existingVoucher.VoucherCode = voucherModel.VoucherCode;
-            existingVoucher.Description = voucherModel.Description;
-            existingVoucher.DiscountNumber = voucherModel.DiscountNumber;
-            existingVoucher.DateStart = voucherModel.DateStart;
-            existingVoucher.DateEnd = voucherModel.DateEnd;
+            //// Check for uniqueness of VoucherCode, if it's being updated
+            //if (!string.IsNullOrEmpty(voucherUpdateModel.VoucherCode) &&
+            //    voucherUpdateModel.VoucherCode != existingVoucher.VoucherCode)
+            //{
+            //    var duplicate = await _context.Vouchers
+            //        .AnyAsync(v => v.VoucherCode == voucherUpdateModel.VoucherCode && v.VoucherId != id);
+            //    if (duplicate)
+            //    {
+            //        throw new ArgumentException("VoucherCode must be unique.");
+            //    }
+            //}
+
+            // Map properties from UpdateVoucherModel to the existing voucher entity
+            existingVoucher.Status = voucherUpdateModel.Status ?? existingVoucher.Status;
+            existingVoucher.VoucherCode = voucherUpdateModel.VoucherCode ?? existingVoucher.VoucherCode;
+            existingVoucher.Description = voucherUpdateModel.Description ?? existingVoucher.Description;
+            existingVoucher.DiscountNumber = voucherUpdateModel.DiscountNumber ?? existingVoucher.DiscountNumber;
+            existingVoucher.DateStart = voucherUpdateModel.DateStart ?? existingVoucher.DateStart;
+            existingVoucher.DateEnd = voucherUpdateModel.DateEnd ?? existingVoucher.DateEnd;
 
             await _context.SaveChangesAsync();
         }
+
 
         // Delete a voucher by ID
         public async Task DeleteVoucherAsync(int voucherId)

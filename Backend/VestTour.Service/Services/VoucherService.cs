@@ -37,10 +37,11 @@ namespace VestTour.Service.Implementation
             return await _voucherRepository.AddVoucherAsync(voucherModel);
         }
 
-        public async Task UpdateVoucherAsync(int id, VoucherModel voucherModel)
+        public async Task UpdateVoucherAsync(int id, UpdateVoucherModel updateVoucherModel)
         {
-            await _voucherRepository.UpdateVoucherAsync(id, voucherModel);
+            await _voucherRepository.UpdateVoucherAsync(id, updateVoucherModel);
         }
+
 
         public async Task DeleteVoucherAsync(int id)
         {

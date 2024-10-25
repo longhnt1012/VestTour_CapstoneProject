@@ -1,9 +1,13 @@
-﻿namespace VestTour.Repository.Models
-{
-    public class VoucherModel
-    {
-        public int? VoucherId { get; set; }          // Corresponds to VoucherID in the database
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace VestTour.Repository.Models
+{
+    public class UpdateVoucherModel
+    {
         public string? Status { get; set; }         // Status column
 
         public string VoucherCode { get; set; }     // Unique VoucherCode
@@ -14,6 +18,6 @@
 
         public DateOnly? DateStart { get; set; }     // DateStart column
 
-        public DateOnly? DateEnd { get; set; }       // DateEnd column
+        public DateOnly? DateEnd { get; set; }
     }
 }

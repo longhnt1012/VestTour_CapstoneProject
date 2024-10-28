@@ -81,10 +81,20 @@ namespace VestTour.Repository.Implementation
             return _mapper.Map<List<UserModel>>(users);
         }
 
-        public async Task<UserModel?> GetUserByIdAsync(int userId)
+        public async Task<User> GetUserByIdAsync(int userId)
         {
-            var user = await _context.Users.FindAsync(userId);
-            return _mapper.Map<UserModel>(user);
+            return await _context.Users.FindAsync(userId);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
         }
 
         public async Task<string?> GetUserRoleAsync(int userId)
@@ -109,6 +119,30 @@ namespace VestTour.Repository.Implementation
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateRefreshTokenAsync(int userId, string refreshToken, DateTime expiryTime)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = expiryTime;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+      
+        //public async Task ClearRefreshTokenAsync(int userId)
+        //{
+        //    var user = await _context.Users.FindAsync(userId);
+        //    if (user != null)
+        //    {
+        //        user.RefreshToken = null;
+        //        user.RefreshTokenExpiryTime = null;
+        //        _context.Users.Update(user);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
 
 
     }

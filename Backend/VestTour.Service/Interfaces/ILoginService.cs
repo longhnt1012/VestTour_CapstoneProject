@@ -9,6 +9,6 @@ namespace VestTour.Service.Interfaces
 {
     public interface ILoginService
     {
-        Task<string> LoginAsync(LoginModel login);
+        Task<AuthenticationResponseModel> LoginAsync(LoginModel login);
     }
 }

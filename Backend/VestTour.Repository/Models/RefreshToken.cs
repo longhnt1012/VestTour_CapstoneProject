@@ -2,8 +2,9 @@
 {
     public class RefreshToken
     {
-        public string Token { get; set; }
-        public DateTime Expiry { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
+        public string Token { get; set; }
+        public DateTime Expiration { get; set; }
     }
 }

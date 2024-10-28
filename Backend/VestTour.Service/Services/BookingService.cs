@@ -4,6 +4,10 @@ using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
 using VestTour.Services;
 using VestTour.Domain.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using VestTour.Repository.ValidationHelper;
 
 public class BookingService : IBookingService
 {
@@ -13,8 +17,9 @@ public class BookingService : IBookingService
     public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo)
     {
         _bookingRepository = bookingRepository;
-        _userRepo = userRepo; 
+        _userRepo = userRepo;
     }
+
     public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
     {
         var response = new ServiceResponse();
@@ -22,21 +27,21 @@ public class BookingService : IBookingService
         if (bookingId <= 0)
         {
             response.Success = false;
-            response.Message = Error.InvalidBookingId; // Sử dụng thông báo lỗi đã định nghĩa
+            response.Message = Error.InvalidBookingId; // Use a constant from Error class
             return response;
         }
 
-        // Kiểm tra xem trạng thái có hợp lệ không
+        // Check if the status is valid
         if (string.IsNullOrEmpty(status) || !Enum.TryParse<BookingEnums>(status, true, out _))
         {
             response.Success = false;
-            response.Message = "Status is not valid. Please provide a valid status."; // Thông báo lỗi tùy chỉnh
+            response.Message = "Status is not valid. Please provide a valid status."; // Custom error message
             return response;
         }
 
-        // Tiến hành cập nhật trạng thái
+        // Proceed to update the status
         await _bookingRepository.UpdateBookingStatusAsync(bookingId, status);
-        response.Message = Success.StatusUpdated; // Sử dụng thông báo thành công
+        response.Message = Success.StatusUpdated; // Use a constant from Success class
         return response;
     }
 
@@ -50,7 +55,6 @@ public class BookingService : IBookingService
             response.Message = Error.InvalidBookingId; // Use a constant from Error class
             return response;
         }
-        
 
         var booking = await _bookingRepository.GetBookingById(bookingId);
         if (booking == null)
@@ -91,16 +95,24 @@ public class BookingService : IBookingService
         if (string.IsNullOrEmpty(booking.GuestName))
         {
             response.Success = false;
-            response.Message = Error.InvalidGuestName; // Sử dụng thông báo lỗi đã định nghĩa
+            response.Message = Error.InvalidGuestName; // Use a constant from Error class
             return response;
         }
 
-        // Đặt trạng thái mặc định là "Pending"
+        // Validate the service type
+        if (!BookingServiceValidate.IsValidService(booking.Service))
+        {
+            response.Success = false;
+            response.Message = "Service type is not valid. Allowed types are: tailor, return, exchange, fix.";
+            return response;
+        }
+
+        // Set the default status to "Pending"
         booking.Status = BookingEnums.Pending.ToString();
 
         var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
         response.Data = newBookingId;
-        response.Message = Success.BookingCreated; // Sử dụng thông báo thành công
+        response.Message = Success.BookingCreated; // Use a constant from Success class
         return response;
     }
 
@@ -111,12 +123,20 @@ public class BookingService : IBookingService
         if (id <= 0 || string.IsNullOrEmpty(booking.GuestName))
         {
             response.Success = false;
-            response.Message = Error.InvalidInputData;
+            response.Message = Error.InvalidInputData; // Use a constant from Error class
+            return response;
+        }
+
+        // Validate the service type
+        if (!BookingServiceValidate.IsValidService(booking.Service))
+        {
+            response.Success = false;
+            response.Message = "Service type is not valid. Allowed types are: tailor, return, exchange, fix.";
             return response;
         }
 
         await _bookingRepository.UpdateBooking(id, booking);
-        response.Message = Success.BookingUpdated;
+        response.Message = Success.BookingUpdated; // Use a constant from Success class
         return response;
     }
 
@@ -159,6 +179,14 @@ public class BookingService : IBookingService
             return response; // Return response if user not found
         }
 
+        // Validate the service type
+        if (!BookingServiceValidate.IsValidService(model.Service))
+        {
+            response.Success = false;
+            response.Message = "Service type is not valid. Allowed types are: tailor, return, exchange, fix.";
+            return response;
+        }
+
         // Create the booking with user details
         var newBooking = new BookingModel
         {
@@ -170,7 +198,9 @@ public class BookingService : IBookingService
             StoreId = model.StoreId,
             GuestName = user.Name,
             GuestEmail = user.Email,
-            GuestPhone = user.Phone
+            GuestPhone = user.Phone,
+            DepositCost = model.DepositCost,
+            Service = model.Service, // Include service type
         };
 
         var newBookingId = await _bookingRepository.AddNewBookingAsync(newBooking);
@@ -190,5 +220,4 @@ public class BookingService : IBookingService
         // Return the response regardless of success or failure
         return response;
     }
-
 }

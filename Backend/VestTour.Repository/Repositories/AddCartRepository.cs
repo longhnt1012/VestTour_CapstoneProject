@@ -56,7 +56,7 @@ namespace VestTour.Repository.Implementation
                 }
             }
 
-            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
+            await Task.CompletedTask; 
         }
 
         public async Task<List<CartItemModel>> GetUserCartAsync(int userId)
@@ -69,11 +69,10 @@ namespace VestTour.Repository.Implementation
             return new List<CartItemModel>();
         }
 
-        // Phương thức cập nhật giỏ hàng sau khi thay đổi số lượng
         public async Task UpdateCartAsync(int userId, List<CartItemModel> updatedCart)
         {
             userCarts[userId] = updatedCart;
-            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
+            await Task.CompletedTask;
         }
     }
 }

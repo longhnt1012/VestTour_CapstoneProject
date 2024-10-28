@@ -24,7 +24,7 @@ namespace VestTour.Service.Services
             _userRepository = userRepository;
         }
 
-        public async Task<UserModel?> GetUserByIdAsync(int userId)
+        public async Task<User?> GetUserByIdAsync(int userId)
         {
             return await _userRepository.GetUserByIdAsync(userId);
         }
@@ -142,7 +142,32 @@ namespace VestTour.Service.Services
             return await _userRepository.GetUsersByRoleIdAsync(roleId);
         }
 
+        public async Task UpdateRefreshTokenAsync(int userId, string refreshToken, DateTime refreshTokenExpiryTime)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null) throw new ArgumentNullException("User not found.");
 
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = refreshTokenExpiryTime;
+
+            await _userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
+        {
+            return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
+        }
+
+        public async Task ClearRefreshTokenAsync(int userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = null;
+                user.RefreshTokenExpiryTime = null;
+                await _userRepository.UpdateUserAsync(user);
+            }
+        }
 
     }
 }

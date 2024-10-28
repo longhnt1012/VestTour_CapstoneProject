@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
@@ -14,42 +12,47 @@ namespace VestTour.Service.Services
     public class LoginService : ILoginService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
 
-        // Thay thế các thuộc tính này bằng các giá trị cụ thể
-        private const string JWTSecretKey = "3713ab7f791c1991d3a210c5fa68c3aa"; // Đảm bảo rằng đây là một khóa bí mật an toàn
-        private const string Issuer = "http://localhost:7194"; // Địa chỉ của bạn
-        private const string Audience = "http://localhost"; // Địa chỉ của bạn
-        private const int AccessTokenDurationInMinutes = 60; // Thời gian sống của token
-
-        public LoginService(IUserRepository userRepository)
+        public LoginService(IUserRepository userRepository, ITokenService tokenService, IUserService userService)
         {
             _userRepository = userRepository;
+            _tokenService = tokenService;
+            _userService = userService;
         }
 
-        public async Task<string> LoginAsync(LoginModel login)
+        public async Task<AuthenticationResponseModel> LoginAsync(LoginModel login)
         {
-            // Xác thực người dùng
             var user = await _userRepository.GetUserByEmailAndPasswordAsync(login.Email, login.Password);
-
             if (user == null)
-            {
                 throw new UnauthorizedAccessException("Invalid credentials.");
-            }
 
-            return GenerateJwtToken(user);
+            var claims = new List<Claim> {
+        new Claim(ClaimTypes.Name, user.UserId.ToString()),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role.RoleName)
+    };
+
+            var accessToken = _tokenService.GenerateAccessToken(claims);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            // Store the refresh token and expiration in the database
+            await _userService.UpdateRefreshTokenAsync(user.UserId, refreshToken, DateTime.Now.AddDays(7));
+
+            return new AuthenticationResponseModel
+            {
+                Token = accessToken,
+                RefreshToken = refreshToken
+            };
         }
+
 
         private string GenerateJwtToken(User user)
         {
-            // Kiểm tra các thuộc tính của user
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), "User cannot be null.");
-            }
-
-            if (string.IsNullOrEmpty(JWTSecretKey))
-            {
-                throw new ArgumentNullException(nameof(JWTSecretKey), "JWT secret key cannot be null or empty.");
             }
 
             if (user.Role == null || string.IsNullOrEmpty(user.Role.RoleName))
@@ -57,25 +60,16 @@ namespace VestTour.Service.Services
                 throw new ArgumentNullException(nameof(user.Role), "User role cannot be null or empty.");
             }
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTSecretKey));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
+            // Set up claims for the user
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.RoleName)
             };
 
-            var token = new JwtSecurityToken(
-                issuer: Issuer,
-                audience: Audience,
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(AccessTokenDurationInMinutes),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            // Generate JWT using TokenService
+            return _tokenService.GenerateAccessToken(claims);
         }
     }
 }

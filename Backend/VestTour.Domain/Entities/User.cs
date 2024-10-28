@@ -27,6 +27,10 @@ public partial class User
 
     public bool IsConfirmed { get; set; }
 
+    public string? RefreshToken { get; set; }
+
+    public DateTime? RefreshTokenExpiryTime { get; set; }
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();

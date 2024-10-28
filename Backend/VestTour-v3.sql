@@ -29,8 +29,11 @@ CREATE TABLE [User] (
     Password NVARCHAR(255)  NOT NULL,
 	Phone VARCHAR(11),
 	[Status] VARCHAR(50),
-    IsConfirmed BIT  NOT NULL
+    IsConfirmed BIT  NOT NULL,
+	RefreshToken NVARCHAR(MAX) NULL,
+    RefreshTokenExpiryTime DATETIME NULL
 );
+
 
 
 INSERT INTO [User] (Name, Gender, Address, DOB, RoleID, Email, Password,IsConfirmed)
@@ -111,9 +114,10 @@ CREATE TABLE Booking (
     Time TIME,
     Note NVARCHAR(255),
     Status NVARCHAR(50),
-    StoreID INT FOREIGN KEY REFERENCES Store(StoreID)
+    StoreID INT FOREIGN KEY REFERENCES Store(StoreID),
+	DepositCost DECIMAL(10,2) NULL,
+    [Service] NVARCHAR(255) 
 );
-
 
 --Table : Shipperpartner
 CREATE TABLE ShipperPartner(
@@ -165,8 +169,11 @@ CREATE TABLE [Order] (
     Note NVARCHAR(255),
     Paid BIT NOT NULL, 
 	Status NVARCHAR(50),
-	TotalPrice DECIMAL(10,2)
+	TotalPrice DECIMAL(10,2),
+	Deposit DECIMAL(10,2) NULL,
+    BalancePayment DECIMAL(10,2) 
 ); 
+
 -------------CHAY CAI NAY THOI --------------------
 
 -- Insert into BankingAccount
@@ -574,8 +581,14 @@ VALUES
 
 
 
-
-
+CREATE TABLE Inventory (
+    InventoryId INT PRIMARY KEY IDENTITY(1,1),
+    ProductId INT NOT NULL,
+    Quantity INT NOT NULL,
+    Status VARCHAR(50) NOT NULL,
+    LastUpdated DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (ProductId) REFERENCES Product(ProductId)
+);
 
 
 

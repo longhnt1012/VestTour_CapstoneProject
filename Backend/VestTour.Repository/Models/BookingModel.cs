@@ -26,5 +26,8 @@ namespace VestTour.Repository.Models
         public string? GuestName { get; set; }
         public string? GuestEmail { get; set; }
         public string? GuestPhone { get; set; }
+        public decimal? DepositCost { get; set; }
+
+        public string? Service { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VestTour.Repository.Data;
 
@@ -11,9 +12,11 @@ using VestTour.Repository.Data;
 namespace VestTour.Repository.Migrations
 {
     [DbContext(typeof(VestTourDbContext))]
-    partial class VestTourDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241026170255_AddRefreshTokenToUser")]
+    partial class AddRefreshTokenToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

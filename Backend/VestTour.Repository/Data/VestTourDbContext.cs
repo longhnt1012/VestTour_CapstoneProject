@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+
 using VestTour.Domain.Entities;
 
 namespace VestTour.Repository.Data;
@@ -26,6 +27,8 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<Feedback> Feedbacks { get; set; }
 
+    public virtual DbSet<Inventory> Inventories { get; set; }
+
     public virtual DbSet<Lining> Linings { get; set; }
 
     public virtual DbSet<Measurement> Measurements { get; set; }
@@ -35,7 +38,7 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-
+  
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<ShipperPartner> ShipperPartners { get; set; }
@@ -49,6 +52,7 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Voucher> Vouchers { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,6 +78,7 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Booking");
 
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
+            entity.Property(e => e.DepositCost).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.GuestEmail)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -82,6 +87,7 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(11)
                 .IsUnicode(false);
             entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.Service).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
@@ -147,6 +153,25 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__Feedback__UserID__59FA5E80");
         });
 
+        modelBuilder.Entity<Inventory>(entity =>
+        {
+            entity.HasKey(e => e.InventoryId).HasName("PK__Inventor__F5FDE6B383099AFB");
+
+            entity.ToTable("Inventory");
+
+            entity.Property(e => e.LastUpdated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Inventories)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Inventory__Produ__2A164134");
+        });
+
         modelBuilder.Entity<Lining>(entity =>
         {
             entity.HasKey(e => e.LiningId).HasName("PK__Lining__82032A225C29625D");
@@ -192,6 +217,8 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Order");
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.BalancePayment).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Deposit).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
             entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
@@ -238,7 +265,6 @@ public partial class VestTourDbContext : DbContext
                         j.ToTable("OrderDetail");
                         j.IndexerProperty<int>("OrderId").HasColumnName("OrderID");
                     });
-
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -418,6 +444,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(11)
                 .IsUnicode(false);
+            entity.Property(e => e.RefreshTokenExpiryTime).HasColumnType("datetime");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)

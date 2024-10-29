@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using VestTour.Domain.Entities;
 
 namespace VestTour.Domain.Entities;
 
@@ -23,15 +24,17 @@ public partial class Product
 
     public decimal? Price { get; set; }
 
+    public string? Size { get; set; }
+
     public virtual Category? Category { get; set; }
 
     public virtual Fabric? Fabric { get; set; }
 
-    public virtual ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
-
     public virtual Lining? Lining { get; set; }
 
     public virtual Measurement? Measurement { get; set; }
+
+    public virtual ProductInventory? ProductInventory { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 

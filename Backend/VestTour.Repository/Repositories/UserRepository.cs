@@ -27,12 +27,13 @@ namespace VestTour.Repository.Implementation
             return _mapper.Map<List<UserModel>>(users);
         }
 
-        public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
+        public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string hashedPassword)
         {
             return await _context.Users
-                .Include(u => u.Role) // Đảm bảo lấy thông tin vai trò
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword);
         }
+
 
 
 

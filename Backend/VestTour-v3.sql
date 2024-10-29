@@ -64,6 +64,13 @@ CREATE TABLE Measurement (
     Thigh DECIMAL(5,2),
     PantsLength DECIMAL(5,2)
 );
+ALTER TABLE Measurement
+ADD Age INT,
+    Chest DECIMAL(5,2),
+    Shoulder DECIMAL(5,2),
+    SleeveLength DECIMAL(5,2),
+    JacketLength DECIMAL(5,2);
+
 INSERT INTO [Measurement] 
 (UserID, Weight, Height, Neck, Hip, Waist, Armhole, Biceps, PantsWaist, Crotch, Thigh, PantsLength) 
 VALUES 
@@ -486,7 +493,8 @@ CREATE TABLE Product (
 	ImgURL NVARCHAR(255),
 	Price DECIMAL(10,2)
 );
-
+ALTER TABLE Product
+ADD SIZE VARCHAR(3)
 ---------------------------------------------------------------------------------------CHAY CAI NAY NE---------------------------------------
 INSERT INTO Product (ProductCode, MeasurementID, CategoryID, FabricID, LiningID,IsCustom,ImgURL,Price) 
 VALUES ('PRD001', 1, 2, 3, 4,1,null,650);
@@ -579,16 +587,16 @@ VALUES
 ('Denim Lining', 'https://example.com/images/denim_lining.jpg'),
 ('Canvas Lining', 'https://example.com/images/canvas_lining.jpg');
 
+DROP TABLE IF EXISTS Inventory;
+GO
 
-
-CREATE TABLE Inventory (
-    InventoryId INT PRIMARY KEY IDENTITY(1,1),
-    ProductId INT NOT NULL,
-    Quantity INT NOT NULL,
-    Status VARCHAR(50) NOT NULL,
-    LastUpdated DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (ProductId) REFERENCES Product(ProductId)
+CREATE TABLE ProductInventory (
+    ProductID INT PRIMARY KEY,           
+    Quantity INT NOT NULL,               
+    LastUpdate DATETIME NOT NULL,         
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) 
 );
+
 
 
 

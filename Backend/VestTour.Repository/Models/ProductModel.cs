@@ -8,7 +8,7 @@
         public int? CategoryID { get; set; }
         public int? FabricID { get; set; }
         public int? LiningID { get; set; }
-        public int? OrderID { get; set; }
+        public string? Size { get; set; }
 
         public bool IsCustom { get; set; }
         public string? ImgURL { get; set; }

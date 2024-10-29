@@ -83,6 +83,7 @@ builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>(
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<IProductStyleOptionRepository, ProductStyleOptionRepository>();
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 //builder.Services.AddScoped<IVerificationService, VerificationService>();
@@ -102,6 +103,7 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 // Add PayPal Client service
 builder.Services.AddSingleton(x => new PaypalClient(
     builder.Configuration["PaypalOptions:AppId"],

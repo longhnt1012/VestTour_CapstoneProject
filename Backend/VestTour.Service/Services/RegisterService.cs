@@ -1,9 +1,9 @@
 ﻿using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
-using System.Threading.Tasks;
 using VestTour.ValidationHelpers;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
+using VestTour.Service.Helpers;
 
 namespace VestTour.Service.Services
 {
@@ -43,6 +43,9 @@ namespace VestTour.Service.Services
                 return Error.EmailTaken;
             }
 
+            // Hash the password before storing it
+            var hashedPassword = PasswordHelper.HashPassword(registerModel.Password);
+
             var newUser = new UserModel
             {
                 Name = registerModel.Name,
@@ -50,20 +53,16 @@ namespace VestTour.Service.Services
                 Address = registerModel.Address,
                 Dob = registerModel.Dob,
                 Email = registerModel.Email,
-                Password = registerModel.Password,
-                Status = "active",  // Set default status
+                Phone=registerModel.Phone,
+                Password = hashedPassword,  // Store the hashed password
+                Status = "active",
                 IsConfirmed = true,
-                RoleId = 3       // Set default role as Customer (RoleID = 2)
+                RoleId = 3
             };
 
             var result = await _userRepository.AddUserAsync(newUser);
 
-            if (result > 0)
-            {
-                return Success.RegistrationSuccess;
-            }
-
-            return Error.RegistrationFailed;
+            return result > 0 ? Success.RegistrationSuccess : Error.RegistrationFailed;
         }
     }
 }

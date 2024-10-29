@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
+using VestTour.Domain.Entities;
 using VestTour.Domain.Entities;
 
 namespace VestTour.Repository.Data;
@@ -27,8 +27,6 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<Feedback> Feedbacks { get; set; }
 
-    public virtual DbSet<Inventory> Inventories { get; set; }
-
     public virtual DbSet<Lining> Linings { get; set; }
 
     public virtual DbSet<Measurement> Measurements { get; set; }
@@ -38,7 +36,9 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-  
+
+    public virtual DbSet<ProductInventory> ProductInventories { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<ShipperPartner> ShipperPartners { get; set; }
@@ -52,8 +52,6 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Voucher> Vouchers { get; set; }
-
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -153,25 +151,6 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__Feedback__UserID__59FA5E80");
         });
 
-        modelBuilder.Entity<Inventory>(entity =>
-        {
-            entity.HasKey(e => e.InventoryId).HasName("PK__Inventor__F5FDE6B383099AFB");
-
-            entity.ToTable("Inventory");
-
-            entity.Property(e => e.LastUpdated)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Product).WithMany(p => p.Inventories)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Inventory__Produ__2A164134");
-        });
-
         modelBuilder.Entity<Lining>(entity =>
         {
             entity.HasKey(e => e.LiningId).HasName("PK__Lining__82032A225C29625D");
@@ -194,12 +173,16 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.MeasurementId).HasColumnName("MeasurementID");
             entity.Property(e => e.Armhole).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Biceps).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.Chest).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Crotch).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Height).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Hip).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.JacketLength).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Neck).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.PantsLength).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.PantsWaist).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.Shoulder).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.SleeveLength).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Thigh).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Waist).HasColumnType("decimal(5, 2)");
@@ -289,7 +272,7 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
         });
         modelBuilder.Entity<ProductStyleOption>()
-            .HasKey(pso => new { pso.ProductId, pso.StyleOptionId });  // Composite key
+    .HasKey(pso => new { pso.ProductId, pso.StyleOptionId });  // Composite key
 
         modelBuilder.Entity<ProductStyleOption>()
             .HasOne(pso => pso.Product)
@@ -302,7 +285,6 @@ public partial class VestTourDbContext : DbContext
             .WithMany(so => so.ProductStyleOptions)
             .HasForeignKey(pso => pso.StyleOptionId)
             .OnDelete(DeleteBehavior.ClientSetNull);
-
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED51B9E1F7");
@@ -319,6 +301,10 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.MeasurementId).HasColumnName("MeasurementID");
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.ProductCode).HasMaxLength(100);
+            entity.Property(e => e.Size)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("Size");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
@@ -352,6 +338,23 @@ public partial class VestTourDbContext : DbContext
                         j.HasKey("ProductId", "StyleOptionId").HasName("PK__ProductS__E965E6E3BF898D14");
                         j.ToTable("ProductStyleOption");
                     });
+        });
+
+        modelBuilder.Entity<ProductInventory>(entity =>
+        {
+            entity.HasKey(e => e.ProductId).HasName("PK__ProductI__B40CC6ED0607B01D");
+
+            entity.ToTable("ProductInventory");
+
+            entity.Property(e => e.ProductId)
+                .ValueGeneratedNever()
+                .HasColumnName("ProductID");
+            entity.Property(e => e.LastUpdate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Product).WithOne(p => p.ProductInventory)
+                .HasForeignKey<ProductInventory>(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProductIn__Produ__3C34F16F");
         });
 
         modelBuilder.Entity<Role>(entity =>

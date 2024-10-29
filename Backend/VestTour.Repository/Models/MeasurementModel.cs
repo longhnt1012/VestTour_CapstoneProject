@@ -27,6 +27,14 @@
         public decimal? Thigh { get; set; }
 
         public decimal? PantsLength { get; set; }
+        public int? Age { get; set; }
 
+        public decimal? Chest { get; set; }
+
+        public decimal? Shoulder { get; set; }
+
+        public decimal? SleeveLength { get; set; }
+
+        public decimal? JacketLength { get; set; }
     }
 }

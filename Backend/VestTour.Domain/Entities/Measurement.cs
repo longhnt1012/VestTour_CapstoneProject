@@ -31,6 +31,16 @@ public partial class Measurement
 
     public decimal? PantsLength { get; set; }
 
+    public int? Age { get; set; }
+
+    public decimal? Chest { get; set; }
+
+    public decimal? Shoulder { get; set; }
+
+    public decimal? SleeveLength { get; set; }
+
+    public decimal? JacketLength { get; set; }
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     public virtual User? User { get; set; }

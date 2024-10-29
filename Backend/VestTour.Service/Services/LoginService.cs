@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Service.Helpers;
 using VestTour.Service.Interfaces;
 
 namespace VestTour.Service.Services
@@ -24,7 +25,8 @@ namespace VestTour.Service.Services
 
         public async Task<AuthenticationResponseModel> LoginAsync(LoginModel login)
         {
-            var user = await _userRepository.GetUserByEmailAndPasswordAsync(login.Email, login.Password);
+            var hashedPassword = PasswordHelper.HashPassword(login.Password);
+            var user = await _userRepository.GetUserByEmailAndPasswordAsync(login.Email, hashedPassword);
             if (user == null)
                 throw new UnauthorizedAccessException("Invalid credentials.");
 

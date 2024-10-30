@@ -22,5 +22,11 @@
         public string Status { get; set; }
         public string? Phone { get; set; }
 
+<<<<<<< Updated upstream
+=======
+        // Add RefreshToken properties to the UserModel
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+>>>>>>> Stashed changes
     }
 }

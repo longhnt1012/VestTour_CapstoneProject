@@ -17,6 +17,12 @@ namespace VestTour.Service.Interfaces
         Task DeleteUserAsync(int userId);
         Task<string?> GetUserRoleAsync(int userId);
         Task UpdateUserStatusAsync(int userId, string status);
+<<<<<<< Updated upstream
 
+=======
+        Task ClearRefreshTokenAsync(int userId);
+        Task<User> GetUserByRefreshTokenAsync(string refreshToken);
+        Task UpdateRefreshTokenAsync(int userId, string refreshToken, DateTime refreshTokenExpiryTime);
+>>>>>>> Stashed changes
     }
 }

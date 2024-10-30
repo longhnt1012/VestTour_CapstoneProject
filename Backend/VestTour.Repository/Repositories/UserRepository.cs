@@ -6,6 +6,10 @@ using VestTour.Repository.Interface;
 using VestTour.Repository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+<<<<<<< Updated upstream
+=======
+using VestTour.Repository.Models;
+>>>>>>> Stashed changes
 
 namespace VestTour.Repository.Implementation
 {
@@ -102,6 +106,33 @@ namespace VestTour.Repository.Implementation
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();
         }
+<<<<<<< Updated upstream
+=======
+        public async Task UpdateRefreshTokenAsync(int userId, string refreshToken, DateTime expiryTime)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = expiryTime;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+      
+        //public async Task ClearRefreshTokenAsync(int userId)
+        //{
+        //    var user = await _context.Users.FindAsync(userId);
+        //    if (user != null)
+        //    {
+        //        user.RefreshToken = null;
+        //        user.RefreshTokenExpiryTime = null;
+        //        _context.Users.Update(user);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
+>>>>>>> Stashed changes
 
 
     }

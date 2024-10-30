@@ -4,6 +4,13 @@ using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
 using VestTour.Services;
 using VestTour.Domain.Enums;
+<<<<<<< Updated upstream
+=======
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using VestTour.Repository.ValidationHelper;
+>>>>>>> Stashed changes
 
 public class BookingService : IBookingService
 {
@@ -13,7 +20,11 @@ public class BookingService : IBookingService
     public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo)
     {
         _bookingRepository = bookingRepository;
+<<<<<<< Updated upstream
         _userRepo = userRepo; 
+=======
+        _userRepo = userRepo;
+>>>>>>> Stashed changes
     }
     public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
     {
@@ -100,7 +111,11 @@ public class BookingService : IBookingService
 
         var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
         response.Data = newBookingId;
+<<<<<<< Updated upstream
         response.Message = Success.BookingCreated; // Sử dụng thông báo thành công
+=======
+        response.Message = Success.BookingCreated; // Use a constant from Success class
+>>>>>>> Stashed changes
         return response;
     }
 

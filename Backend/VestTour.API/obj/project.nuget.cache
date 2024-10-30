@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "owR1JhS8F7E=",
+=======
+  "dgSpecHash": "sKJkgrGuMmM=",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "D:\\SECapstone\\VestTour\\VestTour.API\\VestTour.API.csproj",
   "expectedPackageFiles": [

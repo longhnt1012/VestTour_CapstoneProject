@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using VestTour.ValidationHelpers;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
+<<<<<<< Updated upstream
+=======
+using VestTour.Service.Helpers;
+>>>>>>> Stashed changes
 
 namespace VestTour.Service.Services
 {
@@ -43,6 +47,12 @@ namespace VestTour.Service.Services
                 return Error.EmailTaken;
             }
 
+<<<<<<< Updated upstream
+=======
+            // Hash the password before storing it
+            var hashedPassword = PasswordHelper.HashPassword(registerModel.Password);
+
+>>>>>>> Stashed changes
             var newUser = new UserModel
             {
                 Name = registerModel.Name,
@@ -50,20 +60,32 @@ namespace VestTour.Service.Services
                 Address = registerModel.Address,
                 Dob = registerModel.Dob,
                 Email = registerModel.Email,
+<<<<<<< Updated upstream
                 Password = registerModel.Password,
                 Status = "active",  // Set default status
                 IsConfirmed = true,
                 RoleId = 3       // Set default role as Customer (RoleID = 2)
+=======
+                Phone=registerModel.Phone,
+                Password = hashedPassword,  // Store the hashed password
+                Status = "active",
+                IsConfirmed = true,
+                RoleId = 3
+>>>>>>> Stashed changes
             };
 
             var result = await _userRepository.AddUserAsync(newUser);
 
+<<<<<<< Updated upstream
             if (result > 0)
             {
                 return Success.RegistrationSuccess;
             }
 
             return Error.RegistrationFailed;
+=======
+            return result > 0 ? Success.RegistrationSuccess : Error.RegistrationFailed;
+>>>>>>> Stashed changes
         }
     }
 }

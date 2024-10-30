@@ -12,6 +12,10 @@ using VestTour.Service.Interfaces;
 using VestTour.ValidationHelpers;
 using VestTour.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< Updated upstream
+=======
+using VestTour.Repository.Models;
+>>>>>>> Stashed changes
 
 namespace VestTour.Service.Services
 {
@@ -136,9 +140,38 @@ namespace VestTour.Service.Services
             }
 
             await _userRepository.UpdateUserAsync(id, updateUserModel);
+<<<<<<< Updated upstream
+=======
+        }
+        public async Task<List<UserModel>> GetUsersByRoleAsync(int roleId)
+        {
+            return await _userRepository.GetUsersByRoleIdAsync(roleId);
+>>>>>>> Stashed changes
         }
 
 
 
+<<<<<<< Updated upstream
+=======
+            await _userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
+        {
+            return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
+        }
+
+        public async Task ClearRefreshTokenAsync(int userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = null;
+                user.RefreshTokenExpiryTime = null;
+                await _userRepository.UpdateUserAsync(user);
+            }
+        }
+
+>>>>>>> Stashed changes
     }
 }

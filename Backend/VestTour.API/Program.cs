@@ -19,6 +19,10 @@ using VestTour.Service.Implementation;
 using VestTour.Services.Interfaces;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Repositories;
+<<<<<<< Updated upstream
+=======
+using VestTour.Repository.Services;
+>>>>>>> Stashed changes
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,7 +88,12 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<IProductStyleOptionRepository, ProductStyleOptionRepository>();
 
+<<<<<<< Updated upstream
 //builder.Services.AddScoped<ITokenService, TokenService>();
+=======
+builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+>>>>>>> Stashed changes
 //builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
@@ -102,6 +111,10 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
+<<<<<<< Updated upstream
+=======
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+>>>>>>> Stashed changes
 // Add PayPal Client service
 builder.Services.AddSingleton(x => new PaypalClient(
     builder.Configuration["PaypalOptions:AppId"],

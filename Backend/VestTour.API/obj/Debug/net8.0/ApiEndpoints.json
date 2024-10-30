@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customProduct",
-        "Type": "CustomProductModel",
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.AddToCartRequestModel",
         "IsRequired": true
       }
     ],

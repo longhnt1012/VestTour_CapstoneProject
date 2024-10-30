@@ -33,6 +33,7 @@ namespace VestTour.Service.Implementation
             // Thực hiện logic xử lý trước khi thêm đơn hàng
             var newOrder = new OrderModel
             {
+                UserID = order.UserID,
                 PaymentId = order.PaymentId,
                 StoreId = order.StoreId,
                 VoucherId = order.VoucherId,
@@ -41,7 +42,11 @@ namespace VestTour.Service.Implementation
                 ShippedDate = order.ShippedDate,
                 Note = order.Note,
                 Paid = order.Paid,
-                Status = order.Status ?? "pending" // Gán giá trị mặc định nếu không có
+                Status = order.Status ?? "pending",
+                BalancePayment = order.BalancePayment,
+                TotalPrice = order.TotalPrice,
+                Deposit= order.Deposit,
+                ShippingFee= order.ShippingFee
             };
 
             return await _orderRepository.AddOrderAsync(newOrder);

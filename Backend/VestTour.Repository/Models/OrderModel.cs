@@ -21,8 +21,10 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
-        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
-        public decimal? TotalPrice => Products.Sum(p => p.Price ?? 0m);
-
+       // public List<ProductModel> Products { get; set; } = new List<ProductModel>();
+        public decimal? TotalPrice { get; set; }
+        public decimal? Deposit { get; set; }
+        public decimal? ShippingFee { get; set; }
+        public decimal? BalancePayment { get; set; }
     }
 }

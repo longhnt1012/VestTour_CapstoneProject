@@ -267,13 +267,13 @@ public partial class VestTourDbContext : DbContext
 
         modelBuilder.Entity<ProductStyleOption>()
             .HasOne(pso => pso.Product)
-            .WithMany(p => p.ProductStyleOptions)
+            .WithMany(p => p.ProductStyleOption)
             .HasForeignKey(pso => pso.ProductId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 
         modelBuilder.Entity<ProductStyleOption>()
             .HasOne(pso => pso.StyleOption)
-            .WithMany(so => so.ProductStyleOptions)
+            .WithMany(so => so.ProductStyleOption)
             .HasForeignKey(pso => pso.StyleOptionId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 

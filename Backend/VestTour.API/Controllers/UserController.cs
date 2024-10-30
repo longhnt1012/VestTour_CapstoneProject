@@ -131,5 +131,30 @@ namespace VestTour.API.Controllers
         }
 
 
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+        {
+            var result = await _userService.ForgotPassword(model.Email);
+
+            if (result == Success.ResetEmailSent)
+            {
+                return Ok(new { Message = "Password reset email sent successfully." });
+            }
+
+            return BadRequest(new { Message = result });
+        }
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            var result = await _userService.ResetPasswordAsync(model.Token, model.NewPassword);
+
+            if (result == Success.PasswordResetSuccess)
+            {
+                return Ok(new { Message = "Password has been reset successfully." });
+            }
+
+            return BadRequest(new { Message = result });
+        }
     }
 }

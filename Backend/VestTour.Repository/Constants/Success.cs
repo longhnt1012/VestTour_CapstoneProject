@@ -46,5 +46,7 @@
          public const string BookingStatusUpdated = "Booking status has been successfully updated.";
 
         public static string OtpConfirmed { get; set; }
+        public static string ResetEmailSent { get; set; }
+        public static string PasswordResetSuccess { get; set; }
     }
 }

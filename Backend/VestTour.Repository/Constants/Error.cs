@@ -70,5 +70,6 @@
         public const string LiningNotFound = "Lining not found";
 
         public static string InvalidOtpOrExpired { get; set; }
+        public static string InvalidToken { get; set; }
     }
 }

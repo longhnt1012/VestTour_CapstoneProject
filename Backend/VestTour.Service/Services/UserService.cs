@@ -12,16 +12,20 @@ using VestTour.ValidationHelpers;
 using VestTour.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Repository.Models;
+using VestTour.Repository.Helpers;
+using VestTour.Service.Helpers;
 
 namespace VestTour.Service.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEmailHelper _emailHelper;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository,IEmailHelper emailHelper)
         {
             _userRepository = userRepository;
+            _emailHelper=emailHelper;
         }
 
         public async Task<User?> GetUserByIdAsync(int userId)
@@ -135,7 +139,7 @@ namespace VestTour.Service.Services
                 throw new KeyNotFoundException("User not found.");
             }
 
-            await _userRepository.UpdateUserAsync(id, updateUserModel);
+            await _userRepository.UpdateUserProfileAsync(id, updateUserModel);
         }
         public async Task<List<UserModel>> GetUsersByRoleAsync(int roleId)
         {
@@ -169,5 +173,46 @@ namespace VestTour.Service.Services
             }
         }
 
+        public async Task<string> ForgotPassword(string email)
+        {
+            var user= await _userRepository.GetUserByEmailAsync(email);
+            if(user == null)
+            {
+                return Error.UserNotFound;
+            }
+
+            var resetToken= Guid.NewGuid().ToString();
+            user.RefreshToken= resetToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddHours(1);
+
+            await _userRepository.UpdateUserAsync(user);
+
+            var resetLink = $"https://yourapp.com/reset-password?token={resetToken}";
+            var emailContent = $"Please reset your password by clicking here: {resetLink}";
+            await _emailHelper.SendEmailAsync(new EmailRequest
+            {
+                To = email,
+                Subject = "Password Reset Request",
+                Content = emailContent
+            });
+            return Success.ResetEmailSent;
+        }
+        public async Task<string> ResetPasswordAsync(string token, string newPassword)
+        {
+            var user = await _userRepository.GetUserByResetTokenAsync(token);
+            if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
+            {
+                return Error.InvalidToken; // Handle invalid token case
+            }
+
+            // Hash the new password
+            user.Password = PasswordHelper.HashPassword(newPassword);
+            user.RefreshToken = null; // Clear the reset token
+            user.RefreshTokenExpiryTime = null; // Clear the expiration time
+
+            await _userRepository.UpdatePasswordUser(user.UserId,user); // Ensure this method updates the user
+
+            return Success.PasswordResetSuccess; // Success message
+        }
     }
 }

@@ -56,6 +56,18 @@ namespace VestTourApi.Controllers
                 return BadRequest("Invalid OTP. Please try again.");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 
 

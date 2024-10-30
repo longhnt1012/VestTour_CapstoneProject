@@ -52,7 +52,7 @@ namespace VestTour.Repository.Implementation
             return newUser.UserId;
         }
 
-        public async Task UpdateUserAsync(int id, UpdateUserModel userModel)
+        public async Task UpdateUserProfileAsync(int id, UpdateUserModel userModel)
         {
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null)
@@ -160,7 +160,7 @@ namespace VestTour.Repository.Implementation
             }
 
 
-         
+
 
 
         }
@@ -175,5 +175,29 @@ namespace VestTour.Repository.Implementation
         //        await _context.SaveChangesAsync();
         //    }
         //}
+
+        public async Task<UserModel> GetUserByResetTokenAsync(string resetToken)
+        {
+            var token = await  _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
+
+            return _mapper.Map<UserModel>(token);
+        }
+
+        public async Task UpdatePasswordUser(int userId,UserModel user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User cannot be null.");
+            }
+
+            if (userId != user.UserId)
+            {
+                throw new ArgumentException("User ID mismatch");
+            }
+
+            var updateUser = _mapper.Map<User>(user);
+            _context.Users!.Update(updateUser);
+            await _context.SaveChangesAsync();
+        }
     }
 }

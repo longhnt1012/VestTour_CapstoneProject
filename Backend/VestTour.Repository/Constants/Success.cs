@@ -44,5 +44,7 @@
         public const string BookingRetrieved = "Booking retrieved successfully.";
         public const string TotalBookingsRetrieved = "Total bookings retrieved successfully.";
          public const string BookingStatusUpdated = "Booking status has been successfully updated.";
+
+        public static string OtpConfirmed { get; set; }
     }
 }

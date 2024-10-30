@@ -17,10 +17,10 @@ namespace VestTour.Repository.Interface
         Task UpdateUserStatusAsync(int userId, string status);// Update an existing user
         Task DeleteUserAsync(int userId);                         // Delete a user by ID
         Task<string?> GetUserRoleAsync(int userId);
-
+        public Task<User?> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(int userId);
         Task UpdateUserAsync(User user);
         Task<User> GetUserByRefreshTokenAsync(string refreshToken);
-
+        public Task UpdateEmailConfirmStatusAsync(string email, string status,bool Isconfirm);
     }
 }

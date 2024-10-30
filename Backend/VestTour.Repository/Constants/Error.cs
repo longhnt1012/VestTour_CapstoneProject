@@ -68,5 +68,7 @@
        
         public const string FailedDeleteLining = "Lining Deleted failed";
         public const string LiningNotFound = "Lining not found";
+
+        public static string InvalidOtpOrExpired { get; set; }
     }
 }

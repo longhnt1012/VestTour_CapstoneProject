@@ -32,10 +32,31 @@ namespace VestTourApi.Controllers
 
             if (result == Success.RegistrationSuccess)
             {
-                return Ok(result);
+                return Ok("User registered successfully! Please check your email for OTP.");
             }
 
             return BadRequest(result);
         }
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmRequest confirmEmailRequest)
+        {
+            if (string.IsNullOrWhiteSpace(confirmEmailRequest.Email) || string.IsNullOrWhiteSpace(confirmEmailRequest.Otp))
+            {
+                return BadRequest("Email and OTP are required.");
+            }
+
+            var isOtpValid = await _registerService.ConfirmEmailAsync(confirmEmailRequest.Email, confirmEmailRequest.Otp);
+
+            if (isOtpValid)
+            {
+                return Ok(new { Message = "Email confirmed successfully. Your account is now active." });
+            }
+            else
+            {
+                return BadRequest("Invalid OTP. Please try again.");
+            }
+        }
     }
+
+
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Constants;
+using VestTour.Repository.Helpers;
 
 namespace VestTour.Controllers
 {
@@ -11,10 +12,12 @@ namespace VestTour.Controllers
     public class LiningsController : ControllerBase
     {
         private readonly ILiningRepository _liningRepo;
+        private readonly IEmailHelper _emailHelper;
 
-        public LiningsController(ILiningRepository repo)
+        public LiningsController(ILiningRepository repo,IEmailHelper emailHelper)
         {
             _liningRepo = repo;
+            _emailHelper=emailHelper;
         }
 
         [HttpGet]
@@ -22,6 +25,7 @@ namespace VestTour.Controllers
         {
             try
             {
+                
                 return Ok(await _liningRepo.GetAllLiningAsync());
             }
             catch

@@ -6,6 +6,7 @@ using VestTour.Repository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Models;
+using System.Net.NetworkInformation;
 
 namespace VestTour.Repository.Implementation
 {
@@ -45,7 +46,7 @@ namespace VestTour.Repository.Implementation
         public async Task<int> AddUserAsync(UserModel user)
         {
             var newUser = _mapper.Map<User>(user);
-            newUser.Status = "active"; // Default status for new users
+
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return newUser.UserId;
@@ -132,7 +133,37 @@ namespace VestTour.Repository.Implementation
             }
         }
 
-      
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task UpdateUserStatusAsync(string email, string status, bool isConfirmed)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user != null)
+            {
+                user.Status = status;
+                user.IsConfirmed = isConfirmed;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateEmailConfirmStatusAsync(string email, string status, bool Isconfirm)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user != null)
+            {
+                user.Status = status;
+                user.IsConfirmed = Isconfirm;
+                await _context.SaveChangesAsync();
+            }
+
+
+         
+
+
+        }
         //public async Task ClearRefreshTokenAsync(int userId)
         //{
         //    var user = await _context.Users.FindAsync(userId);
@@ -144,7 +175,5 @@ namespace VestTour.Repository.Implementation
         //        await _context.SaveChangesAsync();
         //    }
         //}
-
-
     }
 }

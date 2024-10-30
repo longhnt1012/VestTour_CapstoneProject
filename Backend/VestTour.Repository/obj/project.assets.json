@@ -4528,19 +4528,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {}
+    "C:\\Users\\ACER\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SECapstone\\VestTour\\VestTour.Repository\\VestTour.Repository.csproj",
+      "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
       "projectName": "VestTour.Repository",
-      "projectPath": "D:\\SECapstone\\VestTour\\VestTour.Repository\\VestTour.Repository.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\SECapstone\\VestTour\\VestTour.Repository\\obj\\",
+      "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4555,8 +4560,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\SECapstone\\VestTour\\VestTour.Domain\\VestTour.Domain.csproj": {
-              "projectPath": "D:\\SECapstone\\VestTour\\VestTour.Domain\\VestTour.Domain.csproj"
+            "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj": {
+              "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj"
             }
           }
         }
@@ -4565,11 +4570,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4627,7 +4627,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -5,6 +5,8 @@ namespace VestTour.Service.Interface
 {
     public interface IRegisterService
     {
-        Task<string?> RegisterUserAsync(RegisterModel registerModel);
+        Task<string?> RegisterUserAsync( RegisterModel registerModel);
+
+        public Task<bool> ConfirmEmailAsync(string email, string otp);
     }
 }

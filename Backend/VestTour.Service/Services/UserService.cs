@@ -186,7 +186,7 @@ namespace VestTour.Service.Services
 
             await _userRepository.UpdateUserAsync(user);
 
-            var resetLink = $"https://yourapp.com/reset-password?token={resetToken}";
+            var resetLink = $"http://localhost:5173/new-password?token={resetToken}";
             var emailContent = $"Please reset your password by clicking here: {resetLink}";
             await _emailHelper.SendEmailAsync(new EmailRequest
             {

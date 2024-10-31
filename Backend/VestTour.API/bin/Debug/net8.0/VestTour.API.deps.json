@@ -1378,10 +1378,7 @@
           "System.Data.SqlClient": "4.8.6"
         },
         "runtime": {
-          "VestTour.Domain.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "VestTour.Domain.dll": {}
         }
       },
       "VestTour.Repository/1.0.0": {
@@ -1396,10 +1393,7 @@
           "VestTour.Domain": "1.0.0"
         },
         "runtime": {
-          "VestTour.Repository.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "VestTour.Repository.dll": {}
         }
       },
       "VestTour.Service/1.0.0": {
@@ -1413,10 +1407,7 @@
           "VestTour.Repository": "1.0.0"
         },
         "runtime": {
-          "VestTour.Service.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "VestTour.Service.dll": {}
         }
       }
     }

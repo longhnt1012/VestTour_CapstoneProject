@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {}
+    "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {}
   },
   "projects": {
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj": {
+    "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
+        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
         "projectName": "VestTour.Domain",
-        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
+        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\obj\\",
+        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -86,14 +86,14 @@
         }
       }
     },
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
+    "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
         "projectName": "VestTour.Repository",
-        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\obj\\",
+        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -115,8 +115,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj": {
-                "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj"
+              "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj": {
+                "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj"
               }
             }
           }
@@ -186,14 +186,14 @@
         }
       }
     },
-    "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {
+    "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+        "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
         "projectName": "VestTour.Service",
-        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+        "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\obj\\",
+        "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -215,8 +215,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
-                "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj"
+              "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
+                "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj"
               }
             }
           }

@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using VestTour.Repository.Helpers;
+using VestTour.Repository.Implementation;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
@@ -14,12 +15,14 @@ namespace VestTour.Service.Implementation
         private readonly IOrderRepository _orderRepository;
         private readonly IEmailHelper _emailHelper;
         private readonly IUserService _userService;
+        private readonly IAddCartRepository _cartRepo;
 
-        public OrderService(IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService)
+        public OrderService(IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo)
         {
             _orderRepository = orderRepository;
             _emailHelper = emailHelper;
             _userService = userService;
+            _cartRepo= cartRepo;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -157,5 +160,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
+        
+
     }
 }

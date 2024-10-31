@@ -15,5 +15,6 @@ namespace VestTour.Service.Interfaces
         Task<List<OrderModel>> GetOrdersByStoreIdAsync(int storeId);
         Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId);
         Task<OrderModel?> GetOrderDetailByIdAsync(int orderId);
+       
     }
 }

@@ -3,6 +3,7 @@ using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace VestTour.Repository.Implementation
 {
@@ -82,5 +83,6 @@ namespace VestTour.Repository.Implementation
             userCarts[userId] = updatedCart;
             await Task.CompletedTask;
         }
+        
     }
 }

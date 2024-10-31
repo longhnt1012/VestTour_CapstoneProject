@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7lQPogzSs5LVfsYtrKuooAJ60Z3BkCXBt6K7eOZTM3LHLMQhggNaN9DXeU6qHJYhWxkhQns4E6lLfMvgeTTItw==",
+  "dgSpecHash": "rAJbV790Eb3jSqA8uZe3P7BvvQuu72aRGOjV0tZ1J50+8ygG8NvFryGgmgz/iJQCNLo9UN+X4P681inEb5DX9A==",
   "success": true,
-  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
+  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\VestTour.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

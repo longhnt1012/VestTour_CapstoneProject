@@ -4,6 +4,8 @@ using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using VestTour.Service.Services;
 
 namespace VestTour.API.Controllers
 {
@@ -12,10 +14,14 @@ namespace VestTour.API.Controllers
     public class AddCartController : ControllerBase
     {
         private readonly IAddCartService _addCartService;
+        private readonly PaypalClient _paypalClient;
+        private readonly IOrderService _orderService;
 
-        public AddCartController(IAddCartService addCartService)
+        public AddCartController(IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService)
         {
             _addCartService = addCartService;
+            _paypalClient=paypalClient;
+            _orderService=orderService;
         }
 
         [HttpGet("mycart")]
@@ -81,6 +87,7 @@ namespace VestTour.API.Controllers
             {
                 await _addCartService.ConfirmOrderAsync(userId);
                 return Ok("Order confirmed successfully.");
+                
             }
             catch (KeyNotFoundException ex)
             {
@@ -93,6 +100,48 @@ namespace VestTour.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error: " + ex.Message); // Trả về lỗi máy chủ nếu có lỗi khác
+            }
+        }
+
+
+        [Authorize]
+        [HttpPost("/Cart/create-paypal-order")]
+        public async Task<IActionResult> CreatePaypalOrder(int userID, CancellationToken cancellationToken)
+        {
+            var totalPrice = await _addCartService.GetTotalPriceAsync(userID);
+            if (totalPrice <= 0)
+            {
+                return BadRequest("The cart is empty or has invalid items.");
+            }
+            var tongtien = totalPrice.ToString("F2");
+            var donViTienTe = "USD";
+            var maDonHangThamChieu = "OR" + DateTime.Now.Ticks.ToString();
+            try
+            {
+                var response = await _paypalClient.CreateOrder(tongtien, donViTienTe, maDonHangThamChieu);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
+        [Authorize]
+        [HttpPost("Cart/capture-paypal-order")]
+        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await _paypalClient.CaptureOrder(orderID);
+
+                //Lưu database thì xài create order
+                
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
 

@@ -162,6 +162,14 @@ namespace VestTour.Services
             await _addCartRepository.RemoveAllFromCartAsync(userId); // Bạn cần thêm phương thức này trong AddCartRepository
         }
 
+        public async Task<decimal> GetTotalPriceAsync(int userID)
+        {
+            var cart = await GetUserCartAsync(userID);
+
+            var totalPrice = cart.CartTotal;
+            return (decimal)totalPrice;
+        }
+
 
 
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DZZPYDQRbIC2dVhYk5RKDlhCNmDvjoy5gvzBkO3J+OhSt7mYmijM5wk9C4YX8xPI8gw6b48GFiqNazbrwbxJ9g==",
+  "dgSpecHash": "zmfRMOTstuunIRATQPSp8W1zYMl+2EzFbBkwtyjhl0TVis13cIkDx7j1JFzRdbMVDOJ9AIJqKRlADQvMySi8Vg==",
   "success": true,
-  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
+  "projectFilePath": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

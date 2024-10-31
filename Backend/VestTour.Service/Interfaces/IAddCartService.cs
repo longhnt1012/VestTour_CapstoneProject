@@ -12,5 +12,6 @@ namespace VestTour.Service.Interfaces
         Task DecreaseQuantityAsync(int userId, string productCode);
         Task IncreaseQuantityAsync(int userId, string productCode);
         Task ConfirmOrderAsync(int userId);
+        public Task<decimal> GetTotalPriceAsync(int userID);
     }
 }

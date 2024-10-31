@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using VestTour.Domain.Entities;
 using VestTour.Repository.Helpers;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
+using VestTour.Service.Services;
 
 namespace VestTour.Service.Implementation
 {
@@ -13,11 +13,13 @@ namespace VestTour.Service.Implementation
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IEmailHelper _emailHelper;
+        private readonly IUserService _userService;
 
-        public OrderService(IOrderRepository orderRepository,IEmailHelper emailHelper)
+        public OrderService(IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService)
         {
             _orderRepository = orderRepository;
-            _emailHelper=emailHelper;
+            _emailHelper = emailHelper;
+            _userService = userService;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -38,6 +40,7 @@ namespace VestTour.Service.Implementation
             // Thực hiện logic xử lý trước khi thêm đơn hàng
             var newOrder = new OrderModel
             {
+                UserID = order.UserID,
                 PaymentId = order.PaymentId,
                 StoreId = order.StoreId,
                 VoucherId = order.VoucherId,
@@ -46,7 +49,11 @@ namespace VestTour.Service.Implementation
                 ShippedDate = order.ShippedDate,
                 Note = order.Note,
                 Paid = order.Paid,
-                Status = order.Status ?? "pending" // Gán giá trị mặc định nếu không có
+                Status = order.Status ?? "pending",
+                BalancePayment = order.BalancePayment,
+                TotalPrice = order.TotalPrice,
+                Deposit= order.Deposit,
+                ShippingFee= order.ShippingFee
             };
             var subject = "Order Confirmation";
             var body = new StringBuilder();
@@ -55,7 +62,7 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"Thank you for your order! Your Order ID is: {order.OrderId}.");
             body.AppendLine();
             body.AppendLine($"Order Details:");
-            
+
             body.AppendLine($"- User ID: {order.UserID}");
             body.AppendLine($"- Payment ID: {order.PaymentId}");
             body.AppendLine($"- Store ID: {order.StoreId}");
@@ -63,13 +70,14 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"- Shipper Partner ID: {order.ShipperPartnerId}");
             body.AppendLine($"- Order Date: {order.OrderDate?.ToString("d")}");
             body.AppendLine($"- Shipped Date: {order.ShippedDate?.ToString("d")}");
+            
             body.AppendLine();
 
             // List the products in the order
             body.AppendLine($"\nProducts in your order:");
             foreach (var product in newOrder.Products)
             {
-                
+
                 body.AppendLine($"-- Product Code: {product.ProductCode}");
                 body.AppendLine($"-- Size: {product.Size}");
                 body.AppendLine($"-- Custom: {(product.IsCustom ? "Yes" : "No")}");
@@ -83,15 +91,28 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"- Note: {order.Note}");
             body.AppendLine($"- Paid: {(order.Paid ? "Yes" : "No")}");
             body.AppendLine($"- Status: {order.Status}");
-            body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}"); // Format as currency
+            body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
+            body.AppendLine($"-Shipping Fee:{order.ShippingFee}");
+            body.AppendLine($"-Deposit:{order.Deposit}");
+            body.AppendLine($"-Balance Payment{order.BalancePayment}");
             body.AppendLine("We appreciate your business and look forward to serving you again!");
             body.AppendLine("Best regards,");
             body.AppendLine("Matcha VestTailor Team");
 
+            string? userEmail = await _userService.GetEmailByUserIdAsync(order.UserID);
+
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                throw new Exception("User email not found.");
+            }
+
+            // Now `userEmail` contains the email address as a string
+
+
             // Create an email request object
             var emailRequest = new EmailRequest
             {
-                To = order.UserID.ToString(), // Ensure this is a valid email address
+                To = userEmail, // Assign the retrieved email
                 Subject = subject,
                 Content = body.ToString() // Set the email body
             };

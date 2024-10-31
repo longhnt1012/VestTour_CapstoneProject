@@ -32,11 +32,12 @@ namespace VestTourApi.Controllers
 
             if (result == Success.RegistrationSuccess)
             {
-                return Ok("User registered successfully! Please check your email for OTP.");
+                return Ok(result);
             }
 
             return BadRequest(result);
         }
+
         [HttpPost("confirm-email")]
         public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmRequest confirmEmailRequest)
         {
@@ -69,6 +70,4 @@ namespace VestTourApi.Controllers
             }
         }
     }
-
-
 }

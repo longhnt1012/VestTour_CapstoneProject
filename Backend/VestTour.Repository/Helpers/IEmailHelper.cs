@@ -9,8 +9,8 @@ namespace VestTour.Repository.Helpers
 {
     public interface IEmailHelper
     {
-       public Task SendEmailAsync( EmailRequest emailRequest);
-        
-        
+        public Task SendEmailAsync(EmailRequest emailRequest);
+
+
     }
 }

@@ -16,11 +16,11 @@ public class BookingService : IBookingService
     private readonly IUserRepository _userRepo; // Add IUserRepository for user details
     private readonly IEmailHelper _emailHelper;
 
-    public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo,IEmailHelper emailHelper)
+    public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo, IEmailHelper emailHelper)
     {
         _bookingRepository = bookingRepository;
         _userRepo = userRepo;
-        _emailHelper=emailHelper;
+        _emailHelper = emailHelper;
     }
 
     public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
@@ -115,19 +115,19 @@ public class BookingService : IBookingService
 
         var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
         response.Data = newBookingId;
-        response.Message = Success.BookingCreated;
+        response.Message = Success.BookingCreated; // Use a constant from Success class
         var emailRequest = new EmailRequest
         {
             To = booking.GuestEmail,
             Subject = "Booking Confirmation",
             Content = $"Dear {booking.GuestName},\n\nYour booking has been confirmed!\n\n" +
-                 $"Booking ID: {newBookingId}\n" +
-                 $"Service: {booking.Service}\n" +
-                 $"Date: {booking.BookingDate}\n" +
-                 $"Time: {booking.Time}\n" +
-                 $"Store ID: {booking.StoreId}\n" +
-                 $"Note: {booking.Note}\n\n" +
-                 "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
+                  $"Booking ID: {newBookingId}\n" +
+                  $"Service: {booking.Service}\n" +
+                  $"Date: {booking.BookingDate}\n" +
+                  $"Time: {booking.Time}\n" +
+                  $"Store ID: {booking.StoreId}\n" +
+                  $"Note: {booking.Note}\n\n" +
+                  "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
         };
 
         // Send email confirmation

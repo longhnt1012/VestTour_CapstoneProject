@@ -88,17 +88,17 @@ namespace VestTour.Service.Implementation
 
             return productDetails;
         }
-        public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
-        {
-            // Tạo và lưu ProductStyleOption vào database
-            var productStyleOption = new ProductStyleOptionModel
-            {
-                ProductId = productId,
-                StyleOptionId = styleOptionId
-            };
+        //public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
+        //{
+        //    // Tạo và lưu ProductStyleOption vào database
+        //    var productStyleOption = new ProductStyleOptionModel
+        //    {
+        //        ProductId = productId,
+        //        StyleOptionId = styleOptionId
+        //    };
 
-            await _productStyleOptionRepository.AddAsync(productStyleOption);
-        }
+        //    await _productStyleOptionRepository.AddProductStyleOptionAsync(productStyleOption);
+        //}
 
     }
 }

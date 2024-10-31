@@ -402,7 +402,7 @@ namespace VestTour.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductStyleOptions",
+                name: "ProductStyleOption",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -410,14 +410,14 @@ namespace VestTour.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductStyleOptions", x => new { x.ProductId, x.StyleOptionId });
+                    table.PrimaryKey("PK_ProductStyleOption", x => new { x.ProductId, x.StyleOptionId });
                     table.ForeignKey(
-                        name: "FK_ProductStyleOptions_Product_ProductId",
+                        name: "FK_ProductStyleOption_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ProductID");
                     table.ForeignKey(
-                        name: "FK_ProductStyleOptions_StyleOption_StyleOptionId",
+                        name: "FK_ProductStyleOption_StyleOption_StyleOptionId",
                         column: x => x.StyleOptionId,
                         principalTable: "StyleOption",
                         principalColumn: "StyleOptionID");
@@ -564,8 +564,8 @@ namespace VestTour.Repository.Migrations
                 column: "StyleOptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductStyleOptions_StyleOptionId",
-                table: "ProductStyleOptions",
+                name: "IX_ProductStyleOption_StyleOptionId",
+                table: "ProductStyleOption",
                 column: "StyleOptionId");
 
             migrationBuilder.CreateIndex(
@@ -613,7 +613,7 @@ namespace VestTour.Repository.Migrations
                 name: "ProductStyleOption");
 
             migrationBuilder.DropTable(
-                name: "ProductStyleOptions");
+                name: "ProductStyleOption");
 
             migrationBuilder.DropTable(
                 name: "Order");

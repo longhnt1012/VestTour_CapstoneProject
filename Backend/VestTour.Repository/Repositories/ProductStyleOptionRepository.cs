@@ -22,7 +22,7 @@ namespace VestTour.Repository.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddAsync(ProductStyleOptionModel productStyleOption)
+        public async Task AddProductStyleOptionAsync(ProductStyleOptionModel productStyleOption)
         {
             var productOption = _mapper.Map<ProductStyleOption>(productStyleOption);
             _context.ProductStyleOptions.Add(productOption);
@@ -36,6 +36,14 @@ namespace VestTour.Repository.Repositories
             return await _context.ProductStyleOptions
                                 .Where(p => p.ProductId == productId)
                                 .ToListAsync();
+        }
+        public async Task DeleteByProductIdAsync(int productId)
+        {
+            var optionsToDelete = await _context.ProductStyleOptions
+                                                .Where(p => p.ProductId == productId)
+                                                .ToListAsync();
+            _context.ProductStyleOptions.RemoveRange(optionsToDelete);
+            await _context.SaveChangesAsync();
         }
     }
 }

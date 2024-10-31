@@ -9,7 +9,7 @@ namespace VestTour.Repository.Implementation
     public class AddCartRepository : IAddCartRepository
     {
         private static Dictionary<int, List<CartItemModel>> userCarts = new Dictionary<int, List<CartItemModel>>();
-
+        private static int _nextCartItemId = 1;
         public async Task AddToCartAsync(int userId, CartItemModel cartItem)
         {
             if (!userCarts.ContainsKey(userId))
@@ -18,8 +18,21 @@ namespace VestTour.Repository.Implementation
             }
 
             var cart = userCarts[userId];
-            // Tìm kiếm theo thuộc tính của CustomProduct, ví dụ như ProductCode
-            var existingItem = cart.FirstOrDefault(c => c.CustomProduct.ProductCode == cartItem.CustomProduct.ProductCode);
+            var existingItem = cart.FirstOrDefault(c =>
+        (!cartItem.IsCustom && c.ProductID == cartItem.ProductID) || // Regular product match
+        (cartItem.IsCustom && c.CustomProduct != null && c.CustomProduct.ProductCode == cartItem.CustomProduct.ProductCode) // Custom product match
+    );
+          
+            if (cartItem.IsCustom && cartItem.CustomProduct != null)
+            {
+                // For custom products, identify by ProductCode
+                existingItem = cart.FirstOrDefault(c => c.IsCustom && c.CustomProduct.ProductCode == cartItem.CustomProduct.ProductCode);
+            }
+            else
+            {
+               
+                existingItem = cart.FirstOrDefault(c => !c.IsCustom && c.Product?.ProductID == cartItem.Product.ProductID);
+            }
 
             if (existingItem != null)
             {
@@ -27,46 +40,41 @@ namespace VestTour.Repository.Implementation
             }
             else
             {
+                cartItem.CartItemId = _nextCartItemId++;
                 cart.Add(cartItem);
-            }
-
-            await Task.CompletedTask; // Chuyển đổi sang phương thức bất đồng bộ nếu cần
-        }
-        public async Task RemoveAllFromCartAsync(int userId)
-        {
-            if (userCarts.ContainsKey(userId))
-            {
-                userCarts[userId].Clear(); // Xóa tất cả sản phẩm trong giỏ hàng
             }
 
             await Task.CompletedTask;
         }
 
-        public async Task RemoveFromCartAsync(int userId, string productCode) // Thay đổi tham số từ int sang string
+        public async Task RemoveFromCartAsync(int userId, string productCode)
         {
             if (userCarts.ContainsKey(userId))
             {
                 var cart = userCarts[userId];
-                // Tìm kiếm theo ProductCode
-                var existingItem = cart.FirstOrDefault(c => c.CustomProduct.ProductCode == productCode);
-
+                var existingItem = cart.FirstOrDefault(c => c.IsCustom && c.CustomProduct.ProductCode == productCode);
                 if (existingItem != null)
                 {
                     cart.Remove(existingItem);
                 }
             }
 
-            await Task.CompletedTask; 
+            await Task.CompletedTask;
+        }
+
+        public async Task RemoveAllFromCartAsync(int userId)
+        {
+            if (userCarts.ContainsKey(userId))
+            {
+                userCarts[userId].Clear();
+            }
+
+            await Task.CompletedTask;
         }
 
         public async Task<List<CartItemModel>> GetUserCartAsync(int userId)
         {
-            if (userCarts.ContainsKey(userId))
-            {
-                return await Task.FromResult(userCarts[userId]);
-            }
-
-            return new List<CartItemModel>();
+            return userCarts.ContainsKey(userId) ? await Task.FromResult(userCarts[userId]) : new List<CartItemModel>();
         }
 
         public async Task UpdateCartAsync(int userId, List<CartItemModel> updatedCart)

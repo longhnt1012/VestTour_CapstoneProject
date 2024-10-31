@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customProduct",
-        "Type": "CustomProductModel",
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.AddToCartRequestModel",
         "IsRequired": true
       }
     ],
@@ -1221,6 +1221,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTourApi.Controllers.RegisterController",
+    "Method": "ForgetPassword",
+    "RelativePath": "api/Register",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTourApi.Controllers.RegisterController",
+    "Method": "ConfirmEmail",
+    "RelativePath": "api/Register/confirm-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "confirmEmailRequest",
+        "Type": "VestTour.Repository.Models.ConfirmRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.RoleController",
     "Method": "GetRoles",
     "RelativePath": "api/Role",
@@ -1990,6 +2022,38 @@
       {
         "Name": "status",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/User/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VestTour.Repository.Models.ForgotPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/User/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VestTour.Repository.Models.ResetPasswordModel",
         "IsRequired": true
       }
     ],

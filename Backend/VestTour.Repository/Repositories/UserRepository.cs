@@ -6,7 +6,6 @@ using VestTour.Repository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Models;
-using System.Net.NetworkInformation;
 
 namespace VestTour.Repository.Implementation
 {
@@ -46,13 +45,13 @@ namespace VestTour.Repository.Implementation
         public async Task<int> AddUserAsync(UserModel user)
         {
             var newUser = _mapper.Map<User>(user);
-
+            newUser.Status = "active"; // Default status for new users
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return newUser.UserId;
         }
-
-        public async Task UpdateUserProfileAsync(int id, UpdateUserModel userModel)
+       
+        public async Task UpdateUserAsync(int id, UpdateUserModel userModel)
         {
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null)
@@ -107,6 +106,17 @@ namespace VestTour.Repository.Implementation
 
             return user?.Role?.RoleName;
         }
+        public async Task UpdateEmailConfirmStatusAsync(string email, string status, bool Isconfirm)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user != null)
+            {
+                user.Status = status;
+                user.IsConfirmed = Isconfirm;
+                await _context.SaveChangesAsync();
+            }
+
+        }
         public async Task UpdateUserStatusAsync(int userId, string status)
         {
             var existingUser = await _context.Users.FindAsync(userId);
@@ -148,22 +158,6 @@ namespace VestTour.Repository.Implementation
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task UpdateEmailConfirmStatusAsync(string email, string status, bool Isconfirm)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user != null)
-            {
-                user.Status = status;
-                user.IsConfirmed = Isconfirm;
-                await _context.SaveChangesAsync();
-            }
-
-
-
-
-
-        }
         //public async Task ClearRefreshTokenAsync(int userId)
         //{
         //    var user = await _context.Users.FindAsync(userId);
@@ -178,12 +172,12 @@ namespace VestTour.Repository.Implementation
 
         public async Task<UserModel> GetUserByResetTokenAsync(string resetToken)
         {
-            var token = await  _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
+            var token = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
 
             return _mapper.Map<UserModel>(token);
         }
 
-        public async Task UpdatePasswordUser(int userId,UserModel user)
+        public async Task UpdatePasswordUser(int userId, UserModel user)
         {
             if (user == null)
             {
@@ -199,5 +193,11 @@ namespace VestTour.Repository.Implementation
             _context.Users!.Update(updateUser);
             await _context.SaveChangesAsync();
         }
+        public async Task<string?> GetEmailByUserIdAsync(int? userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            return user?.Email;
+        }
+
     }
 }

@@ -23,7 +23,7 @@ namespace VestTour.Repository.Helpers
 
         }
 
-        public async Task SendEmailAsync( EmailRequest emailRequest)
+        public async Task SendEmailAsync(EmailRequest emailRequest)
         {
             using var smtp = new SmtpClient(_emailConfig.Provider, _emailConfig.Port)
             {

@@ -19,9 +19,9 @@ using VestTour.Service.Implementation;
 using VestTour.Services.Interfaces;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Repositories;
+using VestTour.Repository.Services;
 using VestTour.Repository.Configuration;
 using VestTour.Repository.Helpers;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
@@ -87,6 +87,7 @@ builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<IProductStyleOptionRepository, ProductStyleOptionRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
+builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 //builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -113,7 +114,6 @@ builder.Services.AddScoped<IEmailHelper, EmailHelper>();
 // Add IMemoryCache 
 builder.Services.AddMemoryCache(); // For in-memory cache
 builder.Services.AddScoped<OtpService>();
-
 // Add PayPal Client service
 builder.Services.AddSingleton(x => new PaypalClient(
     builder.Configuration["PaypalOptions:AppId"],

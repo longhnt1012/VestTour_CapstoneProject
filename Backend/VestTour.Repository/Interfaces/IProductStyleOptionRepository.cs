@@ -10,7 +10,8 @@ namespace VestTour.Repository.Interfaces
 {
     public interface IProductStyleOptionRepository
     {
-        Task AddAsync(ProductStyleOptionModel productStyleOption);
+        Task AddProductStyleOptionAsync(ProductStyleOptionModel productStyleOption);
         Task<IEnumerable<ProductStyleOption>> GetByProductIdAsync(int productId);
+        Task DeleteByProductIdAsync(int productId);
     }
 }

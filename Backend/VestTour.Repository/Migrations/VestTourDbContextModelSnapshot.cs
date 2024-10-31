@@ -499,7 +499,7 @@ namespace VestTour.Repository.Migrations
 
                     b.HasIndex("StyleOptionId");
 
-                    b.ToTable("ProductStyleOptions");
+                    b.ToTable("ProductStyleOption");
                 });
 
             modelBuilder.Entity("VestTour.Domain.Entities.Role", b =>
@@ -919,12 +919,12 @@ namespace VestTour.Repository.Migrations
             modelBuilder.Entity("VestTour.Domain.Entities.ProductStyleOption", b =>
                 {
                     b.HasOne("VestTour.Domain.Entities.Product", "Product")
-                        .WithMany("ProductStyleOptions")
+                        .WithMany("ProductStyleOption")
                         .HasForeignKey("ProductId")
                         .IsRequired();
 
                     b.HasOne("VestTour.Domain.Entities.StyleOption", "StyleOption")
-                        .WithMany("ProductStyleOptions")
+                        .WithMany("ProductStyleOption")
                         .HasForeignKey("StyleOptionId")
                         .IsRequired();
 
@@ -1001,7 +1001,7 @@ namespace VestTour.Repository.Migrations
 
             modelBuilder.Entity("VestTour.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("ProductStyleOptions");
+                    b.Navigation("ProductStyleOption");
                 });
 
             modelBuilder.Entity("VestTour.Domain.Entities.Role", b =>
@@ -1028,7 +1028,7 @@ namespace VestTour.Repository.Migrations
 
             modelBuilder.Entity("VestTour.Domain.Entities.StyleOption", b =>
                 {
-                    b.Navigation("ProductStyleOptions");
+                    b.Navigation("ProductStyleOption");
                 });
 
             modelBuilder.Entity("VestTour.Domain.Entities.User", b =>

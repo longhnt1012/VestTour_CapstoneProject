@@ -5,7 +5,6 @@ using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
 using VestTour.Service.Helpers;
 using VestTour.Repository.Helpers;
-using VestTour.Service.Interfaces;
 
 namespace VestTour.Service.Services
 {
@@ -19,10 +18,9 @@ namespace VestTour.Service.Services
         {
             _userRepository = userRepository;
             _emailHelper = emailHelper;
-            _otpService=otpService;
+            _otpService = otpService;
         }
 
-      
 
         public async Task<string> RegisterUserAsync(RegisterModel registerModel)
         {
@@ -53,12 +51,8 @@ namespace VestTour.Service.Services
 
             // Hash the password before storing it
             var hashedPassword = PasswordHelper.HashPassword(registerModel.Password);
-
-
             // Generate OTP
             var otp = _otpService.GenerateAndStoreOtp(registerModel.Email);
-            
-
             var newUser = new UserModel
             {
                 Name = registerModel.Name,
@@ -66,11 +60,11 @@ namespace VestTour.Service.Services
                 Address = registerModel.Address,
                 Dob = registerModel.Dob,
                 Email = registerModel.Email,
-                Phone = registerModel.Phone,
-                Password = hashedPassword,
-                Status = "pending",
-                IsConfirmed = false,
-                RoleId=3
+                Phone=registerModel.Phone,
+                Password = hashedPassword,  // Store the hashed password
+                Status = "active",
+                IsConfirmed = true,
+                RoleId = 3
             };
 
             var result = await _userRepository.AddUserAsync(newUser);
@@ -101,7 +95,5 @@ namespace VestTour.Service.Services
 
             return isOtpValid;
         }
-
-
     }
 }

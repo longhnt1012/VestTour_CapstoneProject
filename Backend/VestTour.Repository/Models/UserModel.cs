@@ -26,7 +26,5 @@
         // Add RefreshToken properties to the UserModel
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
-
-
     }
 }

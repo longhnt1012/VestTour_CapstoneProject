@@ -130,8 +130,6 @@ namespace VestTour.API.Controllers
             return Ok(users);
         }
 
-
-
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {

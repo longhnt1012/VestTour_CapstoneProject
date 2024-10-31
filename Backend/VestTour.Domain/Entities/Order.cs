@@ -30,9 +30,9 @@ public partial class Order
     public decimal? TotalPrice { get; set; }
 
     public decimal? Deposit { get; set; }
-
+    public decimal? ShippingFee { get; set; }
     public decimal? BalancePayment { get; set; }
-
+   
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual Payment? Payment { get; set; }

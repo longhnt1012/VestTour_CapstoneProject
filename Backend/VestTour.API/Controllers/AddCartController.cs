@@ -28,12 +28,26 @@ namespace VestTour.API.Controllers
 
 
         [HttpPost("addtocart")]
-        public async Task<IActionResult> AddToCart([FromBody] CustomProductModel customProduct)
+        public async Task<IActionResult> AddToCart([FromBody] AddToCartRequestModel request)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _addCartService.AddToCartAsync(userId, customProduct);
+
+            if (request.IsCustom)
+            {
+                await _addCartService.AddToCartAsync(userId, true, customProduct: request.CustomProduct);
+            }
+            else if (request.ProductId.HasValue)
+            {
+                await _addCartService.AddToCartAsync(userId, false, productId: request.ProductId.Value);
+            }
+            else
+            {
+                return BadRequest("Invalid product information.");
+            }
+
             return Ok("Product added to cart.");
         }
+
 
 
         [HttpDelete("removefromcart/{productCode}")]

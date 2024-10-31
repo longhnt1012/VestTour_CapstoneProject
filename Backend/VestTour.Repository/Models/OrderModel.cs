@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using VestTour.Domain.Entities;
 
 namespace VestTour.Repository.Models
@@ -21,8 +22,11 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
+        [JsonIgnore]
         public List<ProductModel> Products { get; set; } = new List<ProductModel>();
-        public decimal? TotalPrice => Products.Sum(p => p.Price ?? 0m);
-
+        public decimal? TotalPrice { get; set; }
+        public decimal? Deposit { get; set; }
+        public decimal? ShippingFee { get; set; }
+        public decimal? BalancePayment { get; set; }
     }
 }

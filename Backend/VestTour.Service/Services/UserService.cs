@@ -12,8 +12,8 @@ using VestTour.ValidationHelpers;
 using VestTour.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Repository.Models;
-using VestTour.Repository.Helpers;
 using VestTour.Service.Helpers;
+using VestTour.Repository.Helpers;
 
 namespace VestTour.Service.Services
 {
@@ -22,10 +22,10 @@ namespace VestTour.Service.Services
         private readonly IUserRepository _userRepository;
         private readonly IEmailHelper _emailHelper;
 
-        public UserService(IUserRepository userRepository,IEmailHelper emailHelper)
+        public UserService(IUserRepository userRepository, IEmailHelper emailHelper)
         {
             _userRepository = userRepository;
-            _emailHelper=emailHelper;
+            _emailHelper = emailHelper;
         }
 
         public async Task<User?> GetUserByIdAsync(int userId)
@@ -139,7 +139,7 @@ namespace VestTour.Service.Services
                 throw new KeyNotFoundException("User not found.");
             }
 
-            await _userRepository.UpdateUserProfileAsync(id, updateUserModel);
+            await _userRepository.UpdateUserAsync(id, updateUserModel);
         }
         public async Task<List<UserModel>> GetUsersByRoleAsync(int roleId)
         {
@@ -172,17 +172,16 @@ namespace VestTour.Service.Services
                 await _userRepository.UpdateUserAsync(user);
             }
         }
-
         public async Task<string> ForgotPassword(string email)
         {
-            var user= await _userRepository.GetUserByEmailAsync(email);
-            if(user == null)
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null)
             {
                 return Error.UserNotFound;
             }
 
-            var resetToken= Guid.NewGuid().ToString();
-            user.RefreshToken= resetToken;
+            var resetToken = Guid.NewGuid().ToString();
+            user.RefreshToken = resetToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddHours(1);
 
             await _userRepository.UpdateUserAsync(user);
@@ -210,9 +209,15 @@ namespace VestTour.Service.Services
             user.RefreshToken = null; // Clear the reset token
             user.RefreshTokenExpiryTime = null; // Clear the expiration time
 
-            await _userRepository.UpdatePasswordUser(user.UserId,user); // Ensure this method updates the user
+            await _userRepository.UpdatePasswordUser(user.UserId, user); // Ensure this method updates the user
 
             return Success.PasswordResetSuccess; // Success message
         }
+        public async Task<string?> GetEmailByUserIdAsync(int? userId)
+        {
+            return await _userRepository.GetEmailByUserIdAsync(userId);
+        }
+
+
     }
 }

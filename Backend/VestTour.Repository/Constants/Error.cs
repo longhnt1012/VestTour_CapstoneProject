@@ -2,7 +2,6 @@
 {
     public static class Error
     {
-        // User-related errors
         public const string InvalidEmail = "Invalid email format.";
         public const string InvalidUserStatus = "Invalid user status";
         public const string InvalidPassword = "Password must be between 6 and 18 characters.";
@@ -22,7 +21,7 @@
         public const string FabricUpdateFailed = "Failed to update fabric.";
         public const string FabricDeleteFailed = "Failed to delete fabric.";
         public const string InvalidInputData = "Invalid input data.";
-        
+
         // bang voucher
         public const string VoucherNotFound = "Voucher not found.";
         public const string VoucherAddFailed = "Failed to add voucher.";
@@ -47,7 +46,7 @@
         public const string CategoryIDmismatch = "Category ID mismatch.";
         // Additional errors
         public const string UnknownError = "An unknown error occurred. Please try again.";
-       
+
 
         //Booking error
         public const string InvalidBookingId = "The booking ID is invalid.";
@@ -65,7 +64,7 @@
         public const string InvalidMeasurementId = "Invalid Measurement ID.";
         public const string MeasurementNotFound = "Measurement not found.";
         //Lining table
-       
+
         public const string FailedDeleteLining = "Lining Deleted failed";
         public const string LiningNotFound = "Lining not found";
 

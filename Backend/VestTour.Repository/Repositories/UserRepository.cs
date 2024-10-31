@@ -22,16 +22,15 @@ namespace VestTour.Repository.Implementation
         public async Task<List<UserModel>> GetUsersByRoleIdAsync(int roleId)
         {
             var users = await _context.Users
-                .Where(u => u.RoleId == roleId)
+                .Where(u => u.RoleId == roleId && u.Status == "active" && u.IsConfirmed == true)
                 .ToListAsync();
             return _mapper.Map<List<UserModel>>(users);
         }
-
         public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string hashedPassword)
         {
             return await _context.Users
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword);
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword && u.Status == "active" && u.IsConfirmed == true);
         }
 
 

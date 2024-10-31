@@ -62,8 +62,8 @@ namespace VestTour.Service.Services
                 Email = registerModel.Email,
                 Phone=registerModel.Phone,
                 Password = hashedPassword,  // Store the hashed password
-                Status = "active",
-                IsConfirmed = true,
+                Status = "deactive",
+                IsConfirmed = false,
                 RoleId = 3
             };
 

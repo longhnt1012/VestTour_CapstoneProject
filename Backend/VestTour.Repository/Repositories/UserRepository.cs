@@ -94,7 +94,9 @@ namespace VestTour.Repository.Implementation
 
         public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+            return await _context.Users
+        .AsNoTracking() // Prevents Entity Framework from tracking the entity
+        .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
         }
 
         public async Task<string?> GetUserRoleAsync(int userId)
@@ -171,9 +173,9 @@ namespace VestTour.Repository.Implementation
 
         public async Task<UserModel> GetUserByResetTokenAsync(string resetToken)
         {
-            var token = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken );
 
-            return _mapper.Map<UserModel>(token);
+            return _mapper.Map<UserModel>(user);
         }
 
         public async Task UpdatePasswordUser(int userId, UserModel user)
@@ -187,9 +189,18 @@ namespace VestTour.Repository.Implementation
             {
                 throw new ArgumentException("User ID mismatch");
             }
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            if (existingUser == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
 
-            var updateUser = _mapper.Map<User>(user);
-            _context.Users!.Update(updateUser);
+            // Map the properties from userModel to the existing tracked entity
+            existingUser.Password = user.Password;
+            existingUser.RefreshToken = user.RefreshToken;
+            existingUser.RefreshTokenExpiryTime = user.RefreshTokenExpiryTime;
+
+            // No need to call Update() here as EF is already tracking existingUser
             await _context.SaveChangesAsync();
         }
         public async Task<string?> GetEmailByUserIdAsync(int? userId)
@@ -198,5 +209,11 @@ namespace VestTour.Repository.Implementation
             return user?.Email;
         }
 
+        public async Task UpdateUserPasswordAsync(UserModel user)
+        {
+            var updateUser = _mapper.Map<User>(user);
+            _context.Users!.Update(updateUser);
+            await _context.SaveChangesAsync();
+        }
     }
 }

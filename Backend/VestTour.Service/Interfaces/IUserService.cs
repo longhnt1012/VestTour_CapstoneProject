@@ -23,6 +23,6 @@ namespace VestTour.Service.Interfaces
         Task UpdateRefreshTokenAsync(int userId, string refreshToken, DateTime refreshTokenExpiryTime);
         Task<string> ForgotPassword(string email);
         Task<string?> GetEmailByUserIdAsync(int? userId);
-        Task<string> ResetPasswordAsync(string token, string newPassword);
+       
     }
 }

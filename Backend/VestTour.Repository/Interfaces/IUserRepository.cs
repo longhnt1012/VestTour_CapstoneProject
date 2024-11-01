@@ -20,6 +20,8 @@ namespace VestTour.Repository.Interface
         public Task<User?> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(int userId);
         Task UpdateUserAsync(User user);
+
+        public Task UpdateUserPasswordAsync(UserModel user);
         Task<User> GetUserByRefreshTokenAsync(string refreshToken);
         public Task UpdateEmailConfirmStatusAsync(string email, string status, bool Isconfirm);
         Task<UserModel> GetUserByResetTokenAsync(string resetToken);

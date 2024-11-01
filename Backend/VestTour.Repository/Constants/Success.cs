@@ -48,5 +48,6 @@
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }
+        public static string ValidatePassword { get; set; }
     }
 }

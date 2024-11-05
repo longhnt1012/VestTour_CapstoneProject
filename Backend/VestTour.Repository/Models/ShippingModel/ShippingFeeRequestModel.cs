@@ -18,6 +18,6 @@ namespace VestTour.Repository.Models.ShippingModel
         public int Length { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public int ShopId { get; set; }
+        public int ShopCode { get; set; }
     }
 }

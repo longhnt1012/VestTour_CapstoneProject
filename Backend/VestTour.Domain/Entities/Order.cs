@@ -30,10 +30,20 @@ public partial class Order
     public decimal? TotalPrice { get; set; }
 
     public decimal? Deposit { get; set; }
-    public decimal? ShippingFee { get; set; }
+
     public decimal? BalancePayment { get; set; }
-   
+
+    public decimal? ShippingFee { get; set; }
+
+    public string? GuestName { get; set; }
+
+    public string? GuestEmail { get; set; }
+
+    public string? GuestAddress { get; set; }
+
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual Payment? Payment { get; set; }
 
@@ -44,6 +54,4 @@ public partial class Order
     public virtual User? User { get; set; }
 
     public virtual Voucher? Voucher { get; set; }
-
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

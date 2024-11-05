@@ -53,7 +53,16 @@ namespace VestTour.Repository.Implementation
                 await _context.SaveChangesAsync();
             }
         }
-
+        //public async Task AddProductStyleOptionAsync(ProductStyleOptionModel model)
+        //{
+        //    var entity = new ProductStyleOption
+        //    {
+        //        ProductId = model.ProductId,
+        //        StyleOptionId = model.StyleOptionId
+        //    };
+        //    _context.ProductStyleOptions.Add(entity);
+        //    await _context.SaveChangesAsync();
+        //}
         public async Task DeleteProductAsync(int productId)
         {
             var product = await _context.Products.FindAsync(productId);

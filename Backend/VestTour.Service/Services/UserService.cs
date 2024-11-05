@@ -196,13 +196,28 @@ namespace VestTour.Service.Services
             });
             return Success.ResetEmailSent;
         }
-       
+        public async Task<string> ResetPasswordAsync(string token, string newPassword)
+        {
+            var user = await _userRepository.GetUserByResetTokenAsync(token);
+            if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
+            {
+                return Error.InvalidToken; // Handle invalid token case
+            }
+
+            // Hash the new password
+            user.Password = PasswordHelper.HashPassword(newPassword);
+            user.RefreshToken = null; // Clear the reset token
+            user.RefreshTokenExpiryTime = null; // Clear the expiration time
+
+            await _userRepository.UpdatePasswordUser(user.UserId, user); // Ensure this method updates the user
+
+            return Success.PasswordResetSuccess; // Success message
+        }
         public async Task<string?> GetEmailByUserIdAsync(int? userId)
         {
             return await _userRepository.GetEmailByUserIdAsync(userId);
         }
 
-        
-        
+
     }
 }

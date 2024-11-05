@@ -97,6 +97,9 @@ namespace VestTour.Repository.Migrations
                     b.Property<DateOnly?>("BookingDate")
                         .HasColumnType("date");
 
+                    b.Property<decimal?>("DepositCost")
+                        .HasColumnType("decimal(10, 2)");
+
                     b.Property<string>("GuestEmail")
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -112,6 +115,10 @@ namespace VestTour.Repository.Migrations
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("Note")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Service")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -281,10 +288,16 @@ namespace VestTour.Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MeasurementId"));
 
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("Armhole")
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<decimal?>("Biceps")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<decimal?>("Chest")
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<decimal?>("Crotch")
@@ -296,6 +309,9 @@ namespace VestTour.Repository.Migrations
                     b.Property<decimal?>("Hip")
                         .HasColumnType("decimal(5, 2)");
 
+                    b.Property<decimal?>("JacketLength")
+                        .HasColumnType("decimal(5, 2)");
+
                     b.Property<decimal?>("Neck")
                         .HasColumnType("decimal(5, 2)");
 
@@ -303,6 +319,12 @@ namespace VestTour.Repository.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<decimal?>("PantsWaist")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<decimal?>("Shoulder")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<decimal?>("SleeveLength")
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<decimal?>("Thigh")
@@ -335,6 +357,12 @@ namespace VestTour.Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
+                    b.Property<decimal?>("BalancePayment")
+                        .HasColumnType("decimal(10, 2)");
+
+                    b.Property<decimal?>("Deposit")
+                        .HasColumnType("decimal(10, 2)");
+
                     b.Property<string>("Note")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -356,6 +384,9 @@ namespace VestTour.Repository.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ShipperPartnerID");
 
+                    b.Property<decimal?>("ShippingFee")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Status")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -364,7 +395,7 @@ namespace VestTour.Repository.Migrations
                         .HasColumnType("int")
                         .HasColumnName("StoreID");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(10, 2)");
 
                     b.Property<int?>("UserId")
@@ -473,6 +504,12 @@ namespace VestTour.Repository.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Size")
+                        .HasMaxLength(3)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("Size");
+
                     b.HasKey("ProductId")
                         .HasName("PK__Product__B40CC6ED51B9E1F7");
 
@@ -487,6 +524,24 @@ namespace VestTour.Repository.Migrations
                     b.ToTable("Product", (string)null);
                 });
 
+            modelBuilder.Entity("VestTour.Domain.Entities.ProductInventory", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProductID");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId")
+                        .HasName("PK__ProductI__B40CC6ED0607B01D");
+
+                    b.ToTable("ProductInventory", (string)null);
+                });
+
             modelBuilder.Entity("VestTour.Domain.Entities.ProductStyleOption", b =>
                 {
                     b.Property<int>("ProductId")
@@ -499,7 +554,7 @@ namespace VestTour.Repository.Migrations
 
                     b.HasIndex("StyleOptionId");
 
-                    b.ToTable("ProductStyleOption");
+                    b.ToTable("ProductStyleOptions");
                 });
 
             modelBuilder.Entity("VestTour.Domain.Entities.Role", b =>
@@ -693,7 +748,7 @@ namespace VestTour.Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int")
@@ -916,6 +971,17 @@ namespace VestTour.Repository.Migrations
                     b.Navigation("Measurement");
                 });
 
+            modelBuilder.Entity("VestTour.Domain.Entities.ProductInventory", b =>
+                {
+                    b.HasOne("VestTour.Domain.Entities.Product", "Product")
+                        .WithOne("ProductInventory")
+                        .HasForeignKey("VestTour.Domain.Entities.ProductInventory", "ProductId")
+                        .IsRequired()
+                        .HasConstraintName("FK__ProductIn__Produ__3C34F16F");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("VestTour.Domain.Entities.ProductStyleOption", b =>
                 {
                     b.HasOne("VestTour.Domain.Entities.Product", "Product")
@@ -1001,6 +1067,8 @@ namespace VestTour.Repository.Migrations
 
             modelBuilder.Entity("VestTour.Domain.Entities.Product", b =>
                 {
+                    b.Navigation("ProductInventory");
+
                     b.Navigation("ProductStyleOption");
                 });
 

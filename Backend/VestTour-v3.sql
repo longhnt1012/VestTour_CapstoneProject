@@ -86,7 +86,8 @@ CREATE TABLE Store (
     Address NVARCHAR(255),
     ContactNumber VARCHAR(20),
    
-);
+);ALTER TABLE Store
+ADD StoreCode INT
 INSERT INTO [Store] (UserID,Name,Address,ContactNumber)
 VALUES 
 	(5,'Vest pro',' 441/2/2G Quang Trung, P.10, Q.Gò Vấp, TP.HCM','0169136419'),
@@ -180,7 +181,10 @@ CREATE TABLE [Order] (
 	Deposit DECIMAL(10,2) NULL,
     BalancePayment DECIMAL(10,2) 
 ); 
-
+ALTER TABLE [Order]
+ADD GuestName NVARCHAR(255),
+	GuestEmail VARCHAR(255),
+	GuestAddress NVARCHAR(255)
 -------------CHAY CAI NAY THOI --------------------
 
 -- Insert into BankingAccount
@@ -535,6 +539,10 @@ CREATE TABLE OrderDetail (
 	FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
     FOREIGN KEY (ProductId) REFERENCES Product(ProductID)
 )
+ALTER TABLE OrderDetail
+ADD Quantity INT,
+	Price DECIMAL(10,2)
+
 INSERT INTO OrderDetail (OrderID, ProductId) VALUES
 (1,1),
 (2,3)

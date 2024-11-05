@@ -25,6 +25,23 @@ namespace VestTour.Repository.Implementation
             await _context.SaveChangesAsync();
             return newOrder.OrderId;
         }
+        public async Task AddOrderDetailsAsync(int orderId, List<CartItemModel> cartItems)
+        {
+            foreach (var item in cartItems)
+            {
+                var orderDetail = new OrderDetail
+                {
+                    OrderId = orderId,
+                    ProductId = item.Product?.ProductID ?? 0, // Use ProductID from the cart item
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                };
+
+                _context.OrderDetails.Add(orderDetail);
+            }
+
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<List<OrderModel>> GetAllOrderAsync()
         {
@@ -42,7 +59,7 @@ namespace VestTour.Repository.Implementation
         public async Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId)
         {
             var orders = await _context.Orders!
-                .Include(o => o.Products) 
+                //.Include(o => o.Products) 
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
 
@@ -52,7 +69,7 @@ namespace VestTour.Repository.Implementation
         public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
         {
             var order = await _context.Orders!
-                .Include(o => o.Products) 
+                //.Include(o => o.Products) 
                 .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             return _mapper.Map<OrderModel>(order);
@@ -60,7 +77,7 @@ namespace VestTour.Repository.Implementation
         public async Task<OrderModel?> GetOrderByIdAsync(int orderId)
         {
             var order = await _context.Orders!
-                .Include(o => o.Products) // Make sure to include the products
+               // .Include(o => o.Products) // Make sure to include the products
                 .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             return _mapper.Map<OrderModel>(order);

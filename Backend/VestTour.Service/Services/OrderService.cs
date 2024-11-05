@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VestTour.Domain.Entities;
 using VestTour.Repository.Helpers;
 using VestTour.Repository.Implementation;
 using VestTour.Repository.Interface;
@@ -53,7 +54,6 @@ namespace VestTour.Service.Implementation
                 Note = order.Note,
                 Paid = order.Paid,
                 Status = order.Status ?? "pending",
-                BalancePayment = order.BalancePayment,
                 TotalPrice = order.TotalPrice,
                 Deposit= order.Deposit,
                 ShippingFee= order.ShippingFee
@@ -160,7 +160,76 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        
+        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null,decimal? deposit=null,decimal? shippingFee=null)
+        {
+            // Generate a guest ID if userId is null
+            int id = userId ?? GenerateGuestId();
+
+            // Retrieve cart items for the user or guest
+            var cartItems = await _cartRepo.GetUserCartAsync(id);
+            if (cartItems == null || cartItems.Count == 0)
+            {
+                throw new InvalidOperationException("No items in cart to confirm.");
+            }
+
+            // Calculate the total price based on cart items
+            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
+
+            // Fetch the user if userId is not null
+            User? user = userId != null ? await _userService.GetUserByIdAsync(userId.Value) : null;
+
+            // Create a new order with relevant details
+            var newOrder = new OrderModel
+            {
+                UserID = user?.UserId, // Set UserID if user is found, otherwise leave as null
+                GuestName = user == null ? guestName : null, // Only set GuestName if user is not found
+                GuestEmail = user == null ? guestEmail : null, // Only set GuestEmail if user is not found
+                GuestAddress = user == null ? guestAddress : null, // Only set GuestAddress if user is not found
+                OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                TotalPrice = Math.Round(totalPrice, 2),
+                Deposit = deposit,
+                ShippingFee = shippingFee,
+                Paid = false,
+                Status = "Pending"
+            };
+
+            // Add the order to the database and retrieve its generated ID
+            int orderId = await _orderRepository.AddOrderAsync(newOrder);
+
+            // Add order details from cart items
+            await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
+            // Send a confirmation email to the guest or user
+            string recipientEmail = user != null ? user.Email : guestEmail;
+            if (!string.IsNullOrEmpty(recipientEmail))
+            {
+                var subject = "Order Confirmation";
+                var body = new StringBuilder();
+                body.AppendLine("Dear Customer,");
+                body.AppendLine();
+                body.AppendLine($"Thank you for your order! Your Order ID is: {orderId}.");
+                body.AppendLine("Order Details:");
+                body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
+                body.AppendLine($"- Status: {newOrder.Status}");
+                body.AppendLine();
+                body.AppendLine("We appreciate your business and look forward to serving you again!");
+                body.AppendLine("Best regards,");
+                body.AppendLine("Matcha VestTailor Team");
+
+                var emailRequest = new EmailRequest
+                {
+                    To = recipientEmail,
+                    Subject = subject,
+                    Content = body.ToString()
+                };
+                // Clear the cart after the order is confirmed
+                // await _cartRepo.RemoveAllFromCartAsync(id);
+            }
+        }
+        private int GenerateGuestId()
+        {
+            // Logic to generate a guest ID, similar to what's in AddCartService
+            return new Random().Next(1000000, 9999999);
+        }
 
     }
 }

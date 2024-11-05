@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VestTour.Repository.ValidationHelper;
 using VestTour.Repository.Helpers;
+using VestTour.Domain.Entities;
 
 public class BookingService : IBookingService
 {
@@ -277,4 +278,65 @@ public class BookingService : IBookingService
         // Return the response regardless of success or failure
         return response;
     }
+    public async Task<ServiceResponse<List<BookingModel>>> GetUserBookingsAsync(int? userId, string? guestName, string? email, DateOnly? startDate, DateOnly? endDate)
+    {
+        var response = new ServiceResponse<List<BookingModel>>();
+
+        // Check if at least one search criterion is provided
+        if (userId == null && string.IsNullOrEmpty(guestName) && string.IsNullOrEmpty(email))
+        {
+            response.Success = false;
+            response.Message = Error.InvalidInputData; // Use a constant from Error class
+            return response;
+        }
+
+        // Initialize the list to hold the bookings
+        List<BookingModel> bookings = new List<BookingModel>();
+
+        // Fetch bookings based on user ID if provided
+        if (userId != null)
+        {
+            bookings = await _bookingRepository.GetBookingsByUserIdAndDateRangeAsync(userId.Value, startDate, endDate);
+        }
+        // Fetch bookings based on guest name if provided
+        else if (!string.IsNullOrEmpty(guestName))
+        {
+            bookings = await _bookingRepository.GetBookingsByGuestNameAndDateRangeAsync(guestName, startDate, endDate);
+        }
+        // Fetch bookings based on email if provided
+        else if (!string.IsNullOrEmpty(email))
+        {
+            bookings = await _bookingRepository.GetBookingsByEmailAndDateRangeAsync(email, startDate, endDate);
+        }
+
+        // Check if any bookings were found
+        if (bookings == null || !bookings.Any())
+        {
+            response.Success = false;
+            response.Message = Error.BookingNotFound; // Use a constant from Error class
+        }
+        else
+        {
+            response.Data = bookings;
+            response.Message = Success.BookingsRetrieved; // Use a constant from Success class
+        }
+
+        return response;
+    }
+
+    public async Task<Booking> GetLastBookingAsync(int? userId, string? guestName, string? email)
+    {
+        var lastBooking = await _bookingRepository.GetLastBookingAsync(userId, guestName, email);
+
+        if (lastBooking == null)
+        {
+            return null; // or handle this case as needed
+        }
+
+        return lastBooking;
+    }
+
+
+
+
 }

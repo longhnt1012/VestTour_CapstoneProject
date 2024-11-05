@@ -11,6 +11,6 @@ namespace VestTour.Repository.Interface
         Task<List<CartItemModel>> GetUserCartAsync(int userId);
         Task UpdateCartAsync(int userId, List<CartItemModel> updatedCart);
         Task RemoveAllFromCartAsync(int userId);
-      
+
     }
 }

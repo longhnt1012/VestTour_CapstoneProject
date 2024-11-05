@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using VestTour.Domain.Entities;
 
 namespace VestTour.Domain.Entities;
 
@@ -34,11 +33,9 @@ public partial class Product
 
     public virtual Measurement? Measurement { get; set; }
 
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
     public virtual ProductInventory? ProductInventory { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
     public virtual ICollection<StyleOption> StyleOptions { get; set; } = new List<StyleOption>();
-    public ICollection<ProductStyleOption> ProductStyleOption { get; set; } = new List<ProductStyleOption>();
-
 }

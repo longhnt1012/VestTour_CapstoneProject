@@ -13,13 +13,13 @@ using VestTour.Service.Interfaces;
 using VestTour.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
+
 using VestTour.Service.Common;
 using VestTour.Service.Implementation;
-using VestTour.Services.Interfaces;
+
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Repositories;
-using VestTour.Repository.Services;
+
 using VestTour.Repository.Configuration;
 using VestTour.Repository.Helpers;
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +64,7 @@ builder.Services.AddSwaggerGen(c =>
 
 // Register HTTP client for GHTK service
 builder.Services.AddHttpClient<ShippingService>();
+builder.Services.AddHttpContextAccessor();
 
 
 // Register necessary services
@@ -84,10 +85,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
-builder.Services.AddScoped<IProductStyleOptionRepository, ProductStyleOptionRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
-builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
+//builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 //builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();

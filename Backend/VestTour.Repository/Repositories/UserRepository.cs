@@ -94,9 +94,7 @@ namespace VestTour.Repository.Implementation
 
         public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
         {
-            return await _context.Users
-        .AsNoTracking() // Prevents Entity Framework from tracking the entity
-        .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
+            return await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
         }
 
         public async Task<string?> GetUserRoleAsync(int userId)
@@ -173,9 +171,9 @@ namespace VestTour.Repository.Implementation
 
         public async Task<UserModel> GetUserByResetTokenAsync(string resetToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken );
+            var token = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
 
-            return _mapper.Map<UserModel>(user);
+            return _mapper.Map<UserModel>(token);
         }
 
         public async Task UpdatePasswordUser(int userId, UserModel user)
@@ -189,31 +187,25 @@ namespace VestTour.Repository.Implementation
             {
                 throw new ArgumentException("User ID mismatch");
             }
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+
+            var existingUser = await _context.Users.FindAsync(userId);
             if (existingUser == null)
             {
-                throw new InvalidOperationException("User not found.");
+                throw new KeyNotFoundException("User not found.");
             }
 
-            // Map the properties from userModel to the existing tracked entity
-            existingUser.Password = user.Password;
-            existingUser.RefreshToken = user.RefreshToken;
-            existingUser.RefreshTokenExpiryTime = user.RefreshTokenExpiryTime;
+            // Chỉ cập nhật các thuộc tính cần thiết thay vì thay thế toàn bộ bản thể
+            existingUser.Password = user.Password; // Giả sử bạn chỉ cần cập nhật mật khẩu
+                                                   // Cập nhật các trường khác nếu cần thiết
 
-            // No need to call Update() here as EF is already tracking existingUser
             await _context.SaveChangesAsync();
         }
+
         public async Task<string?> GetEmailByUserIdAsync(int? userId)
         {
             var user = await _context.Users.FindAsync(userId);
             return user?.Email;
         }
 
-        public async Task UpdateUserPasswordAsync(UserModel user)
-        {
-            var updateUser = _mapper.Map<User>(user);
-            _context.Users!.Update(updateUser);
-            await _context.SaveChangesAsync();
-        }
     }
 }

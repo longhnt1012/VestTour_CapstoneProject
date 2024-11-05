@@ -92,7 +92,7 @@ namespace VestTour.Service.Services
             return apiResponse?.Data;
         }
 
-        public async Task<List<ShippingServiceModel>> GetAvailableServicesAsync(int shopId, int fromDistrict, int toDistrict)
+        public async Task<List<ShippingServiceModel>> GetAvailableServicesAsync(int shopCode, int fromDistrict, int toDistrict)
         {
             var request = new HttpRequestMessage
             {
@@ -105,7 +105,7 @@ namespace VestTour.Service.Services
         },
                 Content = new StringContent(JsonConvert.SerializeObject(new
                 {
-                    shop_id = shopId,
+                    shop_id = shopCode,
                     from_district = fromDistrict,
                     to_district = toDistrict
                 }), Encoding.UTF8, "application/json")
@@ -138,7 +138,7 @@ namespace VestTour.Service.Services
         {
             { "Token", _apiToken },
             { "Accept", "application/json" },
-            { "Shop_Id", request.ShopId.ToString() }
+            { "Shop_Id", request.ShopCode.ToString() }
         },
                 Content = new StringContent(JsonConvert.SerializeObject(new
                 {

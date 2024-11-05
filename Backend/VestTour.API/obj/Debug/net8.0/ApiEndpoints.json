@@ -17,12 +17,54 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "CapturePaypalOrder",
+    "RelativePath": "api/AddCart/Cart/capture-paypal-order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderID",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "ConfirmOrder",
     "RelativePath": "api/AddCart/confirmorder",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "deposit",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "shippingfee",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -263,6 +305,32 @@
   },
   {
     "ContainingType": "BookingController",
+    "Method": "GetLastBooking",
+    "RelativePath": "api/Booking/last-booking",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
     "Method": "CreateBookingForLoggedInUser",
     "RelativePath": "api/Booking/loggedin-user-booking",
     "HttpMethod": "POST",
@@ -294,6 +362,42 @@
         "Name": "status",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
+    "Method": "GetUserBooking",
+    "RelativePath": "api/Booking/user-booking",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2239,5 +2343,21 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "CreatePaypalOrder",
+    "RelativePath": "Cart/create-paypal-order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

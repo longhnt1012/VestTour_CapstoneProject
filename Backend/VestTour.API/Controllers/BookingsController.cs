@@ -26,7 +26,33 @@ public class BookingController : ControllerBase
         }
         return Ok(new { Message = Success.BookingRetrieved, Data = response.Data });
     }
+    [HttpGet("user-booking")]
+    public async Task<IActionResult> GetUserBooking([FromQuery] int? userId, [FromQuery] string? guestName, [FromQuery] string? email, [FromQuery] DateOnly? startDate, [FromQuery] DateOnly? endDate)
+    {
+        // Call the service method that handles the logic for filtering bookings
+        var result = await _bookingService.GetUserBookingsAsync(userId, guestName, email, startDate, endDate);
 
+        if (!result.Success)
+        {
+            return BadRequest(result.Message);
+        }
+
+        return Ok(result.Data);
+    }
+    [HttpGet("last-booking")]
+    public async Task<IActionResult> GetLastBooking([FromQuery] int? userId, [FromQuery] string? guestName, [FromQuery] string? email)
+    {
+        // Call the service method to get the last booking
+        var lastBooking = await _bookingService.GetLastBookingAsync(userId, guestName, email);
+
+        // Check if the last booking is null and return appropriate response
+        if (lastBooking == null)
+        {
+            return NotFound("No bookings found."); // Return 404 if no booking is found
+        }
+
+        return Ok(lastBooking); // Return 200 with the last booking details
+    }
     [HttpGet]
     public async Task<IActionResult> GetAllBookings()
     {

@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
-using VestTour.Service.Helpers;
-using VestTour.Repository.Interface;
-using VestTour.Repository.Implementation;
 
 namespace VestTour.API.Controllers
 {
@@ -16,12 +13,10 @@ namespace VestTour.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IUserRepository _userRepo;
 
-        public UserController(IUserService userService,IUserRepository userRepository)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _userRepo=userRepository;
         }
 
         // GET: api/user
@@ -148,34 +143,16 @@ namespace VestTour.API.Controllers
             return BadRequest(new { Message = result });
         }
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordModel model)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
-            try
+            var result = await _userService.ResetPasswordAsync(model.Token, model.NewPassword);
+
+            if (result == Success.PasswordResetSuccess)
             {
-                var user = await _userRepo.GetUserByResetTokenAsync(model.Token);
-                if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
-                {
-                    return BadRequest("Invalid or expired token.");
-                }
-
-                if (model.NewPassword != model.ConfirmPassword)
-                {
-                    return BadRequest("Passwords do not match.");
-                }
-
-                // Update password and clear token fields
-                user.Password = PasswordHelper.HashPassword(model.NewPassword);
-                user.RefreshToken = null;
-                user.RefreshTokenExpiryTime = null;
-
-                await _userRepo.UpdatePasswordUser(user.UserId, user);
-
-                return Ok("Password reset successfully.");
+                return Ok(new { Message = "Password has been reset successfully." });
             }
-            catch
-            {
-                return BadRequest();
-            }
+
+            return BadRequest(new { Message = result });
         }
     }
 }

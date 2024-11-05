@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Domain.Entities;
-using VestTour.Domain.Entities;
 
 namespace VestTour.Repository.Data;
 
@@ -16,7 +15,7 @@ public partial class VestTourDbContext : DbContext
         : base(options)
     {
     }
-    public virtual DbSet<ProductStyleOption> ProductStyleOptions { get; set; }
+    //public virtual DbSet<ProductStyleOption> ProductStyleOptions { get; set; }
     public virtual DbSet<BankingAccount> BankingAccounts { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -32,6 +31,8 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<Measurement> Measurements { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
 
@@ -52,6 +53,10 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Voucher> Vouchers { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-33UM2VQ;Database=VestTourDB;User Id=sa;Password=12345;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -202,9 +207,15 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.BalancePayment).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Deposit).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.GuestAddress).HasMaxLength(255);
+            entity.Property(e => e.GuestEmail)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.GuestName).HasMaxLength(255);
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
             entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
+            entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
@@ -230,24 +241,26 @@ public partial class VestTourDbContext : DbContext
             entity.HasOne(d => d.Voucher).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.VoucherId)
                 .HasConstraintName("FK__Order__VoucherID__412EB0B6");
+        });
 
-            entity.HasMany(d => d.Products).WithMany(p => p.Orders)
-                .UsingEntity<Dictionary<string, object>>(
-                    "OrderDetail",
-                    r => r.HasOne<Product>().WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__OrderDeta__Produ__5EBF139D"),
-                    l => l.HasOne<Order>().WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__OrderDeta__Order__5DCAEF64"),
-                    j =>
-                    {
-                        j.HasKey("OrderId", "ProductId").HasName("PK__OrderDet__08D097C3DC0885B2");
-                        j.ToTable("OrderDetail");
-                        j.IndexerProperty<int>("OrderId").HasColumnName("OrderID");
-                    });
+        modelBuilder.Entity<OrderDetail>(entity =>
+        {
+            entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("PK__OrderDet__08D097C3DC0885B2");
+
+            entity.ToTable("OrderDetail");
+
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderDeta__Order__5DCAEF64");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderDeta__Produ__5EBF139D");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -271,20 +284,7 @@ public partial class VestTourDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
         });
-        modelBuilder.Entity<ProductStyleOption>()
-    .HasKey(pso => new { pso.ProductId, pso.StyleOptionId });  // Composite key
 
-        modelBuilder.Entity<ProductStyleOption>()
-            .HasOne(pso => pso.Product)
-            .WithMany(p => p.ProductStyleOption)
-            .HasForeignKey(pso => pso.ProductId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
-
-        modelBuilder.Entity<ProductStyleOption>()
-            .HasOne(pso => pso.StyleOption)
-            .WithMany(so => so.ProductStyleOption)
-            .HasForeignKey(pso => pso.StyleOptionId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED51B9E1F7");
@@ -304,7 +304,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Size)
                 .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasColumnName("Size");
+                .HasColumnName("SIZE");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)

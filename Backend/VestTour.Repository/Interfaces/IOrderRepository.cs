@@ -13,6 +13,7 @@ namespace VestTour.Repository.Interface
         public Task UpdateOrderAsync(int id, OrderModel order);
         public Task<OrderModel?> GetOrderDetailByIdAsync(int orderId);
         public Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId);
+        Task AddOrderDetailsAsync(int orderId, List<CartItemModel> cartItems);
 
 
     }

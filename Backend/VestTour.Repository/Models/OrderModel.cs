@@ -22,11 +22,16 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
+        public string? GuestName { get; set; }
+        public string? GuestEmail { get; set; }
+        public string? GuestAddress { get; set; }
         [JsonIgnore]
         public List<ProductModel> Products { get; set; } = new List<ProductModel>();
         public decimal? TotalPrice { get; set; }
         public decimal? Deposit { get; set; }
         public decimal? ShippingFee { get; set; }
-        public decimal? BalancePayment { get; set; }
+        public decimal? BalancePayment => TotalPrice - Deposit + ShippingFee;
+        public List<OrderDetailModel> OrderDetails { get; set; } = new List<OrderDetailModel>();
     }
 }
+

@@ -87,6 +87,7 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
+builder.Services.AddScoped<IContactService, ContactService>();
 //builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 //builder.Services.AddScoped<IVerificationService, VerificationService>();

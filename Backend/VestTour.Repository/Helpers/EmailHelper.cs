@@ -59,6 +59,41 @@ namespace VestTour.Repository.Helpers
                 throw new InvalidOperationException("Failed to send email", ex);
             }
         }
+        public async Task CustomerSendContactEmail(ContactRequest contactRequest)
+        {
+            using var smtp = new SmtpClient(_emailConfig.Provider, _emailConfig.Port)
+            {
+                Credentials = new NetworkCredential(_emailConfig.DefaultSender, _emailConfig.Password),
+                EnableSsl = true
+            };
+
+            using var mailMessage = new MailMessage
+            {
+                From = new MailAddress(_emailConfig.DefaultSender, $"Contact from {contactRequest.Name}"), // Display customer's name
+                Subject = $"Contact Form: {contactRequest.Subject}",
+                Body = $@"New contact request from:
+                  Name: {contactRequest.Name}
+                  Email: {contactRequest.Email}
+                  Message: {contactRequest.Message}",
+                IsBodyHtml = false
+            };
+
+            // Set the "To" address to your email
+            mailMessage.To.Add(_emailConfig.DefaultSender);
+
+            // Set the "Reply-To" address to the customer's email
+            mailMessage.ReplyToList.Add(new MailAddress(contactRequest.Email));
+
+            try
+            {
+                await smtp.SendMailAsync(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to send contact email", ex);
+            }
+        }
+
 
 
 

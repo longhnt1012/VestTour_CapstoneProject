@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Google.Apis.Storage.v1.Data;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using VestTour.Domain.Entities;
@@ -207,20 +208,41 @@ namespace VestTour.Service.Implementation
                 body.AppendLine("Dear Customer,");
                 body.AppendLine();
                 body.AppendLine($"Thank you for your order! Your Order ID is: {orderId}.");
-                body.AppendLine("Order Details:");
-                body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
-                body.AppendLine($"- Status: {newOrder.Status}");
+                
+                body.AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}");
+                body.AppendLine($"- Shipped Date: {newOrder.ShippedDate?.ToString("d")}");
+
                 body.AppendLine();
+                body.AppendLine("Order Details:");
+                // List the products in the order
+                body.AppendLine($"\nProducts in your order:");
+                foreach (var product in cartItems)
+                {
+
+                    body.AppendLine($"-- Product Code: {product.CustomProduct.ProductCode}");
+                    body.AppendLine($"-- Custom: {(product.IsCustom ? "Yes" : "No")}");
+                    body.AppendLine($"--Quantity: {(product.Quantity)}");
+                    body.AppendLine($"-- Price: {product.Price:C}");
+                    
+                    body.AppendLine(); // Add a blank line for spacing
+                }
+                body.AppendLine($"- Note: {newOrder.Note}");
+                body.AppendLine($"- Paid: {(newOrder.Paid ? "Yes" : "No")}");
+                body.AppendLine($"- Status: {newOrder.Status}");
+                body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
+                body.AppendLine($"-Shipping Fee:{newOrder.ShippingFee}");
+                body.AppendLine($"-Deposit:{newOrder.Deposit}");
+                body.AppendLine($"-Balance Payment{newOrder.BalancePayment}");
                 body.AppendLine("We appreciate your business and look forward to serving you again!");
                 body.AppendLine("Best regards,");
                 body.AppendLine("Matcha VestTailor Team");
-
                 var emailRequest = new EmailRequest
                 {
                     To = recipientEmail,
                     Subject = subject,
                     Content = body.ToString()
                 };
+                await _emailHelper.SendEmailAsync(emailRequest);
                 // Clear the cart after the order is confirmed
                 // await _cartRepo.RemoveAllFromCartAsync(id);
             }

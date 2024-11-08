@@ -538,6 +538,22 @@
     ]
   },
   {
+    "ContainingType": "VestTour.API.Controllers.ContactController",
+    "Method": "SendContactEmail",
+    "RelativePath": "api/Contact/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contactRequest",
+        "Type": "VestTour.Repository.Models.ContactRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.FabricsController",
     "Method": "GetAllFabrics",
     "RelativePath": "api/Fabrics",

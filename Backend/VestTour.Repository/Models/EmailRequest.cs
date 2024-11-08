@@ -12,7 +12,7 @@ namespace VestTour.Repository.Models
         public string Subject { get; set; }
 
         public string Content { get; set; }
-
+        public string ReplyTo { get; set; }
         public string[] AttachFilePatch { get; set; } = Array.Empty<string>();
     }
 }

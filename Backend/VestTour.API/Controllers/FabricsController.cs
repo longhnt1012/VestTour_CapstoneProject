@@ -100,18 +100,17 @@ namespace VestTour.Controllers
             }
         }
 
-        //[HttpGet("tag/{tag?}")]
-        //public async Task<IActionResult> GetFabricsByTag(FabricEnums? tag)
-        //{
-        //    try
-        //    {
-        //        var fabrics = await _fabricService.GetFabricByTagAsync(tag);
-        //        return fabrics == null || fabrics.Count == 0 ? NotFound(Error.FabricNotFound) : Ok(fabrics);
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest(Error.FabricNotFound);
-        //    }
-        //}
+        [HttpGet("tag/{tag}")]
+        public async Task<IActionResult> GetFabricByTag(FabricEnums? tag)
+        {
+            if (tag == null)
+            {
+                return BadRequest("Tag parameter is required.");
+            }
+
+            var fabrics = await _fabricService.GetFabricByTagAsync(tag);
+            return Ok(fabrics);
+        }
+
     }
 }

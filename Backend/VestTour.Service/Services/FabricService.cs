@@ -39,9 +39,10 @@ namespace VestTour.Service.Implementation
             await _fabricRepo.DeleteFabricAsync(fabricId);
         }
 
-        //public async Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag)
-        //{
-        //    return await _fabricRepo.GetFabricByTagAsync(tag);
-        //}
+        public async Task<List<FabricModel>> GetFabricByTagAsync(FabricEnums? tag)
+        {
+            return await _fabricRepo.GetFabricByTagAsync(tag);
+        }
+
     }
 }

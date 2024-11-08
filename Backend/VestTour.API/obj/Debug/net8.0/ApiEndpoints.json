@@ -633,6 +633,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.FabricsController",
+    "Method": "GetFabricByTag",
+    "RelativePath": "api/Fabrics/tag/{tag}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tag",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.API.Controllers.InventoryController",
     "Method": "GetAll",
     "RelativePath": "api/Inventory",

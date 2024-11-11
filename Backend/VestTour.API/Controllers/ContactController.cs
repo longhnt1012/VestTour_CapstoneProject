@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Helpers;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
@@ -17,6 +18,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("send")]
+        
         public async Task<IActionResult> SendContactEmail([FromBody] ContactRequest contactRequest)
         {
             if (!ModelState.IsValid)

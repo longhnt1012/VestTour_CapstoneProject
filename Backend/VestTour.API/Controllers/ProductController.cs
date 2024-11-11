@@ -4,6 +4,7 @@ using VestTour.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -89,6 +90,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<IActionResult> UpdateProduct(int id, ProductModel product)
         {
             try
@@ -103,6 +105,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try

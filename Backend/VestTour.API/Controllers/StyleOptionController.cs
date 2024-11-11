@@ -3,6 +3,7 @@ using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -36,6 +37,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> AddStyleOption(StyleOptionModel styleOptionModel)
         {
             var newStyleOptionId = await _styleOptionService.AddStyleOptionAsync(styleOptionModel);
@@ -43,6 +45,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateStyleOption(int id, StyleOptionModel styleOptionModel)
         {
             if (id != styleOptionModel.StyleOptionId)
@@ -55,6 +58,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteStyleOption(int id)
         {
             await _styleOptionService.DeleteStyleOptionAsync(id);

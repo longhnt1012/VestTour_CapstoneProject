@@ -3,6 +3,7 @@ using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -19,6 +20,7 @@ namespace VestTour.Controllers
 
         // GET: api/Measurement
         [HttpGet]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<ActionResult<IEnumerable<MeasurementModel>>> GetMeasurements()
         {
             var measurements = await _measurementService.GetAllMeasurementsAsync();

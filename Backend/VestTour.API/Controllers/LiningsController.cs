@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -45,6 +46,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddNewLining(LiningModel model)
         {
             var newLiningID = await _liningRepo.AddLiningAsync(model);
@@ -53,6 +55,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<IActionResult> UpdateLining(int id, LiningModel model)
         {
             try
@@ -77,6 +80,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteLining(int id)
         {
             try

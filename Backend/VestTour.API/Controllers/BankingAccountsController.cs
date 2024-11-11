@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -59,6 +60,7 @@ namespace VestTour.Controllers
 
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateBankingAccount(int id, BankingAccountModel model)
         {
             try
@@ -84,6 +86,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteBankingAccount(int id)
         {
             try

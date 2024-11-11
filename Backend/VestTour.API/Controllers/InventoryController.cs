@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 
@@ -34,6 +35,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<IActionResult> Add(InventoryModel inventory)
         {
             await _inventoryService.AddInventoryAsync(inventory);
@@ -41,6 +43,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPut("{productId}")]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<IActionResult> Update(int productId, InventoryModel inventory)
         {
             if (productId != inventory.ProductID)
@@ -53,6 +56,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpDelete("{productId}")]
+        [Authorize(Roles = "admin,manager,staff")]
         public async Task<IActionResult> Delete(int productId)
         {
             await _inventoryService.DeleteInventoryAsync(productId);

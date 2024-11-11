@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -52,6 +53,7 @@ namespace VestTour.Controllers
 
         // POST: api/Voucher
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> CreateVoucher(VoucherModel voucherModel)
         {
             var newVoucherId = await _voucherRepository.AddVoucherAsync(voucherModel);
@@ -65,6 +67,7 @@ namespace VestTour.Controllers
         
         // PUT: api/Voucher/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> UpdateVoucher(int id, UpdateVoucherModel updateVoucherModel)
         {
             var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);
@@ -80,6 +83,7 @@ namespace VestTour.Controllers
 
         // DELETE: api/Voucher/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVoucher(int id)
         {
             var voucher = await _voucherRepository.GetVoucherByIdAsync(id);

@@ -21,7 +21,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/user
         [HttpGet]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -30,7 +30,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/user/{id}
         [HttpGet("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -43,7 +43,7 @@ namespace VestTour.API.Controllers
 
         // POST: api/user
         [HttpPost]
-        //[Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<ActionResult<int>> AddUser([FromBody] UserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -55,10 +55,9 @@ namespace VestTour.API.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = newUserId }, newUserId);
         }
 
-        // PUT: api/user/{id}
-        // PUT: api/user/{id}
+       
         [HttpPut("{id}")]
-        // [Authorize(Roles = "customer")]
+         [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -84,7 +83,7 @@ namespace VestTour.API.Controllers
 
         // DELETE: api/user/{id}
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -100,7 +99,8 @@ namespace VestTour.API.Controllers
         // PUT: api/user/{id}/status
         // PUT: api/user/{id}/status
         [HttpPut("{id}/status")]
-        // [Authorize(Roles = "admin")]
+        [Authorize]
+        [Authorize]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
         {
             if (string.IsNullOrWhiteSpace(status))
@@ -124,6 +124,7 @@ namespace VestTour.API.Controllers
         }
         // GET: api/user/role/4
         [HttpGet("role/{roleId:int}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsersByRole(int roleId)
         {
             var users = await _userService.GetUsersByRoleAsync(roleId);
@@ -131,6 +132,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("forgot-password")]
+        [Authorize]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
             var result = await _userService.ForgotPassword(model.Email);
@@ -143,6 +145,7 @@ namespace VestTour.API.Controllers
             return BadRequest(new { Message = result });
         }
         [HttpPost("reset-password")]
+        [Authorize]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
             var result = await _userService.ResetPasswordAsync(model.Token, model.NewPassword);

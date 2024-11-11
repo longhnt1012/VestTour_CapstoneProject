@@ -3,6 +3,7 @@ using VestTour.Repository.Models;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
 using VestTour.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -53,6 +54,7 @@ namespace VestTour.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddNewFabric(FabricModel model)
         {
             try
@@ -68,6 +70,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin,manager")]
         public async Task<IActionResult> UpdateFabric(int id, FabricModel model)
         {
             try
@@ -87,6 +90,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteFabric(int id)
         {
             try

@@ -22,6 +22,7 @@ namespace VestTour.API.Controllers
 
         [HttpPost]
         [Route("refresh")]
+        [Authorize]
         public async Task<IActionResult> Refresh(TokenApiModel tokenApiModel)
         {
             if (tokenApiModel is null || string.IsNullOrEmpty(tokenApiModel.RefreshToken))

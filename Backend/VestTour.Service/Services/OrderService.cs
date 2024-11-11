@@ -216,16 +216,7 @@ namespace VestTour.Service.Implementation
                 body.AppendLine("Order Details:");
                 // List the products in the order
                 body.AppendLine($"\nProducts in your order:");
-                foreach (var product in cartItems)
-                {
-
-                    body.AppendLine($"-- Product Code: {product.CustomProduct.ProductCode}");
-                    body.AppendLine($"-- Custom: {(product.IsCustom ? "Yes" : "No")}");
-                    body.AppendLine($"--Quantity: {(product.Quantity)}");
-                    body.AppendLine($"-- Price: {product.Price:C}");
-                    
-                    body.AppendLine(); // Add a blank line for spacing
-                }
+                
                 body.AppendLine($"- Note: {newOrder.Note}");
                 body.AppendLine($"- Paid: {(newOrder.Paid ? "Yes" : "No")}");
                 body.AppendLine($"- Status: {newOrder.Status}");

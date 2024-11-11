@@ -4,6 +4,7 @@ using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VestTour.Controllers
 {
@@ -52,6 +53,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse<int>>> CreateCategory(CategoryModel categoryModel)
         {
             var response = await _categoryService.AddCategoryAsync(categoryModel);
@@ -63,6 +65,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateCategory(int id, CategoryModel categoryModel)
         {
             if (id != categoryModel.CategoryId)
@@ -79,6 +82,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var response = await _categoryService.DeleteCategoryAsync(id);

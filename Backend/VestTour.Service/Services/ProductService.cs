@@ -26,20 +26,19 @@ namespace VestTour.Service.Implementation
         public async Task<ProductModel?> GetProductByIdAsync(int id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
-            // Logic: nếu không tìm thấy sản phẩm, có thể ném ngoại lệ hoặc trả về một giá trị mặc định
             return product;
         }
 
         public async Task<ProductModel?> GetProductByCodeAsync(string productCode)
         {
             var product = await _productRepository.GetProductByCodeAsync(productCode);
-            return product ?? throw new KeyNotFoundException("Product not found."); // Ném ngoại lệ nếu không tìm thấy
+            return product ?? throw new KeyNotFoundException("Product not found."); 
         }
 
         public async Task<List<ProductModel>> GetProductsByCategoryIdAsync(int categoryId)
         {
             var products = await _productRepository.GetProductsByCategoryIdAsync(categoryId);
-            // Logic: có thể ném ngoại lệ nếu không có sản phẩm nào được tìm thấy
+           
             if (products == null || products.Count == 0)
                 throw new KeyNotFoundException("No products found for this category.");
 
@@ -48,7 +47,6 @@ namespace VestTour.Service.Implementation
 
         public async Task<int> AddProductAsync(ProductModel product)
         {
-            // Logic: kiểm tra hợp lệ hoặc xử lý bổ sung trước khi thêm sản phẩm
             if (string.IsNullOrEmpty(product.ProductCode))
                 throw new ArgumentException("Product code cannot be empty.");
 
@@ -57,7 +55,7 @@ namespace VestTour.Service.Implementation
 
         public async Task UpdateProductAsync(int id, ProductModel product)
         {
-            // Logic: kiểm tra xem sản phẩm có tồn tại không trước khi cập nhật
+           
             var existingProduct = await _productRepository.GetProductByIdAsync(id);
             if (existingProduct == null)
                 throw new KeyNotFoundException("Product not found.");
@@ -67,7 +65,7 @@ namespace VestTour.Service.Implementation
 
         public async Task DeleteProductAsync(int id)
         {
-            // Logic: kiểm tra xem sản phẩm có tồn tại không trước khi xóa
+            
             var existingProduct = await _productRepository.GetProductByIdAsync(id);
             if (existingProduct == null)
                 throw new KeyNotFoundException("Product not found.");
@@ -88,17 +86,7 @@ namespace VestTour.Service.Implementation
 
             return productDetails;
         }
-        //public async Task AddStyleOptionToProductAsync(int productId, int styleOptionId)
-        //{
-        //    // Tạo và lưu ProductStyleOption vào database
-        //    var productStyleOption = new ProductStyleOptionModel
-        //    {
-        //        ProductId = productId,
-        //        StyleOptionId = styleOptionId
-        //    };
-
-        //    await _productStyleOptionRepository.AddProductStyleOptionAsync(productStyleOption);
-        //}
+       
 
     }
 }

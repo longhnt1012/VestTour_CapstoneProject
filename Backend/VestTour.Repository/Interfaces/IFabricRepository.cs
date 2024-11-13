@@ -7,7 +7,7 @@ namespace VestTour.Repository.Interface
     {
         public Task<List<FabricModel>> GetAllFabricsAsync();
         public Task<FabricModel> GetFabricByIdAsync(int fabricId);
-
+        Task<string?> GetFabricNameByIdAsync(int fabricId);
         public Task<int> AddFabricAsync(FabricModel model);
 
         public Task UpdateFabricAsync(int id, FabricModel model);

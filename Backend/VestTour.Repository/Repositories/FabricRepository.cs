@@ -90,6 +90,14 @@ namespace VestTour.Repository.Implementation
             }
         }
 
+        public async Task<string?> GetFabricNameByIdAsync(int fabricId)
+        {
+            // Attempt to retrieve the fabric's name based on the provided fabric ID
+            var fabric = await _context.Fabrics.SingleOrDefaultAsync(f => f.FabricId == fabricId);
+
+            // Return the name if found, otherwise null
+            return fabric?.FabricName;
+        }
 
         public async Task UpdateFabricAsync(int id, FabricModel model)
         {

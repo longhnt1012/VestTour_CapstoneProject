@@ -70,6 +70,11 @@ namespace VestTour.Services
 
             if (isCustom && customProduct != null)
             {
+                if (string.IsNullOrEmpty(customProduct.ProductCode))
+                {
+                    customProduct.ProductCode= await customProduct.GenerateProductCodeAsync(_fabricRepository);
+                }
+
                 decimal price = await CalculatePrice(customProduct);
                 cartItem = new CartItemModel
                 {
@@ -99,6 +104,8 @@ namespace VestTour.Services
 
             await _addCartRepository.AddToCartAsync(id, cartItem);
         }
+
+
 
         public async Task<CartModel> GetUserCartAsync(int? userId)
         {

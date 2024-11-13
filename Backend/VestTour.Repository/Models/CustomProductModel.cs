@@ -1,30 +1,44 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 
 public class CustomProductModel
 {
-   
-    public string ProductCode { get; private set; } // Set to private set to prevent external modification
-
+    public string? ProductCode { get;  set; }
     public int CategoryID { get; set; }
     public int FabricID { get; set; }
     public int? LiningID { get; set; }
     public int? MeasurementID { get; set; }
     public List<PickedStyleOptionModel> PickedStyleOptions { get; set; } = new List<PickedStyleOptionModel>();
 
-    // Constructor to generate ProductCode
-    public CustomProductModel()
-    {
-        ProductCode = GenerateProductCode();
+    // Parameterless constructor for deserialization
+    public CustomProductModel() {
+        
     }
 
-    private string GenerateProductCode()
+    // Method to generate ProductCode with repository dependency
+    public async Task<string> GenerateProductCodeAsync(IFabricRepository fabricRepository)
     {
-        Random random = new Random();
-        int randomNumber = random.Next(100, 1000); // Generates a number between 100 and 999
-        return $"SUIT{randomNumber}";
+        try
+        {
+            string fabricName = await fabricRepository.GetFabricNameByIdAsync(FabricID);
+            if (string.IsNullOrEmpty(fabricName))
+            {
+                throw new InvalidOperationException("Fabric name not found for the provided FabricID.");
+            }
+            return $"SUIT{fabricName}";
+        }
+        catch (Exception ex)
+        {
+            // Log exception here
+            throw new ApplicationException("An error occurred while generating the product code.", ex);
+        }
+    }
+
+    public void SetProductCode(string code)
+    {
+        ProductCode = code;
     }
 }

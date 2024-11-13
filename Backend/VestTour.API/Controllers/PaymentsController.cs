@@ -59,7 +59,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> UpdatePayment(int id, PaymentModel payment)
         {
             try

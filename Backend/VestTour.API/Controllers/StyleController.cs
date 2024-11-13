@@ -45,7 +45,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateStyle(int id, StyleModel styleModel)
         {
             if (id != styleModel.StyleId)

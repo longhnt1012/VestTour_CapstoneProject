@@ -68,15 +68,7 @@ namespace VestTour.Repository.Implementation
             return await _context.ShipperPartners!.CountAsync(); // Đếm số lượng shipper partners
         }
 
-        // Get shipper partners by name
-        public async Task<List<ShipperPartnerModel>> GetShipperPartnersByNameAsync(string name)
-        {
-            var shipperPartners = await _context.ShipperPartners!
-                .Where(sp => sp.ShipperPartnerName.Contains(name))
-                .ToListAsync();
-            return _mapper.Map<List<ShipperPartnerModel>>(shipperPartners);
-        }
-
+      
         // Get shipper partners by company
         public async Task<List<ShipperPartnerModel>> GetShipperPartnersByCompanyAsync(string company)
         {

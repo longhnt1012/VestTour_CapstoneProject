@@ -33,6 +33,8 @@ namespace VestTour.Repository.Mapper
             CreateMap<Product, ProductDetailsModel>().ReverseMap();
             CreateMap<Product, ProductModel>().ReverseMap();
             CreateMap<ProductInventory, InventoryModel>().ReverseMap();
+            CreateMap<TailorPartner, TailorPartnerModel>().ReverseMap();
+            CreateMap<ProcessingTailor, ProcessingTailorModel>().ReverseMap();
     //        CreateMap<ProductStyleOption, ProductStyleOptionModel>()
     //.ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Product))
     //.ForMember(dest => dest.StyleOptions, opt => opt.MapFrom(src => src.StyleOption))

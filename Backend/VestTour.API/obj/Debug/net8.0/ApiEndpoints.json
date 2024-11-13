@@ -846,17 +846,7 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.MeasurementModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -872,17 +862,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Int32",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -898,17 +878,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.MeasurementModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -961,17 +931,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.MeasurementModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
@@ -1161,6 +1121,85 @@
     "ContainingType": "VestTour.Controllers.PaymentsController",
     "Method": "DeletePayment",
     "RelativePath": "api/Payments/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "GetAllProcessingTailors",
+    "RelativePath": "api/ProcessingTailor",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "AddProcessingTailor",
+    "RelativePath": "api/ProcessingTailor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "processingTailor",
+        "Type": "VestTour.Repository.Models.ProcessingTailorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "GetProcessingTailorById",
+    "RelativePath": "api/ProcessingTailor/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "UpdateProcessingTailor",
+    "RelativePath": "api/ProcessingTailor/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "processingTailor",
+        "Type": "VestTour.Repository.Models.ProcessingTailorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "DeleteProcessingTailor",
+    "RelativePath": "api/ProcessingTailor/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1886,6 +1925,85 @@
     "ContainingType": "VestTour.Controllers.StyleOptionController",
     "Method": "DeleteStyleOption",
     "RelativePath": "api/StyleOption/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "GetAllTailorPartners",
+    "RelativePath": "api/TailorPartner",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "AddTailorPartner",
+    "RelativePath": "api/TailorPartner",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tailorPartner",
+        "Type": "VestTour.Repository.Models.TailorPartnerModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "GetTailorPartnerById",
+    "RelativePath": "api/TailorPartner/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "UpdateTailorPartner",
+    "RelativePath": "api/TailorPartner/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "tailorPartner",
+        "Type": "VestTour.Repository.Models.TailorPartnerModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "DeleteTailorPartner",
+    "RelativePath": "api/TailorPartner/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

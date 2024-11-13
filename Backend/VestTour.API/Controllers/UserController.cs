@@ -43,7 +43,7 @@ namespace VestTour.API.Controllers
 
         // POST: api/user
         [HttpPost]
-        [Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<ActionResult<int>> AddUser([FromBody] UserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace VestTour.API.Controllers
 
        
         [HttpPut("{id}")]
-         [Authorize(Roles = "customer")]
+         [Authorize]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserModel userModel)
         {
             if (!ModelState.IsValid)

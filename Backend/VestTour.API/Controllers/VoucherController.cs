@@ -67,7 +67,7 @@ namespace VestTour.Controllers
         
         // PUT: api/Voucher/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin, manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateVoucher(int id, UpdateVoucherModel updateVoucherModel)
         {
             var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);

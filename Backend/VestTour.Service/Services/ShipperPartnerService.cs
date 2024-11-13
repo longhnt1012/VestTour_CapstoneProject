@@ -44,10 +44,6 @@ namespace VestTour.Service.Implementation
             return await _shipperPartnerRepository.GetTotalShipperPartnersAsync(); // Gọi repository để lấy tổng
         }
 
-        public async Task<List<ShipperPartnerModel>> GetShipperPartnersByNameAsync(string name)
-        {
-            return await _shipperPartnerRepository.GetShipperPartnersByNameAsync(name); // Gọi repository để tìm theo tên
-        }
 
         public async Task<List<ShipperPartnerModel>> GetShipperPartnersByCompanyAsync(string company)
         {

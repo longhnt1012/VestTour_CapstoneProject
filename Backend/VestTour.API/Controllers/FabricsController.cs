@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
-using VestTour.Repository.Constants;
-using VestTour.Service.Interface;
+using VestTour.Service.Interfaces;
 using VestTour.Domain.Enums;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using VestTour.Service.Interface;
 
 namespace VestTour.Controllers
 {
@@ -21,100 +23,52 @@ namespace VestTour.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllFabrics()
         {
-            try
-            {
-                return Ok(await _fabricService.GetAllFabricsAsync());
-            }
-            catch
-            {
-                return BadRequest(Error.FabricNotFound);
-            }
+            var response = await _fabricService.GetAllFabricsAsync();
+            return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFabricById(int id)
         {
-            try
-            {
-                var fabric = await _fabricService.GetFabricByIdAsync(id);
-                if (fabric == null)
-                {
-                    return NotFound("Fabric not found.");
-                }
-                return Ok(fabric);
-            }
-            catch (Exception ex)
-            {
-                // Log the error for debugging purposes
-                Console.WriteLine($"Error retrieving fabric with ID {id}: {ex.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
+            var response = await _fabricService.GetFabricByIdAsync(id);
+            return response.Success ? Ok(response.Data) : (response.Data == null ? NotFound(response.Message) : StatusCode(500, response.Message));
         }
-
-
 
         [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddNewFabric(FabricModel model)
         {
-            try
-            {
-                var newFabricID = await _fabricService.AddFabricAsync(model);
-                var fabric = await _fabricService.GetFabricByIdAsync(newFabricID);
-                return fabric == null ? NotFound(Error.FabricAddFailed) : Ok(fabric);
-            }
-            catch
-            {
-                return BadRequest(Error.FabricAddFailed);
-            }
+            var response = await _fabricService.AddFabricAsync(model);
+            return response.Success ? CreatedAtAction(nameof(GetFabricById), new { id = response.Data }, response.Data) : StatusCode(500, response.Message);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateFabric(int id, FabricModel model)
         {
-            try
-            {
-                if (id != model.FabricID)
-                {
-                    return BadRequest(Error.FabricNotFound);
-                }
+            if (id != model.FabricID)
+                return BadRequest("Fabric ID mismatch.");
 
-                await _fabricService.UpdateFabricAsync(id, model);
-                return Ok(Success.FabricUpdated);
-            }
-            catch
-            {
-                return BadRequest(Error.FabricUpdateFailed);
-            }
+            var response = await _fabricService.UpdateFabricAsync(id, model);
+            return response.Success ? NoContent() : BadRequest(response);
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteFabric(int id)
         {
-            try
-            {
-                await _fabricService.DeleteFabricAsync(id);
-                return Ok(Success.FabricDeleted);
-            }
-            catch
-            {
-                return BadRequest(Error.FabricDeleteFailed);
-            }
+            var response = await _fabricService.DeleteFabricAsync(id);
+            return response.Success ? NoContent() : BadRequest(response);
         }
 
         [HttpGet("tag/{tag}")]
         public async Task<IActionResult> GetFabricByTag(FabricEnums? tag)
         {
             if (tag == null)
-            {
                 return BadRequest("Tag parameter is required.");
-            }
 
-            var fabrics = await _fabricService.GetFabricByTagAsync(tag);
-            return Ok(fabrics);
+            var response = await _fabricService.GetFabricByTagAsync(tag);
+            return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
         }
-
     }
 }

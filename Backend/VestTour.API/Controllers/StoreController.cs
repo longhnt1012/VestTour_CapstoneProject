@@ -49,7 +49,7 @@ namespace VestTour.Controllers
 
         // PUT: api/Store/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateStore(int id, StoreModel storeModel)
         {
             if (id != storeModel.StoreId)

@@ -47,6 +47,8 @@ public partial class Order
 
     public virtual Payment? Payment { get; set; }
 
+    public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
+
     public virtual ShipperPartner? ShipperPartner { get; set; }
 
     public virtual Store? Store { get; set; }

@@ -12,11 +12,12 @@ CREATE TABLE [Role] (
     RoleName NVARCHAR(100)  NOT NULL
 );
 INSERT INTO Role (RoleName)
-VALUES 
+VALUES
     ('admin'),
     ('staff'),
     ('customer'),
-    ('store manager');
+    ('store manager'),
+	('tailor partner');
 	
 CREATE TABLE [User] (
     UserID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -128,17 +129,20 @@ CREATE TABLE Booking (
 );
 
 --Table : Shipperpartner
-CREATE TABLE ShipperPartner(
-	ShipperPartnerID INT PRIMARY KEY IDENTITY(1,1),
-	ShipperPartnerName NVARCHAR(255) NOT NULL,
-	Phone VARCHAR(20),
-	Company NVARCHAR(255),
-	Status NVARCHAR(50),
-)
-INSERT INTO ShipperPartner (ShipperPartnerName, Phone, Company, Status)
+DROP TABLE IF EXISTS ShipperPartner;
+GO
+CREATE TABLE ShipperPartner (
+    ShipperPartnerID INT PRIMARY KEY IDENTITY(1,1),
+    Phone VARCHAR(20),
+    Company NVARCHAR(255),
+    Status NVARCHAR(50)
+);
+
+
+INSERT INTO ShipperPartner (Phone, Company, Status)
 VALUES
-	('Le Hong Ngoc','0914721438','VNEXPRESS','Success'),
-	('Bui Thanh Hai','0918253644','GHTK','Success');
+	('0914721438','VNEXPRESS','Success'),
+	('0918253644','GHTK','Success');
 
 -- Table: BankingAccount
 DROP TABLE IF EXISTS BankingAccount;
@@ -605,6 +609,26 @@ CREATE TABLE ProductInventory (
     FOREIGN KEY (ProductID) REFERENCES Product(ProductID) 
 );
 
+CREATE TABLE TailorPartner (
+    TailorPartnerID INT PRIMARY KEY IDENTITY,
+    StoreID INT UNIQUE NOT NULL,
+    Location NVARCHAR(255),
+    Status NVARCHAR(50),
+    FOREIGN KEY (StoreID) REFERENCES Store(StoreID)
+);
+
+DROP TABLE IF EXISTS ProcessingTailor;
+GO
+CREATE TABLE ProcessingTailor (
+    ProcessingID INT PRIMARY KEY IDENTITY,
+    StageName NVARCHAR(100),
+    TailorPartnerID INT NOT NULL,
+    Status NVARCHAR(50),
+    OrderID INT NOT NULL,
+    Note NVARCHAR(255),
+    FOREIGN KEY (TailorPartnerID) REFERENCES TailorPartner(TailorPartnerID),
+	FOREIGN KEY (OrderID) REFERENCES [Order](OrderID)
+);
 
 
 

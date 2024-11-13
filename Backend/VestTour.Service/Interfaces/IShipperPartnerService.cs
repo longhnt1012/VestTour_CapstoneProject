@@ -12,7 +12,7 @@ namespace VestTour.Service.Interfaces
         Task UpdateShipperPartnerAsync(int id, ShipperPartnerModel shipperPartnerModel);
         Task DeleteShipperPartnerAsync(int id);
         Task<int> GetTotalShipperPartnersAsync(); // Thêm phương thức đếm tổng
-        Task<List<ShipperPartnerModel>> GetShipperPartnersByNameAsync(string name); // Thêm phương thức tìm theo tên
+       
         Task<List<ShipperPartnerModel>> GetShipperPartnersByCompanyAsync(string company);
     }
 }

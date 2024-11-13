@@ -19,7 +19,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetAllOrder()
         {
             try
@@ -67,7 +67,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> UpdateOrder(int id, OrderModel order)
         {
             try
@@ -116,7 +116,7 @@ namespace VestTour.Controllers
 
         // Thêm các phương thức mới
         [HttpGet("total")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetTotalOrders()
         {
             try
@@ -133,7 +133,7 @@ namespace VestTour.Controllers
         
 
         [HttpGet("store/{storeId}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetOrdersByStoreId(int storeId)
         {
             try

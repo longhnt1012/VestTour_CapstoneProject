@@ -45,6 +45,16 @@
         public const string TotalBookingsRetrieved = "Total bookings retrieved successfully.";
          public const string BookingStatusUpdated = "Booking status has been successfully updated.";
 
+       
+
+        public const string TailorPartnerAdded = "Tailor partner successfully added.";
+        public const string TailorPartnerUpdated = "Tailor partner successfully updated.";
+        public const string TailorPartnerDeleted = "Tailor partner successfully deleted.";
+
+        public const string ProcessingTailorAdded = "Processing tailor successfully added.";
+        public const string ProcessingTailorUpdated = "Processing tailor successfully updated.";
+        public const string ProcessingTailorDeleted = "Processing tailor successfully deleted.";
+
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }

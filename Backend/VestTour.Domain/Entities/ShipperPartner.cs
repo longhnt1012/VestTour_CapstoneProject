@@ -7,8 +7,6 @@ public partial class ShipperPartner
 {
     public int ShipperPartnerId { get; set; }
 
-    public string ShipperPartnerName { get; set; } = null!;
-
     public string? Phone { get; set; }
 
     public string? Company { get; set; }

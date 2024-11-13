@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace VestTour.Controllers
 {
@@ -18,81 +18,51 @@ namespace VestTour.Controllers
             _measurementService = measurementService;
         }
 
-        // GET: api/Measurement
         [HttpGet]
-        [Authorize(Roles = "admin,manager,staff")]
-        public async Task<ActionResult<IEnumerable<MeasurementModel>>> GetMeasurements()
+        [Authorize(Roles = "admin,store manager,staff")]
+        public async Task<IActionResult> GetMeasurements()
         {
-            var measurements = await _measurementService.GetAllMeasurementsAsync();
-            return Ok(measurements);
+            var response = await _measurementService.GetAllMeasurementsAsync();
+            return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
         }
 
-        // GET: api/Measurement/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MeasurementModel>> GetMeasurement(int id)
+        public async Task<IActionResult> GetMeasurement(int id)
         {
-            try
-            {
-                var measurement = await _measurementService.GetMeasurementByIdAsync(id);
-                return Ok(measurement);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Measurement not found.");
-            }
+            var response = await _measurementService.GetMeasurementByIdAsync(id);
+            return response.Success ? Ok(response.Data) : (response.Data == null ? NotFound(response.Message) : StatusCode(500, response.Message));
         }
 
-        // POST: api/Measurement
         [HttpPost]
-        public async Task<ActionResult<int>> CreateMeasurement(MeasurementModel measurementModel)
+        public async Task<IActionResult> CreateMeasurement(MeasurementModel measurementModel)
         {
-            var newMeasurementId = await _measurementService.AddMeasurementAsync(measurementModel);
-            return CreatedAtAction(nameof(GetMeasurement), new { id = newMeasurementId }, newMeasurementId);
+            var response = await _measurementService.AddMeasurementAsync(measurementModel);
+            return response.Success ? CreatedAtAction(nameof(GetMeasurement), new { id = response.Data }, response.Data) : StatusCode(500, response.Message);
         }
 
-        // PUT: api/Measurement/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMeasurement(int id, MeasurementModel measurementModel)
         {
-            try
-            {
-                await _measurementService.UpdateMeasurementAsync(id, measurementModel);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Measurement not found.");
-            }
+            if (id != measurementModel.MeasurementId)
+                return BadRequest("Measurement ID mismatch.");
+
+            var response = await _measurementService.UpdateMeasurementAsync(id, measurementModel);
+            return response.Success ? NoContent() : BadRequest(response);
         }
 
-        // DELETE: api/Measurement/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> DeleteMeasurement(int id)
         {
-            try
-            {
-                await _measurementService.DeleteMeasurementAsync(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Measurement not found.");
-            }
-        }
-        // GET: api/Measurement/user/{userId}
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<MeasurementModel>> GetMeasurementByUserId(int userId)
-        {
-            try
-            {
-                var measurement = await _measurementService.GetMeasurementByUserIdAsync(userId);
-                return Ok(measurement);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Measurement not found for this user.");
-            }
+            var response = await _measurementService.DeleteMeasurementAsync(id);
+            return response.Success ? NoContent() : BadRequest(response);
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetMeasurementByUserId(int userId)
+        {
+            var response = await _measurementService.GetMeasurementByUserIdAsync(userId);
+            return response.Success ? Ok(response.Data) : (response.Data == null ? NotFound(response.Message) : StatusCode(500, response.Message));
+        }
     }
 }

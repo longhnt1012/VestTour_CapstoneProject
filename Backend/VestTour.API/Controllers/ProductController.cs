@@ -90,7 +90,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> UpdateProduct(int id, ProductModel product)
         {
             try
@@ -105,7 +105,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try

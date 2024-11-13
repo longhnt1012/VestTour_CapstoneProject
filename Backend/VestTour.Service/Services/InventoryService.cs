@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
-using VestTour.Domain.Entities;
+using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
 namespace VestTour.Service.Services
@@ -12,48 +11,121 @@ namespace VestTour.Service.Services
     public class InventoryService : IInventoryService
     {
         private readonly IInventoryRepository _inventoryRepository;
-      //  private readonly IMapper _mapper;
 
         public InventoryService(IInventoryRepository inventoryRepository)
         {
             _inventoryRepository = inventoryRepository;
-          
         }
 
-        public async Task<int> AddInventoryAsync(InventoryModel inventory)
+        public async Task<ServiceResponse<int>> AddInventoryAsync(InventoryModel inventory)
         {
-            // Delegate to the repository layer
-            return await _inventoryRepository.AddInventoryAsync(inventory);
-        }
+            var response = new ServiceResponse<int>();
 
-        public async Task DeleteInventoryAsync(int productId)
-        {
-            // Delegate to the repository layer
-            await _inventoryRepository.DeleteInventoryAsync(productId);
-        }
-
-        public async Task<List<InventoryModel>> GetAllInventoriesAsync()
-        {
-            // Delegate to the repository layer
-            return await _inventoryRepository.GetAllInventoriesAsync();
-        }
-
-        public async Task<InventoryModel?> GetInventoryByIdAsync(int productId)
-        {
-            // Delegate to the repository layer
-            return await _inventoryRepository.GetInventoryByIdAsync(productId);
-        }
-
-        public async Task UpdateInventoryAsync(int productId, InventoryModel inventory)
-        {
-            // Validate that the inventory object exists
-            if (inventory == null)
+            try
             {
-                throw new ArgumentNullException(nameof(inventory), "Inventory cannot be null");
+                var newInventoryId = await _inventoryRepository.AddInventoryAsync(inventory);
+                response.Data = newInventoryId;
+                response.Success = true;
+                response.Message = "Inventory added successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
             }
 
-            // Delegate to the repository layer
-            await _inventoryRepository.UpdateInventoryAsync(productId, inventory);
+            return response;
+        }
+
+        public async Task<ServiceResponse> DeleteInventoryAsync(int productId)
+        {
+            var response = new ServiceResponse();
+
+            try
+            {
+                await _inventoryRepository.DeleteInventoryAsync(productId);
+                response.Success = true;
+                response.Message = "Inventory deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<InventoryModel>>> GetAllInventoriesAsync()
+        {
+            var response = new ServiceResponse<List<InventoryModel>>();
+
+            try
+            {
+                var inventories = await _inventoryRepository.GetAllInventoriesAsync();
+                response.Data = inventories;
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<InventoryModel?>> GetInventoryByIdAsync(int productId)
+        {
+            var response = new ServiceResponse<InventoryModel?>();
+
+            try
+            {
+                var inventory = await _inventoryRepository.GetInventoryByIdAsync(productId);
+                if (inventory == null)
+                {
+                    response.Success = false;
+                    response.Message = "Inventory not found.";
+                }
+                else
+                {
+                    response.Data = inventory;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse> UpdateInventoryAsync(int productId, InventoryModel inventory)
+        {
+            var response = new ServiceResponse();
+
+            try
+            {
+                if (inventory == null)
+                {
+                    response.Success = false;
+                    response.Message = "Inventory cannot be null.";
+                    return response;
+                }
+
+                await _inventoryRepository.UpdateInventoryAsync(productId, inventory);
+                response.Success = true;
+                response.Message = "Inventory updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
     }
 }

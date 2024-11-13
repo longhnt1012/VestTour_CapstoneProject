@@ -12,7 +12,6 @@ namespace VestTour.Repository.Interface
         Task UpdateShipperPartnerAsync(int id, ShipperPartnerModel shipperPartner); // Update an existing shipper partner
         Task DeleteShipperPartnerAsync(int id);
         Task<int> GetTotalShipperPartnersAsync(); // Thêm phương thức đếm tổng
-        Task<List<ShipperPartnerModel>> GetShipperPartnersByNameAsync(string name); // Thêm phương thức tìm theo tên
         Task<List<ShipperPartnerModel>> GetShipperPartnersByCompanyAsync(string company); /// Delete a shipper partner by ID
     }
 }

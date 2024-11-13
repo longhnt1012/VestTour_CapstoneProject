@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
+using VestTour.Repository.Constants;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Implementation
 {
@@ -15,53 +17,199 @@ namespace VestTour.Service.Implementation
             _measurementRepository = measurementRepository;
         }
 
-        public async Task<List<MeasurementModel>> GetAllMeasurementsAsync()
+        public async Task<ServiceResponse<List<MeasurementModel>>> GetAllMeasurementsAsync()
         {
-            return await _measurementRepository.GetAllMeasurementsAsync();
+            var response = new ServiceResponse<List<MeasurementModel>>();
+
+            try
+            {
+                var measurements = await _measurementRepository.GetAllMeasurementsAsync();
+
+                if (measurements.Count == 0)
+                {
+                    response.Success = false;
+                    response.Message = Error.MeasurementNotFound;
+                }
+                else
+                {
+                    response.Data = measurements;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
 
-        public async Task<MeasurementModel?> GetMeasurementByIdAsync(int id)
+        public async Task<ServiceResponse<MeasurementModel?>> GetMeasurementByIdAsync(int id)
         {
-            var measurement = await _measurementRepository.GetMeasurementByIdAsync(id);
-            if (measurement == null)
-                throw new KeyNotFoundException("Measurement not found.");
+            var response = new ServiceResponse<MeasurementModel?>();
 
-            return measurement;
+            if (id <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidMeasurementId;
+                return response;
+            }
+
+            try
+            {
+                var measurement = await _measurementRepository.GetMeasurementByIdAsync(id);
+
+                if (measurement == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.MeasurementNotFound}: {id}";
+                }
+                else
+                {
+                    response.Data = measurement;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
 
-        public async Task<int> AddMeasurementAsync(MeasurementModel measurementModel)
+        public async Task<ServiceResponse<int>> AddMeasurementAsync(MeasurementModel measurementModel)
         {
+            var response = new ServiceResponse<int>();
+
             if (measurementModel == null)
-                throw new ArgumentNullException(nameof(measurementModel), "Measurement cannot be null.");
+            {
+                response.Success = false;
+                response.Message = Error.InvalidModelState;
+                return response;
+            }
 
-            return await _measurementRepository.AddMeasurementAsync(measurementModel);
+            try
+            {
+                var newMeasurementId = await _measurementRepository.AddMeasurementAsync(measurementModel);
+                response.Data = newMeasurementId;
+                response.Message = Success.MeasurementAdded;
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
 
-        public async Task UpdateMeasurementAsync(int id, MeasurementModel measurementModel)
+        public async Task<ServiceResponse> UpdateMeasurementAsync(int id, MeasurementModel measurementModel)
         {
-            var existingMeasurement = await _measurementRepository.GetMeasurementByIdAsync(id);
-            if (existingMeasurement == null)
-                throw new KeyNotFoundException("Measurement not found.");
+            var response = new ServiceResponse();
 
-            await _measurementRepository.UpdateMeasurementAsync(id, measurementModel);
+            if (id <= 0 || measurementModel == null)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidInputData;
+                return response;
+            }
+
+            try
+            {
+                var existingMeasurement = await _measurementRepository.GetMeasurementByIdAsync(id);
+                if (existingMeasurement == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.MeasurementNotFound}: {id}";
+                }
+                else
+                {
+                    await _measurementRepository.UpdateMeasurementAsync(id, measurementModel);
+                    response.Message = Success.MeasurementUpdated;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
 
-        public async Task DeleteMeasurementAsync(int id)
+        public async Task<ServiceResponse> DeleteMeasurementAsync(int id)
         {
-            var existingMeasurement = await _measurementRepository.GetMeasurementByIdAsync(id);
-            if (existingMeasurement == null)
-                throw new KeyNotFoundException("Measurement not found.");
+            var response = new ServiceResponse();
 
-            await _measurementRepository.DeleteMeasurementAsync(id);
+            if (id <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidMeasurementId;
+                return response;
+            }
+
+            try
+            {
+                var existingMeasurement = await _measurementRepository.GetMeasurementByIdAsync(id);
+                if (existingMeasurement == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.MeasurementNotFound}: {id}";
+                }
+                else
+                {
+                    await _measurementRepository.DeleteMeasurementAsync(id);
+                    response.Message = Success.MeasurementDeleted;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
-        public async Task<MeasurementModel?> GetMeasurementByUserIdAsync(int userId)
+
+        public async Task<ServiceResponse<MeasurementModel?>> GetMeasurementByUserIdAsync(int userId)
         {
-            var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId);
-            if (measurement == null)
-                throw new KeyNotFoundException("Measurement not found for this user.");
+            var response = new ServiceResponse<MeasurementModel?>();
 
-            return measurement;
+            if (userId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidUserId;
+                return response;
+            }
+
+            try
+            {
+                var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId);
+
+                if (measurement == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.MeasurementNotFound}: {userId}";
+                }
+                else
+                {
+                    response.Data = measurement;
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
-
     }
 }

@@ -15,7 +15,7 @@ public partial class VestTourDbContext : DbContext
         : base(options)
     {
     }
-    //public virtual DbSet<ProductStyleOption> ProductStyleOptions { get; set; }
+
     public virtual DbSet<BankingAccount> BankingAccounts { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -36,6 +36,8 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+    public virtual DbSet<ProcessingTailor> ProcessingTailors { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<ProductInventory> ProductInventories { get; set; }
@@ -49,6 +51,8 @@ public partial class VestTourDbContext : DbContext
     public virtual DbSet<Style> Styles { get; set; }
 
     public virtual DbSet<StyleOption> StyleOptions { get; set; }
+
+    public virtual DbSet<TailorPartner> TailorPartners { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -285,6 +289,30 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
         });
 
+        modelBuilder.Entity<ProcessingTailor>(entity =>
+        {
+            entity.HasKey(e => e.ProcessingId).HasName("PK__Processi__22A4D72E47642706");
+
+            entity.ToTable("ProcessingTailor");
+
+            entity.Property(e => e.ProcessingId).HasColumnName("ProcessingID");
+            entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.StageName).HasMaxLength(100);
+            entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.TailorPartnerId).HasColumnName("TailorPartnerID");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.ProcessingTailors)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Processin__Order__56E8E7AB");
+
+            entity.HasOne(d => d.TailorPartner).WithMany(p => p.ProcessingTailors)
+                .HasForeignKey(d => d.TailorPartnerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Processin__Tailo__55F4C372");
+        });
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED51B9E1F7");
@@ -378,7 +406,6 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.ShipperPartnerName).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
         });
 
@@ -427,6 +454,25 @@ public partial class VestTourDbContext : DbContext
             entity.HasOne(d => d.Style).WithMany(p => p.StyleOptions)
                 .HasForeignKey(d => d.StyleId)
                 .HasConstraintName("FK__StyleOpti__Style__48CFD27E");
+        });
+
+        modelBuilder.Entity<TailorPartner>(entity =>
+        {
+            entity.HasKey(e => e.TailorPartnerId).HasName("PK__TailorPa__92F307536A3D31BC");
+
+            entity.ToTable("TailorPartner");
+
+            entity.HasIndex(e => e.StoreId, "UQ__TailorPa__3B82F0E018BF59DE").IsUnique();
+
+            entity.Property(e => e.TailorPartnerId).HasColumnName("TailorPartnerID");
+            entity.Property(e => e.Location).HasMaxLength(255);
+            entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+            entity.HasOne(d => d.Store).WithOne(p => p.TailorPartner)
+                .HasForeignKey<TailorPartner>(d => d.StoreId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TailorPar__Store__503BEA1C");
         });
 
         modelBuilder.Entity<User>(entity =>

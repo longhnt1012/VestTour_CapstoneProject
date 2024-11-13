@@ -4,6 +4,7 @@
     {
         public const string InvalidEmail = "Invalid email format.";
         public const string InvalidUserStatus = "Invalid user status";
+        public const string InvalidUserId = "Invalid user Id";
         public const string InvalidPassword = "Password must be between 6 and 18 characters.";
         public const string InvalidName = "Name must be between 5 and 25 characters.";
         public const string EmailTaken = "Email is already taken.";
@@ -68,6 +69,14 @@
         public const string FailedDeleteLining = "Lining Deleted failed";
         public const string LiningNotFound = "Lining not found";
 
+
+        public const string InvalidTailorPartnerId = "Invalid tailor partner ID provided.";
+        public const string TailorPartnerNotFound = "Tailor partner not found.";
+        public const string NoTailorPartnersFound = "No tailor partners found.";
+
+        public const string InvalidProcessingTailorId = "Invalid processing tailor ID provided.";
+        public const string ProcessingTailorNotFound = "Processing tailor not found.";
+        public const string NoProcessingTailorsFound = "No processing tailors found.";
         public static string InvalidOtpOrExpired { get; set; }
         public static string InvalidToken { get; set; }
     }

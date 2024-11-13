@@ -55,7 +55,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,manager")]
+        [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateLining(int id, LiningModel model)
         {
             try

@@ -44,14 +44,18 @@ namespace VestTour.Repository.Implementation
         }
 
         // Update measurement details
-        public async Task UpdateMeasurementAsync(int id, MeasurementModel measurementModel)
+        public async Task UpdateMeasurementAsync(int measurementId, MeasurementModel measurementModel)
         {
-            if (id == measurementModel.MeasurementId)
+            var existingMeasurement = await _context.Measurements!
+                .FirstOrDefaultAsync(m => m.MeasurementId == measurementId);
+
+            if (existingMeasurement == null)
             {
-                var updateMeasurement = _mapper.Map<Measurement>(measurementModel);
-                _context.Measurements!.Update(updateMeasurement);
-                await _context.SaveChangesAsync();
+                throw new KeyNotFoundException("Measurement not found.");
             }
+
+            _mapper.Map(measurementModel, existingMeasurement); // Update existing entity with new data
+            await _context.SaveChangesAsync();
         }
 
         // Delete a measurement by ID

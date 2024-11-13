@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace VestTour.API.Controllers
 {
@@ -19,49 +21,42 @@ namespace VestTour.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var inventories = await _inventoryService.GetAllInventoriesAsync();
-            return Ok(inventories);
+            var response = await _inventoryService.GetAllInventoriesAsync();
+            return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
         }
 
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetByProductID(int productId)
         {
-            var inventory = await _inventoryService.GetInventoryByIdAsync(productId);
-            if (inventory == null)
-            {
-                return NotFound();
-            }
-            return Ok(inventory);
+            var response = await _inventoryService.GetInventoryByIdAsync(productId);
+            return response.Success ? Ok(response.Data) : (response.Data == null ? NotFound(response.Message) : StatusCode(500, response.Message));
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> Add(InventoryModel inventory)
         {
-            await _inventoryService.AddInventoryAsync(inventory);
-            return CreatedAtAction(nameof(GetByProductID), new { productId = inventory.ProductID }, inventory);
+            var response = await _inventoryService.AddInventoryAsync(inventory);
+            return response.Success ? CreatedAtAction(nameof(GetByProductID), new { productId = inventory.ProductID }, inventory) : StatusCode(500, response.Message);
         }
 
         [HttpPut("{productId}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> Update(int productId, InventoryModel inventory)
         {
             if (productId != inventory.ProductID)
-            {
-                return BadRequest();
-            }
+                return BadRequest("Product ID mismatch.");
 
-            await _inventoryService.UpdateInventoryAsync(productId,inventory);
-            return NoContent();
+            var response = await _inventoryService.UpdateInventoryAsync(productId, inventory);
+            return response.Success ? NoContent() : BadRequest(response);
         }
 
         [HttpDelete("{productId}")]
-        [Authorize(Roles = "admin,manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> Delete(int productId)
         {
-            await _inventoryService.DeleteInventoryAsync(productId);
-            return NoContent();
+            var response = await _inventoryService.DeleteInventoryAsync(productId);
+            return response.Success ? NoContent() : BadRequest(response);
         }
     }
-
 }

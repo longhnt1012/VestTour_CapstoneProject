@@ -34,13 +34,16 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
+    public virtual DbSet<OrderPayment> OrderPayments { get; set; }
+
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<ProcessingTailor> ProcessingTailors { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<ProductInventory> ProductInventories { get; set; }
+    public virtual DbSet<ProductInStore> ProductInStores { get; set; }
+
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -76,6 +79,11 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Bank).HasMaxLength(255);
+            entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+
+            entity.HasOne(d => d.Payment).WithMany(p => p.BankingAccounts)
+                .HasForeignKey(d => d.PaymentId)
+                .HasConstraintName("FK__BankingAc__Payme__662B2B3B");
         });
 
         modelBuilder.Entity<Booking>(entity =>
@@ -267,6 +275,26 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__OrderDeta__Produ__5EBF139D");
         });
 
+        modelBuilder.Entity<OrderPayment>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("OrderPayment");
+
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+
+            entity.HasOne(d => d.Order).WithMany()
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderPaym__Order__6442E2C9");
+
+            entity.HasOne(d => d.Payment).WithMany()
+                .HasForeignKey(d => d.PaymentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__OrderPaym__Payme__65370702");
+        });
+
         modelBuilder.Entity<Payment>(entity =>
         {
             entity.HasKey(e => e.PaymentId).HasName("PK__Payment__9B556A5833503F87");
@@ -274,15 +302,10 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Payment");
 
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
-            entity.Property(e => e.BankingAccountId).HasColumnName("BankingAccountID");
             entity.Property(e => e.Method).HasMaxLength(50);
             entity.Property(e => e.PaymentDetails).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.BankingAccount).WithMany(p => p.Payments)
-                .HasForeignKey(d => d.BankingAccountId)
-                .HasConstraintName("FK__Payment__Banking__3A81B327");
 
             entity.HasOne(d => d.User).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.UserId)
@@ -368,23 +391,30 @@ public partial class VestTourDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<ProductInventory>(entity =>
+        modelBuilder.Entity<ProductInStore>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__ProductI__B40CC6ED0607B01D");
+            entity.ToTable("ProductInStore");
+            entity.HasKey(e => new { e.StoreId, e.ProductId })
+        .HasName("PK_ProductInStore");
 
-            entity.ToTable("ProductInventory");
+            // Map StoreId and ProductId properties to the correct column names
+            entity.Property(e => e.StoreId).HasColumnName("StoreID");
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
-            entity.Property(e => e.ProductId)
-                .ValueGeneratedNever()
-                .HasColumnName("ProductID");
-            entity.Property(e => e.LastUpdate).HasColumnType("datetime");
+            entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
-            entity.HasOne(d => d.Product).WithOne(p => p.ProductInventory)
-                .HasForeignKey<ProductInventory>(d => d.ProductId)
+            entity.HasOne(d => d.Product).WithMany()
+                .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ProductIn__Produ__3C34F16F");
+                .HasConstraintName("FK__ProductIn__Produ__625A9A57");
+
+            entity.HasOne(d => d.Store).WithMany()
+                .HasForeignKey(d => d.StoreId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProductIn__Store__6166761E");
         });
 
+      
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE3A7C5056B0");

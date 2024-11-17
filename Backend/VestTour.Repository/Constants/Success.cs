@@ -54,7 +54,11 @@
         public const string ProcessingTailorAdded = "Processing tailor successfully added.";
         public const string ProcessingTailorUpdated = "Processing tailor successfully updated.";
         public const string ProcessingTailorDeleted = "Processing tailor successfully deleted.";
-
+        //ProductInStore
+        public const string ProductUpdatedInStore = "Product in store updated successfully.";
+        public const string ProductDeletedFromStore = "Product in store deleted successfully.";
+        public const string QuantityUpdatedInStore = "Product in store quantity updated successfully.";
+        public const string ProductAddedToStore = "Product in store added successfully.";
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }

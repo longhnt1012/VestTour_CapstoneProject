@@ -524,24 +524,7 @@ namespace VestTour.Repository.Migrations
                     b.ToTable("Product", (string)null);
                 });
 
-            modelBuilder.Entity("VestTour.Domain.Entities.ProductInventory", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId")
-                        .HasName("PK__ProductI__B40CC6ED0607B01D");
-
-                    b.ToTable("ProductInventory", (string)null);
-                });
-
+          
             modelBuilder.Entity("VestTour.Domain.Entities.ProductStyleOption", b =>
                 {
                     b.Property<int>("ProductId")
@@ -971,17 +954,7 @@ namespace VestTour.Repository.Migrations
                     b.Navigation("Measurement");
                 });
 
-            modelBuilder.Entity("VestTour.Domain.Entities.ProductInventory", b =>
-                {
-                    b.HasOne("VestTour.Domain.Entities.Product", "Product")
-                        .WithOne("ProductInventory")
-                        .HasForeignKey("VestTour.Domain.Entities.ProductInventory", "ProductId")
-                        .IsRequired()
-                        .HasConstraintName("FK__ProductIn__Produ__3C34F16F");
-
-                    b.Navigation("Product");
-                });
-
+         
             modelBuilder.Entity("VestTour.Domain.Entities.ProductStyleOption", b =>
                 {
                     b.HasOne("VestTour.Domain.Entities.Product", "Product")
@@ -1067,7 +1040,6 @@ namespace VestTour.Repository.Migrations
 
             modelBuilder.Entity("VestTour.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("ProductInventory");
 
                     b.Navigation("ProductStyleOption");
                 });

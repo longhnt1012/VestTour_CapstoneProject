@@ -17,6 +17,12 @@ public partial class ProcessingTailor
 
     public string? Note { get; set; }
 
+    public DateOnly? DateSample { get; set; }
+
+    public DateOnly? DateFix { get; set; }
+
+    public DateOnly? DateFinish { get; set; }
+
     public virtual Order Order { get; set; } = null!;
 
     public virtual TailorPartner TailorPartner { get; set; } = null!;

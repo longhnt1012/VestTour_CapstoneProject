@@ -153,12 +153,13 @@ CREATE TABLE BankingAccount (
     AccountName NVARCHAR(255) NOT NULL,
     Bank NVARCHAR(255)
 );
+ALTER TABLE BankingAccount
+ADD PaymentID INT FOREIGN KEY REFERENCES Payment(PaymentID)
 -- Table: Payment
 DROP TABLE IF EXISTS Payment;
 GO
 CREATE TABLE Payment (
     PaymentID INT PRIMARY KEY IDENTITY(1,1),
-	BankingAccountID INT FOREIGN KEY REFERENCES BankingAccount(BankingAccountID),
 	UserID INT FOREIGN KEY REFERENCES [User](UserID),
     Method NVARCHAR(50),
     PaymentDate DATE,
@@ -166,6 +167,7 @@ CREATE TABLE Payment (
     Status NVARCHAR(50)
    
 );
+
 -- Table: Order
 DROP TABLE IF EXISTS [Order];
 GO
@@ -189,7 +191,6 @@ ALTER TABLE [Order]
 ADD GuestName NVARCHAR(255),
 	GuestEmail VARCHAR(255),
 	GuestAddress NVARCHAR(255)
--------------CHAY CAI NAY THOI --------------------
 
 -- Insert into BankingAccount
 INSERT INTO BankingAccount (AccountNumber, AccountName, Bank)
@@ -199,9 +200,9 @@ VALUES ('123456789', 'Tran Dinh Nam', 'ABC Bank'),
 -- Insert into Payment
 INSERT INTO Payment (BankingAccountID, UserID, Method, PaymentDate, PaymentDetails, Status)
 VALUES 
-(1, 2, 'Visa Card', '2024-10-02', 'Payment for order #1', 'Completed'),
-(1, 6, 'Momo', '2024-10-03', 'Payment for order #2', 'Completed'),
-(1, 6, 'Momo', '2024-10-20', 'Payment for order #3', 'Completed');
+(2, 'Visa Card', '2024-10-02', 'Payment for order #1', 'Completed'),
+(6, 'Momo', '2024-10-03', 'Payment for order #2', 'Completed'),
+(6, 'Momo', '2024-10-20', 'Payment for order #3', 'Completed');
 -- Insert into [Order]
 INSERT INTO [Order] (PaymentID,UserID, StoreID, VoucherID, ShipperPartnerID, OrderDate, ShippedDate, Note, Paid, Status,TotalPrice)
 VALUES 
@@ -601,13 +602,14 @@ VALUES
 
 DROP TABLE IF EXISTS Inventory;
 GO
-
-CREATE TABLE ProductInventory (
-    ProductID INT PRIMARY KEY,           
-    Quantity INT NOT NULL,               
-    LastUpdate DATETIME NOT NULL,         
-    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) 
-);
+DROP TABLE IF EXISTS ProductInventory;
+GO
+--CREATE TABLE ProductInventory (
+--    ProductID INT PRIMARY KEY,           
+--    Quantity INT NOT NULL,               
+--    LastUpdate DATETIME NOT NULL,         
+--    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) 
+--);
 
 CREATE TABLE TailorPartner (
     TailorPartnerID INT PRIMARY KEY IDENTITY,
@@ -629,8 +631,31 @@ CREATE TABLE ProcessingTailor (
     FOREIGN KEY (TailorPartnerID) REFERENCES TailorPartner(TailorPartnerID),
 	FOREIGN KEY (OrderID) REFERENCES [Order](OrderID)
 );
+ALTER TABLE ProcessingTailor
+ADD DateSample DATE,
+	DateFix DATE,
+	DateFinish DATE;
 
+DROP TABLE IF EXISTS ProductInStore;
+GO
+CREATE TABLE ProductInStore (
+    StoreID INT NOT NULL,
+    ProductId INT NOT NULL,
+    Quantity INT NOT NULL,      
+    FOREIGN KEY (StoreID) REFERENCES Store(StoreID),
+	FOREIGN KEY (ProductID) REFERENCES Product(ProductID) 
+);
 
+DROP TABLE IF EXISTS OrderPayment;
+GO
+CREATE TABLE OrderPayment (
+    OrderID INT NOT NULL,
+	PaymentID INT NOT NULL,
+    Times INT NOT NULL,   
+	PaidDate DATE NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
+	FOREIGN KEY (PaymentID) REFERENCES Payment(PaymentID) 
+);
 
 
 

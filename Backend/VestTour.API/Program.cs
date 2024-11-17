@@ -85,9 +85,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBankingAccountRepository, BankingAccountRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
-builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddScoped<ITailorPartnerRepository, TailorPartnerRepository>();
 builder.Services.AddScoped<IProcessingTailorRepository, ProcessingTailorRepository>();
+builder.Services.AddScoped<IProductInStoreRepository, ProductInStoreRepository>();
 
 builder.Services.AddScoped<IContactService, ContactService>();
 //builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
@@ -109,9 +109,9 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
-builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<IProcessingTailorService, ProcessingTailorService>();
 builder.Services.AddScoped<ITailorPartnerService, TailorPartnerService>();
+builder.Services.AddScoped<IProductInStoreService, ProductInStoreService>();
 
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();

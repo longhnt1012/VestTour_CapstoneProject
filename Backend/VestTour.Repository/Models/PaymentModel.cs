@@ -10,8 +10,6 @@ namespace VestTour.Repository.Models
         [Column("PaymentID")]
         public int PaymentId { get; set; }
         
-        [Column("BankingAccountID")]
-        public int? BankingAccountId { get; set; }
 
         [Column("UserID")]
         public int? UserId { get; set; }

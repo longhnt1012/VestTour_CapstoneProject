@@ -19,5 +19,6 @@ namespace VestTour.Repository.Models
 
         [StringLength(255)]
         public string? Bank { get; set; }
+        public int PaymentID { get; set; }
     }
 }

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\VestTour.Domain\VestTour.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

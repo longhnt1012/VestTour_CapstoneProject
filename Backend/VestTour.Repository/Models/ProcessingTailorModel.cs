@@ -14,5 +14,10 @@ namespace VestTour.Repository.Models
         public string? Status { get; set; }
         public int OrderId { get; set; }
         public string? Note { get; set; }
+        public DateOnly? DateSample { get; set; }
+
+        public DateOnly? DateFix { get; set; }
+
+        public DateOnly? DateFinish { get; set; }
     }
 }

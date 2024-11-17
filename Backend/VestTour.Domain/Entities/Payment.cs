@@ -7,8 +7,6 @@ public partial class Payment
 {
     public int PaymentId { get; set; }
 
-    public int? BankingAccountId { get; set; }
-
     public int? UserId { get; set; }
 
     public string? Method { get; set; }
@@ -19,7 +17,7 @@ public partial class Payment
 
     public string? Status { get; set; }
 
-    public virtual BankingAccount? BankingAccount { get; set; }
+    public virtual ICollection<BankingAccount> BankingAccounts { get; set; } = new List<BankingAccount>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 

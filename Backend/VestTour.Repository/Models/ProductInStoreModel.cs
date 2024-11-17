@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace VestTour.Repository.Models
 {
-    public class InventoryModel
+    public class ProductInStoreModel
     {
+        public int StoreID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
-        public DateTime LastUpdate { get; set; }
+       
     }
 
 }

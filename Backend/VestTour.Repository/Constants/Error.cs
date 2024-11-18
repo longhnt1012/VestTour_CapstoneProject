@@ -75,6 +75,7 @@
         public const string NoTailorPartnersFound = "No tailor partners found.";
 
         public const string InvalidProcessingTailorId = "Invalid processing tailor ID provided.";
+        public const string InvalidStageName = "Invalid stage name.";
         public const string ProcessingTailorNotFound = "Processing tailor not found.";
         public const string NoProcessingTailorsFound = "No processing tailors found.";
         public static string InvalidOtpOrExpired { get; set; }

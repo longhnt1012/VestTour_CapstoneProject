@@ -84,6 +84,32 @@ namespace VestTour.Repository.Implementation
                                          .ToListAsync();
             return _mapper.Map<List<ProductModel>>(products);
         }
+        public async Task<List<ProductQuantityModel>> GetProductsWithIsCustomFalseInStoreAsync(int storeId)
+        {
+            var productsWithQuantities = await _context.Products
+                .Where(p => p.IsCustom == false)
+                .Join(
+                    _context.ProductInStores, // Joining with ProductInStore table
+                    product => product.ProductId, // Primary key in Products
+                    productInStore => productInStore.ProductId, // Foreign key in ProductInStore
+                    (product, productInStore) => new
+                    {
+                        Product = product,
+                        ProductInStore = productInStore
+                    }
+                )
+                .Where(joined => joined.ProductInStore.StoreId == storeId) 
+                .Select(joined => new ProductQuantityModel
+                {
+                    ProductId = joined.Product.ProductId,
+                    ProductCode = joined.Product.ProductCode,
+                    Price = joined.Product.Price,
+                    Quantity = joined.ProductInStore.Quantity 
+                })
+                .ToListAsync();
+
+            return productsWithQuantities;
+        }
         public async Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId)
         {
             // Load the product along with its related entities, including the many-to-many StyleOptions

@@ -130,5 +130,17 @@ namespace VestTour.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet("products/custom-false/instoreid")]
+        public async Task<IActionResult> GetProductsWithIsCustomFalseInStoreAsync(int storeId)
+        {
+            var products = await _productService.GetProductsWithIsCustomFalseInStoreAsync(storeId);
+            if (products == null || products.Count == 0)
+            {
+                return NotFound(Error.ProductNotFound);
+            }
+
+            return Ok(products);
+        }
     }
 }

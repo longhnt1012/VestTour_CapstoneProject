@@ -77,7 +77,10 @@ namespace VestTour.Service.Implementation
         {
             return await _productRepository.GetProductsWithIsCustomFalseAsync();
         }
-
+        public async Task<List<ProductQuantityModel>> GetProductsWithIsCustomFalseInStoreAsync(int storeId)
+        {
+            return await _productRepository.GetProductsWithIsCustomFalseInStoreAsync(storeId);
+        }
         public async Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId)
         {
             var productDetails = await _productRepository.GetProductWithDetailsAsync(productId);

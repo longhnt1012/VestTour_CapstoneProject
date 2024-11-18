@@ -14,6 +14,7 @@ namespace VestTour.Service.Interfaces
         Task UpdateProductAsync(int id, ProductModel product);
         Task DeleteProductAsync(int id);
         Task<List<ProductModel>> GetProductsWithIsCustomFalseAsync();
+        Task<List<ProductQuantityModel>> GetProductsWithIsCustomFalseInStoreAsync(int storeId);
         Task<ProductDetailsModel> GetProductWithDetailsAsync(int productId);
       
     }

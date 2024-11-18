@@ -16,6 +16,7 @@ public partial class Payment
     public string? PaymentDetails { get; set; }
 
     public string? Status { get; set; }
+    public string? PaymentCode { get; set; }
 
     public virtual ICollection<BankingAccount> BankingAccounts { get; set; } = new List<BankingAccount>();
 

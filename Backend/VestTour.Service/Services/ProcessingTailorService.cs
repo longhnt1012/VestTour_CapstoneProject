@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VestTour.Repository.Constants;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
@@ -69,6 +70,12 @@ namespace VestTour.Service.Services
         public async Task<ServiceResponse<int>> AddProcessingTailorAsync(ProcessingTailorModel processingTailor)
         {
             var response = new ServiceResponse<int>();
+            if (!StageNameValidate.IsValidStage(processingTailor.StageName))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageName; 
+                return response;
+            }
 
             try
             {
@@ -93,6 +100,12 @@ namespace VestTour.Service.Services
             {
                 response.Success = false;
                 response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+            if (!StageNameValidate.IsValidStage(processingTailor.StageName))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageName; // Assume this constant exists in your error messages
                 return response;
             }
 

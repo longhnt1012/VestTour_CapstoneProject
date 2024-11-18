@@ -1301,6 +1301,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.ProductController",
+    "Method": "GetProductsWithIsCustomFalseInStoreAsync",
+    "RelativePath": "api/Product/products/custom-false/instoreid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
     "Method": "GetAllProductsInStore",
     "RelativePath": "api/ProductInStore",
@@ -1368,42 +1384,6 @@
     "ReturnTypes": [
       {
         "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[VestTour.Repository.Models.ProductInStoreModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
-    "Method": "UpdateProductInStore",
-    "RelativePath": "api/ProductInStore/{storeId}/{productId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "storeId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "productId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "productInStore",
-        "Type": "VestTour.Repository.Models.ProductInStoreModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Service.Interface.ServiceResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -2493,13 +2473,7 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userID",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Services;
+using VestTour.Domain.Entities;
 
 namespace VestTour.API.Controllers
 {
@@ -108,11 +109,12 @@ namespace VestTour.API.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("/Cart/create-paypal-order")]
-        public async Task<IActionResult> CreatePaypalOrder(int userID, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
         {
-            var totalPrice = await _addCartService.GetTotalPriceAsync(userID);
+            var userId = GetUserId();
+            var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
             if (totalPrice <= 0)
             {
                 return BadRequest("The cart is empty or has invalid items.");
@@ -131,7 +133,7 @@ namespace VestTour.API.Controllers
             }
 
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("Cart/capture-paypal-order")]
         public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
         {

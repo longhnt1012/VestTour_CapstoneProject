@@ -24,5 +24,6 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
+        public string? PaymentCode { get; set; }
     }
 }

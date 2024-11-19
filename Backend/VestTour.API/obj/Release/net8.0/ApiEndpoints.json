@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customProduct",
-        "Type": "CustomProductModel",
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.AddToCartRequestModel",
         "IsRequired": true
       }
     ],
@@ -17,20 +17,67 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
-    "Method": "DecreaseQuantity",
-    "RelativePath": "api/AddCart/decrease/{productId}",
+    "Method": "CapturePaypalOrder",
+    "RelativePath": "api/AddCart/Cart/capture-paypal-order",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customProductModel",
-        "Type": "CustomProductModel",
-        "IsRequired": true
+        "Name": "orderID",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "ConfirmOrder",
+    "RelativePath": "api/AddCart/confirmorder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
       },
       {
-        "Name": "productId",
-        "Type": "",
+        "Name": "guestEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "deposit",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "shippingfee",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "DecreaseQuantity",
+    "RelativePath": "api/AddCart/decrease/{productCode}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productCode",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -39,19 +86,14 @@
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "IncreaseQuantity",
-    "RelativePath": "api/AddCart/increase/{productId}",
+    "RelativePath": "api/AddCart/increase/{productCode}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customProductModel",
-        "Type": "CustomProductModel",
-        "IsRequired": true
-      },
-      {
-        "Name": "productId",
-        "Type": "",
+        "Name": "productCode",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -80,7 +122,7 @@
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "RemoveFromCart",
-    "RelativePath": "api/AddCart/removefromcart/{productId}",
+    "RelativePath": "api/AddCart/removefromcart/{productCode}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -88,11 +130,6 @@
       {
         "Name": "productCode",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "productId",
-        "Type": "",
         "IsRequired": true
       }
     ],
@@ -268,6 +305,32 @@
   },
   {
     "ContainingType": "BookingController",
+    "Method": "GetLastBooking",
+    "RelativePath": "api/Booking/last-booking",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
     "Method": "CreateBookingForLoggedInUser",
     "RelativePath": "api/Booking/loggedin-user-booking",
     "HttpMethod": "POST",
@@ -299,6 +362,42 @@
         "Name": "status",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
+    "Method": "GetUserBooking",
+    "RelativePath": "api/Booking/user-booking",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -439,6 +538,22 @@
     ]
   },
   {
+    "ContainingType": "VestTour.API.Controllers.ContactController",
+    "Method": "SendContactEmail",
+    "RelativePath": "api/Contact/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contactRequest",
+        "Type": "VestTour.Repository.Models.ContactRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.FabricsController",
     "Method": "GetAllFabrics",
     "RelativePath": "api/Fabrics",
@@ -512,6 +627,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.FabricsController",
+    "Method": "GetFabricByTag",
+    "RelativePath": "api/Fabrics/tag/{tag}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tag",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -605,8 +736,24 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "login",
+        "Name": "loginModel",
         "Type": "VestTour.Repository.Models.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.LoginController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/Login/refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.TokenApiModel",
         "IsRequired": true
       }
     ],
@@ -620,17 +767,7 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.MeasurementModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -646,17 +783,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Int32",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -672,17 +799,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.MeasurementModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.Controllers.MeasurementController",
@@ -715,6 +832,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.MeasurementController",
+    "Method": "GetMeasurementByUserId",
+    "RelativePath": "api/Measurement/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -922,6 +1055,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "GetAllProcessingTailors",
+    "RelativePath": "api/ProcessingTailor",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "AddProcessingTailor",
+    "RelativePath": "api/ProcessingTailor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "processingTailor",
+        "Type": "VestTour.Repository.Models.ProcessingTailorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "GetProcessingTailorById",
+    "RelativePath": "api/ProcessingTailor/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "UpdateProcessingTailor",
+    "RelativePath": "api/ProcessingTailor/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "processingTailor",
+        "Type": "VestTour.Repository.Models.ProcessingTailorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "DeleteProcessingTailor",
+    "RelativePath": "api/ProcessingTailor/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.ProductController",
     "Method": "GetAllProducts",
     "RelativePath": "api/Product",
@@ -1089,6 +1301,166 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.ProductController",
+    "Method": "GetProductsWithIsCustomFalseInStoreAsync",
+    "RelativePath": "api/Product/products/custom-false/instoreid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "GetAllProductsInStore",
+    "RelativePath": "api/ProductInStore",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[System.Collections.Generic.List\u00601[[VestTour.Repository.Models.ProductInStoreModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "AddProductInStore",
+    "RelativePath": "api/ProductInStore",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productInStore",
+        "Type": "VestTour.Repository.Models.ProductInStoreModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "GetProductInStore",
+    "RelativePath": "api/ProductInStore/{storeId}/{productId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[VestTour.Repository.Models.ProductInStoreModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "DeleteProductInStore",
+    "RelativePath": "api/ProductInStore/{storeId}/{productId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "UpdateQuantity",
+    "RelativePath": "api/ProductInStore/{storeId}/{productId}/quantity",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "quantity",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "VestTourApi.Controllers.RegisterController",
     "Method": "Register",
     "RelativePath": "api/Register",
@@ -1105,109 +1477,32 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.RoleController",
-    "Method": "GetRoles",
-    "RelativePath": "api/Role",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.RoleModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "VestTour.Controllers.RoleController",
-    "Method": "CreateRole",
-    "RelativePath": "api/Role",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "roleModel",
-        "Type": "VestTour.Repository.Models.RoleModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Int32",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "VestTour.Controllers.RoleController",
-    "Method": "GetRole",
-    "RelativePath": "api/Role/{id}",
+    "ContainingType": "VestTourApi.Controllers.RegisterController",
+    "Method": "ForgetPassword",
+    "RelativePath": "api/Register",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.RoleModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "VestTour.Controllers.RoleController",
-    "Method": "UpdateRole",
-    "RelativePath": "api/Role/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "roleModel",
-        "Type": "VestTour.Repository.Models.RoleModel",
-        "IsRequired": true
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.RoleController",
-    "Method": "DeleteRole",
-    "RelativePath": "api/Role/{id}",
-    "HttpMethod": "DELETE",
+    "ContainingType": "VestTourApi.Controllers.RegisterController",
+    "Method": "ConfirmEmail",
+    "RelativePath": "api/Register/confirm-email",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "confirmEmailRequest",
+        "Type": "VestTour.Repository.Models.ConfirmRequest",
         "IsRequired": true
       }
     ],
@@ -1316,6 +1611,80 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetAvailableServices",
+    "RelativePath": "api/Shipping/available-services",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.ShippingModel.ShippingRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "CalculateShippingFee",
+    "RelativePath": "api/Shipping/calculate-fee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "VestTour.Repository.Models.ShippingModel.ShippingFeeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetDistricts",
+    "RelativePath": "api/Shipping/districts",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "provinceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetProvinces",
+    "RelativePath": "api/Shipping/provinces",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ShippingController",
+    "Method": "GetWards",
+    "RelativePath": "api/Shipping/wards",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "districtId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -1650,6 +2019,111 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "GetAllTailorPartners",
+    "RelativePath": "api/TailorPartner",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "AddTailorPartner",
+    "RelativePath": "api/TailorPartner",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tailorPartner",
+        "Type": "VestTour.Repository.Models.TailorPartnerModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "GetTailorPartnerById",
+    "RelativePath": "api/TailorPartner/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "UpdateTailorPartner",
+    "RelativePath": "api/TailorPartner/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "tailorPartner",
+        "Type": "VestTour.Repository.Models.TailorPartnerModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
+    "Method": "DeleteTailorPartner",
+    "RelativePath": "api/TailorPartner/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TokenController",
+    "Method": "Refresh",
+    "RelativePath": "api/Token/refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tokenApiModel",
+        "Type": "VestTour.Repository.Models.TokenApiModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.TokenController",
+    "Method": "Revoke",
+    "RelativePath": "api/Token/revoke",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.API.Controllers.UserController",
     "Method": "GetAllUsers",
     "RelativePath": "api/User",
@@ -1780,6 +2254,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/User/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VestTour.Repository.Models.ForgotPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/User/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "VestTour.Repository.Models.ResetPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "GetUsersByRole",
+    "RelativePath": "api/User/role/{roleId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.UserModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "VestTour.Controllers.VoucherController",
     "Method": "GetVouchers",
     "RelativePath": "api/Voucher",
@@ -1865,8 +2397,8 @@
         "IsRequired": true
       },
       {
-        "Name": "voucherModel",
-        "Type": "VestTour.Repository.Models.VoucherModel",
+        "Name": "updateVoucherModel",
+        "Type": "VestTour.Repository.Models.UpdateVoucherModel",
         "IsRequired": true
       }
     ],
@@ -1933,5 +2465,15 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "CreatePaypalOrder",
+    "RelativePath": "Cart/create-paypal-order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

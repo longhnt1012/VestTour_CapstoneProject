@@ -27,6 +27,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddDbContext<VestTourDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDb")));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

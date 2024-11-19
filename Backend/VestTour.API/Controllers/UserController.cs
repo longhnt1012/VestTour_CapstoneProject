@@ -124,7 +124,7 @@ namespace VestTour.API.Controllers
         }
         // GET: api/user/role/4
         [HttpGet("role/{roleId:int}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, store manager")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsersByRole(int roleId)
         {
             var users = await _userService.GetUsersByRoleAsync(roleId);

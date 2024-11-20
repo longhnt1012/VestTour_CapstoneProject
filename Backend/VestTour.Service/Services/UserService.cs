@@ -41,7 +41,21 @@ namespace VestTour.Service.Services
         public async Task<int> AddUserAsync(UserModel user)
         {
             ValidateUserFields(user); // Add validation here
-            return await _userRepository.AddUserAsync(user);
+            var hashedPassword = PasswordHelper.HashPassword(user.Password);
+            var newUser = new UserModel
+            {
+                Name = user.Name,
+                Gender = user.Gender,
+                Address = user.Address,
+                Dob = user.Dob,
+                Email = user.Email,
+                Phone = user.Phone,
+                Password = hashedPassword,  // Store the hashed password
+                Status = "active",
+                IsConfirmed = true,
+                RoleId = user.RoleId,
+            };
+            return await _userRepository.AddUserAsync(newUser);
         }
 
         

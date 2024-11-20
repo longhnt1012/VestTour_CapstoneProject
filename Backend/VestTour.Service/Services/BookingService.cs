@@ -230,7 +230,7 @@ public class BookingService : IBookingService
             GuestName = user.Name,
             GuestEmail = user.Email,
             GuestPhone = user.Phone,
-            DepositCost = model.DepositCost,
+            //DepositCost = model.DepositCost,
             Service = model.Service, // Include service type
         };
 

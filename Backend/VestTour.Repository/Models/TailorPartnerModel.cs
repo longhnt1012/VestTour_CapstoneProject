@@ -11,6 +11,7 @@ namespace VestTour.Repository.Models
     {
         public int TailorPartnerId { get; set; }
         public int StoreId { get; set; }
+        public int UserId { get; set; }
         public string? Location { get; set; }
         public string? Status { get; set; }
     }

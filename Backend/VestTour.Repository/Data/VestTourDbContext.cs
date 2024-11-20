@@ -93,7 +93,7 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Booking");
 
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
-            entity.Property(e => e.DepositCost).HasColumnType("decimal(10, 2)");
+            //entity.Property(e => e.DepositCost).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.GuestEmail)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -498,11 +498,15 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Location).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
-
             entity.HasOne(d => d.Store).WithOne(p => p.TailorPartner)
                 .HasForeignKey<TailorPartner>(d => d.StoreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TailorPar__Store__503BEA1C");
+            entity.Property(e => e.UserId).HasColumnName("UserId");
+            entity.HasOne(u => u.User).WithOne(p => p.TailorPartner)
+                .HasForeignKey<TailorPartner>(u=> u.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TailorPar__User");
         });
 
         modelBuilder.Entity<User>(entity =>

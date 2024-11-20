@@ -44,4 +44,5 @@ public partial class User
     public virtual Role Role { get; set; } = null!;
 
     public virtual ICollection<Store> Stores { get; set; } = new List<Store>();
+    public virtual TailorPartner? TailorPartner { get; set; }
 }

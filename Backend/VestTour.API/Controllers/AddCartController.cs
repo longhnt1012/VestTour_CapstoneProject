@@ -111,7 +111,7 @@ namespace VestTour.API.Controllers
 
         //[Authorize]
         [HttpPost("/Cart/create-paypal-order")]
-        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken, bool isDeposit)
         {
             var userId = GetUserId();
             var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
@@ -120,6 +120,13 @@ namespace VestTour.API.Controllers
                 return BadRequest("The cart is empty or has invalid items.");
             }
             var tongtien = totalPrice.ToString("F2");
+            decimal tienphaitra;
+            if (isDeposit)
+            {
+                tienphaitra = totalPrice/ 2;
+                tongtien = tienphaitra.ToString("F2");
+            }
+            
             var donViTienTe = "USD";
             var maDonHangThamChieu = "OR" + DateTime.Now.Ticks.ToString();
             try

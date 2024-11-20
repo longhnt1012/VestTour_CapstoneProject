@@ -9,8 +9,6 @@ public partial class Order
 
     public int? UserId { get; set; }
 
-    public int? PaymentId { get; set; }
-
     public int? StoreId { get; set; }
 
     public int? VoucherId { get; set; }
@@ -45,7 +43,7 @@ public partial class Order
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
-    public virtual Payment? Payment { get; set; }
+    //public virtual Payment? Payment { get; set; }
 
     public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
 
@@ -56,4 +54,5 @@ public partial class Order
     public virtual User? User { get; set; }
 
     public virtual Voucher? Voucher { get; set; }
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

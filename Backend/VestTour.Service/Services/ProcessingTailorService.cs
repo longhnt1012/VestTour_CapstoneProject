@@ -76,7 +76,12 @@ namespace VestTour.Service.Services
                 response.Message = Error.InvalidStageName; 
                 return response;
             }
-
+            if (!TailorProcessStatusValidate.IsValidProcessStatus(processingTailor.Status))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessStatus;
+                return response;
+            }
             try
             {
                 response.Data = await _processingTailorRepository.AddProcessingTailorAsync(processingTailor);
@@ -149,5 +154,32 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse<List<ProcessingTailorModel>>> GetProcessAssignedByTailorPartnerIdAsync(int tailorPartnerId)
+        {
+            var response = new ServiceResponse<List<ProcessingTailorModel>>();
+
+            if (tailorPartnerId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidTailorPartnerId; // Đảm bảo rằng bạn có định nghĩa lỗi này
+                return response;
+            }
+
+            try
+            {
+                var processes = await _processingTailorRepository.GetProcessAssignedByTailorPartnerIdAsync(tailorPartnerId);
+                response.Data = processes;
+                response.Success = processes.Any();
+                response.Message = processes.Any() ? null : Error.NoProcessesAssigned; // Thông báo nếu không tìm thấy dữ liệu
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
     }
 }

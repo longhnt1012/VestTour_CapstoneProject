@@ -15,5 +15,6 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse<int>> AddTailorPartnerAsync(TailorPartnerModel tailorPartner);
         Task<ServiceResponse> UpdateTailorPartnerAsync(int id, TailorPartnerModel tailorPartner);
         Task<ServiceResponse> DeleteTailorPartnerAsync(int tailorPartnerId);
+        Task<ServiceResponse<List<TailorPartnerModel>>> GetTailorPartnersByStoreIdAsync(int storeId);
     }
 }

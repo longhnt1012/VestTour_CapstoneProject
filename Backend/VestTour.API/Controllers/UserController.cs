@@ -96,10 +96,9 @@ namespace VestTour.API.Controllers
             return NoContent();
         }
 
-        // PUT: api/user/{id}/status
+
         // PUT: api/user/{id}/status
         [HttpPut("{id}/status")]
-        [Authorize]
         [Authorize]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
         {

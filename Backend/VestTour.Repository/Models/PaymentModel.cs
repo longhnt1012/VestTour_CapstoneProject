@@ -9,10 +9,11 @@ namespace VestTour.Repository.Models
         [Key]
         [Column("PaymentID")]
         public int PaymentId { get; set; }
-        
+        public int OrderId { get; set; }
 
         [Column("UserID")]
         public int? UserId { get; set; }
+
 
         [StringLength(50)]
         public string? Method { get; set; }
@@ -24,6 +25,7 @@ namespace VestTour.Repository.Models
 
         [StringLength(50)]
         public string? Status { get; set; }
+        public decimal? Amount { get; set; }
         //public string? PaymentCode { get; set; }
     }
 }

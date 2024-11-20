@@ -50,5 +50,15 @@ namespace VestTour.API.Controllers
             var response = await _processingTailorService.DeleteProcessingTailorAsync(id);
             return response.Success ? NoContent() : NotFound(response);
         }
+        [HttpGet("assigned-to/{tailorPartnerId}")]
+        public async Task<IActionResult> GetProcessesByTailorPartnerId(int tailorPartnerId)
+        {
+            var result = await _processingTailorService.GetProcessAssignedByTailorPartnerIdAsync(tailorPartnerId);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }

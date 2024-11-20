@@ -59,5 +59,14 @@ namespace VestTour.Repository.Implementation
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<ProcessingTailorModel>> GetProcessAssignedByTailorPartnerIdAsync(int tailorPartnerId)
+        {
+            var processingTailors = await _context.ProcessingTailors
+                .Where(pt => pt.TailorPartnerId == tailorPartnerId)
+                .ToListAsync();
+
+            
+            return _mapper.Map<List<ProcessingTailorModel>>(processingTailors);
+        }
     }
 }

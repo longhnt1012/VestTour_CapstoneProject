@@ -9,7 +9,6 @@ namespace VestTour.Repository.Models
     {
         public int OrderId { get; set; }
         public int? UserID { get; set; }
-        public int? PaymentId { get; set; }
         public int? StoreId { get; set; }
         public int? VoucherId { get; set; }
         public int? ShipperPartnerId { get; set; }

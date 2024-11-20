@@ -34,8 +34,6 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
-    public virtual DbSet<OrderPayment> OrderPayments { get; set; }
-
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<ProcessingTailor> ProcessingTailors { get; set; }
@@ -159,6 +157,12 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Response).HasMaxLength(255);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
+            entity.Property(e => e.ProductId).HasColumnName("ProductId");
+
+            entity.HasOne(p => p.Product).WithMany(p => p.Feedbacks)
+                .HasForeignKey(p => p.ProductId)
+                .HasConstraintName("FK__Feedback__ProductId");
+
             entity.HasOne(d => d.Order).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("FK__Feedback__OrderI__5AEE82B9");
@@ -225,7 +229,6 @@ public partial class VestTourDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.GuestName).HasMaxLength(255);
             entity.Property(e => e.Note).HasMaxLength(255);
-            entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
             entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
             entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
@@ -234,11 +237,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
 
-            entity.HasOne(d => d.Payment).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.PaymentId)
-                .HasConstraintName("FK__Order__PaymentID__3F466844");
-
-            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
+             entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ShipperPartnerId)
                 .HasConstraintName("FK__Order__ShipperPa__4222D4EF");
 
@@ -275,26 +274,6 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__OrderDeta__Produ__5EBF139D");
         });
 
-        modelBuilder.Entity<OrderPayment>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("OrderPayment");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
-
-            entity.HasOne(d => d.Order).WithMany()
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderPaym__Order__6442E2C9");
-
-            entity.HasOne(d => d.Payment).WithMany()
-                .HasForeignKey(d => d.PaymentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderPaym__Payme__65370702");
-        });
-
         modelBuilder.Entity<Payment>(entity =>
         {
             entity.HasKey(e => e.PaymentId).HasName("PK__Payment__9B556A5833503F87");
@@ -306,10 +285,15 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.PaymentDetails).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-
+            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
             entity.HasOne(d => d.User).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
+            entity.Property(o => o.OrderId).HasColumnName("OrderID");
+
+            entity.HasOne(o => o.Order).WithMany(p => p.Payments)
+                .HasForeignKey(o => o.OrderId)
+                .HasConstraintName("FK__Payment__OrderID");
         });
 
         modelBuilder.Entity<ProcessingTailor>(entity =>

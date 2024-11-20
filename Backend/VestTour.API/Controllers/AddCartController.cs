@@ -140,7 +140,7 @@ namespace VestTour.API.Controllers
             }
 
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost("Cart/capture-paypal-order")]
         public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
         {
@@ -149,7 +149,8 @@ namespace VestTour.API.Controllers
                 var response = await _paypalClient.CaptureOrder(orderID);
 
                 //Lưu database thì xài create order
-                
+                //var newOrder = await _addCartService.ConfirmOrderAsync()
+
                 return Ok(response);
             }
             catch
@@ -157,6 +158,38 @@ namespace VestTour.API.Controllers
                 return BadRequest();
             }
         }
+        //[HttpPost("Cart/capture-paypal-order")]
+        //public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        //{
+        //    try
+        //    {
 
+        //        var response = await _paypalClient.CaptureOrder(orderID);
+
+        //        if (response.status == "COMPLETED") 
+        //        {
+
+        //            var userId = GetUserId();
+        //            await _addCartService.ConfirmOrderAsync(
+        //                userId: userId,
+        //                guestName: null,
+        //                guestEmail: null,
+        //                guestAddress: null,
+        //                deposit: null,
+        //                shippingFee: null
+        //            );
+
+        //            return Ok(new { message = "Order captured and confirmed successfully.", paypalResponse = response });
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(new { message = "PayPal order capture failed.", paypalResponse = response });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Error capturing PayPal order: {ex.Message}");
+        //    }
+        //}
     }
 }

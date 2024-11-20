@@ -90,7 +90,9 @@ builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<ITailorPartnerRepository, TailorPartnerRepository>();
 builder.Services.AddScoped<IProcessingTailorRepository, ProcessingTailorRepository>();
 builder.Services.AddScoped<IProductInStoreRepository, ProductInStoreRepository>();
+builder.Services.AddScoped<IFeedbackRepository,FeedbackRepository>();
 
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 //builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
 builder.Services.AddScoped<ITokenService, TokenService>();

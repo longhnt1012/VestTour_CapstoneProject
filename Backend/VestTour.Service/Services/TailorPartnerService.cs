@@ -136,5 +136,33 @@ namespace VestTour.Service.Services
 
             return response;
         }
+
+        public async Task<ServiceResponse<List<TailorPartnerModel>>> GetTailorPartnersByStoreIdAsync(int storeId)
+        {
+            var response = new ServiceResponse<List<TailorPartnerModel>>();
+
+            if (storeId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStoreId;
+                return response;
+            }
+
+            try
+            {
+                var tailorPartners = await _tailorPartnerRepository.GetTailorPartnersByStoreIdAsync(storeId);
+
+                response.Data = tailorPartners;
+                response.Success = tailorPartners.Any();
+                response.Message = tailorPartners.Any() ? null : Error.TailorPartnerNotFound;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
     }
 }

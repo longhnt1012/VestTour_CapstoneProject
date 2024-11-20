@@ -35,7 +35,7 @@ public partial class Product
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
- 
+    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<StyleOption> StyleOptions { get; set; } = new List<StyleOption>();
 }

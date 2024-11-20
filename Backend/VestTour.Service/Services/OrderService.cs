@@ -7,6 +7,7 @@ using VestTour.Repository.Helpers;
 using VestTour.Repository.Implementation;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interfaces;
 using VestTour.Service.Services;
 
@@ -42,11 +43,16 @@ namespace VestTour.Service.Implementation
 
         public async Task<int> CreateOrderAsync(OrderModel order)
         {
+            // Validate the order status
+            if (!OrderStatusValidate.IsValidProcessStatus(order.Status ?? "Pending"))
+            {
+                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
+            }
+
             // Thực hiện logic xử lý trước khi thêm đơn hàng
             var newOrder = new OrderModel
             {
                 UserID = order.UserID,
-                PaymentId = order.PaymentId,
                 StoreId = order.StoreId,
                 VoucherId = order.VoucherId,
                 ShipperPartnerId = order.ShipperPartnerId,
@@ -54,7 +60,7 @@ namespace VestTour.Service.Implementation
                 ShippedDate = order.ShippedDate,
                 Note = order.Note,
                 Paid = order.Paid,
-                Status = order.Status ?? "pending",
+                Status = order.Status ?? "Pending",
                 TotalPrice = order.TotalPrice,
                 Deposit= order.Deposit,
                 ShippingFee= order.ShippingFee
@@ -68,7 +74,6 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"Order Details:");
 
             body.AppendLine($"- User ID: {order.UserID}");
-            body.AppendLine($"- Payment ID: {order.PaymentId}");
             body.AppendLine($"- Store ID: {order.StoreId}");
             body.AppendLine($"- Voucher ID: {order.VoucherId}");
             body.AppendLine($"- Shipper Partner ID: {order.ShipperPartnerId}");
@@ -130,9 +135,16 @@ namespace VestTour.Service.Implementation
 
         public async Task UpdateOrderAsync(int id, OrderModel order)
         {
+            if (!OrderStatusValidate.IsValidProcessStatus(order.Status ?? "Pending"))
+            {
+                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
+            }
+
             var existingOrder = await _orderRepository.GetOrderByIdAsync(id);
             if (existingOrder == null)
+            {
                 throw new KeyNotFoundException("Order not found.");
+            }
             await _orderRepository.UpdateOrderAsync(id, order);
         }
         public async Task<int> GetTotalOrdersAsync()

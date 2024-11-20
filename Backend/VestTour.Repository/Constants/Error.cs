@@ -76,8 +76,12 @@
 
         public const string InvalidProcessingTailorId = "Invalid processing tailor ID provided.";
         public const string InvalidStageName = "Invalid stage name.";
+        public const string InvalidProcessStatus = "Invalid process status.";
         public const string ProcessingTailorNotFound = "Processing tailor not found.";
         public const string NoProcessingTailorsFound = "No processing tailors found.";
+        public const string NoProcessesAssigned = "No process assigned.";
+
+        public const string InvalidStoreId = "Invalid store ID provided.";
         public static string InvalidOtpOrExpired { get; set; }
         public static string InvalidToken { get; set; }
     }

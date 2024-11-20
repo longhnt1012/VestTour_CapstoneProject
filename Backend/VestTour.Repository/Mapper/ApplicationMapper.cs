@@ -35,7 +35,9 @@ namespace VestTour.Repository.Mapper
             CreateMap<TailorPartner, TailorPartnerModel>().ReverseMap();
             CreateMap<ProcessingTailor, ProcessingTailorModel>().ReverseMap();
             CreateMap<ProductInStore, ProductInStoreModel>().ReverseMap();
-
+            CreateMap<Feedback, FeedbackModel>().ReverseMap();
+            CreateMap<Feedback, WriteFeedbackModel>().ReverseMap();
+            CreateMap<Feedback, ResponseFeedbackModel>().ReverseMap();
 
         }
     }

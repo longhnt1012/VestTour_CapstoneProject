@@ -59,5 +59,16 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<TailorPartnerModel>> GetTailorPartnersByStoreIdAsync(int storeId)
+        {
+            var tailorPartners = await _context.TailorPartners
+                .Where(tp => tp.StoreId == storeId)
+                .Include(tp => tp.Store) 
+                .Include(tp => tp.ProcessingTailors) 
+                .ToListAsync();
+
+            return _mapper.Map<List<TailorPartnerModel>>(tailorPartners);
+        }
+
     }
-    }
+}

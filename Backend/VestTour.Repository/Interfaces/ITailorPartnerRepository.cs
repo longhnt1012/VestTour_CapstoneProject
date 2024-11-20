@@ -14,5 +14,6 @@ namespace VestTour.Repository.Interfaces
         Task<int> AddTailorPartnerAsync(TailorPartnerModel tailorPartner);
         Task UpdateTailorPartnerAsync(int id, TailorPartnerModel tailorPartner);
         Task DeleteTailorPartnerAsync(int tailorPartnerId);
+        Task<List<TailorPartnerModel>> GetTailorPartnersByStoreIdAsync(int storeId);
     }
 }

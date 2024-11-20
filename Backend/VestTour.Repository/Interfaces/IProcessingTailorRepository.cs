@@ -14,5 +14,6 @@ namespace VestTour.Repository.Interfaces
         Task<int> AddProcessingTailorAsync(ProcessingTailorModel processingTailor);
         Task UpdateProcessingTailorAsync(int id, ProcessingTailorModel processingTailor);
         Task DeleteProcessingTailorAsync(int processingId);
+        Task<List<ProcessingTailorModel>> GetProcessAssignedByTailorPartnerIdAsync(int tailorPartnerId);
     }
 }

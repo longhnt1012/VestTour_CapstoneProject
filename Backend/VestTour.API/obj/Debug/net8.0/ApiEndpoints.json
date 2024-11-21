@@ -1366,6 +1366,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "ChangeStageName",
+    "RelativePath": "api/ProcessingTailor/stagename/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStage",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.ProductController",
     "Method": "GetAllProducts",
     "RelativePath": "api/Product",

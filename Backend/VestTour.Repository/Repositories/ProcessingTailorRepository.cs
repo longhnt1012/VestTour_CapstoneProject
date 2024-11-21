@@ -108,5 +108,15 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task ChangeStageNameAsync(int processingId, string newStage)
+        {
+            var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);
+
+            if (processingTailor != null)
+            {
+                processingTailor.StageName = newStage;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

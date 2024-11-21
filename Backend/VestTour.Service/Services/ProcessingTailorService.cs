@@ -397,5 +397,46 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse> ChangeStageNameAsync(int processingId, string newStage)
+        {
+            var response = new ServiceResponse();
+
+            if (processingId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+
+            if (!StageNameValidate.IsValidStage(newStage))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageName;
+                return response;
+            }
+
+            try
+            {
+                var existingProcessingTailor = await _processingTailorRepository.GetProcessingTailorByIdAsync(processingId);
+
+                if (existingProcessingTailor == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.ProcessingTailorNotFound}: {processingId}";
+                    return response;
+                }
+                await _processingTailorRepository.ChangeStageNameAsync(processingId, newStage);
+
+                response.Success = true;
+                response.Message = Success.StageNameUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
     }
 }

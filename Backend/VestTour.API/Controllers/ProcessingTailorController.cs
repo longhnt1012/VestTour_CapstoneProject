@@ -115,5 +115,17 @@ namespace VestTour.API.Controllers
 
             return Ok(response);
         }
+        [HttpPatch("stagename/{id}")]
+        public async Task<IActionResult> ChangeStageName(int id, [FromBody] string newStage)
+        {
+
+            var response = await _processingTailorService.ChangeStageNameAsync(id, newStage);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

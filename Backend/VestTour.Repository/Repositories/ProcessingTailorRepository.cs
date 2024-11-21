@@ -10,7 +10,7 @@ using VestTour.Repository.Data;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
 
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class ProcessingTailorRepository : IProcessingTailorRepository
     {
@@ -67,6 +67,46 @@ namespace VestTour.Repository.Implementation
 
             
             return _mapper.Map<List<ProcessingTailorModel>>(processingTailors);
+        }
+        public async Task ChangeStatusAsync(int processingId, string newStatus)
+        {
+            var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);
+
+            if (processingTailor != null)
+            {
+                processingTailor.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task ChangeSampleStatusAsync(int processingId, string newStatus)
+        {
+            var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);
+
+            if (processingTailor != null)
+            {
+                processingTailor.SampleStatus = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task ChangeFixStatusAsync(int processingId, string newStatus)
+        {
+            var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);
+
+            if (processingTailor != null)
+            {
+                processingTailor.FixStatus = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task ChangeDeliveryStatusAsync(int processingId, string newStatus)
+        {
+            var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);
+
+            if (processingTailor != null)
+            {
+                processingTailor.DeliveryStatus = newStatus;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

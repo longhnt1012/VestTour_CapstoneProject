@@ -59,6 +59,10 @@
         public const string ProductDeletedFromStore = "Product in store deleted successfully.";
         public const string QuantityUpdatedInStore = "Product in store quantity updated successfully.";
         public const string ProductAddedToStore = "Product in store added successfully.";
+        public const string ProcessingTailorStatusUpdated = "Processing tailor status updated successfully.";
+        public const string SampleStatusUpdated = "Sample status updated successfully.";
+        public const string FixStatusUpdated = "Fix status updated successfully.";
+        public const string DeliveryStatusUpdated = "Delivery status updated successfully.";
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }

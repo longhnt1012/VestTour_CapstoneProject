@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Data;
 using VestTour.Repository.Models;
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class VoucherRepository : IVoucherRepository
     {

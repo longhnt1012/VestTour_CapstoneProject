@@ -70,18 +70,47 @@ namespace VestTour.Service.Services
         public async Task<ServiceResponse<int>> AddProcessingTailorAsync(ProcessingTailorModel processingTailor)
         {
             var response = new ServiceResponse<int>();
+
+            // Kiểm tra StageName
             if (!StageNameValidate.IsValidStage(processingTailor.StageName))
             {
                 response.Success = false;
-                response.Message = Error.InvalidStageName; 
+                response.Message = Error.InvalidStageName;
                 return response;
             }
-            if (!TailorProcessStatusValidate.IsValidProcessStatus(processingTailor.Status))
+
+           
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.Status))
             {
                 response.Success = false;
                 response.Message = Error.InvalidProcessStatus;
                 return response;
             }
+
+           
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.SampleStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.FixStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.DeliveryStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+;
+                return response;
+            }
+
             try
             {
                 response.Data = await _processingTailorRepository.AddProcessingTailorAsync(processingTailor);
@@ -97,6 +126,7 @@ namespace VestTour.Service.Services
             return response;
         }
 
+
         public async Task<ServiceResponse> UpdateProcessingTailorAsync(int id, ProcessingTailorModel processingTailor)
         {
             var response = new ServiceResponse();
@@ -110,10 +140,33 @@ namespace VestTour.Service.Services
             if (!StageNameValidate.IsValidStage(processingTailor.StageName))
             {
                 response.Success = false;
-                response.Message = Error.InvalidStageName; // Assume this constant exists in your error messages
+                response.Message = Error.InvalidStageName; 
                 return response;
             }
 
+
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.SampleStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.FixStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                ;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(processingTailor.DeliveryStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                ;
+                return response;
+            }
             try
             {
                 await _processingTailorRepository.UpdateProcessingTailorAsync(id, processingTailor);
@@ -161,7 +214,7 @@ namespace VestTour.Service.Services
             if (tailorPartnerId <= 0)
             {
                 response.Success = false;
-                response.Message = Error.InvalidTailorPartnerId; // Đảm bảo rằng bạn có định nghĩa lỗi này
+                response.Message = Error.InvalidTailorPartnerId; 
                 return response;
             }
 
@@ -170,7 +223,7 @@ namespace VestTour.Service.Services
                 var processes = await _processingTailorRepository.GetProcessAssignedByTailorPartnerIdAsync(tailorPartnerId);
                 response.Data = processes;
                 response.Success = processes.Any();
-                response.Message = processes.Any() ? null : Error.NoProcessesAssigned; // Thông báo nếu không tìm thấy dữ liệu
+                response.Message = processes.Any() ? null : Error.NoProcessesAssigned;
             }
             catch (Exception ex)
             {
@@ -180,6 +233,169 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse> ChangeStatusAsync(int processingId, string newStatus)
+        {
+            var response = new ServiceResponse();
 
+            if (processingId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+
+            if (!TailorProcessStatusValidate.IsValidProcessStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingProcessingTailor = await _processingTailorRepository.GetProcessingTailorByIdAsync(processingId);
+
+                if (existingProcessingTailor == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.ProcessingTailorNotFound}: {processingId}";
+                    return response;
+                }
+                await _processingTailorRepository.ChangeStatusAsync(processingId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.ProcessingTailorStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse> ChangeSampleStatusAsync(int processingId, string newStatus)
+        {
+            var response = new ServiceResponse();
+
+            if (processingId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingProcessingTailor = await _processingTailorRepository.GetProcessingTailorByIdAsync(processingId);
+
+                if (existingProcessingTailor == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.ProcessingTailorNotFound}: {processingId}";
+                    return response;
+                }
+                await _processingTailorRepository.ChangeSampleStatusAsync(processingId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.SampleStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse> ChangeFixStatusAsync(int processingId, string newStatus)
+        {
+            var response = new ServiceResponse();
+
+            if (processingId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingProcessingTailor = await _processingTailorRepository.GetProcessingTailorByIdAsync(processingId);
+
+                if (existingProcessingTailor == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.ProcessingTailorNotFound}: {processingId}";
+                    return response;
+                }
+                await _processingTailorRepository.ChangeFixStatusAsync(processingId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.FixStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse> ChangeDeliveryStatusAsync(int processingId, string newStatus)
+        {
+            var response = new ServiceResponse();
+
+            if (processingId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidProcessingTailorId;
+                return response;
+            }
+
+            if (!StageStatusValidate.IsValidStageStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStageStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingProcessingTailor = await _processingTailorRepository.GetProcessingTailorByIdAsync(processingId);
+
+                if (existingProcessingTailor == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.ProcessingTailorNotFound}: {processingId}";
+                    return response;
+                }
+                await _processingTailorRepository.ChangeDeliveryStatusAsync(processingId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.DeliveryStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
     }
 }

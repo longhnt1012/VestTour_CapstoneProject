@@ -5,7 +5,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Data;
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class ProductRepository : IProductRepository
     {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Helpers;
-using VestTour.Repository.Implementation;
+using VestTour.Repository.Repositories;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Repository.ValidationHelper;

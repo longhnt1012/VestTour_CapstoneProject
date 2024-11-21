@@ -10,7 +10,7 @@ namespace VestTour.Repository.ValidationHelper
     {
         private static readonly HashSet<string> AllowedStages = new HashSet<string>
     {
-        "Make Sample", "Fix", "Finish"
+        "Make Sample", "Fix", "Delivery"
     };
 
         

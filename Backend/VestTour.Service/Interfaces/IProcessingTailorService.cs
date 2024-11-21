@@ -16,5 +16,9 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse> UpdateProcessingTailorAsync(int id, ProcessingTailorModel processingTailor);
         Task<ServiceResponse> DeleteProcessingTailorAsync(int processingId);
         Task<ServiceResponse<List<ProcessingTailorModel>>> GetProcessAssignedByTailorPartnerIdAsync(int tailorPartnerId);
+        Task<ServiceResponse> ChangeStatusAsync(int processingId, string newStatus);
+        Task<ServiceResponse> ChangeSampleStatusAsync(int processingId, string newStatus);
+        Task<ServiceResponse> ChangeFixStatusAsync(int processingId, string newStatus);
+        Task<ServiceResponse> ChangeDeliveryStatusAsync(int processingId, string newStatus);
     }
 }

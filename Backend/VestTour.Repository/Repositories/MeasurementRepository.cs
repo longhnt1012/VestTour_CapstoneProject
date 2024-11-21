@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Data;
 
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class MeasurementRepository : IMeasurementRepository
     {
@@ -68,7 +68,7 @@ namespace VestTour.Repository.Implementation
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<MeasurementModel?> GetMeasurementByUserIdAsync(int userId)
+        public async Task<MeasurementModel?> GetMeasurementByUserIdAsync(int? userId)
         {
             var measurement = await _context.Measurements!
                 .FirstOrDefaultAsync(m => m.UserId == userId);

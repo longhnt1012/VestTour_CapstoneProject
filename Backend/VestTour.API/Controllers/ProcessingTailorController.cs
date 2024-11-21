@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VestTour.Domain.Entities;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
+using VestTour.Service.Services;
 
 namespace VestTour.API.Controllers
 {
@@ -34,7 +36,12 @@ namespace VestTour.API.Controllers
         public async Task<IActionResult> AddProcessingTailor(ProcessingTailorModel processingTailor)
         {
             var response = await _processingTailorService.AddProcessingTailorAsync(processingTailor);
-            return response.Success ? CreatedAtAction(nameof(GetProcessingTailorById), new { id = response.Data }, response) : BadRequest(response);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+            return CreatedAtAction(nameof(GetProcessingTailorById), new { id = response.Data }, response);
+
         }
 
         [HttpPut("{id}")]
@@ -59,6 +66,54 @@ namespace VestTour.API.Controllers
                 return BadRequest(result);
 
             return Ok(result);
+        }
+        [HttpPatch("process/status/{id}")]
+        public async Task<IActionResult> ChangeStatus(int id, [FromBody] string newStatus)
+        {
+           
+            var response = await _processingTailorService.ChangeStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }  
+
+            return Ok(response);
+        }
+        [HttpPatch("sample/status/{id}")]
+        public async Task<IActionResult> ChangeSampleStatus(int id, [FromBody] string newStatus)
+        {
+
+            var response = await _processingTailorService.ChangeSampleStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+        [HttpPatch("fix/status/{id}")]
+        public async Task<IActionResult> ChangeFixStatus(int id, [FromBody] string newStatus)
+        {
+
+            var response = await _processingTailorService.ChangeFixStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+        [HttpPatch("delivery/status/{id}")]
+        public async Task<IActionResult> ChangeDeliveryStatus(int id, [FromBody] string newStatus)
+        {
+
+            var response = await _processingTailorService.ChangeDeliveryStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
     }
 }

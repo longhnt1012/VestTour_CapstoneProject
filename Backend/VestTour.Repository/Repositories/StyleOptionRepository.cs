@@ -4,7 +4,7 @@ using VestTour.Repository.Models;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Data;
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class StyleOptionRepository : IStyleOptionRepository
     {

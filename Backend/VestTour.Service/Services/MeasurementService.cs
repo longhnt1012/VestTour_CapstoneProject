@@ -93,9 +93,24 @@ namespace VestTour.Service.Implementation
 
             try
             {
-                var newMeasurementId = await _measurementRepository.AddMeasurementAsync(measurementModel);
-                response.Data = newMeasurementId;
-                response.Message = Success.MeasurementAdded;
+                // Kiểm tra Measurement theo UserId
+                var existingMeasurement = await _measurementRepository.GetMeasurementByUserIdAsync(measurementModel.UserId);
+
+                if (existingMeasurement != null)
+                {
+                    // Nếu tồn tại, thực hiện cập nhật
+                    await _measurementRepository.UpdateMeasurementAsync(existingMeasurement.MeasurementId, measurementModel);
+                    response.Data = existingMeasurement.MeasurementId;
+                    response.Message = Success.MeasurementUpdated;
+                }
+                else
+                {
+                    // Nếu không tồn tại, thêm mới
+                    var newMeasurementId = await _measurementRepository.AddMeasurementAsync(measurementModel);
+                    response.Data = newMeasurementId;
+                    response.Message = Success.MeasurementAdded;
+                }
+
                 response.Success = true;
             }
             catch (Exception ex)
@@ -106,6 +121,7 @@ namespace VestTour.Service.Implementation
 
             return response;
         }
+
 
         public async Task<ServiceResponse> UpdateMeasurementAsync(int id, MeasurementModel measurementModel)
         {

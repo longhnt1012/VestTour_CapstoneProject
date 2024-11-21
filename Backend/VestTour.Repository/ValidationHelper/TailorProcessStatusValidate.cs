@@ -9,9 +9,9 @@ namespace VestTour.Repository.ValidationHelper
     public class TailorProcessStatusValidate
     {
         private static readonly HashSet<string> AllowedStatus = new HashSet<string>
-  {
-      "Doing", "Finish", "Due","Cancel"
-  };
+        {
+            "Doing", "Finish", "Due","Cancel"
+        };
 
 
         public static bool IsValidProcessStatus(string status)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Mapper;
-using VestTour.Repository.Implementation;
+using VestTour.Repository.Repositories;
 using VestTour.Repository.Interface;
 using VestTour.Service.Interface;
 using VestTour.Services;

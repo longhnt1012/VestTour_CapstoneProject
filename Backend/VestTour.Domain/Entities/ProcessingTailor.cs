@@ -11,8 +11,10 @@ public partial class ProcessingTailor
 
     public int TailorPartnerId { get; set; }
 
+    public string? SampleStatus { get; set; }
+    public string? FixStatus { get; set; }
+    public string? DeliveryStatus { get; set; }
     public string? Status { get; set; }
-
     public int OrderId { get; set; }
 
     public string? Note { get; set; }
@@ -21,7 +23,7 @@ public partial class ProcessingTailor
 
     public DateOnly? DateFix { get; set; }
 
-    public DateOnly? DateFinish { get; set; }
+    public DateOnly? DateDelivery { get; set; }
 
     public virtual Order Order { get; set; } = null!;
 

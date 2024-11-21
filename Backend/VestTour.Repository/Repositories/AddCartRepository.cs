@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class AddCartRepository : IAddCartRepository
     {

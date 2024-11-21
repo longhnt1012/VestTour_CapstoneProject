@@ -5,7 +5,7 @@ using VestTour.Domain.Entities;
 using VestTour.Repository.Models;
 using VestTour.Repository.Data;
 
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class RoleRepository : IRoleRepository
     {

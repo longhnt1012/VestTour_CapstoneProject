@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Models;
 using VestTour.Repository.Data;
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class StyleRepository : IStyleRepository
     {

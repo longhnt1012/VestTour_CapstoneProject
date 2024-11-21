@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace VestTour.Repository.Implementation
+namespace VestTour.Repository.Repositories
 {
     public class FabricRepository : IFabricRepository
     {

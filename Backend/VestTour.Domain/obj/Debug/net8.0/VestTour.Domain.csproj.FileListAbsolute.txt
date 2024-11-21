@@ -1,17 +1,3 @@
-D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.deps.json
-D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.runtimeconfig.json
-D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.dll
-D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.pdb
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.AssemblyReference.cache
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.GeneratedMSBuildEditorConfig.editorconfig
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfoInputs.cache
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfo.cs
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.CoreCompileInputs.cache
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.dll
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\refint\VestTour.Domain.dll
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.pdb
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.genruntimeconfig.cache
-D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\ref\VestTour.Domain.dll
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.deps.json
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.runtimeconfig.json
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.dll
@@ -42,3 +28,17 @@ D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\B
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.pdb
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.genruntimeconfig.cache
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\ref\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.deps.json
+D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.runtimeconfig.json
+D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.pdb
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.AssemblyReference.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfoInputs.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfo.cs
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.CoreCompileInputs.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\refint\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.pdb
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.genruntimeconfig.cache
+D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\ref\VestTour.Domain.dll

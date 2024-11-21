@@ -9,14 +9,14 @@ namespace VestTour.Repository.ValidationHelper
     public class OrderStatusValidate
     {
         private static readonly HashSet<string> AllowedStatus = new HashSet<string>
-  {
-      "Pending", "Processing", "Finish","Cancel"
-  };
+        {
+            "Pending", "Processing", "Finish","Cancel"
+        };
 
 
         public static bool IsValidProcessStatus(string status)
         {
-            return !string.IsNullOrEmpty(status) && AllowedStatus.Contains(status);
+          return !string.IsNullOrEmpty(status) && AllowedStatus.Contains(status);
         }
     }
 }

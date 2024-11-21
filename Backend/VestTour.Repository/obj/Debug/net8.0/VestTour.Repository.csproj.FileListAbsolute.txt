@@ -1,20 +1,3 @@
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.deps.json
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.runtimeconfig.json
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.dll
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.pdb
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.dll
-D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.pdb
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.AssemblyReference.cache
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.GeneratedMSBuildEditorConfig.editorconfig
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfoInputs.cache
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfo.cs
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.CoreCompileInputs.cache
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.8287A8C6.Up2Date
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.dll
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\refint\VestTour.Repository.dll
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.pdb
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.genruntimeconfig.cache
-D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\ref\VestTour.Repository.dll
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.deps.json
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.runtimeconfig.json
 D:\FPT University\Semester_9_2024\C#\Github\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.dll
@@ -51,3 +34,20 @@ D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\B
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.pdb
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.genruntimeconfig.cache
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\ref\VestTour.Repository.dll
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.deps.json
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.runtimeconfig.json
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.dll
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.pdb
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.dll
+D:\SECapstone\VestTour\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.pdb
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.AssemblyReference.cache
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfoInputs.cache
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfo.cs
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.CoreCompileInputs.cache
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.8287A8C6.Up2Date
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.dll
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\refint\VestTour.Repository.dll
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.pdb
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.genruntimeconfig.cache
+D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\ref\VestTour.Repository.dll

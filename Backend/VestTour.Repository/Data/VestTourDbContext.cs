@@ -236,8 +236,9 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
+            entity.Property(e => e.DeliveryMethod).HasMaxLength(50);
 
-             entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
+            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ShipperPartnerId)
                 .HasConstraintName("FK__Order__ShipperPa__4222D4EF");
 

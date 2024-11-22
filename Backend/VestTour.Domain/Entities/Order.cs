@@ -38,6 +38,7 @@ public partial class Order
     public string? GuestEmail { get; set; }
 
     public string? GuestAddress { get; set; }
+    public string? DeliveryMethod { get; set; }
     //public string? OrderCode { get; set; }
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 

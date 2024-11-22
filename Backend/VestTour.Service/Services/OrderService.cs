@@ -51,8 +51,12 @@ namespace VestTour.Service.Implementation
             {
                 throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
             }
+            User? user = order.UserID != null ? await _userService.GetUserByIdAsync(order.UserID.Value) : null;
+            if (!DeliveryMethodValidate.IsValidDeliveryMethod(order.DeliveryMethod))
+            {
+                throw new ArgumentException($"Invalid delivery method: {order.DeliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
+            }
 
-            // Thực hiện logic xử lý trước khi thêm đơn hàng
             var newOrder = new OrderModel
             {
                 UserID = order.UserID,
@@ -66,7 +70,12 @@ namespace VestTour.Service.Implementation
                 Status = order.Status ?? "Pending",
                 TotalPrice = order.TotalPrice,
                 Deposit= order.Deposit,
-                ShippingFee= order.ShippingFee
+                ShippingFee= order.ShippingFee,
+                GuestName =  order.GuestName ?? user?.Name,
+                GuestEmail = order.GuestEmail ?? user?.Email,
+                GuestAddress = order.GuestAddress ?? user?.Address,
+                DeliveryMethod = order.DeliveryMethod
+
             };
             var subject = "Order Confirmation";
             var body = new StringBuilder();
@@ -106,7 +115,8 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
             body.AppendLine($"-Shipping Fee:{order.ShippingFee}");
             body.AppendLine($"-Deposit:{order.Deposit}");
-            body.AppendLine($"-Balance Payment{order.BalancePayment}");
+            body.AppendLine($"-Balance Payment: {order.BalancePayment}");
+            body.AppendLine($"-Delivery Method: {order.DeliveryMethod}");
             body.AppendLine("We appreciate your business and look forward to serving you again!");
             body.AppendLine("Best regards,");
             body.AppendLine("Matcha VestTailor Team");
@@ -124,9 +134,10 @@ namespace VestTour.Service.Implementation
             // Create an email request object
             var emailRequest = new EmailRequest
             {
-                To = userEmail, // Assign the retrieved email
+                To = userEmail, 
                 Subject = subject,
-                Content = body.ToString() // Set the email body
+                Content = body.ToString() ,
+               // IsHtml = true
             };
 
 
@@ -176,7 +187,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null,decimal? deposit=null,decimal? shippingFee=null)
+        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null,decimal? deposit=null,decimal? shippingFee=null, string? deliverymethod=null)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -187,26 +198,28 @@ namespace VestTour.Service.Implementation
             {
                 throw new InvalidOperationException("No items in cart to confirm.");
             }
+            if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliverymethod))
+            {
+                throw new ArgumentException($"Invalid delivery method: {deliverymethod}. Allowed values are 'Pick up' and 'Delivery'.");
+            }
 
-            // Calculate the total price based on cart items
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
 
-            // Fetch the user if userId is not null
             User? user = userId != null ? await _userService.GetUserByIdAsync(userId.Value) : null;
 
-            // Create a new order with relevant details
             var newOrder = new OrderModel
             {
-                UserID = user?.UserId, // Set UserID if user is found, otherwise leave as null
-                GuestName = user == null ? guestName : null, // Only set GuestName if user is not found
-                GuestEmail = user == null ? guestEmail : null, // Only set GuestEmail if user is not found
-                GuestAddress = user == null ? guestAddress : null, // Only set GuestAddress if user is not found
+                UserID = user?.UserId,
+                GuestName = guestName ?? user?.Name,
+                GuestEmail = guestEmail ?? user?.Email,
+                GuestAddress = guestAddress ?? user?.Address,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 TotalPrice = Math.Round(totalPrice, 2),
                 Deposit = deposit,
                 ShippingFee = shippingFee,
                 Paid = false,
-                Status = "Pending"
+                Status = "Pending",
+                DeliveryMethod = deliverymethod
             };
 
             // Add the order to the database and retrieve its generated ID
@@ -231,14 +244,23 @@ namespace VestTour.Service.Implementation
                 body.AppendLine("Order Details:");
                 // List the products in the order
                 body.AppendLine($"\nProducts in your order:");
-                
+                body.AppendLine($"\nProducts in your order:");
+                foreach (var item in cartItems)
+                {
+                    body.AppendLine($"- Product: {item.CustomProduct.ProductCode}");
+                    body.AppendLine($"  Price: {item.Price:C}");
+                    body.AppendLine($"  Quantity: {item.Quantity}");
+                    body.AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}");
+                    body.AppendLine(); // Add a blank line between products for readability
+                }
                 body.AppendLine($"- Note: {newOrder.Note}");
                 body.AppendLine($"- Paid: {(newOrder.Paid ? "Yes" : "No")}");
                 body.AppendLine($"- Status: {newOrder.Status}");
                 body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
                 body.AppendLine($"-Shipping Fee:{newOrder.ShippingFee}");
                 body.AppendLine($"-Deposit:{newOrder.Deposit}");
-                body.AppendLine($"-Balance Payment{newOrder.BalancePayment}");
+                body.AppendLine($"-Balance Payment: {newOrder.BalancePayment}");
+                body.AppendLine($"-Delivery Method: {newOrder.DeliveryMethod}");
                 body.AppendLine("We appreciate your business and look forward to serving you again!");
                 body.AppendLine("Best regards,");
                 body.AppendLine("Matcha VestTailor Team");
@@ -250,7 +272,7 @@ namespace VestTour.Service.Implementation
                 };
                 await _emailHelper.SendEmailAsync(emailRequest);
                 // Clear the cart after the order is confirmed
-                // await _cartRepo.RemoveAllFromCartAsync(id);
+                 await _cartRepo.RemoveAllFromCartAsync(id);
             }
         }
         private int GenerateGuestId()

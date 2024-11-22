@@ -86,12 +86,12 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
-        public async Task<IActionResult> ConfirmOrder(string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingfee)
+        public async Task<IActionResult> ConfirmOrder(string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingfee, string? deliverymethod)
         {
             var userId = GetUserId();
             try
             {
-                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress,deposit, shippingfee);
+                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress,deposit, shippingfee,deliverymethod);
                 return Ok("Order confirmed successfully.");
             }
             catch (KeyNotFoundException ex)

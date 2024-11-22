@@ -118,5 +118,14 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<ProcessingTailorModel> GetProcessingTailorsByOrderIdAsync(int orderId)
+        {
+            var processingTailor = await _context.ProcessingTailors
+                .FirstOrDefaultAsync(pt => pt.OrderId == orderId);
+
+            return processingTailor == null ? null : _mapper.Map<ProcessingTailorModel>(processingTailor);
+        }
+
+
     }
 }

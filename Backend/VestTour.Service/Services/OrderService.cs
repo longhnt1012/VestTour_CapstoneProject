@@ -10,6 +10,9 @@ using VestTour.Repository.Models;
 using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interfaces;
 using VestTour.Service.Services;
+using VestTour.Repository.Constants;
+using VestTour.Repository.Interfaces;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Implementation
 {
@@ -44,7 +47,7 @@ namespace VestTour.Service.Implementation
         public async Task<int> CreateOrderAsync(OrderModel order)
         {
             // Validate the order status
-            if (!OrderStatusValidate.IsValidProcessStatus(order.Status ?? "Pending"))
+            if (!OrderStatusValidate.IsValidOrderStatus(order.Status ?? "Pending"))
             {
                 throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
             }
@@ -135,7 +138,7 @@ namespace VestTour.Service.Implementation
 
         public async Task UpdateOrderAsync(int id, OrderModel order)
         {
-            if (!OrderStatusValidate.IsValidProcessStatus(order.Status ?? "Pending"))
+            if (!OrderStatusValidate.IsValidOrderStatus(order.Status ?? "Pending"))
             {
                 throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
             }
@@ -255,6 +258,46 @@ namespace VestTour.Service.Implementation
             // Logic to generate a guest ID, similar to what's in AddCartService
             return new Random().Next(1000000, 9999999);
         }
+        public async Task<ServiceResponse> ChangeOrderStatusAsync(int orderId, string newStatus)
+        {
+            var response = new ServiceResponse();
 
+            if (orderId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidOrderId;
+                return response;
+            }
+
+            if (!OrderStatusValidate.IsValidOrderStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidOrderStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingOrder = await _orderRepository.GetOrderByIdAsync(orderId);
+
+                if (existingOrder == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.OrderNotFound}: {orderId}";
+                    return response;
+                }
+                await _orderRepository.ChangeStatusAsync(orderId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.OrderStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
     }
 }

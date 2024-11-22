@@ -22,18 +22,30 @@ namespace VestTour.API.Controllers
             return Ok(provinces);
         }
 
-        [HttpPost("districts")]
-        public async Task<IActionResult> GetDistricts([FromBody] int provinceId)
+        [HttpGet("districts")]
+        public async Task<IActionResult> GetDistricts([FromQuery] int provinceId)
         {
+            if (provinceId <= 0)
+            {
+                return BadRequest("Invalid province ID.");
+            }
+
             var districts = await _shippingService.GetDistrictsAsync(provinceId);
             return Ok(districts);
         }
-        [HttpPost("wards")]
-        public async Task<IActionResult> GetWards([FromBody] int districtId)
+
+        [HttpGet("wards")]
+        public async Task<IActionResult> GetWards([FromQuery] int districtId)
         {
+            if (districtId <= 0)
+            {
+                return BadRequest("Invalid district ID.");
+            }
+
             var wards = await _shippingService.GetWardsAsync(districtId);
             return Ok(wards);
         }
+
         //xem dich vu co san
         [HttpPost("available-services")]
         public async Task<IActionResult> GetAvailableServices([FromBody] ShippingRequestModel request)

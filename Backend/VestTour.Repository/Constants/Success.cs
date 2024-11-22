@@ -64,6 +64,7 @@
         public const string FixStatusUpdated = "Fix status updated successfully.";
         public const string DeliveryStatusUpdated = "Delivery status updated successfully.";
         public const string StageNameUpdated = "Stage name updated successfully.";
+        public const string OrderStatusUpdated = "Order status updated successfully.";
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }

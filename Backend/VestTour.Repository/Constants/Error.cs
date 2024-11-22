@@ -81,6 +81,8 @@
         public const string ProcessingTailorNotFound = "Processing tailor not found.";
         public const string NoProcessingTailorsFound = "No processing tailors found.";
         public const string NoProcessesAssigned = "No process assigned.";
+        public static string InvalidOrderId = "The provided Order ID is invalid.";
+        public static string NoProcessingTailorsFoundForOrder = "No processing tailors found for the specified Order ID.";
 
         public const string InvalidStoreId = "Invalid store ID provided.";
         public static string InvalidOtpOrExpired { get; set; }

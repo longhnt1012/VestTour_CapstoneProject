@@ -129,7 +129,9 @@ namespace VestTour.Repository.Repositories
                                      LiningID = p.LiningId,
                                      FabricName = f != null ? f.FabricName : null,
                                      LiningName = l != null ? l.LiningName : null,
-                                     // Directly load the StyleOptions using the navigation property
+                                     Price = p.Price,
+                                     Size = p.Size,
+                                     ImgURL = p.ImgUrl,
                                      StyleOptions = p.StyleOptions.Select(so => new StyleOptionModel
                                      {
                                          StyleOptionId = so.StyleOptionId,

@@ -82,6 +82,15 @@ namespace VestTour.Repository.Repositories
 
             return _mapper.Map<OrderModel>(order);
         }
+        public async Task ChangeStatusAsync(int orderId, string newStatus)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
 
+            if (order != null)
+            {
+                order.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

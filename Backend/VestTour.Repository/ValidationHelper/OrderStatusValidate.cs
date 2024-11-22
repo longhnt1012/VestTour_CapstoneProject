@@ -14,7 +14,7 @@ namespace VestTour.Repository.ValidationHelper
         };
 
 
-        public static bool IsValidProcessStatus(string status)
+        public static bool IsValidOrderStatus(string status)
         {
           return !string.IsNullOrEmpty(status) && AllowedStatus.Contains(status);
         }

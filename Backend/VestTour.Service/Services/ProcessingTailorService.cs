@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VestTour.Domain.Entities;
 using VestTour.Repository.Constants;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
@@ -438,5 +439,32 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse<ProcessingTailorModel>> GetProcessingTailorsByOrderIdAsync(int orderId)
+        {
+            var response = new ServiceResponse<ProcessingTailorModel?>();
+
+            if (orderId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidOrderId;
+                return response;
+            }
+
+            try
+            {
+                var processingTailors = await _processingTailorRepository.GetProcessingTailorsByOrderIdAsync(orderId);
+                response.Data = processingTailors;
+                response.Success = processingTailors != null;
+                response.Message = processingTailors != null ? null : Error.ProcessingTailorNotFound;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
     }
 }

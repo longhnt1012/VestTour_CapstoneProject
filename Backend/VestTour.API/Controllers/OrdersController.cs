@@ -4,6 +4,7 @@ using VestTour.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using VestTour.Service.Services;
 
 namespace VestTour.Controllers
 {
@@ -145,6 +146,19 @@ namespace VestTour.Controllers
             {
                 return BadRequest();
             }
+        }
+        [HttpPatch("updatestatus/{id}")]
+        [Authorize(Roles = "admin,store manager")]
+        public async Task<IActionResult> ChangeStageName(int id, [FromBody] string newStatus)
+        {
+
+            var response = await _orderService.ChangeOrderStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
     }
 }

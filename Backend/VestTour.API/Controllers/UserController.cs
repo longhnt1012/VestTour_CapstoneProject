@@ -131,7 +131,6 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("forgot-password")]
-        [Authorize]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
             var result = await _userService.ForgotPassword(model.Email);
@@ -144,7 +143,6 @@ namespace VestTour.API.Controllers
             return BadRequest(new { Message = result });
         }
         [HttpPost("reset-password")]
-        [Authorize]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
             var result = await _userService.ResetPasswordAsync(model.Token, model.NewPassword);

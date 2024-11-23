@@ -16,5 +16,7 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse<PaymentModel>> GetPaymentByIdAsync(int id);
         Task<ServiceResponse> UpdatePaymentAsync(int id, PaymentModel payment);
         Task UpdatePaymentOrderIdAsync(int paymentId, int orderId);
+        Task<ServiceResponse<List<PaymentModel>>> GetPaymentsByOrderIdAsync(int orderId);
+        Task<ServiceResponse<List<PaymentModel>>> GetPaymentsByUserIdAsync(int userId);
     }
 }

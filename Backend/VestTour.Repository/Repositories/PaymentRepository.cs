@@ -61,5 +61,17 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<PaymentModel>> GetPaymentsByOrderIdAsync(int orderId)
+        {
+            var payments = await _context.Payments!.Where(p => p.OrderId == orderId).ToListAsync();
+            return _mapper.Map<List<PaymentModel>>(payments);
+        }
+
+        public async Task<List<PaymentModel>> GetPaymentsByUserIdAsync(int userId)
+        {
+            var payments = await _context.Payments!.Where(p => p.UserId == userId).ToListAsync();
+            return _mapper.Map<List<PaymentModel>>(payments);
+        }
+
     }
 }

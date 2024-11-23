@@ -109,8 +109,7 @@ namespace VestTour.Repository.Repositories
                 }).ToList(),
                 OrderDetails = orderEntity.OrderDetails.Select(od => new OrderDetailModel
                 {
-                    OrderId = od.OrderId,
-                    ProductId = od.ProductId,
+                    
                     Quantity = od.Quantity.Value,
                     Price = od.Price.Value
                 }).ToList()

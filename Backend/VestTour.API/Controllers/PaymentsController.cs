@@ -105,5 +105,27 @@ namespace VestTour.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+        [HttpGet("by-order/{orderId}")]
+        public async Task<IActionResult> GetPaymentsByOrderId(int orderId)
+        {
+            var response = await _paymentService.GetPaymentsByOrderIdAsync(orderId);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+            return Ok(response.Data);
+        }
+
+        // GET: api/Payments/by-user/{userId}
+        [HttpGet("by-user/{userId}")]
+        public async Task<IActionResult> GetPaymentsByUserId(int userId)
+        {
+            var response = await _paymentService.GetPaymentsByUserIdAsync(userId);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+            return Ok(response.Data);
+        }
     }
 }

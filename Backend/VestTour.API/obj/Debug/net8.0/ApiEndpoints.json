@@ -1234,6 +1234,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "GetPaymentsByOrderId",
+    "RelativePath": "api/Payments/by-order/{orderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "GetPaymentsByUserId",
+    "RelativePath": "api/Payments/by-user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
     "Method": "GetAllProcessingTailors",
     "RelativePath": "api/ProcessingTailor",

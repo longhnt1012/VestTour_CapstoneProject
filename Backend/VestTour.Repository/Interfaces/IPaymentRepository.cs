@@ -13,5 +13,7 @@ namespace VestTour.Repository.Interface
         public Task UpdatePayment(int id, PaymentModel payment);
 
         public Task DeletePayment(int id);
+        Task<List<PaymentModel>> GetPaymentsByOrderIdAsync(int orderId);
+        Task<List<PaymentModel>> GetPaymentsByUserIdAsync(int userId);
     }
 }

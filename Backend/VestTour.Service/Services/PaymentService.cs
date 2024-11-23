@@ -152,6 +152,56 @@ namespace VestTour.Service.Services
             payment.OrderId = orderId;
             await _paymentRepository.UpdatePayment(paymentId, payment);
         }
+        public async Task<ServiceResponse<List<PaymentModel>>> GetPaymentsByOrderIdAsync(int orderId)
+        {
+            var response = new ServiceResponse<List<PaymentModel>>();
+            try
+            {
+                if (orderId <= 0)
+                {
+                    response.Success = false;
+                    response.Message = "Invalid Order ID.";
+                    return response;
+                }
+
+                var payments = await _paymentRepository.GetPaymentsByOrderIdAsync(orderId);
+                response.Data = payments;
+                response.Message = payments.Any() ? "Payments retrieved successfully." : "No payments found for the specified Order ID.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<PaymentModel>>> GetPaymentsByUserIdAsync(int userId)
+        {
+            var response = new ServiceResponse<List<PaymentModel>>();
+            try
+            {
+                if (userId <= 0)
+                {
+                    response.Success = false;
+                    response.Message = "Invalid User ID.";
+                    return response;
+                }
+
+                var payments = await _paymentRepository.GetPaymentsByUserIdAsync(userId);
+                response.Data = payments;
+                response.Message = payments.Any() ? "Payments retrieved successfully." : "No payments found for the specified User ID.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+
 
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Services;
 using VestTour.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace VestTour.API.Controllers
 {
@@ -16,13 +17,15 @@ namespace VestTour.API.Controllers
     {
         private readonly IAddCartService _addCartService;
         private readonly PaypalClient _paypalClient;
+        private readonly IPaymentService _paymentService;
         private readonly IOrderService _orderService;
 
-        public AddCartController(IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService)
+        public AddCartController(IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService,IPaymentService paymentService)
         {
             _addCartService = addCartService;
             _paypalClient=paypalClient;
             _orderService=orderService;
+            _paymentService=paymentService;
         }
 
         private int? GetUserId()
@@ -92,6 +95,7 @@ namespace VestTour.API.Controllers
             try
             {
                 await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress,deposit, shippingfee,deliverymethod);
+               
                 return Ok("Order confirmed successfully.");
             }
             catch (KeyNotFoundException ex)
@@ -140,56 +144,75 @@ namespace VestTour.API.Controllers
             }
 
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("Cart/capture-paypal-order")]
         public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
         {
             try
             {
                 var response = await _paypalClient.CaptureOrder(orderID);
+                var purchaseUnit = response.purchase_units?.FirstOrDefault();
+                var capture = purchaseUnit?.payments?.captures?.FirstOrDefault();
 
-                //Lưu database thì xài create order
-                //var newOrder = await _addCartService.ConfirmOrderAsync()
+                if (capture == null)
+                {
+                    return BadRequest("Capture details not found in the response.");
+                }
 
-                return Ok(response);
+                // Extract the amount from the capture
+                var amount = capture.amount;
+                if (amount == null)
+                {
+                    return BadRequest("Amount details not found in the response.");
+                }
+
+                var userId = GetUserId();
+                var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
+                var paidAmount = decimal.Parse(amount.value);
+
+                // Determine payment details
+                string paymentDetails = paidAmount < totalPrice ? "Make deposit 50%" : "Paid full";
+
+                // Create the payment model
+                var payment = new PaymentModel
+                {
+                    UserId = userId,
+                    Amount = paidAmount,
+                    Method = "Paypal",
+                    PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    PaymentDetails = paymentDetails,
+                    Status = "Success"
+                };
+
+                // Save payment record
+                var newPaymentResponse = await _paymentService.AddNewPaymentAsync(payment);
+
+                // Lưu PaymentId vào session
+                if (newPaymentResponse.Success)
+                {
+                    var newPaymentId = newPaymentResponse.Data;
+
+                    // Lưu PaymentId vào session
+                    HttpContext.Session.SetInt32("PaymentId", newPaymentId);
+                }
+                else
+                {
+                    return BadRequest(newPaymentResponse.Message);
+                }
+                return Ok(new
+                {
+                    ResponseId = response.id,
+                    Status = response.status,
+                    PaymentDetails = paymentDetails,
+                    PaidAmount = paidAmount,
+                    TotalPrice = totalPrice
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new { Error = ex.Message });
             }
         }
-        //[HttpPost("Cart/capture-paypal-order")]
-        //public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
-        //{
-        //    try
-        //    {
 
-        //        var response = await _paypalClient.CaptureOrder(orderID);
-
-        //        if (response.status == "COMPLETED") 
-        //        {
-
-        //            var userId = GetUserId();
-        //            await _addCartService.ConfirmOrderAsync(
-        //                userId: userId,
-        //                guestName: null,
-        //                guestEmail: null,
-        //                guestAddress: null,
-        //                deposit: null,
-        //                shippingFee: null
-        //            );
-
-        //            return Ok(new { message = "Order captured and confirmed successfully.", paypalResponse = response });
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(new { message = "PayPal order capture failed.", paypalResponse = response });
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Error capturing PayPal order: {ex.Message}");
-        //    }
-        //}
     }
 }

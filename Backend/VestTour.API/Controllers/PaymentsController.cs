@@ -1,115 +1,109 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
-using VestTour.Repository.Interface;
-using Microsoft.AspNetCore.Authorization;
+using VestTour.Service.Interfaces;
+using System.Threading.Tasks;
 
-namespace VestTour.Controllers
+namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentsController : ControllerBase
     {
-        private readonly IPaymentRepository _paymentRepo;
+        private readonly IPaymentService _paymentService;
 
-        public PaymentsController(IPaymentRepository repo)
+        public PaymentsController(IPaymentService paymentService)
         {
-            _paymentRepo = repo;
+            _paymentService = paymentService;
         }
+
+        // GET: api/Payments
         [HttpGet]
-        public async Task<IActionResult> GetAllPayment()
+        public async Task<IActionResult> GetAllPayments()
         {
-            try
+            var response = await _paymentService.GetAllPaymentsAsync();
+            if (!response.Success)
             {
-                return Ok(await _paymentRepo.GetAllPaymentAsync());
+                return BadRequest(response.Message);
             }
-            catch
-            {
-                return BadRequest();
-            }
-
+            return Ok(response.Data);
         }
+
+        // GET: api/Payments/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPaymentByID(int id)
+        public async Task<IActionResult> GetPaymentById(int id)
         {
-            try
+            var response = await _paymentService.GetPaymentByIdAsync(id);
+            if (!response.Success)
             {
-                var payment= await _paymentRepo.GetPaymentByIDAsync(id);
-                return payment ==null ? NotFound() : Ok(payment);
-            }catch 
-            {
-                return BadRequest();
+                return NotFound(response.Message);
             }
-
+            return Ok(response.Data);
         }
 
+        // POST: api/Payments
         [HttpPost]
-        public async Task<IActionResult> AddNewPayment(PaymentModel payment)
+        public async Task<IActionResult> AddPayment([FromBody] PaymentModel payment)
         {
-            try
+            if (payment == null)
             {
-                var newPayment = await _paymentRepo.AddNewPayment(payment);
-                var paymentAdded = await _paymentRepo.GetPaymentByIDAsync(newPayment);
-                return paymentAdded == null ? NotFound() : Ok(paymentAdded);
+                return BadRequest("Payment data is required.");
             }
-            catch
+
+            var response = await _paymentService.AddNewPaymentAsync(payment);
+            if (!response.Success)
             {
-                return BadRequest();
+                return BadRequest(response.Message);
             }
+            return CreatedAtAction(nameof(GetPaymentById), new { id = response.Data }, response.Data);
         }
+
+        // PUT: api/Payments/{id}
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager,staff")]
-        public async Task<IActionResult> UpdatePayment(int id, PaymentModel payment)
+        public async Task<IActionResult> UpdatePayment(int id, [FromBody] PaymentModel payment)
         {
-            try
+            if (payment == null || id <= 0)
             {
-                if (id != payment.PaymentId)
-                {
-                    return NotFound();
-                }
-                if (id != null)
-                {
-                    await _paymentRepo.UpdatePayment(id, payment);
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return BadRequest("Invalid payment data.");
             }
-            catch
+
+            var response = await _paymentService.UpdatePaymentAsync(id, payment);
+            if (!response.Success)
             {
-                return BadRequest();
+                return BadRequest(response.Message);
             }
+            return Ok(response.Message);
         }
+
+        // DELETE: api/Payments/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeletePayment(int id)
         {
-            try
+            if (id <= 0)
             {
-                if(id != null)
-                {
-                    await _paymentRepo.DeletePayment(id);
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return BadRequest("Invalid payment ID.");
             }
-            catch
+
+            var response = await _paymentService.DeletePaymentAsync(id);
+            if (!response.Success)
             {
-                return BadRequest();
+                return BadRequest(response.Message);
             }
+            return Ok(response.Message);
         }
 
-        
-        
-
-
-
-
+        // PATCH: api/Payments/{paymentId}/order/{orderId}
+        [HttpPatch("{paymentId}/order/{orderId}")]
+        public async Task<IActionResult> UpdatePaymentOrderId(int paymentId, int orderId)
+        {
+            try
+            {
+                await _paymentService.UpdatePaymentOrderIdAsync(paymentId, orderId);
+                return Ok("Payment order ID updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

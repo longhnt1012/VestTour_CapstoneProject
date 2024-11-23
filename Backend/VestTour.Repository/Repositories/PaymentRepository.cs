@@ -23,7 +23,7 @@ namespace VestTour.Repository.Repositories
         {
             var newPayment = _mapper.Map<Payment>(payment);
             _context.Payments!.Add(newPayment);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return newPayment.PaymentId;
         }
 

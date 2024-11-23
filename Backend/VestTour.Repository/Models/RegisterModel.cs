@@ -16,8 +16,8 @@ namespace VestTour.Repository.Models
         [Required(ErrorMessage = "Date of Birth is required.")]
         public DateOnly Dob { get; set; }
 
-        [Required(ErrorMessage = "Phone is required.")]
-        public string Phone { get; set; }
+        
+        public string? Phone { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }

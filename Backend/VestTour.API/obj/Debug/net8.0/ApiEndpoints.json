@@ -1134,8 +1134,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.PaymentsController",
-    "Method": "GetAllPayment",
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "GetAllPayments",
     "RelativePath": "api/Payments",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1144,8 +1144,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.PaymentsController",
-    "Method": "AddNewPayment",
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "AddPayment",
     "RelativePath": "api/Payments",
     "HttpMethod": "POST",
     "IsController": true,
@@ -1160,8 +1160,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.PaymentsController",
-    "Method": "GetPaymentByID",
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "GetPaymentById",
     "RelativePath": "api/Payments/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1176,7 +1176,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.PaymentsController",
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
     "Method": "UpdatePayment",
     "RelativePath": "api/Payments/{id}",
     "HttpMethod": "PUT",
@@ -1197,7 +1197,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.PaymentsController",
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
     "Method": "DeletePayment",
     "RelativePath": "api/Payments/{id}",
     "HttpMethod": "DELETE",
@@ -1206,6 +1206,27 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.PaymentsController",
+    "Method": "UpdatePaymentOrderId",
+    "RelativePath": "api/Payments/{paymentId}/order/{orderId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "orderId",
         "Type": "System.Int32",
         "IsRequired": true
       }

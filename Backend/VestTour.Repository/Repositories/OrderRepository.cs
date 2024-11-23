@@ -68,12 +68,60 @@ namespace VestTour.Repository.Repositories
 
         public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
         {
-            var order = await _context.Orders!
-                //.Include(o => o.Products) 
+            // Lấy Order từ database
+            var orderEntity = await _context.Orders
+                .Include(o => o.OrderDetails) // Bao gồm OrderDetails
+                .ThenInclude(od => od.Product) // Bao gồm thông tin sản phẩm trong OrderDetails
                 .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
-            return _mapper.Map<OrderModel>(order);
+            if (orderEntity == null)
+            {
+                // Nếu không tìm thấy đơn hàng, trả về null
+                return null;
+            }
+
+            // Map từ Order entity sang OrderModel
+            var orderModel = new OrderModel
+            {
+                OrderId = orderEntity.OrderId,
+                UserID = orderEntity.UserId,
+                StoreId = orderEntity.StoreId,
+                VoucherId = orderEntity.VoucherId,
+                ShipperPartnerId = orderEntity.ShipperPartnerId,
+                OrderDate = orderEntity.OrderDate,
+                ShippedDate = orderEntity.ShippedDate,
+                Note = orderEntity.Note,
+                Paid = orderEntity.Paid,
+                Status = orderEntity.Status,
+                GuestName = orderEntity.GuestName,
+                GuestEmail = orderEntity.GuestEmail,
+                GuestAddress = orderEntity.GuestAddress,
+                TotalPrice = orderEntity.TotalPrice,
+                Deposit = orderEntity.Deposit,
+                ShippingFee = orderEntity.ShippingFee,
+                DeliveryMethod = orderEntity.DeliveryMethod,
+                Products = orderEntity.OrderDetails.Select(od => new ProductModel
+                {
+                    ProductID = od.ProductId,
+                    ProductCode = od.Product?.ProductCode,
+                    Price = od.Product?.Price ?? 0
+                    
+                }).ToList(),
+                OrderDetails = orderEntity.OrderDetails.Select(od => new OrderDetailModel
+                {
+                    OrderId = od.OrderId,
+                    ProductId = od.ProductId,
+                    Quantity = od.Quantity.Value,
+                    Price = od.Price.Value
+                }).ToList()
+            };
+
+            // Tính BalancePayment
+            //orderModel.BalancePayment = (orderModel.TotalPrice ?? 0) - (orderModel.Deposit ?? 0) + (orderModel.ShippingFee ?? 0);
+
+            return orderModel;
         }
+
         public async Task<OrderModel?> GetOrderByIdAsync(int orderId)
         {
             var order = await _context.Orders!

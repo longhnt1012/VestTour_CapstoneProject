@@ -13,6 +13,7 @@ using VestTour.Service.Services;
 using VestTour.Repository.Constants;
 using VestTour.Repository.Interfaces;
 using VestTour.Service.Interface;
+using Microsoft.AspNetCore.Http;
 
 namespace VestTour.Service.Implementation
 {
@@ -22,9 +23,12 @@ namespace VestTour.Service.Implementation
         private readonly IEmailHelper _emailHelper;
         private readonly IUserService _userService;
         private readonly IAddCartRepository _cartRepo;
-
-        public OrderService(IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPaymentService _paymentService;
+        public OrderService(IHttpContextAccessor httpContextAccessor,IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo,IPaymentService paymentService)
         {
+            _paymentService = paymentService;
+            _httpContextAccessor = httpContextAccessor;
             _orderRepository = orderRepository;
             _emailHelper = emailHelper;
             _userService = userService;
@@ -187,7 +191,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null,decimal? deposit=null,decimal? shippingFee=null, string? deliverymethod=null)
+        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null, decimal? deposit = null, decimal? shippingFee = null, string? deliveryMethod = null)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -198,15 +202,20 @@ namespace VestTour.Service.Implementation
             {
                 throw new InvalidOperationException("No items in cart to confirm.");
             }
-            if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliverymethod))
+
+            // Validate delivery method
+            if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
             {
-                throw new ArgumentException($"Invalid delivery method: {deliverymethod}. Allowed values are 'Pick up' and 'Delivery'.");
+                throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
             }
 
+            // Calculate total price
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
 
-            User? user = userId != null ? await _userService.GetUserByIdAsync(userId.Value) : null;
+            // Retrieve user details if applicable
+            User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
 
+            // Create new order
             var newOrder = new OrderModel
             {
                 UserID = user?.UserId,
@@ -219,51 +228,55 @@ namespace VestTour.Service.Implementation
                 ShippingFee = shippingFee,
                 Paid = false,
                 Status = "Pending",
-                DeliveryMethod = deliverymethod
+                DeliveryMethod = deliveryMethod
             };
 
-            // Add the order to the database and retrieve its generated ID
+            // Save the order to the database
             int orderId = await _orderRepository.AddOrderAsync(newOrder);
 
+            // Retrieve PaymentId from session using IHttpContextAccessor
+            var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+
+            if (paymentId == null)
+            {
+                throw new InvalidOperationException("Please comback to payment.");
+            }
+            await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
-            // Send a confirmation email to the guest or user
-            string recipientEmail = user != null ? user.Email : guestEmail;
+
+            // Send confirmation email
+            string recipientEmail = user?.Email ?? guestEmail;
             if (!string.IsNullOrEmpty(recipientEmail))
             {
                 var subject = "Order Confirmation";
                 var body = new StringBuilder();
-                body.AppendLine("Dear Customer,");
-                body.AppendLine();
-                body.AppendLine($"Thank you for your order! Your Order ID is: {orderId}.");
-                
-                body.AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}");
-                body.AppendLine($"- Shipped Date: {newOrder.ShippedDate?.ToString("d")}");
+                body.AppendLine("Dear Customer,")
+                    .AppendLine()
+                    .AppendLine($"Thank you for your order! Your Order ID is: {orderId}.")
+                    .AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}")
+                    .AppendLine($"- Total Price: {newOrder.TotalPrice:C}")
+                    .AppendLine($"- Shipping Fee: {newOrder.ShippingFee:C}")
+                    .AppendLine($"- Deposit: {newOrder.Deposit:C}")
+                    .AppendLine($"- Balance Payment: {newOrder.BalancePayment:C}")
+                    .AppendLine($"- Delivery Method: {newOrder.DeliveryMethod}")
+                    .AppendLine()
+                    .AppendLine("Order Details:");
 
-                body.AppendLine();
-                body.AppendLine("Order Details:");
-                // List the products in the order
-                body.AppendLine($"\nProducts in your order:");
-                body.AppendLine($"\nProducts in your order:");
                 foreach (var item in cartItems)
                 {
-                    body.AppendLine($"- Product: {item.CustomProduct.ProductCode}");
-                    body.AppendLine($"  Price: {item.Price:C}");
-                    body.AppendLine($"  Quantity: {item.Quantity}");
-                    body.AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}");
-                    body.AppendLine(); // Add a blank line between products for readability
+                    body.AppendLine($"- Product: {item.CustomProduct.ProductCode}")
+                        .AppendLine($"  Price: {item.Price:C}")
+                        .AppendLine($"  Quantity: {item.Quantity}")
+                        .AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}")
+                        .AppendLine();
                 }
-                body.AppendLine($"- Note: {newOrder.Note}");
-                body.AppendLine($"- Paid: {(newOrder.Paid ? "Yes" : "No")}");
-                body.AppendLine($"- Status: {newOrder.Status}");
-                body.AppendLine($"- Total Price: {newOrder.TotalPrice:C}");
-                body.AppendLine($"-Shipping Fee:{newOrder.ShippingFee}");
-                body.AppendLine($"-Deposit:{newOrder.Deposit}");
-                body.AppendLine($"-Balance Payment: {newOrder.BalancePayment}");
-                body.AppendLine($"-Delivery Method: {newOrder.DeliveryMethod}");
-                body.AppendLine("We appreciate your business and look forward to serving you again!");
-                body.AppendLine("Best regards,");
-                body.AppendLine("Matcha VestTailor Team");
+
+                body.AppendLine("We appreciate your business and look forward to serving you again!")
+                    .AppendLine()
+                    .AppendLine("Best regards,")
+                    .AppendLine("Matcha VestTailor Team");
+
                 var emailRequest = new EmailRequest
                 {
                     To = recipientEmail,
@@ -271,10 +284,12 @@ namespace VestTour.Service.Implementation
                     Content = body.ToString()
                 };
                 await _emailHelper.SendEmailAsync(emailRequest);
-                // Clear the cart after the order is confirmed
-                 await _cartRepo.RemoveAllFromCartAsync(id);
             }
+
+            // Clear the cart
+            await _cartRepo.RemoveAllFromCartAsync(id);
         }
+
         private int GenerateGuestId()
         {
             // Logic to generate a guest ID, similar to what's in AddCartService

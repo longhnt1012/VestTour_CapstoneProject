@@ -1,34 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VestTour.Domain.Entities;
-using VestTour.Repository.Mapper;
-using VestTour.Repository.Repositories;
-using VestTour.Repository.Interface;
-using VestTour.Service.Interface;
-using VestTour.Services;
-using VestTour.Repository.Data;
-using AutoMapper;
-using System.Text;
-using Microsoft.OpenApi.Models;
-using VestTour.Service.Interfaces;
-using VestTour.Service.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
-using VestTour.Service.Common;
-using VestTour.Service.Implementation;
-
+using Microsoft.OpenApi.Models;
+using System.Text;
+using VestTour.Domain.Entities;
+using VestTour.Repository.Data;
+using VestTour.Repository.Helpers;
+using VestTour.Repository.Interface;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Repositories;
-
+using VestTour.Service.Common;
+using VestTour.Service.Implementation;
+using VestTour.Service.Interface;
+using VestTour.Service.Interfaces;
+using VestTour.Service.Services;
+using VestTour.Services;
+using AutoMapper;
 using VestTour.Repository.Configuration;
-using VestTour.Repository.Helpers;
+using VestTour.Repository.Mapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+// Configure DbContext
 builder.Services.AddDbContext<VestTourDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDb")));
+
+// Add Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -64,12 +65,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Register HTTP client for GHTK service
-builder.Services.AddHttpClient<ShippingService>();
-builder.Services.AddHttpContextAccessor();
+// Add distributed memory cache and session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
+// Configure CORS
+builder.Services.AddCors(policy =>
+    policy.AddDefaultPolicy(corsBuilder =>
+        corsBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
-// Register necessary services
+// Register repositories
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMeasurementRepository, MeasurementRepository>();
@@ -90,13 +100,12 @@ builder.Services.AddScoped<IAddCartRepository, AddCartRepository>();
 builder.Services.AddScoped<ITailorPartnerRepository, TailorPartnerRepository>();
 builder.Services.AddScoped<IProcessingTailorRepository, ProcessingTailorRepository>();
 builder.Services.AddScoped<IProductInStoreRepository, ProductInStoreRepository>();
-builder.Services.AddScoped<IFeedbackRepository,FeedbackRepository>();
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
+// Register services
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IContactService, ContactService>();
-//builder.Services.AddScoped<IProductStyleOptionervice, ProductStyleOptionervice>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-//builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IAddCartService, AddCartService>();
@@ -116,27 +125,21 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IProcessingTailorService, ProcessingTailorService>();
 builder.Services.AddScoped<ITailorPartnerService, TailorPartnerService>();
 builder.Services.AddScoped<IProductInStoreService, ProductInStoreService>();
-
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+// Configure email settings
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
 
-// Add IMemoryCache 
-builder.Services.AddMemoryCache(); // For in-memory cache
+// Add memory cache and OTP service
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<OtpService>();
-// Add PayPal Client service
+
+// Configure PayPal client
 builder.Services.AddSingleton(x => new PaypalClient(
     builder.Configuration["PaypalOptions:AppId"],
     builder.Configuration["PaypalOptions:AppSecret"],
     builder.Configuration["PaypalOptions:Mode"]
 ));
-
-// Add CORS policy
-builder.Services.AddCors(co => co.AddDefaultPolicy(policy =>
-    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
-// Configure DbContext
-builder.Services.AddDbContext<VestTourDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(ApplicationMapper));
@@ -179,9 +182,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSession();
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();

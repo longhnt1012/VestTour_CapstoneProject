@@ -100,16 +100,20 @@ namespace VestTour.Repository.Repositories
                 Deposit = orderEntity.Deposit,
                 ShippingFee = orderEntity.ShippingFee,
                 DeliveryMethod = orderEntity.DeliveryMethod,
-                Products = orderEntity.OrderDetails.Select(od => new ProductModel
-                {
-                    ProductID = od.ProductId,
-                    ProductCode = od.Product?.ProductCode,
-                    Price = od.Product?.Price ?? 0
+                //Products = orderEntity.OrderDetails.Select(od => new ProductModel
+                //{
+                //    ProductID = od.ProductId,
+                //    ProductCode = od.Product?.ProductCode,
+                //    FabricID  = od.Product?.FabricId,
+                //    LiningID = od.Product?.LiningId,
+
+                //    Price = od.Product?.Price ?? 0
                     
-                }).ToList(),
+                //}).ToList(),
                 OrderDetails = orderEntity.OrderDetails.Select(od => new OrderDetailModel
                 {
-                    
+                    OrderId = orderEntity.OrderId,
+                    ProductId = od.ProductId,
                     Quantity = od.Quantity.Value,
                     Price = od.Price.Value
                 }).ToList()

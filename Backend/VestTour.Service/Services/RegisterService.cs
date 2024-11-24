@@ -95,5 +95,27 @@ namespace VestTour.Service.Services
 
             return isOtpValid;
         }
+        public async Task<string> ResendOtpAsync(string email)
+        {
+            // Check if the email exists in the repository
+            var userExists = await _userRepository.IsEmailTakenAsync(email);
+            if (!userExists)
+            {
+                return Error.EmailNotFound;
+            }
+
+            // Regenerate OTP
+            var otp = _otpService.GenerateAndStoreOtp(email);
+
+            // Send the OTP via email
+            await _emailHelper.SendEmailAsync(new EmailRequest
+            {
+                To = email,
+                Subject = "Resend OTP for Registration Confirmation",
+                Content = $"Your new OTP for registration confirmation is: {otp}"
+            });
+
+            return Success.OtpResentSuccess;
+        }
     }
 }

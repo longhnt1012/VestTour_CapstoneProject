@@ -135,6 +135,7 @@ namespace VestTour.Repository.Repositories
                                      StyleOptions = p.StyleOptions.Select(so => new StyleOptionModel
                                      {
                                          StyleOptionId = so.StyleOptionId,
+                                         StyleId = so.StyleId.Value,
                                          OptionType = so.OptionType,
                                          OptionValue = so.OptionValue
                                      }).ToList()

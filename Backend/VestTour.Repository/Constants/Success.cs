@@ -8,6 +8,7 @@
         public const string UserUpdated = "User information updated successfully.";
         public const string UserDeleted = "User deleted successfully.";
         public const string StatusUpdated = "User status updated successfully.";
+        public const string OtpResentSuccess = "OTP has been resent successfully.";
         // Fabric-related success messages
         public const string FabricAdded = "Fabric successfully added.";
         public const string FabricUpdated = "Fabric successfully updated.";

@@ -149,7 +149,7 @@ namespace VestTour.Controllers
         }
         [HttpPatch("updatestatus/{id}")]
         [Authorize(Roles = "admin,store manager")]
-        public async Task<IActionResult> ChangeStageName(int id, [FromBody] string newStatus)
+        public async Task<IActionResult> ChangeStatusName(int id, [FromBody] string newStatus)
         {
 
             var response = await _orderService.ChangeOrderStatusAsync(id, newStatus);

@@ -173,12 +173,11 @@ namespace VestTour.API.Controllers
                 // Determine payment details
                 string paymentDetails = paidAmount < totalPrice ? "Make deposit 50%" : "Paid full";
 
-                // Create the payment model
                 var payment = new PaymentModel
                 {
                     UserId = userId,
                     Amount = paidAmount,
-                    Method = "Paypal",
+                    Method = "PayPal",
                     PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     PaymentDetails = paymentDetails,
                     Status = "Success"

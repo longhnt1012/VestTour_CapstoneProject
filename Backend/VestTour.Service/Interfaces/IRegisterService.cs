@@ -7,5 +7,6 @@ namespace VestTour.Service.Interface
     {
         Task<string?> RegisterUserAsync(RegisterModel registerModel);
         Task<bool> ConfirmEmailAsync(string email, string otp);
+        Task<string> ResendOtpAsync(string email);
     }
 }

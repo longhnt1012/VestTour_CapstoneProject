@@ -154,5 +154,6 @@ namespace VestTour.API.Controllers
 
             return BadRequest(new { Message = result });
         }
+
     }
 }

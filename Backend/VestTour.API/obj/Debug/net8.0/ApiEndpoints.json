@@ -1098,7 +1098,7 @@
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
-    "Method": "ChangeStageName",
+    "Method": "ChangeStatusName",
     "RelativePath": "api/Orders/updatestatus/{id}",
     "HttpMethod": "PATCH",
     "IsController": true,
@@ -1852,6 +1852,22 @@
         "Name": "confirmEmailRequest",
         "Type": "VestTour.Repository.Models.ConfirmRequest",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTourApi.Controllers.RegisterController",
+    "Method": "ResendOtp",
+    "RelativePath": "api/Register/resend-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

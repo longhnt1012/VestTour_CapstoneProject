@@ -69,5 +69,22 @@ namespace VestTourApi.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost("resend-otp")]
+        public async Task<IActionResult> ResendOtp([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest(new { message = "Email is required." });
+            }
+
+            var result = await _registerService.ResendOtpAsync(email);
+
+            if (result == Success.OtpResentSuccess)
+            {
+                return Ok(new { message = result });
+            }
+
+            return BadRequest(new { message = result });
+        }
     }
 }

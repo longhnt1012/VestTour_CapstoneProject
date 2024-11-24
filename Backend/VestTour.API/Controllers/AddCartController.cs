@@ -19,13 +19,14 @@ namespace VestTour.API.Controllers
         private readonly PaypalClient _paypalClient;
         private readonly IPaymentService _paymentService;
         private readonly IOrderService _orderService;
-
-        public AddCartController(IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService,IPaymentService paymentService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AddCartController(IHttpContextAccessor httpContextAccessor,IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService,IPaymentService paymentService)
         {
             _addCartService = addCartService;
             _paypalClient=paypalClient;
             _orderService=orderService;
             _paymentService=paymentService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         private int? GetUserId()
@@ -115,7 +116,7 @@ namespace VestTour.API.Controllers
 
         //[Authorize]
         [HttpPost("/Cart/create-paypal-order")]
-        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken, bool isDeposit)
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken,bool isDeposit = false)
         {
             var userId = GetUserId();
             var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
@@ -127,10 +128,10 @@ namespace VestTour.API.Controllers
             decimal tienphaitra;
             if (isDeposit)
             {
-                tienphaitra = totalPrice/ 2;
+                tienphaitra = totalPrice / 2;
                 tongtien = tienphaitra.ToString("F2");
             }
-            
+            HttpContext.Session.SetString("tongtien", tongtien);
             var donViTienTe = "USD";
             var maDonHangThamChieu = "OR" + DateTime.Now.Ticks.ToString();
             try
@@ -150,33 +151,27 @@ namespace VestTour.API.Controllers
         {
             try
             {
-                var response = await _paypalClient.CaptureOrder(orderID);
-                var purchaseUnit = response.purchase_units?.FirstOrDefault();
-                var capture = purchaseUnit?.payments?.captures?.FirstOrDefault();
+                var tongtienString = _httpContextAccessor.HttpContext?.Session.GetString("tongtien");
 
-                if (capture == null)
+                if (tongtienString == null)
                 {
-                    return BadRequest("Capture details not found in the response.");
+                    throw new InvalidOperationException("Tongtien is not found in the session.");
                 }
 
-                // Extract the amount from the capture
-                var amount = capture.amount;
-                if (amount == null)
+                if (!decimal.TryParse(tongtienString, out var tongtien))
                 {
-                    return BadRequest("Amount details not found in the response.");
+                    throw new FormatException("Invalid format for tongtien.");
                 }
 
                 var userId = GetUserId();
                 var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
-                var paidAmount = decimal.Parse(amount.value);
-
-                // Determine payment details
-                string paymentDetails = paidAmount < totalPrice ? "Make deposit 50%" : "Paid full";
-
+                string paymentDetails = tongtien < totalPrice ? "Make deposit 50%" : "Paid full";
+                
                 var payment = new PaymentModel
                 {
                     UserId = userId,
-                    Amount = paidAmount,
+                    OrderId = 26,
+                    Amount = tongtien,
                     Method = "PayPal",
                     PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     PaymentDetails = paymentDetails,
@@ -185,27 +180,57 @@ namespace VestTour.API.Controllers
 
                 // Save payment record
                 var newPaymentResponse = await _paymentService.AddNewPaymentAsync(payment);
-
-                // Lưu PaymentId vào session
                 if (newPaymentResponse.Success)
                 {
                     var newPaymentId = newPaymentResponse.Data;
-
-                    // Lưu PaymentId vào session
                     HttpContext.Session.SetInt32("PaymentId", newPaymentId);
                 }
                 else
                 {
                     return BadRequest(newPaymentResponse.Message);
                 }
-                return Ok(new
-                {
-                    ResponseId = response.id,
-                    Status = response.status,
-                    PaymentDetails = paymentDetails,
-                    PaidAmount = paidAmount,
-                    TotalPrice = totalPrice
-                });
+
+
+
+                //var response = await _paypalClient.CaptureOrder(orderID);
+                //var purchaseUnit = response.purchase_units?.FirstOrDefault();
+                //var capture = purchaseUnit?.payments?.captures?.FirstOrDefault();
+
+                //if (capture == null)
+                //{
+                //    return BadRequest("Capture details not found in the response.");
+                //}
+                //var amount = capture.amount;
+                //if (amount == null)
+                //{
+                //    return BadRequest("Amount details not found in the response.");
+                //}
+                //var paidAmount = decimal.Parse(amount.value);
+                // var status = capture.status;
+               
+                
+                //var tongtien = totalPrice;
+                //if (isDeposit)
+                //{
+                //    tongtien = totalPrice / 2;
+                //}
+                // Determine payment details
+                
+                //if (status == "COMPLETED")
+               // {
+                    
+                   
+               // }
+                // Extract the amount from the capture
+
+                return Ok("Payment created successfully.");
+
+
+
+
+
+                // Lưu PaymentId vào session
+
             }
             catch (Exception ex)
             {

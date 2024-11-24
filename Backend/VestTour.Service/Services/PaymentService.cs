@@ -148,9 +148,7 @@ namespace VestTour.Service.Services
             {
                 throw new Exception("Payment not found.");
             }
-
-            payment.OrderId = orderId;
-            await _paymentRepository.UpdatePayment(paymentId, payment);
+            await _paymentRepository.UpdatePaymentOrderId(paymentId, orderId);
         }
         public async Task<ServiceResponse<List<PaymentModel>>> GetPaymentsByOrderIdAsync(int orderId)
         {

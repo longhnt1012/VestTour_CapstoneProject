@@ -61,6 +61,16 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task UpdatePaymentOrderId(int paymentId, int orderId)
+        {
+            var payment = await _context.Payments.FindAsync(paymentId);
+
+            if (payment != null)
+            {
+                payment.OrderId = orderId;
+                await _context.SaveChangesAsync();
+            }
+        }
         public async Task<List<PaymentModel>> GetPaymentsByOrderIdAsync(int orderId)
         {
             var payments = await _context.Payments!.Where(p => p.OrderId == orderId).ToListAsync();

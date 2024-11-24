@@ -243,6 +243,7 @@ namespace VestTour.Service.Implementation
             }
             await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
             _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
+            _httpContextAccessor.HttpContext?.Session.Remove("tongtien");
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
 
@@ -263,10 +264,11 @@ namespace VestTour.Service.Implementation
                     .AppendLine($"- Delivery Method: {newOrder.DeliveryMethod}")
                     .AppendLine()
                     .AppendLine("Order Details:");
-
                 foreach (var item in cartItems)
                 {
-                    body.AppendLine($"- Product: {item.CustomProduct.ProductCode}")
+                    string productCode = item.CustomProduct?.ProductCode ?? item.Product?.ProductCode ?? "Unknown Product";
+
+                    body.AppendLine($"- Product: {productCode}")
                         .AppendLine($"  Price: {item.Price:C}")
                         .AppendLine($"  Quantity: {item.Quantity}")
                         .AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}")

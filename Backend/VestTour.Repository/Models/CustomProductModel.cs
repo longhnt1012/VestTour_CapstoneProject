@@ -18,7 +18,7 @@ public class CustomProductModel
         
     }
 
-    // Method to generate ProductCode with repository dependency
+
     public async Task<string> GenerateProductCodeAsync(IFabricRepository fabricRepository)
     {
         try
@@ -28,7 +28,9 @@ public class CustomProductModel
             {
                 throw new InvalidOperationException("Fabric name not found for the provided FabricID.");
             }
-            return $"SUIT{fabricName}";
+
+            string currentDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            return $"SUIT{fabricName}{currentDateTime}";
         }
         catch (Exception ex)
         {
@@ -36,6 +38,7 @@ public class CustomProductModel
             throw new ApplicationException("An error occurred while generating the product code.", ex);
         }
     }
+
 
     public void SetProductCode(string code)
     {

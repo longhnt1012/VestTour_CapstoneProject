@@ -81,7 +81,7 @@ namespace VestTour.Service.Services
             }
 
            
-            if (!StageStatusValidate.IsValidStageStatus(processingTailor.Status))
+            if (!TailorProcessStatusValidate.IsValidProcessStatus(processingTailor.Status))
             {
                 response.Success = false;
                 response.Message = Error.InvalidProcessStatus;

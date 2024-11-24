@@ -242,6 +242,7 @@ namespace VestTour.Service.Implementation
                 throw new InvalidOperationException("Please comback to payment.");
             }
             await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
+            _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
 

@@ -10,7 +10,7 @@ namespace VestTour.Repository.ValidationHelper
     {
         private static readonly HashSet<string> AllowedStatus = new HashSet<string>
         {
-            "Start","Doing", "Finish", "Due","Cancel"
+            "Not Start","Doing", "Finish", "Due","Cancel"
         };
 
 

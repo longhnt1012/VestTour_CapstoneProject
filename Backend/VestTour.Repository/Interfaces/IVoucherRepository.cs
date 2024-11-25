@@ -12,7 +12,9 @@ namespace VestTour.Repository.Interface
         Task UpdateVoucherAsync(int id, UpdateVoucherModel voucherUpdateModel);
         Task DeleteVoucherAsync(int voucherId);
         Task<VoucherModel?> GetVoucherByCodeAsync(string code);
-        Task<List<VoucherModel>> GetValidVouchersAsync();            // Get valid vouchers (DateStart <= Now <= DateEnd)
+        Task<List<VoucherModel>> GetValidVouchersAsync();
+        Task ChangeVoucherStatusAsync(int voucherId, string newStatus);
+
         Task<List<VoucherModel>> GetVouchersByCodeAsync(string code);
     }
 }

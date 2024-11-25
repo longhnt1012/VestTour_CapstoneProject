@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Service.Interfaces;
+using VestTour.Repository.Constants;
+using VestTour.Repository.ValidationHelper;
 
 namespace VestTour.Service.Services
 {
@@ -46,6 +48,7 @@ namespace VestTour.Service.Services
                     response.Success = false;
                     response.Message = "Voucher not found.";
                 }
+
                 else
                 {
                     response.Data = voucher;
@@ -174,5 +177,33 @@ namespace VestTour.Service.Services
             }
             return response;
         }
+        public async Task<ServiceResponse> ChangeVoucherStatusAsync(int voucherId, string newStatus)
+        {
+           var response = new ServiceResponse();
+
+            if (voucherId <= 0)
+            {
+                response.Success = false;
+                response.Message = "Voucher id invalid.";
+                return response;
+            }
+            if (!VoucherStatusValidate.IsValidVoucherStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = "Voucher status invalid."; 
+                return response;
+            }
+            try
+            {
+                await _voucherRepository.ChangeVoucherStatusAsync(voucherId, newStatus);
+                response.Message = "Voucher status updated successfully.";
+            }catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred while updating voucher status: {ex.Message}";
+            }
+            return response;
+        }
+
     }
 }

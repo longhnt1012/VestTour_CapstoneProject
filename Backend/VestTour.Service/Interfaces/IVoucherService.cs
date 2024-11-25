@@ -15,5 +15,6 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse<List<VoucherModel>>> GetVouchersByCodeAsync(string code);
         Task<ServiceResponse<List<VoucherModel>>> GetValidVouchersAsync();
         Task<ServiceResponse<VoucherModel?>> GetVoucherByCodeAsync(string code);
+        Task<ServiceResponse> ChangeVoucherStatusAsync(int voucherId, string newStatus);
     }
 }

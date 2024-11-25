@@ -125,9 +125,20 @@ namespace VestTour.Repository.Repositories
 
             return _mapper.Map<VoucherModel>(voucher);
         }
+        public async Task ChangeVoucherStatusAsync(int voucherId, string newStatus)
+        {
+            var voucher = await _context.Vouchers!.FindAsync(voucherId);
+            if (voucher != null)
+            {
+                voucher.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
 
+
+        }
 
 
 
     }
+    
 }

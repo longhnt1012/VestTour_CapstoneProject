@@ -65,6 +65,26 @@ namespace VestTour.Service.Implementation
                 throw new ArgumentException($"Invalid delivery method: {order.DeliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
             }
 
+            //var newOrder = new OrderModel
+            //{
+            //    UserID = order.UserID,
+            //    StoreId = order.StoreId,
+            //    VoucherId = order.VoucherId,
+            //    ShipperPartnerId = order.ShipperPartnerId,
+            //    OrderDate = order.OrderDate,
+            //    ShippedDate = order.ShippedDate,
+            //    Note = order.Note,
+            //    Paid = order.Paid,
+            //    Status = order.Status ?? "Pending",
+            //    TotalPrice = order.TotalPrice,
+            //    Deposit= order.Deposit,
+            //    ShippingFee= order.ShippingFee,
+            //    GuestName =  order.GuestName ?? user?.Name,
+            //    GuestEmail = order.GuestEmail ?? user?.Email,
+            //    GuestAddress = order.GuestAddress ?? user?.Address,
+            //    DeliveryMethod = order.DeliveryMethod
+
+            //};
             var newOrder = new OrderModel
             {
                 UserID = order.UserID,
@@ -75,16 +95,16 @@ namespace VestTour.Service.Implementation
                 ShippedDate = order.ShippedDate,
                 Note = order.Note,
                 Paid = order.Paid,
-                Status = order.Status ?? "Pending",
+                Status = string.IsNullOrEmpty(order.Status) ? "Pending" : order.Status,
                 TotalPrice = order.TotalPrice,
-                Deposit= order.Deposit,
-                ShippingFee= order.ShippingFee,
-                GuestName =  order.GuestName ?? user?.Name,
-                GuestEmail = order.GuestEmail ?? user?.Email,
-                GuestAddress = order.GuestAddress ?? user?.Address,
+                Deposit = order.Deposit,
+                ShippingFee = order.ShippingFee,
+                GuestName = string.IsNullOrEmpty(order.GuestName) ? user?.Name : order.GuestName,
+                GuestEmail = string.IsNullOrEmpty(order.GuestEmail) ? user?.Email : order.GuestEmail,
+                GuestAddress = string.IsNullOrEmpty(order.GuestAddress) ? user?.Address : order.GuestAddress,
                 DeliveryMethod = order.DeliveryMethod
-
             };
+
             var subject = "Order Confirmation";
             var body = new StringBuilder();
             body.AppendLine($"Dear Customer,");
@@ -195,7 +215,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId,string? guestName = null,string? guestEmail = null,string? guestAddress = null,decimal? deposit = null,decimal? shippingFee = null,string? deliveryMethod = null,int? voucherId = null,int? storeId = null)
+        public async Task ConfirmCartOrderAsync(string deliveryMethod ,int? userId,string? guestName = null,string? guestEmail = null,string? guestAddress = null,decimal? deposit = null,decimal? shippingFee = null,int? voucherId = null,int? storeId = null)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -208,10 +228,10 @@ namespace VestTour.Service.Implementation
             }
 
             // Validate delivery method
-            if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
-            {
-                throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
-            }
+            //if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
+           // {
+               // throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
+           // }
 
             // Calculate total price
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
@@ -243,9 +263,9 @@ namespace VestTour.Service.Implementation
                 UserID = user?.UserId,
                 VoucherId = voucherId,
                 StoreId = storeId,
-                GuestName = guestName ?? user?.Name,
-                GuestEmail = guestEmail ?? user?.Email,
-                GuestAddress = guestAddress ?? user?.Address,
+                GuestName = string.IsNullOrEmpty(guestName) ? user?.Name : guestName,
+                GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
+                GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 TotalPrice = Math.Round(totalPrice, 2),
                 Deposit = deposit,
@@ -255,20 +275,21 @@ namespace VestTour.Service.Implementation
                 DeliveryMethod = deliveryMethod
             };
 
+
             // Save the order to the database
             int orderId = await _orderRepository.AddOrderAsync(newOrder);
 
             // Retrieve PaymentId from session using IHttpContextAccessor
-            var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+            //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
 
-            if (paymentId == null)
-            {
-                throw new InvalidOperationException("Please come back to payment.");
-            }
+            //if (paymentId == null)
+            //{
+            //    throw new InvalidOperationException("Please come back to payment.");
+            //}
 
-            await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-            _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
-            _httpContextAccessor.HttpContext?.Session.Remove("tongtien");
+            //await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
+            //_httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
+            //_httpContextAccessor.HttpContext?.Session.Remove("tongtien");
 
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);

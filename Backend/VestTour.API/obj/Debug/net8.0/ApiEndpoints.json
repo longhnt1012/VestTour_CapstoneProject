@@ -56,6 +56,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "deliverymethod",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "guestName",
         "Type": "System.String",
         "IsRequired": false
@@ -78,11 +83,6 @@
       {
         "Name": "shippingfee",
         "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "deliverymethod",
-        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -2813,6 +2813,27 @@
         "Name": "code",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
+    "Method": "ChangeVoucherStatus",
+    "RelativePath": "api/Voucher/status/{voucherId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "voucherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

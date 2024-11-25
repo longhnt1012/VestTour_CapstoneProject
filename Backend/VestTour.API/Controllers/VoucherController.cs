@@ -109,5 +109,16 @@ namespace VestTour.API.Controllers
 
             return Ok(response.Data);
         }
+        [HttpPatch("status/{voucherId}")]
+        public async Task<IActionResult> ChangeVoucherStatus(int voucherId, [FromBody] string newStatus)
+        {
+            var result = await _voucherService.ChangeVoucherStatusAsync(voucherId, newStatus);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Message);
+        }
+
     }
 }

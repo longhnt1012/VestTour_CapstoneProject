@@ -130,38 +130,53 @@ namespace VestTour.Service.Services
 
         public async Task<ShippingFeeResponseModel> CalculateShippingFeeAsync(ShippingFeeRequestModel request)
         {
-            var httpRequest = new HttpRequestMessage
+            try
             {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee"),
-                Headers =
-        {
-            { "Token", _apiToken },
-            { "Accept", "application/json" },
-            { "Shop_Id", request.ShopCode.ToString() }
-        },
-                Content = new StringContent(JsonConvert.SerializeObject(new
+                var httpRequest = new HttpRequestMessage
                 {
-                    service_id = request.ServiceId,
-                    insurance_value = request.InsuranceValue,
-                    coupon = request.Coupon,
-                    to_ward_code = request.ToWardCode,
-                    to_district_id = request.ToDistrictId,
-                    from_district_id = request.FromDistrictId,
-                    weight = request.Weight,
-                    length = request.Length,
-                    width = request.Width,
-                    height = request.Height
-                }), Encoding.UTF8, "application/json")
-            };
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee"),
+                    Headers =
+            {
+                { "Token", _apiToken },
+                { "Accept", "application/json" },
+                { "Shop_Id", request.ShopCode.ToString() }
+            },
+                    Content = new StringContent(JsonConvert.SerializeObject(new
+                    {
+                        service_id = request.ServiceId,
+                        insurance_value = request.InsuranceValue,
+                        coupon = request.Coupon,
+                        to_ward_code = request.ToWardCode,
+                        to_district_id = request.ToDistrictId,
+                        from_district_id = request.FromDistrictId,
+                        weight = request.Weight,
+                        length = request.Length,
+                        width = request.Width,
+                        height = request.Height
+                    }), Encoding.UTF8, "application/json")
+                };
 
-            var response = await _httpClient.SendAsync(httpRequest);
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.SendAsync(httpRequest);
 
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<ShippingFeeResponseModel>>(responseBody);
+                // Log the response if it's not successful
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                    throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {errorContent}");
+                }
 
-            return apiResponse.Data;
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<ShippingFeeResponseModel>>(responseBody);
+
+                return apiResponse?.Data;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred: {ex.Message}");
+                throw;
+            }
         }
 
     }

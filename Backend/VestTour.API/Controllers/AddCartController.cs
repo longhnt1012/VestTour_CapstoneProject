@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Services;
 using VestTour.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using System.Numerics;
 
 namespace VestTour.API.Controllers
 {
@@ -151,26 +152,38 @@ namespace VestTour.API.Controllers
         {
             try
             {
-                var tongtienString = _httpContextAccessor.HttpContext?.Session.GetString("tongtien");
-
-                if (tongtienString == null)
+                // Capture the PayPal order
+                var response = await _paypalClient.CaptureOrder(orderID);
+                if (response.status != "COMPLETED")
                 {
-                    throw new InvalidOperationException("Tongtien is not found in the session.");
+                    return BadRequest(new { Error = "PayPal order capture failed." });
                 }
 
+                // Retrieve the "tongtien" from the session
+                var tongtienString = _httpContextAccessor.HttpContext?.Session.GetString("tongtien");
+                if (string.IsNullOrEmpty(tongtienString))
+                {
+                    return BadRequest(new { Error = "Tongtien is not found in the session." });
+                }
+
+                // Validate and parse "tongtien"
                 if (!decimal.TryParse(tongtienString, out var tongtien))
                 {
-                    throw new FormatException("Invalid format for tongtien.");
+                    return BadRequest(new { Error = "Invalid format for tongtien." });
                 }
 
+                // Get the user ID and calculate the total cart price
                 var userId = GetUserId();
                 var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
+
+                // Determine payment details
                 string paymentDetails = tongtien < totalPrice ? "Make deposit 50%" : "Paid full";
-                
+
+                // Create a PaymentModel object
                 var payment = new PaymentModel
                 {
                     UserId = userId,
-                    OrderId = 26,
+                    OrderId = 26, // You might want to replace this hardcoded value with a dynamic one
                     Amount = tongtien,
                     Method = "PayPal",
                     PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
@@ -178,65 +191,25 @@ namespace VestTour.API.Controllers
                     Status = "Success"
                 };
 
-                // Save payment record
+                // Save the payment record
                 var newPaymentResponse = await _paymentService.AddNewPaymentAsync(payment);
-                if (newPaymentResponse.Success)
+                if (!newPaymentResponse.Success)
                 {
-                    var newPaymentId = newPaymentResponse.Data;
-                    HttpContext.Session.SetInt32("PaymentId", newPaymentId);
-                }
-                else
-                {
-                    return BadRequest(newPaymentResponse.Message);
+                    return BadRequest(new { Error = newPaymentResponse.Message });
                 }
 
+                // Save PaymentId into the session
+                HttpContext.Session.SetInt32("PaymentId", newPaymentResponse.Data);
 
-
-                //var response = await _paypalClient.CaptureOrder(orderID);
-                //var purchaseUnit = response.purchase_units?.FirstOrDefault();
-                //var capture = purchaseUnit?.payments?.captures?.FirstOrDefault();
-
-                //if (capture == null)
-                //{
-                //    return BadRequest("Capture details not found in the response.");
-                //}
-                //var amount = capture.amount;
-                //if (amount == null)
-                //{
-                //    return BadRequest("Amount details not found in the response.");
-                //}
-                //var paidAmount = decimal.Parse(amount.value);
-                // var status = capture.status;
-               
-                
-                //var tongtien = totalPrice;
-                //if (isDeposit)
-                //{
-                //    tongtien = totalPrice / 2;
-                //}
-                // Determine payment details
-                
-                //if (status == "COMPLETED")
-               // {
-                    
-                   
-               // }
-                // Extract the amount from the capture
-
-                return Ok("Payment created successfully.");
-
-
-
-
-
-                // Lưu PaymentId vào session
-
+                return Ok(new { Message = "Payment created successfully.", PaymentId = newPaymentResponse.Data });
             }
             catch (Exception ex)
             {
+                // Return error details
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
 
     }
 }

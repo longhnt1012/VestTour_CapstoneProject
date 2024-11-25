@@ -126,6 +126,7 @@ builder.Services.AddScoped<IProcessingTailorService, ProcessingTailorService>();
 builder.Services.AddScoped<ITailorPartnerService, TailorPartnerService>();
 builder.Services.AddScoped<IProductInStoreService, ProductInStoreService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddHttpClient<ShippingService>();
 // Configure email settings
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();

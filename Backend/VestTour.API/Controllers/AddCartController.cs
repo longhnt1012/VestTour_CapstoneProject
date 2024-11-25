@@ -21,12 +21,12 @@ namespace VestTour.API.Controllers
         private readonly IPaymentService _paymentService;
         private readonly IOrderService _orderService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AddCartController(IHttpContextAccessor httpContextAccessor,IAddCartService addCartService, PaypalClient paypalClient,IOrderService orderService,IPaymentService paymentService)
+        public AddCartController(IHttpContextAccessor httpContextAccessor, IAddCartService addCartService, PaypalClient paypalClient, IOrderService orderService, IPaymentService paymentService)
         {
             _addCartService = addCartService;
-            _paypalClient=paypalClient;
-            _orderService=orderService;
-            _paymentService=paymentService;
+            _paypalClient = paypalClient;
+            _orderService = orderService;
+            _paymentService = paymentService;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -84,13 +84,13 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
-        public async Task<IActionResult> ConfirmOrder(string deliverymethod,string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingfee, int? voucherId, int? storeId)
+        public async Task<IActionResult> ConfirmOrder(string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingfee, string? deliverymethod, int? voucherId, int? storeId)
         {
             var userId = GetUserId();
             try
             {
-                await _addCartService.ConfirmOrderAsync(deliverymethod,userId, guestName, guestEmail, guestAddress,deposit, shippingfee,voucherId,storeId);
-               
+                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress, deposit, shippingfee, deliverymethod, voucherId, storeId);
+
                 return Ok("Order confirmed successfully.");
             }
             catch (KeyNotFoundException ex)
@@ -126,7 +126,7 @@ namespace VestTour.API.Controllers
         }
         //[Authorize]
         [HttpPost("/Cart/create-paypal-order")]
-        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken,bool isDeposit = false)
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken, bool isDeposit = false)
         {
             var userId = GetUserId();
             var totalPrice = await _addCartService.GetTotalPriceAsync(userId);

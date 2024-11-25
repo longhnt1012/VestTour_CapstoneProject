@@ -27,15 +27,15 @@ namespace VestTour.Service.Implementation
         private readonly IPaymentService _paymentService;
         private readonly IVoucherService _voucherService;
         private readonly IStoreService _storeService;
-        public OrderService(IHttpContextAccessor httpContextAccessor,IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo,IPaymentService paymentService,IVoucherService voucherService,IStoreService storeService)
+        public OrderService(IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService)
         {
             _paymentService = paymentService;
             _httpContextAccessor = httpContextAccessor;
             _orderRepository = orderRepository;
             _emailHelper = emailHelper;
             _userService = userService;
-            _cartRepo= cartRepo;
-            _voucherService= voucherService;
+            _cartRepo = cartRepo;
+            _voucherService = voucherService;
             _storeService = storeService;
         }
 
@@ -65,26 +65,6 @@ namespace VestTour.Service.Implementation
                 throw new ArgumentException($"Invalid delivery method: {order.DeliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
             }
 
-            //var newOrder = new OrderModel
-            //{
-            //    UserID = order.UserID,
-            //    StoreId = order.StoreId,
-            //    VoucherId = order.VoucherId,
-            //    ShipperPartnerId = order.ShipperPartnerId,
-            //    OrderDate = order.OrderDate,
-            //    ShippedDate = order.ShippedDate,
-            //    Note = order.Note,
-            //    Paid = order.Paid,
-            //    Status = order.Status ?? "Pending",
-            //    TotalPrice = order.TotalPrice,
-            //    Deposit= order.Deposit,
-            //    ShippingFee= order.ShippingFee,
-            //    GuestName =  order.GuestName ?? user?.Name,
-            //    GuestEmail = order.GuestEmail ?? user?.Email,
-            //    GuestAddress = order.GuestAddress ?? user?.Address,
-            //    DeliveryMethod = order.DeliveryMethod
-
-            //};
             var newOrder = new OrderModel
             {
                 UserID = order.UserID,
@@ -119,7 +99,7 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"- Shipper Partner ID: {order.ShipperPartnerId}");
             body.AppendLine($"- Order Date: {order.OrderDate?.ToString("d")}");
             body.AppendLine($"- Shipped Date: {order.ShippedDate?.ToString("d")}");
-            
+
             body.AppendLine();
 
             // List the products in the order
@@ -162,10 +142,10 @@ namespace VestTour.Service.Implementation
             // Create an email request object
             var emailRequest = new EmailRequest
             {
-                To = userEmail, 
+                To = userEmail,
                 Subject = subject,
-                Content = body.ToString() ,
-               // IsHtml = true
+                Content = body.ToString(),
+                // IsHtml = true
             };
 
 
@@ -215,7 +195,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(string deliveryMethod ,int? userId,string? guestName = null,string? guestEmail = null,string? guestAddress = null,decimal? deposit = null,decimal? shippingFee = null,int? voucherId = null,int? storeId = null)
+        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null, decimal? deposit = null, decimal? shippingFee = null, string? deliveryMethod = null, int? voucherId = null, int? storeId = null)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -229,9 +209,9 @@ namespace VestTour.Service.Implementation
 
             // Validate delivery method
             //if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
-           // {
-               // throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
-           // }
+            //{
+            //    throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
+            //}
 
             // Calculate total price
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
@@ -272,7 +252,7 @@ namespace VestTour.Service.Implementation
                 ShippingFee = shippingFee,
                 Paid = false,
                 Status = "Pending",
-                DeliveryMethod = deliveryMethod
+                DeliveryMethod = "Pick up"
             };
 
 

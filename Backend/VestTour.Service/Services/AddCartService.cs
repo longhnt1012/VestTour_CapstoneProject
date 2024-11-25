@@ -18,7 +18,7 @@ namespace VestTour.Services
         private readonly IProductRepository _productRepository;
         private readonly IAddCartRepository _addCartRepository;
         private readonly IOrderService _orderService;
-       // private readonly IProductStyleOptionervice _productStyleOptionService;
+        // private readonly IProductStyleOptionervice _productStyleOptionService;
         private readonly IFabricRepository _fabricRepository;
         private readonly IProductService _productService;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -28,7 +28,7 @@ namespace VestTour.Services
             IProductRepository productRepository,
             IAddCartRepository addCartRepository,
             IOrderService orderService,
-           // IProductStyleOptionervice productStyleOptionService,
+            // IProductStyleOptionervice productStyleOptionService,
             IFabricRepository fabricRepository,
             IProductService productService,
             IHttpContextAccessor httpContextAccessor)
@@ -37,7 +37,7 @@ namespace VestTour.Services
             _productRepository = productRepository;
             _orderService = orderService;
             _addCartRepository = addCartRepository;
-           // _productStyleOptionService = productStyleOptionService;
+            // _productStyleOptionService = productStyleOptionService;
             _fabricRepository = fabricRepository;
             _productService = productService;
             _httpContextAccessor = httpContextAccessor;
@@ -72,7 +72,7 @@ namespace VestTour.Services
             {
                 if (string.IsNullOrEmpty(customProduct.ProductCode))
                 {
-                    customProduct.ProductCode= await customProduct.GenerateProductCodeAsync(_fabricRepository);
+                    customProduct.ProductCode = await customProduct.GenerateProductCodeAsync(_fabricRepository);
                 }
 
                 decimal price = await CalculatePrice(customProduct);
@@ -165,7 +165,7 @@ namespace VestTour.Services
             await _addCartRepository.UpdateCartAsync(id, cartItems);
         }
 
-        public async Task ConfirmOrderAsync(string deliverymethod, int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingFee, int? voucherId, int? storeId)
+        public async Task ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingFee, string? deliverymethod, int? voucherId, int? storeId)
 
         {
             int id = userId ?? GetOrCreateGuestId();
@@ -180,23 +180,23 @@ namespace VestTour.Services
                 // Kiểm tra nếu sản phẩm là tùy chỉnh (IsCustom = true)
                 if (item.IsCustom)
                 {
-                    
+
                     var customProduct = item.CustomProduct;
 
                     var productToAdd = new ProductModel
                     {
-                        ProductCode = customProduct.ProductCode, 
+                        ProductCode = customProduct.ProductCode,
                         CategoryID = customProduct.CategoryID,
                         FabricID = customProduct.FabricID,
                         LiningID = customProduct.LiningID,
                         MeasurementID = customProduct.MeasurementID,
-                        
-                        Price = item.Price, 
-                        IsCustom = true 
+
+                        Price = item.Price,
+                        IsCustom = true
                     };
 
                     // Lưu sản phẩm vào bảng sản phẩm
-                    var productId= await _productService.AddProductAsync(productToAdd);
+                    var productId = await _productService.AddProductAsync(productToAdd);
                     item.Product = new ProductModel { ProductID = productId };
                     //await _productService.AddProductAsync(productToAdd);
                     foreach (var pickedOption in customProduct.PickedStyleOptions)
@@ -216,7 +216,7 @@ namespace VestTour.Services
 
                 }
             }
-            await _orderService.ConfirmCartOrderAsync(deliverymethod,id, guestName,guestEmail,guestAddress,deposit,shippingFee,voucherId,storeId);
+            await _orderService.ConfirmCartOrderAsync(id, guestName, guestEmail, guestAddress, deposit, shippingFee, deliverymethod, voucherId, storeId);
             await _addCartRepository.RemoveAllFromCartAsync(id);
         }
 

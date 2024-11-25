@@ -148,7 +148,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPatch("updatestatus/{id}")]
-        [Authorize(Roles = "admin,store manager")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> ChangeStatusName(int id, [FromBody] string newStatus)
         {
 

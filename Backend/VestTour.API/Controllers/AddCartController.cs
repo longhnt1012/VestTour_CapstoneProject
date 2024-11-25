@@ -66,13 +66,6 @@ namespace VestTour.API.Controllers
             return Ok("Product added to cart.");
         }
 
-        [HttpDelete("removefromcart/{productCode}")]
-        public async Task<IActionResult> RemoveFromCart(string productCode)
-        {
-            var userId = GetUserId();
-            await _addCartService.RemoveFromCartAsync(userId, productCode);
-            return Ok("Product removed from cart.");
-        }
 
         [HttpPost("increase/{productCode}")]
         public async Task<IActionResult> IncreaseQuantity(string productCode)

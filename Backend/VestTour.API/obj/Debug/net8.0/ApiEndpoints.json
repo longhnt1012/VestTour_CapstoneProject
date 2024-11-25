@@ -172,22 +172,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.API.Controllers.AddCartController",
-    "Method": "RemoveFromCart",
-    "RelativePath": "api/AddCart/removefromcart/{productCode}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "productCode",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "VestTour.Controllers.BankingAccountsController",
     "Method": "GetAllBankingAccount",
     "RelativePath": "api/BankingAccounts",

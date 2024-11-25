@@ -11,7 +11,7 @@ namespace VestTour.Service.Interfaces
         Task<CartModel> GetUserCartAsync(int? userId);
         Task DecreaseQuantityAsync(int? userId, string productCode);
         Task IncreaseQuantityAsync(int? userId, string productCode);
-        Task ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingFee, string? deliverymethod);
+        Task ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingFee, string? deliverymethod, int? voucherId, int? storeId);
         Task<decimal> GetTotalPriceAsync(int? userId);
     }
 }

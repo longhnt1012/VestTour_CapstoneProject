@@ -1,113 +1,113 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VestTour.Repository.Constants;
+using VestTour.Service.Interface;
+using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VestTour.Repository.Interface;
-using VestTour.Repository.Models;
-using Microsoft.AspNetCore.Authorization;
+using VestTour.Service.Interfaces;
 
-namespace VestTour.Controllers
+namespace VestTour.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class VoucherController : ControllerBase
     {
-        private readonly IVoucherRepository _voucherRepository;
+        private readonly IVoucherService _voucherService;
 
-        public VoucherController(IVoucherRepository voucherRepository)
+        public VoucherController(IVoucherService voucherService)
         {
-            _voucherRepository = voucherRepository;
+            _voucherService = voucherService;
         }
 
-        // GET: api/Voucher
+        // Get all vouchers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VoucherModel>>> GetVouchers()
+        public async Task<IActionResult> GetAllVouchers()
         {
-            var vouchers = await _voucherRepository.GetAllVouchersAsync();
-            return Ok(vouchers);
+            var response = await _voucherService.GetAllVouchersAsync();
+            if (!response.Success)
+                return BadRequest(response.Message);
+            return Ok(response.Data);
         }
 
-        // GET: api/Voucher/5
+        // Get voucher by ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<VoucherModel>> GetVoucher(int id)
+        public async Task<IActionResult> GetVoucherById(int id)
         {
-            var voucher = await _voucherRepository.GetVoucherByIdAsync(id);
-
-            if (voucher == null)
-            {
-                return NotFound(new { Message = Error.VoucherNotFound });
-            }
-
-            return Ok(voucher);
+            var response = await _voucherService.GetVoucherByIdAsync(id);
+            if (!response.Success)
+                return NotFound(response.Message);
+            return Ok(response.Data);
         }
 
-        // GET: api/Voucher/valid
-        [HttpGet("valid")]
-        public async Task<ActionResult<IEnumerable<VoucherModel>>> GetValidVouchers()
-        {
-            var validVouchers = await _voucherRepository.GetValidVouchersAsync();
-            return Ok(validVouchers);
-        }
-
-        
-
-        // POST: api/Voucher
+        // Add a new voucher
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<int>> CreateVoucher(VoucherModel voucherModel)
+        public async Task<IActionResult> AddVoucher([FromBody] VoucherModel voucherModel)
         {
-            var newVoucherId = await _voucherRepository.AddVoucherAsync(voucherModel);
-            if (newVoucherId > 0)
-            {
-                return CreatedAtAction(nameof(GetVoucher), new { id = newVoucherId }, new { Message = Success.VoucherAdded, VoucherId = newVoucherId });
-            }
-            return BadRequest(new { Message = Error.VoucherAddFailed });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _voucherService.AddVoucherAsync(voucherModel);
+            if (!response.Success)
+                return BadRequest(response.Message);
+
+            return CreatedAtAction(nameof(GetVoucherById), new { id = response.Data }, response.Data);
         }
 
-        
-        // PUT: api/Voucher/5
+        // Update an existing voucher
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager")]
-        public async Task<IActionResult> UpdateVoucher(int id, UpdateVoucherModel updateVoucherModel)
+        public async Task<IActionResult> UpdateVoucher(int id, [FromBody] UpdateVoucherModel updateModel)
         {
-            var existingVoucher = await _voucherRepository.GetVoucherByIdAsync(id);
-            if (existingVoucher == null)
-            {
-                return NotFound(new { Message = Error.VoucherNotFound });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            await _voucherRepository.UpdateVoucherAsync(id, updateVoucherModel);
-            return Ok(new { Message = Success.VoucherUpdated });
+            var response = await _voucherService.UpdateVoucherAsync(id, updateModel);
+            if (!response.Success)
+                return NotFound(response.Message);
+
+            return NoContent();
         }
 
-
-        // DELETE: api/Voucher/5
+        // Delete a voucher by ID
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVoucher(int id)
         {
-            var voucher = await _voucherRepository.GetVoucherByIdAsync(id);
-            if (voucher == null)
-            {
-                return NotFound(new { Message = Error.VoucherNotFound });
-            }
+            var response = await _voucherService.DeleteVoucherAsync(id);
+            if (!response.Success)
+                return NotFound(response.Message);
 
-            await _voucherRepository.DeleteVoucherAsync(id);
-            return Ok(new { Message = Success.VoucherDeleted });
+            return NoContent();
         }
 
-        // GET: api/Voucher/code/
-        [HttpGet("code/{code}")]
-        public async Task<ActionResult<VoucherModel>> GetVoucherByCode(string code)
+        // Get vouchers by code
+        [HttpGet("search")]
+        public async Task<IActionResult> GetVouchersByCode([FromQuery] string code)
         {
-            var voucher = await _voucherRepository.GetVoucherByCodeAsync(code);
+            var response = await _voucherService.GetVouchersByCodeAsync(code);
+            if (!response.Success)
+                return BadRequest(response.Message);
 
-            if (voucher == null)
-            {
-                return NotFound(new { Message = Error.VoucherNotFound });
-            }
+            return Ok(response.Data);
+        }
 
-            return Ok(voucher);
+        // Get valid vouchers
+        [HttpGet("valid")]
+        public async Task<IActionResult> GetValidVouchers()
+        {
+            var response = await _voucherService.GetValidVouchersAsync();
+            if (!response.Success)
+                return BadRequest(response.Message);
+
+            return Ok(response.Data);
+        }
+
+        // Get voucher by code
+        [HttpGet("by-code/{code}")]
+        public async Task<IActionResult> GetVoucherByCode(string code)
+        {
+            var response = await _voucherService.GetVoucherByCodeAsync(code);
+            if (!response.Success)
+                return NotFound(response.Message);
+
+            return Ok(response.Data);
         }
     }
 }

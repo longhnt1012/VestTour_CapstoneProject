@@ -68,6 +68,16 @@
         "Name": "deliverymethod",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "voucherId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "storeId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2676,28 +2686,18 @@
     ]
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
-    "Method": "GetVouchers",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
+    "Method": "GetAllVouchers",
     "RelativePath": "api/Voucher",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.VoucherModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
-    "Method": "CreateVoucher",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
+    "Method": "AddVoucher",
     "RelativePath": "api/Voucher",
     "HttpMethod": "POST",
     "IsController": true,
@@ -2709,21 +2709,11 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Int32",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
-    "Method": "GetVoucher",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
+    "Method": "GetVoucherById",
     "RelativePath": "api/Voucher/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -2735,20 +2725,10 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.VoucherModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
     "Method": "UpdateVoucher",
     "RelativePath": "api/Voucher/{id}",
     "HttpMethod": "PUT",
@@ -2761,7 +2741,7 @@
         "IsRequired": true
       },
       {
-        "Name": "updateVoucherModel",
+        "Name": "updateModel",
         "Type": "VestTour.Repository.Models.UpdateVoucherModel",
         "IsRequired": true
       }
@@ -2769,7 +2749,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
     "Method": "DeleteVoucher",
     "RelativePath": "api/Voucher/{id}",
     "HttpMethod": "DELETE",
@@ -2785,9 +2765,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
     "Method": "GetVoucherByCode",
-    "RelativePath": "api/Voucher/code/{code}",
+    "RelativePath": "api/Voucher/by-code/{code}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2798,37 +2778,33 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "VestTour.Repository.Models.VoucherModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "VestTour.Controllers.VoucherController",
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
+    "Method": "GetVouchersByCode",
+    "RelativePath": "api/Voucher/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.VoucherController",
     "Method": "GetValidVouchers",
     "RelativePath": "api/Voucher/valid",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[VestTour.Repository.Models.VoucherModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",

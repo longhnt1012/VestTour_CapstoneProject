@@ -25,7 +25,9 @@ namespace VestTour.Service.Implementation
         private readonly IAddCartRepository _cartRepo;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPaymentService _paymentService;
-        public OrderService(IHttpContextAccessor httpContextAccessor,IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo,IPaymentService paymentService)
+        private readonly IVoucherService _voucherService;
+        private readonly IStoreService _storeService;
+        public OrderService(IHttpContextAccessor httpContextAccessor,IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo,IPaymentService paymentService,IVoucherService voucherService,IStoreService storeService)
         {
             _paymentService = paymentService;
             _httpContextAccessor = httpContextAccessor;
@@ -33,6 +35,8 @@ namespace VestTour.Service.Implementation
             _emailHelper = emailHelper;
             _userService = userService;
             _cartRepo= cartRepo;
+            _voucherService= voucherService;
+            _storeService = storeService;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -191,7 +195,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null, decimal? deposit = null, decimal? shippingFee = null, string? deliveryMethod = null)
+        public async Task ConfirmCartOrderAsync(int? userId,string? guestName = null,string? guestEmail = null,string? guestAddress = null,decimal? deposit = null,decimal? shippingFee = null,string? deliveryMethod = null,int? voucherId = null,int? storeId = null)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -212,6 +216,24 @@ namespace VestTour.Service.Implementation
             // Calculate total price
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
 
+            // Apply voucher discount if voucherId is provided
+            if (voucherId.HasValue)
+            {
+                var voucher = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
+                if (voucher == null || !voucher.Success || voucher.Data == null)
+                {
+                    throw new ArgumentException("Invalid or expired voucher.");
+                }
+
+                // Calculate the discount
+                decimal discountAmount = voucher.Data.DiscountNumber ?? 0;
+                var newshippingFee = shippingFee - shippingFee * discountAmount;
+                shippingFee = newshippingFee;
+                if (shippingFee < 0)
+                {
+                    shippingFee = 0; // Ensure total price is non-negative
+                }
+            }
             // Retrieve user details if applicable
             User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
 
@@ -219,6 +241,8 @@ namespace VestTour.Service.Implementation
             var newOrder = new OrderModel
             {
                 UserID = user?.UserId,
+                VoucherId = voucherId,
+                StoreId = storeId,
                 GuestName = guestName ?? user?.Name,
                 GuestEmail = guestEmail ?? user?.Email,
                 GuestAddress = guestAddress ?? user?.Address,
@@ -239,11 +263,13 @@ namespace VestTour.Service.Implementation
 
             if (paymentId == null)
             {
-                throw new InvalidOperationException("Please comback to payment.");
+                throw new InvalidOperationException("Please come back to payment.");
             }
+
             await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
             _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
             _httpContextAccessor.HttpContext?.Session.Remove("tongtien");
+
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
 
@@ -292,6 +318,7 @@ namespace VestTour.Service.Implementation
             // Clear the cart
             await _cartRepo.RemoveAllFromCartAsync(id);
         }
+
 
         private int GenerateGuestId()
         {

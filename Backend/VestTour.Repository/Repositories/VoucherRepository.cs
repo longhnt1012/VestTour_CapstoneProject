@@ -31,9 +31,14 @@ namespace VestTour.Repository.Repositories
         // Get voucher by ID
         public async Task<VoucherModel?> GetVoucherByIdAsync(int voucherId)
         {
-            var voucher = await _context.Vouchers!.FindAsync(voucherId);
-            return _mapper.Map<VoucherModel>(voucher);
+            var now = DateOnly.FromDateTime(DateTime.UtcNow);
+            var voucher = await _context.Vouchers!
+                .Where(v => v.VoucherId == voucherId && v.DateStart <= now && v.DateEnd >= now)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<VoucherModel?>(voucher);
         }
+
 
         // Add a new voucher
         public async Task<int> AddVoucherAsync(VoucherModel voucherModel)
@@ -88,19 +93,18 @@ namespace VestTour.Repository.Repositories
             }
         }
 
-        // Get voucher by code
-        // VoucherRepository
+
         public async Task<List<VoucherModel>> GetVouchersByCodeAsync(string code)
         {
-            // Sử dụng Contains để tìm kiếm các voucher có chứa mã nhập vào
+            var now = DateOnly.FromDateTime(DateTime.UtcNow);
             var vouchers = await _context.Vouchers!
-                .Where(v => v.VoucherCode!.Contains(code)) // Thay đổi ở đây
+                .Where(v => v.DateStart <= now && v.DateEnd >= now && v.VoucherCode!.Contains(code))
                 .ToListAsync();
 
             return _mapper.Map<List<VoucherModel>>(vouchers);
         }
 
-        // Get valid vouchers (DateStart <= Now <= DateEnd)
+
         public async Task<List<VoucherModel>> GetValidVouchersAsync()
         {
             var now = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -114,9 +118,9 @@ namespace VestTour.Repository.Repositories
         // Get voucher by code
         public async Task<VoucherModel?> GetVoucherByCodeAsync(string code)
         {
-            // Sử dụng Contains để tìm kiếm voucher có chứa mã voucher
+            var now = DateOnly.FromDateTime(DateTime.UtcNow);
             var voucher = await _context.Vouchers!
-                .Where(v => v.VoucherCode!.Contains(code))
+                .Where(v => v.DateStart <= now && v.DateEnd >= now && v.VoucherCode!.Contains(code))
                 .FirstOrDefaultAsync();
 
             return _mapper.Map<VoucherModel>(voucher);

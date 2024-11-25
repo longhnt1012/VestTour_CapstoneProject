@@ -113,12 +113,29 @@ namespace VestTour.Services
             var cartItems = await _addCartRepository.GetUserCartAsync(id);
             return new CartModel { CartItems = cartItems };
         }
-
         public async Task RemoveFromCartAsync(int? userId, string productCode)
         {
             int id = userId ?? GetOrCreateGuestId();
-            await _addCartRepository.RemoveFromCartAsync(id, productCode);
+            var cartItems = await _addCartRepository.GetUserCartAsync(id);
+
+            // Find the item to remove
+            var itemToRemove = cartItems.FirstOrDefault(c =>
+                (c.IsCustom && c.CustomProduct.ProductCode == productCode) ||
+                (!c.IsCustom && c.Product.ProductCode == productCode));
+
+            if (itemToRemove != null)
+            {
+                cartItems.Remove(itemToRemove);
+                await _addCartRepository.UpdateCartAsync(id, cartItems);
+            }
         }
+        public async Task ClearCartAsync(int? userId)
+        {
+            int id = userId ?? GetOrCreateGuestId();
+            // Clear the user's cart
+            await _addCartRepository.RemoveAllFromCartAsync(id);
+        }
+
 
         public async Task DecreaseQuantityAsync(int? userId, string productCode)
         {

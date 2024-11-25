@@ -33,6 +33,22 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "ClearCart",
+    "RelativePath": "api/AddCart/clear",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "ConfirmOrder",
     "RelativePath": "api/AddCart/confirmorder",
     "HttpMethod": "POST",
@@ -133,6 +149,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "RemoveFromCart",
+    "RelativePath": "api/AddCart/remove/{productCode}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "productCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",

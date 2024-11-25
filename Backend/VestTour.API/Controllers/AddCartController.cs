@@ -114,7 +114,23 @@ namespace VestTour.API.Controllers
             }
         }
 
+        [HttpDelete("remove/{productCode}")]
+        public async Task<IActionResult> RemoveFromCart(int? userId, string productCode)
+        {
+            if (string.IsNullOrWhiteSpace(productCode))
+                return BadRequest("Product code cannot be empty.");
 
+            await _addCartService.RemoveFromCartAsync(userId, productCode);
+            return Ok(new { message = "Item removed from cart successfully." });
+        }
+
+        // Clear the entire cart
+        [HttpDelete("clear")]
+        public async Task<IActionResult> ClearCart(int? userId)
+        {
+            await _addCartService.ClearCartAsync(userId);
+            return Ok(new { message = "Cart cleared successfully." });
+        }
         //[Authorize]
         [HttpPost("/Cart/create-paypal-order")]
         public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken,bool isDeposit = false)

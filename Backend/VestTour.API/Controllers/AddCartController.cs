@@ -9,10 +9,12 @@ using VestTour.Service.Services;
 using VestTour.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using System.Numerics;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class AddCartController : ControllerBase
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VestTour.Domain.Entities;
@@ -8,6 +9,7 @@ using VestTour.Service.Interfaces;
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class TokenController : ControllerBase
     {

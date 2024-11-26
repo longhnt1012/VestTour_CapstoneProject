@@ -15,12 +15,13 @@ namespace VestTour.Service.Services
         private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
-
-        public LoginService(IUserRepository userRepository, ITokenService tokenService, IUserService userService)
+        private readonly IMeasurementRepository _measurementRepository;
+        public LoginService(IUserRepository userRepository, ITokenService tokenService, IUserService userService,IMeasurementRepository measurementRepository)
         {
             _userRepository = userRepository;
             _tokenService = tokenService;
             _userService = userService;
+            _measurementRepository = measurementRepository;
         }
 
         public async Task<AuthenticationResponseModel> LoginAsync(LoginModel login)
@@ -29,12 +30,18 @@ namespace VestTour.Service.Services
             var user = await _userRepository.GetUserByEmailAndPasswordAsync(login.Email, hashedPassword);
             if (user == null)
                 throw new UnauthorizedAccessException("Invalid credentials.");
-
+            var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(user.UserId);
+            int measurementId = 0;
+            if (measurement != null)
+            {
+                measurementId = measurement.MeasurementId;
+            }
             var claims = new List<Claim> {
-        new Claim(ClaimTypes.Name, user.UserId.ToString()),
-        new Claim(ClaimTypes.Email, user.Email),
-        new Claim(ClaimTypes.Role, user.Role.RoleName)
-    };
+            new Claim(ClaimTypes.Name, user.UserId.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role.RoleName),
+            new Claim("measurementID", measurementId.ToString()) 
+};
 
             var accessToken = _tokenService.GenerateAccessToken(claims);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -50,7 +57,7 @@ namespace VestTour.Service.Services
         }
 
 
-        private string GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtTokenAsync(User user)
         {
             if (user == null)
             {
@@ -62,15 +69,19 @@ namespace VestTour.Service.Services
                 throw new ArgumentNullException(nameof(user.Role), "User role cannot be null or empty.");
             }
 
-            // Set up claims for the user
-            var claims = new List<Claim>
+            var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(user.UserId);
+            int measurementId = 0;
+            if (measurement != null)
             {
-                new Claim(ClaimTypes.Name, user.UserId.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.RoleName)
+                measurementId = measurement.MeasurementId;
+            }
+            var claims = new List<Claim> {
+            new Claim(ClaimTypes.Name, user.UserId.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role.RoleName),
+            new Claim("measurementID", measurementId.ToString())
             };
 
-            // Generate JWT using TokenService
             return _tokenService.GenerateAccessToken(claims);
         }
     }

@@ -4,10 +4,12 @@ using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class LiningsController : ControllerBase
     {

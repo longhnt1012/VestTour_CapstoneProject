@@ -5,10 +5,12 @@ using VestTour.Service.Interface;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class ProductInStoreController : ControllerBase
     {

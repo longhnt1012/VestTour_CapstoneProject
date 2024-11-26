@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
@@ -8,6 +9,7 @@ using VestTour.Service.Services;
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class ProcessingTailorController : ControllerBase
     {

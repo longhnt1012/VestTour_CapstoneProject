@@ -2196,6 +2196,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "GetStaffByStoreId",
+    "RelativePath": "api/Store/{storeId}/staff",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.StyleController",
     "Method": "GetAllStyles",
     "RelativePath": "api/Style",

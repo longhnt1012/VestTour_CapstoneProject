@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class OrdersController : ControllerBase
     {

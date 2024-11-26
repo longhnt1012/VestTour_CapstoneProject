@@ -444,6 +444,7 @@ public partial class VestTourDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Stores)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Store__UserID__2D27B809");
+            entity.Property(e => e.StaffIDs).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Style>(entity =>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Helpers;
 using VestTour.Repository.Models;
@@ -7,6 +8,7 @@ using VestTour.Service.Interfaces;
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class ContactController : ControllerBase
     {

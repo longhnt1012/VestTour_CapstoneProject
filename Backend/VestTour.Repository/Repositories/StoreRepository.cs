@@ -61,5 +61,20 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId)
+        {
+            var store = await _context.Stores!.FindAsync(storeId);
+
+            if (store == null || string.IsNullOrEmpty(store.StaffIDs))
+                return new List<UserModel>();
+
+            // Parse StaffIDs and fetch related users
+            var staffIds = store.StaffIDs.Split(',').Select(int.Parse).ToList();
+            var staff = await _context.Users!
+                .Where(u => staffIds.Contains(u.UserId))
+                .ToListAsync();
+
+            return _mapper.Map<List<UserModel>>(staff);
+        }
     }
 }

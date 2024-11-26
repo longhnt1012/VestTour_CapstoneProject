@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
@@ -6,6 +7,7 @@ using VestTour.Service.Interfaces;
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class TailorPartnerController : ControllerBase
     {

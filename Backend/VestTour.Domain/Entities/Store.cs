@@ -16,6 +16,9 @@ public partial class Store
     public string? ContactNumber { get; set; }
 
     public int? StoreCode { get; set; }
+    public TimeOnly? OpenTime { get; set; }
+    public TimeOnly? CloseTime { get; set; }
+    public string? StaffIDs { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

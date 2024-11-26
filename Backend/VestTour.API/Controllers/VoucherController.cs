@@ -4,11 +4,13 @@ using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Service.Interfaces;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
+    [ApiController]
     public class VoucherController : ControllerBase
     {
         private readonly IVoucherService _voucherService;

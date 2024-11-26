@@ -11,5 +11,6 @@ namespace VestTour.Service.Interfaces
         Task<int> CreateStoreAsync(StoreModel storeModel);
         Task UpdateStoreAsync(int id, StoreModel storeModel);
         Task DeleteStoreAsync(int id);
+        Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId);
     }
 }

@@ -2,10 +2,12 @@
 using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class PaymentsController : ControllerBase
     {

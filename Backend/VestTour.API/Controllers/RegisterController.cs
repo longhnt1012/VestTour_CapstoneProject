@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTourApi.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class RegisterController : ControllerBase
     {

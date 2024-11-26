@@ -4,8 +4,10 @@ using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Cors;
 
 [ApiController]
+[EnableCors("AllowSpecificOrigin")]
 [Route("api/[controller]")]
 public class BookingController : ControllerBase
 {

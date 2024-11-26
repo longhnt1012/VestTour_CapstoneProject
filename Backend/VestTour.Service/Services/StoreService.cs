@@ -39,5 +39,10 @@ namespace VestTour.Service.Implementation
         {
             await _storeRepository.DeleteStoreAsync(id);
         }
+        public async Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId)
+        {
+            return await _storeRepository.GetStaffByStoreIdAsync(storeId);
+        }
+       
     }
 }

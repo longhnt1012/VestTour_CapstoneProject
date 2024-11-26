@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class StoreController : ControllerBase
     {
@@ -67,6 +69,12 @@ namespace VestTour.Controllers
         {
             await _storeService.DeleteStoreAsync(id);
             return NoContent();
+        }
+        [HttpGet("{storeId}/staff")]
+        public async Task<IActionResult> GetStaffByStoreId(int storeId)
+        {
+            var staff = await _storeService.GetStaffByStoreIdAsync(storeId);
+            return Ok(staff);
         }
     }
 }

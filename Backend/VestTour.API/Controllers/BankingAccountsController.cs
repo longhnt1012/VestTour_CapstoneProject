@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models;
 using VestTour.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class BankingAccountsController : ControllerBase
     {

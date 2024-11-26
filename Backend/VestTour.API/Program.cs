@@ -75,10 +75,20 @@ builder.Services.AddSession(options =>
 });
 
 // Configure CORS
-builder.Services.AddCors(policy =>
-    policy.AddDefaultPolicy(corsBuilder =>
-        corsBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
+//builder.Services.AddCors(policy =>
+//    policy.AddDefaultPolicy(corsBuilder =>
+//        corsBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:5173") // Replace with your frontend URL
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials(); // Optional: allows cookies or authentication headers
+    });
+});
 // Register repositories
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -184,7 +194,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSession();
-app.UseCors();
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

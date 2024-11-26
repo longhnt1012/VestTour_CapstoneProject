@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using VestTour.Repository.Models.ShippingModel;
 using VestTour.Service.Services;
 
 namespace VestTour.API.Controllers
 {
     [ApiController]
+    [EnableCors("AllowSpecificOrigin")]
     [Route("api/[controller]")]
     public class ShippingController : ControllerBase
     {

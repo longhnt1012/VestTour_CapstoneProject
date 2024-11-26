@@ -4,10 +4,12 @@ using VestTour.Repository.Models;
 using VestTour.Service.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class MeasurementController : ControllerBase
     {

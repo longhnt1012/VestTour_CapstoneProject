@@ -39,5 +39,6 @@ namespace VestTour.Service.Implementation
         {
             await _styleRepository.DeleteStyleAsync(id);
         }
+
     }
 }

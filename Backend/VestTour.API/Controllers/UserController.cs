@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class UserController : ControllerBase
     {

@@ -11,5 +11,6 @@ namespace VestTour.Service.Interfaces
         Task<int> AddStyleAsync(StyleModel styleModel);
         Task UpdateStyleAsync(int id, StyleModel styleModel);
         Task DeleteStyleAsync(int id);
+       
     }
 }

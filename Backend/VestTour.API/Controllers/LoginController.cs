@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using VestTour.Repository.Interface;
 using Google.Apis.Auth.OAuth2.Requests;
+using Microsoft.AspNetCore.Cors;
 
 namespace VestTour.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     public class LoginController : ControllerBase
     {

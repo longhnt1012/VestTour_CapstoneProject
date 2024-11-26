@@ -1,0 +1,71 @@
+
+
+.header-promotion {
+    background: #cfd3cb;
+    text-align: center;
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #323232;
+    position: relative;
+    z-index: 200;
+    margin-bottom: 20px;
+}
+
+.header-promotion__slide {
+    display: block;
+    height: 36px;
+    overflow: hidden;
+}
+
+.header-promotion__slide-item {
+    height: 36px;
+    line-height: 20px;
+    padding: 7px 0 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+// banner
+.banner-container {
+    padding: 0 15px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.banner-category {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translateY(-50%);
+    width: 33.3333%;
+    text-align: center;
+}
+
+.banner-title {
+    color: #000000;
+    text-align: left;
+    font-size: 2.1rem;
+    margin-bottom: 0;
+}
+
+.banner-description {
+    color: #343434;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+
+
+// sidebar
+
+.side-left {
+    width: 20%;
+    float: left;
+    clear: left;
+    padding: 0 30px 30px 0;
+}

@@ -1,0 +1,146 @@
+.fback.sec {
+    padding: 68px 0;
+}
+
+.decor-sec {
+    width: 1170px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    border-top: dashed 2px #e1e1e1;
+    height: 1px;
+    text-align: center;
+}
+
+.decor-sec img {
+    background: #fff;
+}
+
+.decor-sec img {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.all {
+    position: relative;
+    margin: 0 auto;
+    width: 1170px;
+    max-width: 100%;
+}
+
+
+.sec {
+    float: left;
+    width: 100%;
+    padding: 60px 0;
+    position: relative;
+}
+
+.fback-content {
+    overflow: hidden;
+}
+
+.kpart-top .sec-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.k-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sec-title {
+    color: #000;
+    text-transform: uppercase;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 30px;
+}
+
+.sec-title .tt-sub {
+    display: block;
+    font-weight: 400;
+    color: #707070;
+    line-height: 1;
+}
+
+.kpart-top .tt-txt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: max-content;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    font-family: "PoppinsVN", sans-serif;
+    line-height: 1.3;
+}
+
+.kpart-top .sec-title:after {
+    width: 100px;
+}
+
+.sec-title:after {
+    content: '';
+    width: 170px;
+    display: block;
+    background-color: #a4712a;
+    height: 2px;
+    margin-top: 10px;
+}
+
+
+//link-info
+
+.k-sec .all {
+    width: 1216px;
+}
+
+element.style {
+    width: 406px;
+}
+
+.slick-track-banner {
+    opacity: 1;
+    width: 1218px;
+    transform: translate3d(0px, 0px, 0px);
+    display: flex;
+    align-items: center;
+}
+
+.kpart .slider-item {
+    display: flex;
+    justify-content: center;
+}
+
+.kpart-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.slick-slide img {
+    display: block;
+}
+
+.kpart-slide .slider-item .kpart-item {
+    height: 200px;
+    max-width: 270px;
+    border: 1px dashed #e1e1e1;
+}
+
+

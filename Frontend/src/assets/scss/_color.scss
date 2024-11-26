@@ -1,0 +1,79 @@
+@use './variables' as vars;
+
+/*-------------   Color Variables  --------------*/
+
+// Base Colors
+$white: #ffffff;
+$black: #16161a;
+$gray: #f7f7fd;
+
+// Theme Colors
+$theme-color: #BE9278;
+$theme-color2: #140C40;
+$theme-color3: #f27420;
+$theme-color4: #ff3500;
+
+// Button and Section Color
+$btn_bg: $theme-color; // You can reference the theme color directly
+
+// Heading Colors
+$heading-color: #101A31;
+$heading-color2: #080808;
+
+// Body Font
+$body-text-color: #010A44;
+$hr-border-color: #eceff8;
+
+// Section Backgrounds
+$section_bg1: #454545;
+
+$gray-color: #bebebe;
+$gray-color-2: #bdbdbd;
+
+// Font Color
+$font_color1: #10285d;
+$border_color: #fdcb9e;
+
+// Background Colors
+$brand-bg: #f1f4fa;
+$testimonial-bg: #f9fafc;
+
+/*------------- Color Classes --------------*/
+
+// Background Color Classes
+.gray-bg {
+    background: vars.$gray;
+}
+
+.white-bg {
+    background: vars.$white;
+}
+
+.black-bg {
+    background: vars.$black;
+}
+
+.theme-bg {
+    background: vars.$theme-color;
+}
+
+.brand-bg {
+    background: vars.$brand-bg;
+}
+
+.testimonial-bg {
+    background: vars.$testimonial-bg;
+}
+
+// Text Color Classes
+.white-color {
+    color: vars.$white;
+}
+
+.black-color {
+    color: vars.$black;
+}
+
+.theme-color {
+    color: vars.$theme-color;
+}

@@ -1,0 +1,1199 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\storecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\storecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\addcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\addcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\liningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\liningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\addcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\addcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\bookingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\bookingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\styleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\styleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\addcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\addcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\iaddcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\iaddcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\cartitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\cartitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\cartmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\cartmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iaddcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iaddcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\paypalclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\paypalclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\productdetailsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\productdetailsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\pickedstyleoptionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\pickedstyleoptionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\helpers\\emailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\helpers\\emailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\fabricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\fabricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iregisterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iregisterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\helpers\\iemailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\helpers\\iemailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\configuration\\emailconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\configuration\\emailconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\liningscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\liningscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\fabricscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\fabricscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\emailrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\emailrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\data\\vesttourdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\data\\vesttourdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\common\\pagination.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\common\\pagination.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\vesttour.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\vesttour.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\common\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\common\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.service\\vesttour.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\vesttour.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\constants\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\constants\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.repository\\constants\\success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\constants\\success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\statusenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\statusenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\roleenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\roleenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\genderenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\genderenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\msi\\desktop\\capstone\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\fabricenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\fabricenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 558,
+          "SelectedChildIndex": 15,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAEwBoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IUserService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IUserService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IUserService.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAA1wBkAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.405Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAowKEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AddCartController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\AddCartController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\AddCartController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\AddCartController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\AddCartController.cs",
+              "ViewState": "AQIAAH0AAAAAAAAAAAAAAJMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\UserRepository.cs",
+              "ViewState": "AQIAALcAAAAAAAAAAAAQwLgAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "VestTour.Domain\\Entities\\User.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAcwC0AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.423Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TokenController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\TokenController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\TokenController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\TokenController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\TokenController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StoreController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StoreController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\StoreController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StoreController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\StoreController.cs",
+              "ViewState": "AQIAACMAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\UserModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\UserModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\UserModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\UserModel.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAqwB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.432Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAIwE8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.435Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\UserService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\UserService.cs",
+              "ViewState": "AQIAALAAAAAAAAAAAAAmwM0AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.437Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LiningService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\LiningService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\LiningService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\LiningService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\LiningService.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAA5wAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AddCartService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\AddCartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\AddCartService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\AddCartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\AddCartService.cs",
+              "ViewState": "AQIAAJYAAAAAAAAAAAAcwKwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\CartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\CartService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\CartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\CartService.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "BookingModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\BookingModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\BookingModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\BookingModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\BookingModel.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAgwBwAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.45Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\BookingService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\BookingService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\BookingService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\BookingService.cs",
+              "ViewState": "AQIAAPsAAAAAAAAAAAAiwBEBAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.453Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OrderService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\OrderService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OrderService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\OrderService.cs",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAAAAwAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.456Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ResetPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ForgotPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "RegisterModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\RegisterModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\RegisterModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\RegisterModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\RegisterModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.469Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "StyleService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\StyleService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\StyleService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\StyleService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\StyleService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\TokenService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\TokenService.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.474Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "OrderRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAAAEYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\appsettings.json",
+              "RelativeDocumentMoniker": "VestTour.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\appsettings.json",
+              "RelativeToolTip": "VestTour.API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-26T16:31:31.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AddCartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAUwFUAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "IOrderService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IOrderService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IOrderService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IOrderService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IOrderService.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAxwBEAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.489Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "CartItemModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartItemModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\CartItemModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartItemModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\CartItemModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\OrdersController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\OrdersController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\OrdersController.cs",
+              "ViewState": "AQIAACsAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.497Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IAddCartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.5Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "CartModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\CartModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\CartModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.504Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "OtpService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OtpService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\OtpService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OtpService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\OtpService.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAYwC8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "IAddCartService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAwwA0AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.511Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Program.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Program.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Program.cs",
+              "RelativeToolTip": "VestTour.API\\Program.cs",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAiwIsAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "OrderModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\OrderModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\OrderModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\OrderModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\OrderModel.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAA1wCAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.518Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "PaypalClient.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\PaypalClient.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\PaypalClient.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\PaypalClient.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\PaypalClient.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAqwDkAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\Booking.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Entities\\Booking.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\Booking.cs",
+              "RelativeToolTip": "VestTour.Domain\\Entities\\Booking.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwCMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "ProductDetailsModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.533Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "ProductModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ProductModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ProductModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.538Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "PickedStyleOptionModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.543Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "FabricRepository.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAAAGMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "EmailHelper.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "RelativeToolTip": "VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAiwDsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "IBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IBookingService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IBookingService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IBookingService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IBookingService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAswA0AAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.557Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "BookingsController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BookingsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\BookingsController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BookingsController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\BookingsController.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAADwv0IAAABVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.564Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "RegisterController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\RegisterController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\RegisterController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\RegisterController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\RegisterController.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAYwD8AAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "RegisterService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\RegisterService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\RegisterService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\RegisterService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\RegisterService.cs",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAcwGIAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.579Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "ConfirmRequest.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T07:17:58.184Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "IRegisterService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "IEmailHelper.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "RelativeToolTip": "VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.616Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IEmailService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IEmailService.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IEmailService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IEmailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\LoginController.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAcwA8AAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "FabricsController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FabricsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\FabricsController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FabricsController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\FabricsController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.632Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "InventoryController.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "EmailConfig.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "RelativeToolTip": "VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.649Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "LiningsController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LiningsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\LiningsController.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LiningsController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\LiningsController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwBsAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.654Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "EmailRequest.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\EmailRequest.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\EmailRequest.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\EmailRequest.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\EmailRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "VestTourDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "RelativeToolTip": "VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAAwDgAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "VestTour.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "VestTour.API\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-26T16:31:31.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "VestTour.Repository.csproj",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+              "RelativeDocumentMoniker": "VestTour.Repository\\VestTour.Repository.csproj",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+              "RelativeToolTip": "VestTour.Repository\\VestTour.Repository.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-26T16:31:31.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "JWTSettings.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Common\\JWTSettings.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Common\\JWTSettings.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Common\\JWTSettings.cs",
+              "RelativeToolTip": "VestTour.Service\\Common\\JWTSettings.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.9Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "Success.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T03:20:13.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "Error.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T03:20:13.41Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "VestTour.Service.csproj",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+              "RelativeDocumentMoniker": "VestTour.Service\\VestTour.Service.csproj",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+              "RelativeToolTip": "VestTour.Service\\VestTour.Service.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-26T16:31:31.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "Pagination.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Common\\Pagination.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Common\\Pagination.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Common\\Pagination.cs",
+              "RelativeToolTip": "VestTour.Repository\\Common\\Pagination.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "Error.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Error.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Constants\\Error.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Error.cs",
+              "RelativeToolTip": "VestTour.Repository\\Constants\\Error.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "Success.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Success.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Constants\\Success.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Success.cs",
+              "RelativeToolTip": "VestTour.Repository\\Constants\\Success.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "StatusEnums.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\StatusEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\StatusEnums.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\StatusEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\StatusEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.936Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "RoleEnums.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\RoleEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\RoleEnums.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\RoleEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\RoleEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "GenderEnums.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\GenderEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\GenderEnums.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\GenderEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\GenderEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.946Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "FabricEnums.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\FabricEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\FabricEnums.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\CAPSTONE\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\FabricEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\FabricEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T16:31:31.951Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 153,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

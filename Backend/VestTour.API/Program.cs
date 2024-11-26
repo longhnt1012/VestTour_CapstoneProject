@@ -192,9 +192,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseSession();
 app.UseCors("AllowSpecificOrigin");
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

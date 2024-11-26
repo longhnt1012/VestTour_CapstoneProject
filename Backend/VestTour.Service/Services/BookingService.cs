@@ -336,7 +336,72 @@ public class BookingService : IBookingService
         return lastBooking;
     }
 
+    public async Task<ServiceResponse<List<BookingModel>>> GetBookingsByStoreIdAsync(int storeId)
+    {
+        var response = new ServiceResponse<List<BookingModel>>();
 
+        if (storeId <= 0)
+        {
+            response.Success = false;
+            response.Message = Error.InvalidStoreId; 
+            return response;
+        }
+
+        var bookings = await _bookingRepository.GetBookingsByStoreIdAsync(storeId);
+
+        if (bookings == null || !bookings.Any())
+        {
+            response.Success = false;
+            response.Message = Error.NoBookingsFound;
+        }
+        else
+        {
+            response.Data = bookings;
+        }
+
+        return response;
+    }
+    public async Task<ServiceResponse> StaffAssistWithBooking(int bookingId,int staffId)
+    {
+        var response = new ServiceResponse();
+
+        if (bookingId <= 0)
+        {
+            response.Success = false;
+            response.Message = Error.InvalidBookingId;
+            return response;
+        }
+
+        
+
+        // Retrieve the staff name
+        var staff = await _userRepo.GetUserByIdAsync(staffId);
+        if (staff == null)
+        {
+            response.Success = false;
+            response.Message = "Staff not found.";
+            return response;
+        }
+
+        // Retrieve the booking
+        var booking = await _bookingRepository.GetBookingById(bookingId);
+        if (booking == null)
+        {
+            response.Success = false;
+            response.Message = Error.BookingNotFound;
+            return response;
+        }
+
+        // Update the booking status and staff name
+        booking.Status = BookingEnums.Processing.ToString(); // Set to "Processing"
+        booking.AssistStaffName = staff.Name; // Assign the staff name
+
+        // Update the booking in the repository
+        await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName);
+
+        response.Message = Success.StatusUpdated;
+        return response;
+    }
 
 
 }

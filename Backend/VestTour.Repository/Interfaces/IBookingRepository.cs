@@ -18,5 +18,7 @@ namespace VestTour.Services
         Task<List<BookingModel>> GetBookingsByGuestNameAndDateRangeAsync(string guestName, DateOnly? startDate, DateOnly? endDate);
         Task<List<BookingModel>> GetBookingsByEmailAndDateRangeAsync(string email, DateOnly? startDate, DateOnly? endDate);
         Task<Booking> GetLastBookingAsync(int? userId, string? guestName, string? email);
+        Task<List<BookingModel>> GetBookingsByStoreIdAsync(int storeId);
+        Task StaffAssistWithBooking(int bookingId, string staffAssistName);
     }
 }

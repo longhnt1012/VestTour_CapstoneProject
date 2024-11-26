@@ -76,5 +76,63 @@ namespace VestTour.Repository.Repositories
 
             return _mapper.Map<List<UserModel>>(staff);
         }
+        public async Task<bool> AddStaffToStoreAsync(int storeId, int staffId)
+        {
+            var store = await _context.Stores!.FindAsync(storeId);
+
+            if (store == null)
+                return false; 
+            var user = await _context.Users!.FindAsync(staffId);
+            if (user == null || user.RoleId != 2) 
+                return false;
+
+            var allStores = await _context.Stores!.ToListAsync();
+
+            var otherStore = allStores.FirstOrDefault(s =>
+                !string.IsNullOrEmpty(s.StaffIDs) &&
+                s.StaffIDs.Split(',').Select(int.Parse).Contains(staffId)
+            );
+
+            if (otherStore != null)
+                return false;
+            var staffIds = string.IsNullOrEmpty(store.StaffIDs)
+                ? new List<int>()
+                : store.StaffIDs.Split(',').Select(int.Parse).ToList();
+
+            if (staffIds.Contains(staffId))
+                return false; 
+            staffIds.Add(staffId);
+            store.StaffIDs = string.Join(',', staffIds);
+            _context.Stores!.Update(store);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+    
+        public async Task<bool> RemoveStaffFromStoreAsync(int storeId, int staffId)
+        {
+            var store = await _context.Stores!.FirstOrDefaultAsync(s => s.StoreId == storeId);
+            if (store == null || string.IsNullOrEmpty(store.StaffIDs))
+            {
+                return false; 
+            }
+            var staffIds = store.StaffIDs.Split(',')
+                                         .Select(int.Parse)
+                                         .ToList();
+
+            if (!staffIds.Contains(staffId))
+            {
+                return false; 
+            }
+
+          
+            staffIds.Remove(staffId);
+            store.StaffIDs = string.Join(',', staffIds);
+            _context.Stores.Update(store);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
     }
 }

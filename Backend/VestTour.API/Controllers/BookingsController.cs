@@ -151,4 +151,30 @@ public class BookingController : ControllerBase
         var response = await _bookingService.GetTotalBookingCountAsync();
         return Ok(new { TotalBookings = response.Data });
     }
+    [HttpGet("booking/{storeId}")]
+    public async Task<IActionResult> GetBookingsByStoreId(int storeId)
+    {
+        var result = await _bookingService.GetBookingsByStoreIdAsync(storeId);
+
+        if (!result.Success)
+        {
+            return BadRequest(result.Message); // Adjust based on your response handling
+        }
+
+        return Ok(result.Data);
+    }
+    [HttpPut("{bookingId}/assist")]
+    public async Task<IActionResult> StaffAssistWithBooking(int bookingId, [FromQuery] int staffId )
+    {
+        
+
+        var response = await _bookingService.StaffAssistWithBooking(bookingId, staffId);
+
+        if (!response.Success)
+        {
+            return BadRequest(response.Message); 
+        }
+
+        return Ok(response.Message); 
+    }
 }

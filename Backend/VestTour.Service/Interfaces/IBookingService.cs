@@ -15,6 +15,7 @@ namespace VestTour.Service.Interface
         Task<Booking> GetLastBookingAsync(int? userId, string? guestName, string? email);
         Task<ServiceResponse<BookingModel>> CreateBookingForLoggedInUserAsync(int userId, BookingModel model);
         Task<ServiceResponse<List<BookingModel>>> GetUserBookingsAsync(int? userId, string? guestName, string? email, DateOnly? startDate, DateOnly? endDate);
-
+        Task<ServiceResponse<List<BookingModel>>> GetBookingsByStoreIdAsync(int storeId);
+        Task<ServiceResponse> StaffAssistWithBooking(int bookingId, int staffId);
     }
 }

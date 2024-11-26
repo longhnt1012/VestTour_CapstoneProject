@@ -294,6 +294,27 @@
   },
   {
     "ContainingType": "BookingController",
+    "Method": "StaffAssistWithBooking",
+    "RelativePath": "api/Booking/{bookingId}/assist",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "staffId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
     "Method": "UpdateBooking",
     "RelativePath": "api/Booking/{id}",
     "HttpMethod": "PUT",
@@ -308,6 +329,22 @@
       {
         "Name": "booking",
         "Type": "VestTour.Repository.Models.BookingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BookingController",
+    "Method": "GetBookingsByStoreId",
+    "RelativePath": "api/Booking/booking/{storeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -2189,6 +2226,48 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "AddStaffToStore",
+    "RelativePath": "api/Store/{storeId}/add-staff/{staffId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "staffId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "RemoveStaffFromStore",
+    "RelativePath": "api/Store/{storeId}/remove-staff/{staffId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "staffId",
         "Type": "System.Int32",
         "IsRequired": true
       }

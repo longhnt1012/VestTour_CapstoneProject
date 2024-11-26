@@ -76,5 +76,27 @@ namespace VestTour.Controllers
             var staff = await _storeService.GetStaffByStoreIdAsync(storeId);
             return Ok(staff);
         }
+        [HttpPost("{storeId}/add-staff/{staffId}")]
+        public async Task<IActionResult> AddStaffToStore(int storeId, int staffId)
+        {
+            var result = await _storeService.AddStaffToStoreAsync(storeId, staffId);
+
+            if (result)
+                return Ok(new { Message = "Staff added to store successfully." });
+
+            return BadRequest(new { Message = "Failed to add staff to store. Staff not found or role not suitable." });
+        }
+        [HttpDelete("{storeId}/remove-staff/{staffId}")]
+        public async Task<IActionResult> RemoveStaffFromStore(int storeId, int staffId)
+        {
+            var response = await _storeService.RemoveStaffFromStoreAsync(storeId, staffId);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response.Message);
+        }
+
     }
 }

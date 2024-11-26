@@ -9,6 +9,7 @@ namespace VestTour.Domain.Enums
 	public enum BookingEnums
 	{
 		Pending,
+		Processing,
 		Cancel,
         Confirmed,   
         Completed

@@ -29,5 +29,6 @@ namespace VestTour.Repository.Models
        // public decimal? DepositCost { get; set; }
 
         public string? Service { get; set; }
+        public string? AssistStaffName { get; set; }
     }
 }

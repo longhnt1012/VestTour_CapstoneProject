@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
 namespace VestTour.Service.Implementation
@@ -43,6 +44,28 @@ namespace VestTour.Service.Implementation
         {
             return await _storeRepository.GetStaffByStoreIdAsync(storeId);
         }
-       
+        public async Task<bool> AddStaffToStoreAsync(int storeId, int staffId)
+        {
+            return await _storeRepository.AddStaffToStoreAsync(storeId, staffId);
+        }
+        public async Task<ServiceResponse> RemoveStaffFromStoreAsync(int storeId, int staffId)
+        {
+            var result = await _storeRepository.RemoveStaffFromStoreAsync(storeId, staffId);
+            if (!result)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Message = "Failed to remove staff. Either the store or the staff does not exist, or the staff is not assigned to this store."
+                };
+            }
+
+            return new ServiceResponse
+            {
+                Success = true,
+                Message = "Staff removed successfully from the store."
+            };
+        }
+
     }
 }

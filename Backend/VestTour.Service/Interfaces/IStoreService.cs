@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VestTour.Repository.Models;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Interfaces
 {
@@ -12,5 +13,8 @@ namespace VestTour.Service.Interfaces
         Task UpdateStoreAsync(int id, StoreModel storeModel);
         Task DeleteStoreAsync(int id);
         Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId);
+        Task<bool> AddStaffToStoreAsync(int storeId, int staffId);
+        Task<ServiceResponse> RemoveStaffFromStoreAsync(int storeId, int staffId);
+
     }
 }

@@ -102,6 +102,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.Service).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.AssistStaffName).HasMaxLength(255);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 

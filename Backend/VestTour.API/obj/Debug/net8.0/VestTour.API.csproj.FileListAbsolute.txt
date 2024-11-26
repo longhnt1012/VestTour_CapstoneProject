@@ -354,13 +354,8 @@ D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\B
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.API\obj\Debug\net8.0\VestTour.API.pdb
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.API\obj\Debug\net8.0\VestTour.API.genruntimeconfig.cache
 D:\FPT University\Semester_9_2024\C#\Structure GIthub\VestTour_CapstoneProject\Backend\VestTour.API\obj\Debug\net8.0\ref\VestTour.API.dll
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\publish\web.config
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\appsettings.Development.json
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\appsettings.json
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\publish\appsettings.Development.json
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\publish\appsettings.json
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\publish\VestTour.API.deps.json
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\publish\VestTour.API.runtimeconfig.json
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\VestTour.API.exe
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\VestTour.API.deps.json
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\VestTour.API.runtimeconfig.json

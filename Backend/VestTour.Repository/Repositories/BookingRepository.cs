@@ -182,7 +182,27 @@ namespace VestTour.Services
 
             return _mapper.Map<List<BookingModel>>(bookings);
         }
+        public async Task<List<BookingModel>> GetBookingsByStoreIdAsync(int storeId)
+        {
+            var bookings = await _context.Bookings
+                .Where(b => b.StoreId == storeId)
+                .ToListAsync();
+            return _mapper.Map<List<BookingModel>>(bookings);
+        }
+        public async Task StaffAssistWithBooking(int bookingId, string assistStaffName)
+        {
+            var booking = await _context.Bookings.FindAsync(bookingId);
+            if (booking != null)
+            {
+                booking.Status = "Processing";
+                booking.AssistStaffName = assistStaffName; // Update the staff assist name
 
-       
+                _context.Bookings.Update(booking);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
+
     }
 }

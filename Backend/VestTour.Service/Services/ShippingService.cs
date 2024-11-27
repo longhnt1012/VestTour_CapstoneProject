@@ -144,16 +144,16 @@ namespace VestTour.Service.Services
             },
                     Content = new StringContent(JsonConvert.SerializeObject(new
                     {
-                        service_id = request.ServiceId,
-                        insurance_value = request.InsuranceValue,
+                        service_id = 53321,
+                        insurance_value = 0,
                         coupon = request.Coupon,
                         to_ward_code = request.ToWardCode,
                         to_district_id = request.ToDistrictId,
                         from_district_id = request.FromDistrictId,
-                        weight = request.Weight,
-                        length = request.Length,
-                        width = request.Width,
-                        height = request.Height
+                        weight = 20,
+                        length = 20,
+                        width = 20,
+                        height = 10
                     }), Encoding.UTF8, "application/json")
                 };
 

@@ -12,12 +12,15 @@ namespace VestTour.Repository.Interfaces
         Task<List<FeedbackModel>> GetFeedbacksByOrderIdAsync(int orderId);
         Task<List<FeedbackModel>> GetFeedbacksByProductIdAsync(int productId);
         Task<FeedbackModel?> GetFeedbackByIdAsync(int feedbackId);
-        Task<int> AddFeedbackAsync(WriteFeedbackModel feedback);
-        Task UpdateFeedbackAsync(int feedbackId, WriteFeedbackModel feedback);
+        //Task<int> AddFeedbackAsync(WriteFeedbackModel feedback);
+      //  Task UpdateFeedbackAsync(int feedbackId, WriteFeedbackModel feedback);
         Task ResponseFeedbackAsync(int feedbackId, ResponseFeedbackModel feedback);
         Task DeleteFeedbackAsync(int feedbackId);
         Task<List<FeedbackModel>> GetAllFeedbackAsync();
         Task<List<FeedbackModel>> GetFeedbacksByUserIdAsync(int userId);
-        
+        Task<int> AddFeedbackForProductAsync(FeedBackForProduct feedback);
+        Task<int> AddFeedbackForOrderAsync(FeedbackForOrder feedback);
+        Task UpdateFeedbackForProductAsync(int feedbackId, FeedBackForProduct feedback);
+        Task UpdateFeedbackForOrderAsync(int feedbackId, FeedbackForOrder feedback);
     }
 }

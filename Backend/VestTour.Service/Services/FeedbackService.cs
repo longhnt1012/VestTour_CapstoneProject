@@ -55,13 +55,13 @@ namespace VestTour.Service.Services
             return response;
         }
 
-        public async Task<ServiceResponse<int>> AddFeedbackAsync(WriteFeedbackModel feedback)
+        public async Task<ServiceResponse<int>> AddFeedbackForProductAsync(FeedBackForProduct feedback)
         {
             var response = new ServiceResponse<int>();
 
             try
             {
-                response.Data = await _feedbackRepository.AddFeedbackAsync(feedback);
+                response.Data = await _feedbackRepository.AddFeedbackForProductAsync(feedback);
                 response.Success = true;
                 response.Message = "Feedback added successfully.";
             }
@@ -73,14 +73,49 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse<int>> AddFeedbackForOrderAsync(FeedbackForOrder feedback)
+        {
+            var response = new ServiceResponse<int>();
 
-        public async Task<ServiceResponse> UpdateFeedbackAsync(int feedbackId, WriteFeedbackModel feedback)
+            try
+            {
+                response.Data = await _feedbackRepository.AddFeedbackForOrderAsync(feedback);
+                response.Success = true;
+                response.Message = "Feedback added successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse> UpdateFeedbackForProductAsync(int feedbackId, FeedBackForProduct feedback)
         {
             var response = new ServiceResponse();
 
             try
             {
-                await _feedbackRepository.UpdateFeedbackAsync(feedbackId, feedback);
+                await _feedbackRepository.UpdateFeedbackForProductAsync(feedbackId, feedback);
+                response.Success = true;
+                response.Message = "Feedback updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse> UpdateFeedbackForOrderAsync(int feedbackId, FeedbackForOrder feedback)
+        {
+            var response = new ServiceResponse();
+
+            try
+            {
+                await _feedbackRepository.UpdateFeedbackForOrderAsync(feedbackId, feedback);
                 response.Success = true;
                 response.Message = "Feedback updated successfully.";
             }

@@ -247,31 +247,8 @@ public class BookingService : IBookingService
             response.Data = booking;
             response.Message = Success.BookingCreated; // Use a constant from Success class
             response.Message = Success.BookingCreated;
-            var emailRequest = new EmailRequest
-            {
-                To = booking.GuestEmail,
-                Subject = "Booking Confirmation",
-                Content = $"Dear {booking.GuestName},\n\nYour booking has been confirmed!\n\n" +
-                     $"Booking ID: {newBookingId}\n" +
-                     $"Service: {booking.Service}\n" +
-                     $"Date: {booking.BookingDate}\n" +
-                     $"Time: {booking.Time}\n" +
-                     $"Store ID: {booking.StoreId}\n" +
-                     $"Note: {booking.Note}\n\n" +
-                     "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
-            };
-
-            // Send email confirmation
-            try
-            {
-                await _emailHelper.SendEmailAsync(emailRequest);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception and handle it appropriately
-                response.Success = false;
-                response.Message = "Booking created, but failed to send confirmation email: " + ex.Message;
-            }
+           
+           
         }
 
 
@@ -361,7 +338,7 @@ public class BookingService : IBookingService
 
         return response;
     }
-    public async Task<ServiceResponse> StaffAssistWithBooking(int bookingId,int staffId)
+    public async Task<ServiceResponse> StaffAssistWithBooking(int bookingId, int staffId)
     {
         var response = new ServiceResponse();
 
@@ -372,18 +349,16 @@ public class BookingService : IBookingService
             return response;
         }
 
-        
-
-        // Retrieve the staff name
+        // Retrieve the staff by ID
         var staff = await _userRepo.GetUserByIdAsync(staffId);
         if (staff == null)
         {
             response.Success = false;
-            response.Message = "Staff not found.";
+            response.Message = Error.UserNotFound;
             return response;
         }
 
-        // Retrieve the booking
+        // Retrieve the booking by ID
         var booking = await _bookingRepository.GetBookingById(bookingId);
         if (booking == null)
         {
@@ -392,14 +367,43 @@ public class BookingService : IBookingService
             return response;
         }
 
-        // Update the booking status and staff name
+        // Update the booking details
         booking.Status = BookingEnums.Processing.ToString(); // Set to "Processing"
         booking.AssistStaffName = staff.Name; // Assign the staff name
 
-        // Update the booking in the repository
-        await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName);
+        try
+        {
+            // Update booking in the repository
+            await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName);
 
-        response.Message = Success.StatusUpdated;
+            // Prepare and send email confirmation
+            var emailRequest = new EmailRequest
+            {
+                To = booking.GuestEmail,
+                Subject = "Booking Confirmation",
+                Content = $"Dear {booking.GuestName},\n\nYour booking has been confirmed!\n\n" +
+                          $"Booking ID: {booking.BookingId}\n" +
+                          $"Service: {booking.Service}\n" +
+                          $"Date: {booking.BookingDate:yyyy-MM-dd}\n" +
+                          $"Time: {booking.Time}\n" +
+                          $"Store ID: {booking.StoreId}\n" +
+                          $"Note: {booking.Note}\n\n" +
+                          "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
+            };
+
+            await _emailHelper.SendEmailAsync(emailRequest);
+
+            response.Success = true;
+            response.Message = Success.StatusUpdated;
+        }
+        catch (Exception ex)
+        {
+            // Log the exception and return a failure response
+            // Example: _logger.LogError(ex, "Error while assisting with booking.");
+            response.Success = false;
+            response.Message = $"An error occurred: {ex.Message}";
+        }
+
         return response;
     }
 

@@ -45,7 +45,19 @@ namespace VestTour.Repository.Repositories
             return _mapper.Map<FeedbackModel>(feedback);
         }
 
-        public async Task<int> AddFeedbackAsync(WriteFeedbackModel feedback)
+        public async Task<int> AddFeedbackForProductAsync(FeedBackForProduct feedback)
+        {
+            if (feedback.Rating.HasValue && (feedback.Rating < 1 || feedback.Rating > 5))
+            {
+                throw new ArgumentOutOfRangeException(nameof(feedback.Rating), "Rating must be between 1 and 5.");
+            }
+
+            var newFeedback = _mapper.Map<Feedback>(feedback);
+            _context.Feedbacks.Add(newFeedback);
+            await _context.SaveChangesAsync();
+            return newFeedback.FeedbackId;
+        }
+        public async Task<int> AddFeedbackForOrderAsync(FeedbackForOrder feedback)
         {
             if (feedback.Rating.HasValue && (feedback.Rating < 1 || feedback.Rating > 5))
             {
@@ -58,8 +70,18 @@ namespace VestTour.Repository.Repositories
             return newFeedback.FeedbackId;
         }
 
+        public async Task UpdateFeedbackForProductAsync(int feedbackId, FeedBackForProduct feedback)
+        {
 
-        public async Task UpdateFeedbackAsync(int feedbackId, WriteFeedbackModel feedback)
+            var existingFeedback = await _context.Feedbacks.FindAsync(feedbackId);
+            if (existingFeedback != null)
+            {
+                _mapper.Map(feedback, existingFeedback);
+                _context.Feedbacks.Update(existingFeedback);
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task UpdateFeedbackForOrderAsync(int feedbackId, FeedbackForOrder feedback)
         {
 
             var existingFeedback = await _context.Feedbacks.FindAsync(feedbackId);

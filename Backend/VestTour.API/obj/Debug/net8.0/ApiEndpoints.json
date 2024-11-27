@@ -723,43 +723,6 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.FeedbackController",
-    "Method": "AddFeedback",
-    "RelativePath": "api/Feedback",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "feedbackModel",
-        "Type": "VestTour.Repository.Models.WriteFeedbackModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.API.Controllers.FeedbackController",
-    "Method": "UpdateFeedback",
-    "RelativePath": "api/Feedback/{feedbackId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "feedbackId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "feedbackModel",
-        "Type": "VestTour.Repository.Models.WriteFeedbackModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.API.Controllers.FeedbackController",
     "Method": "DeleteFeedback",
     "RelativePath": "api/Feedback/{feedbackId}",
     "HttpMethod": "DELETE",
@@ -782,6 +745,38 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.FeedbackController",
+    "Method": "AddFeedbackForOrder",
+    "RelativePath": "api/Feedback/feedbackfororder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedback",
+        "Type": "VestTour.Repository.Models.FeedbackForOrder",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.FeedbackController",
+    "Method": "AddFeedbackForProduct",
+    "RelativePath": "api/Feedback/feedbackforproduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedback",
+        "Type": "VestTour.Repository.Models.FeedBackForProduct",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -832,6 +827,48 @@
       {
         "Name": "responsefeedbackModel",
         "Type": "VestTour.Repository.Models.ResponseFeedbackModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.FeedbackController",
+    "Method": "UpdateFeedbackForOrder",
+    "RelativePath": "api/Feedback/updateorderfeedbackorder/{feedbackId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "feedback",
+        "Type": "VestTour.Repository.Models.FeedbackForOrder",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.FeedbackController",
+    "Method": "UpdateFeedbackForProduct",
+    "RelativePath": "api/Feedback/updateproductfeedback/{feedbackId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "feedbackId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "feedback",
+        "Type": "VestTour.Repository.Models.FeedBackForProduct",
         "IsRequired": true
       }
     ],

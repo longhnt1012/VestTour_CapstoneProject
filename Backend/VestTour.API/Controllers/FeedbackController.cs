@@ -64,29 +64,60 @@ namespace VestTour.API.Controllers
             }
             return NotFound(response.Message);
         }
-
-        // Endpoint to add new feedback
-        [HttpPost]
-        public async Task<IActionResult> AddFeedback([FromBody] WriteFeedbackModel feedbackModel)
+        // Add feedback for product
+        [HttpPost("feedbackforproduct")]
+        public async Task<IActionResult> AddFeedbackForProduct([FromBody] FeedBackForProduct feedback)
         {
-            var response = await _feedbackService.AddFeedbackAsync(feedbackModel);
-            if (response.Success)
-            {
-                return CreatedAtAction(nameof(GetFeedbacksByUserId), new { userId = feedbackModel.UserId }, response.Data);
-            }
-            return BadRequest(response.Message);
+            if (feedback == null)
+                return BadRequest("Feedback cannot be null.");
+
+            var response = await _feedbackService.AddFeedbackForProductAsync(feedback);
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
         }
 
-        // Endpoint to update feedback
-        [HttpPut("{feedbackId}")]
-        public async Task<IActionResult> UpdateFeedback(int feedbackId, [FromBody] WriteFeedbackModel feedbackModel)
+        // Add feedback for order
+        [HttpPost("feedbackfororder")]
+        public async Task<IActionResult> AddFeedbackForOrder([FromBody] FeedbackForOrder feedback)
         {
-            var response = await _feedbackService.UpdateFeedbackAsync(feedbackId, feedbackModel);
-            if (response.Success)
-            {
-                return NoContent();
-            }
-            return NotFound(response.Message);
+            if (feedback == null)
+                return BadRequest("Feedback cannot be null.");
+
+            var response = await _feedbackService.AddFeedbackForOrderAsync(feedback);
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        // Update feedback for product
+        [HttpPut("updateproductfeedback/{feedbackId}")]
+        public async Task<IActionResult> UpdateFeedbackForProduct(int feedbackId, [FromBody] FeedBackForProduct feedback)
+        {
+            if (feedback == null)
+                return BadRequest("Feedback cannot be null.");
+
+            var response = await _feedbackService.UpdateFeedbackForProductAsync(feedbackId, feedback);
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        // Update feedback for order
+        [HttpPut("updateorderfeedbackorder/{feedbackId}")]
+        public async Task<IActionResult> UpdateFeedbackForOrder(int feedbackId, [FromBody] FeedbackForOrder feedback)
+        {
+            if (feedback == null)
+                return BadRequest("Feedback cannot be null.");
+
+            var response = await _feedbackService.UpdateFeedbackForOrderAsync(feedbackId, feedback);
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
         }
         // Endpoint to update feedback
         [HttpPut("response/{feedbackId}")]

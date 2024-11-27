@@ -21,7 +21,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,store manager,staff")]
+       // [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetMeasurements()
         {
             var response = await _measurementService.GetAllMeasurementsAsync();
@@ -53,7 +53,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin,store manager,staff")]
+       // [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> DeleteMeasurement(int id)
         {
             var response = await _measurementService.DeleteMeasurementAsync(id);

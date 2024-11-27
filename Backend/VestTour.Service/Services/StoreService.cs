@@ -70,5 +70,34 @@ namespace VestTour.Service.Implementation
         {
             return await _storeRepository.GetStoreByStaffIdAsync(staffId);
         }
+        public async Task<(TimeOnly? OpenTime, TimeOnly? CloseTime)> GetStoreTimingsAsync(int storeId)
+        {
+            return await _storeRepository.GetStoreTimingsAsync(storeId);
+        }
+
+        public List<string> GetTimeSlots(TimeOnly openTime, TimeOnly closeTime)
+        {
+            var timeSlots = new List<string>();
+            var currentTime = openTime;
+
+            while (currentTime.AddMinutes(30) <= closeTime)
+            {
+                var endTime = currentTime.AddMinutes(30);
+                timeSlots.Add($"{currentTime:HH:mm} - {endTime:HH:mm}");
+                currentTime = endTime;
+            }
+
+            return timeSlots;
+        }
+        public async Task<List<string>> GetStoreTimeSlotsAsync(int storeId)
+        {
+            var (openTime, closeTime) = await GetStoreTimingsAsync(storeId);
+
+            if (openTime == null || closeTime == null)
+                return new List<string> { "Store timings are not available." };
+
+            return GetTimeSlots(openTime.Value, closeTime.Value);
+        }
+
     }
 }

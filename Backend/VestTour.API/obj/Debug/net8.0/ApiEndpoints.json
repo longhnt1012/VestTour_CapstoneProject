@@ -2329,6 +2329,22 @@
   },
   {
     "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "GetStoreTimeSlots",
+    "RelativePath": "api/Store/{storeId}/timeslots",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StoreController",
     "Method": "GetStoreByStaffIdAsync",
     "RelativePath": "api/Store/GetStoreByStaff/{staffId}",
     "HttpMethod": "GET",

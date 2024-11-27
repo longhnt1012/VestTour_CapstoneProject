@@ -136,7 +136,7 @@ namespace VestTour.Controllers
         
 
         [HttpGet("store/{storeId}")]
-        [Authorize(Roles = "admin,store manager,staff")]
+        //[Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetOrdersByStoreId(int storeId)
         {
             try
@@ -150,7 +150,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPatch("updatestatus/{id}")]
-        [Authorize(Roles = "admin,store manager,staff")]
+       // [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> ChangeStatusName(int id, [FromBody] string newStatus)
         {
 

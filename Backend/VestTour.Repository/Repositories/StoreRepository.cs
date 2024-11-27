@@ -156,6 +156,14 @@ namespace VestTour.Repository.Repositories
             return _mapper.Map<StoreModel>(store);
         }
 
+        public async Task<(TimeOnly? OpenTime, TimeOnly? CloseTime)> GetStoreTimingsAsync(int storeId)
+        {
+            var store = await _context.Stores!.FindAsync(storeId);
+            if (store == null)
+                return (null, null);
+
+            return (store.OpenTime, store.CloseTime);
+        }
 
     }
 }

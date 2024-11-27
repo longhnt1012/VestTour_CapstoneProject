@@ -114,6 +114,16 @@ namespace VestTour.Controllers
 
             return Ok(store);
         }
+        [HttpGet("{storeId}/timeslots")]
+        public async Task<IActionResult> GetStoreTimeSlots(int storeId)
+        {
+            var timeSlots = await _storeService.GetStoreTimeSlotsAsync(storeId);
+
+            if (timeSlots == null || !timeSlots.Any())
+                return NotFound(new { Message = "No available time slots for this store." });
+
+            return Ok(timeSlots);
+        }
 
     }
 }

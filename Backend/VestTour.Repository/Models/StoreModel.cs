@@ -11,5 +11,6 @@
         public TimeOnly? OpenTime { get; set; }
         public TimeOnly? CloseTime { get; set; }
         public string? StaffIDs { get; set; }
+        public int? DistrictID { get; set; }
     }
 }

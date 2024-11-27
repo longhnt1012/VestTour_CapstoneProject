@@ -15,6 +15,7 @@ namespace VestTour.Service.Interfaces
         Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId);
         Task<bool> AddStaffToStoreAsync(int storeId, int staffId);
         Task<ServiceResponse> RemoveStaffFromStoreAsync(int storeId, int staffId);
+        Task<StoreModel?> GetStoreByStaffIdAsync(int staffId);
 
     }
 }

@@ -133,6 +133,29 @@ namespace VestTour.Repository.Repositories
             return true;
         }
 
+        public async Task<StoreModel?> GetStoreByStaffIdAsync(int staffId)
+        {
+            if (staffId <= 0)
+            {
+                return null;
+            }
+
+            // Fetch all stores with non-null StaffIDs from the database
+            var stores = await _context.Stores
+                .Where(store => !string.IsNullOrEmpty(store.StaffIDs))
+                .ToListAsync();
+
+            // Process the StaffIDs in memory
+            var store = stores
+                .FirstOrDefault(store => store.StaffIDs
+                    .Split(',')
+                    .Select(id => int.Parse(id.Trim()))
+                    .Contains(staffId));
+
+            // Map to StoreModel and return
+            return _mapper.Map<StoreModel>(store);
+        }
+
 
     }
 }

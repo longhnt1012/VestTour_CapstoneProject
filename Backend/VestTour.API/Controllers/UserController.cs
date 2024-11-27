@@ -32,7 +32,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/user/{id}
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);

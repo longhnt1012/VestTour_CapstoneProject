@@ -97,6 +97,23 @@ namespace VestTour.Controllers
 
             return Ok(response.Message);
         }
+        [HttpGet("GetStoreByStaff/{staffId}")]
+        public async Task<IActionResult> GetStoreByStaffIdAsync(int staffId)
+        {
+            if (staffId <= 0)
+            {
+                return BadRequest("Invalid staff ID.");
+            }
+
+            var store = await _storeService.GetStoreByStaffIdAsync(staffId);
+
+            if (store == null)
+            {
+                return NotFound("No store found for the given staff ID.");
+            }
+
+            return Ok(store);
+        }
 
     }
 }

@@ -14,5 +14,6 @@ namespace VestTour.Repository.Interface
         Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId);
         Task<bool> AddStaffToStoreAsync(int storeId, int staffId);
         Task<bool> RemoveStaffFromStoreAsync(int storeId, int staffId);
+        Task<StoreModel?> GetStoreByStaffIdAsync(int staffId);
     }
 }

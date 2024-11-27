@@ -66,6 +66,9 @@ namespace VestTour.Service.Implementation
                 Message = "Staff removed successfully from the store."
             };
         }
-
+        public async Task<StoreModel?> GetStoreByStaffIdAsync(int staffId)
+        {
+            return await _storeRepository.GetStoreByStaffIdAsync(staffId);
+        }
     }
 }

@@ -56,9 +56,44 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "confirmOrder",
-        "Type": "VestTour.Repository.Models.ConfirmOrderModel",
-        "IsRequired": true
+        "Name": "guestName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "guestAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "deposit",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "shippingfee",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "deliverymethod",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "voucherId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

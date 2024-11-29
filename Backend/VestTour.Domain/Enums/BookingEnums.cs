@@ -11,7 +11,6 @@ namespace VestTour.Domain.Enums
 		Pending,
 		Processing,
 		Cancel,
-        Confirmed,   
-        Completed
+        Confirmed
     }
 }

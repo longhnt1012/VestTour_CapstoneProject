@@ -165,7 +165,7 @@ namespace VestTour.Services
             await _addCartRepository.UpdateCartAsync(id, cartItems);
         }
 
-        public async Task ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingFee, string? deliverymethod, int? voucherId, int? storeId)
+        public async Task ConfirmOrderAsync(int? userId, string guestName, string guestEmail, string guestAddress, decimal deposit, decimal shippingFee, string deliveryMethod, int storeId, int? voucherId)
 
         {
             int id = userId ?? GetOrCreateGuestId();
@@ -216,7 +216,7 @@ namespace VestTour.Services
 
                 }
             }
-            await _orderService.ConfirmCartOrderAsync(id, guestName, guestEmail, guestAddress, deposit, shippingFee, deliverymethod, voucherId, storeId);
+            await _orderService.ConfirmCartOrderAsync(id, guestName, guestEmail, guestAddress, deposit, shippingFee, deliveryMethod, storeId,voucherId);
             await _addCartRepository.RemoveAllFromCartAsync(id);
         }
 

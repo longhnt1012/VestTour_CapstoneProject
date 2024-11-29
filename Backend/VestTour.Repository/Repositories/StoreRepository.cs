@@ -25,7 +25,7 @@ namespace VestTour.Repository.Repositories
         }
 
         // Get store by ID
-        public async Task<StoreModel?> GetStoreByIdAsync(int storeId)
+        public async Task<StoreModel?> GetStoreByIdAsync(int? storeId)
         {
             var store = await _context.Stores!.FindAsync(storeId);
             return _mapper.Map<StoreModel>(store);
@@ -61,7 +61,7 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId)
+        public async Task<List<UserModel>> GetStaffByStoreIdAsync(int? storeId)
         {
             var store = await _context.Stores!.FindAsync(storeId);
 

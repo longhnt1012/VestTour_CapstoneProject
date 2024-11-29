@@ -195,7 +195,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string? guestName = null, string? guestEmail = null, string? guestAddress = null, decimal? deposit = null, decimal? shippingFee = null, string? deliveryMethod = null, int? voucherId = null, int? storeId = null)
+        public async Task ConfirmCartOrderAsync(int? userId, string guestName , string guestEmail , string guestAddress, decimal deposit , decimal shippingFee, string deliveryMethod, int storeId, int? voucherId )
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();

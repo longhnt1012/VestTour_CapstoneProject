@@ -72,12 +72,12 @@
       },
       {
         "Name": "deposit",
-        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Decimal",
         "IsRequired": false
       },
       {
         "Name": "shippingfee",
-        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Decimal",
         "IsRequired": false
       },
       {
@@ -86,12 +86,12 @@
         "IsRequired": false
       },
       {
-        "Name": "voucherId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "storeId",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "storeId",
+        "Name": "voucherId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }

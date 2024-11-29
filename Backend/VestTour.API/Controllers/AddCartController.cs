@@ -86,12 +86,12 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
-        public async Task<IActionResult> ConfirmOrder(string? guestName, string? guestEmail, string? guestAddress, decimal? deposit, decimal? shippingfee, string? deliverymethod, int? voucherId, int? storeId)
+        public async Task<IActionResult> ConfirmOrder(string guestName, string guestEmail, string guestAddress, decimal deposit, decimal shippingfee, string deliverymethod, int storeId, int? voucherId)
         {
             var userId = GetUserId();
             try
             {
-                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress, deposit, shippingfee, deliverymethod, voucherId, storeId);
+                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress, deposit, shippingfee, deliverymethod, storeId, voucherId);
 
                 return Ok("Order confirmed successfully.");
             }

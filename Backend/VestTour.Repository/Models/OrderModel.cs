@@ -25,13 +25,14 @@ namespace VestTour.Repository.Models
         public string? GuestEmail { get; set; }
         public string? GuestAddress { get; set; }
        // public string? OrderCode { get; set; }
-        //[JsonIgnore]
+       // [JsonIgnore]
         public List<ProductModel> Products { get; set; } = new List<ProductModel>();
         public decimal? TotalPrice { get; set; }
         public decimal? Deposit { get; set; }
         public decimal? ShippingFee { get; set; }
         public decimal? BalancePayment => TotalPrice - Deposit + ShippingFee;
         public string? DeliveryMethod { get; set; }
+        [JsonIgnore]
         public List<OrderDetailModel> OrderDetails { get; set; } = new List<OrderDetailModel>();
     }
 }

@@ -16,12 +16,14 @@ public class BookingService : IBookingService
     private readonly IBookingRepository _bookingRepository;
     private readonly IUserRepository _userRepo; // Add IUserRepository for user details
     private readonly IEmailHelper _emailHelper;
+    private readonly IStoreRepository _storeRepository;
 
-    public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo, IEmailHelper emailHelper)
+    public BookingService(IBookingRepository bookingRepository, IUserRepository userRepo, IEmailHelper emailHelper,IStoreRepository storeRepository)
     {
         _bookingRepository = bookingRepository;
         _userRepo = userRepo;
         _emailHelper = emailHelper;
+        _storeRepository = storeRepository;
     }
 
     public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
@@ -117,31 +119,6 @@ public class BookingService : IBookingService
         var newBookingId = await _bookingRepository.AddNewBookingAsync(booking);
         response.Data = newBookingId;
         response.Message = Success.BookingCreated; // Use a constant from Success class
-        var emailRequest = new EmailRequest
-        {
-            To = booking.GuestEmail,
-            Subject = "Booking Confirmation",
-            Content = $"Dear {booking.GuestName},\n\nYour booking has been confirmed!\n\n" +
-                  $"Booking ID: {newBookingId}\n" +
-                  $"Service: {booking.Service}\n" +
-                  $"Date: {booking.BookingDate}\n" +
-                  $"Time: {booking.Time}\n" +
-                  $"Store ID: {booking.StoreId}\n" +
-                  $"Note: {booking.Note}\n\n" +
-                  "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
-        };
-
-        // Send email confirmation
-        try
-        {
-            await _emailHelper.SendEmailAsync(emailRequest);
-        }
-        catch (Exception ex)
-        {
-            // Log the exception and handle it appropriately
-            response.Success = false;
-            response.Message = "Booking created, but failed to send confirmation email: " + ex.Message;
-        }
 
         // Use a constant from Success class
         return response;
@@ -368,14 +345,17 @@ public class BookingService : IBookingService
         }
 
         // Update the booking details
-        booking.Status = BookingEnums.Processing.ToString(); // Set to "Processing"
+        booking.Status = BookingEnums.Confirmed.ToString(); 
         booking.AssistStaffName = staff.Name; // Assign the staff name
 
         try
         {
             // Update booking in the repository
             await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName);
-
+            
+                var store = await _storeRepository.GetStoreByIdAsync(booking.StoreId);
+           
+           
             // Prepare and send email confirmation
             var emailRequest = new EmailRequest
             {
@@ -386,7 +366,8 @@ public class BookingService : IBookingService
                           $"Service: {booking.Service}\n" +
                           $"Date: {booking.BookingDate:yyyy-MM-dd}\n" +
                           $"Time: {booking.Time}\n" +
-                          $"Store ID: {booking.StoreId}\n" +
+                          $"Store Name: {store.Name}\n" +
+                          $"Store Address: {store.Address}\n"+
                           $"Note: {booking.Note}\n\n" +
                           "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
             };

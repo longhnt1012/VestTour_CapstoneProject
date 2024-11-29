@@ -195,31 +195,31 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string guestName , string guestEmail , string guestAddress, decimal deposit , decimal shippingFee, string deliveryMethod, int storeId, int? voucherId )
+        public async Task ConfirmCartOrderAsync(ConfirmOrderModel confirmOrder)
         {
-            // Generate a guest ID if userId is null
-            int id = userId ?? GenerateGuestId();
+            // Generate a guest ID if UserId is null
+            int id = confirmOrder.UserId ?? GenerateGuestId();
 
             // Retrieve cart items for the user or guest
             var cartItems = await _cartRepo.GetUserCartAsync(id);
             if (cartItems == null || cartItems.Count == 0)
             {
-                throw new InvalidOperationException("No items in cart to confirm.");
+                throw new InvalidOperationException("No items in the cart to confirm.");
             }
 
-            // Validate delivery method
-            //if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
-            //{
-            //    throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
-            //}
+            // Validate delivery method (uncomment and implement as needed)
+            // if (!DeliveryMethodValidate.IsValidDeliveryMethod(confirmOrder.DeliveryMethod))
+            // {
+            //     throw new ArgumentException($"Invalid delivery method: {confirmOrder.DeliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
+            // }
 
             // Calculate total price
             decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
 
-            // Apply voucher discount if voucherId is provided
-            if (voucherId.HasValue)
+            // Apply voucher discount if VoucherId is provided
+            if (confirmOrder.VoucherId.HasValue)
             {
-                var voucher = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
+                var voucher = await _voucherService.GetVoucherByIdAsync(confirmOrder.VoucherId.Value);
                 if (voucher == null || !voucher.Success || voucher.Data == null)
                 {
                     throw new ArgumentException("Invalid or expired voucher.");
@@ -227,55 +227,47 @@ namespace VestTour.Service.Implementation
 
                 // Calculate the discount
                 decimal discountAmount = voucher.Data.DiscountNumber ?? 0;
-                var newshippingFee = shippingFee - shippingFee * discountAmount;
-                shippingFee = newshippingFee;
-                if (shippingFee < 0)
+                confirmOrder.ShippingFee -= confirmOrder.ShippingFee * discountAmount;
+                if (confirmOrder.ShippingFee < 0)
                 {
-                    shippingFee = 0; // Ensure total price is non-negative
+                    confirmOrder.ShippingFee = 0; // Ensure total price is non-negative
                 }
             }
-            // Retrieve user details if applicable
-            User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
 
-            // Create new order
+            // Retrieve user details if applicable
+            User? user = confirmOrder.UserId.HasValue
+                ? await _userService.GetUserByIdAsync(confirmOrder.UserId.Value)
+                : null;
+
+            // Create a new order
             var newOrder = new OrderModel
             {
                 UserID = user?.UserId,
-                VoucherId = voucherId,
-                StoreId = storeId,
-                GuestName = string.IsNullOrEmpty(guestName) ? user?.Name : guestName,
-                GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
-                GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
+                VoucherId = confirmOrder.VoucherId,
+                StoreId = confirmOrder.StoreId,
+                ShipperPartnerId = 1,
+                GuestName = string.IsNullOrEmpty(confirmOrder.GuestName) ? user?.Name : confirmOrder.GuestName,
+                GuestEmail = string.IsNullOrEmpty(confirmOrder.GuestEmail) ? user?.Email : confirmOrder.GuestEmail,
+                GuestAddress = string.IsNullOrEmpty(confirmOrder.GuestAddress) ? user?.Address : confirmOrder.GuestAddress,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                Note = "Tailor vest",
                 TotalPrice = Math.Round(totalPrice, 2),
-                Deposit = deposit,
-                ShippingFee = shippingFee,
+                Deposit = confirmOrder.Deposit,
+                ShippingFee = confirmOrder.ShippingFee,
                 Paid = false,
                 Status = "Pending",
-                DeliveryMethod = "Pick up"
+                DeliveryMethod = confirmOrder.DeliveryMethod
             };
-
 
             // Save the order to the database
             int orderId = await _orderRepository.AddOrderAsync(newOrder);
-
-            // Retrieve PaymentId from session using IHttpContextAccessor
-            //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
-
-            //if (paymentId == null)
-            //{
-            //    throw new InvalidOperationException("Please come back to payment.");
-            //}
-
-            //await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-            //_httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
-            //_httpContextAccessor.HttpContext?.Session.Remove("tongtien");
 
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
 
             // Send confirmation email
-            string recipientEmail = user?.Email ?? guestEmail;
+            string recipientEmail = user?.Email ?? confirmOrder.GuestEmail;
             if (!string.IsNullOrEmpty(recipientEmail))
             {
                 var subject = "Order Confirmation";
@@ -287,7 +279,6 @@ namespace VestTour.Service.Implementation
                     .AppendLine($"- Total Price: {newOrder.TotalPrice:C}")
                     .AppendLine($"- Shipping Fee: {newOrder.ShippingFee:C}")
                     .AppendLine($"- Deposit: {newOrder.Deposit:C}")
-                    .AppendLine($"- Balance Payment: {newOrder.BalancePayment:C}")
                     .AppendLine($"- Delivery Method: {newOrder.DeliveryMethod}")
                     .AppendLine()
                     .AppendLine("Order Details:");

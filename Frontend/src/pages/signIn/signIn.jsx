@@ -10,13 +10,16 @@ import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { jwtDecode } from "jwt-decode";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "./ForgotPassword";
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
+import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import { useNavigate, useLocation } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -57,55 +60,122 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [authError, setAuthError] = React.useState(""); // New state for authentication error
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const validateInputs = () => {
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
+    // Validate email
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address.");
       isValid = false;
     } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
+      setEmailError("");
     }
 
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
+    // Validate password
+    if (password.length < 6 || password.length > 18) {
+      setPasswordError("Password must be between 6 and 18 characters.");
       isValid = false;
     } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
+      setPasswordError("");
     }
 
     return isValid;
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!validateInputs()) return;
+
+    setIsLoading(true);
+    try {
+      const response = await fetch("https://localhost:7194/api/Login/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        setAuthError("Invalid email or password."); // Set the auth error message
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("Login successful:", result);
+
+      const decodedToken = jwtDecode(result.token);
+      console.log("Decoded Token:", decodedToken);
+
+      const userRole =
+        decodedToken[
+          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+
+      // Store userID from the correct claim and other tokens in localStorage
+      localStorage.setItem(
+        "userID",
+        decodedToken[
+          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+        ]
+      ); // Use the correct claim
+      localStorage.setItem("roleID", userRole);
+      localStorage.setItem("token", result.token); // Store the JWT
+
+      // Redirect based on user role
+      switch (userRole) {
+        case "customer":
+          navigate("/");
+          break;
+        case "staff":
+          navigate("/staff");
+          break;
+        case "store manager":
+          navigate("/manager");
+          break;
+        case "admin":
+          navigate("/admin");
+          break;
+        case "tailor partner":
+          navigate("/tailor");
+          break;
+        default:
+          console.error("User role is not recognized.");
+          break;
+      }
+    } catch (error) {
+      console.error("There was an error with the login request:", error);
+      setAuthError("Invalid email or password."); // Set the auth error message
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (location.state?.alert) {
+      alert(location.state.alert);
+    }
+  }, [location.state]);
 
   return (
     <AppTheme {...props}>
@@ -136,8 +206,8 @@ export default function SignIn(props) {
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
+                error={!!emailError}
+                helperText={emailError}
                 id="email"
                 type="email"
                 name="email"
@@ -147,8 +217,8 @@ export default function SignIn(props) {
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? "error" : "primary"}
-                sx={{ ariaLabel: "email" }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl>
@@ -164,18 +234,18 @@ export default function SignIn(props) {
                 </Link>
               </Box>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
+                error={!!passwordError}
+                helperText={passwordError}
                 name="password"
                 placeholder="••••••"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? "error" : "primary"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
             <FormControlLabel
@@ -187,15 +257,38 @@ export default function SignIn(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
+              disabled={isLoading}
+              sx={{ position: "relative" }}
             >
-              Sign in
+              {isLoading ? (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: "#90caf9", // Light blue color
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
+              ) : (
+                "Sign in"
+              )}
             </Button>
+            {authError && (
+              <Typography
+                color="error"
+                sx={{ textAlign: "center", marginTop: 1 }}
+              >
+                {authError}
+              </Typography>
+            )}
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
               <span>
                 <Link
-                  href="/material-ui/getting-started/templates/sign-in/"
+                  href="/signup"
                   variant="body2"
                   sx={{ alignSelf: "center" }}
                 >
@@ -207,7 +300,7 @@ export default function SignIn(props) {
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="outlined"
               onClick={() => alert("Sign in with Google")}
@@ -216,7 +309,7 @@ export default function SignIn(props) {
               Sign in with Google
             </Button>
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="outlined"
               onClick={() => alert("Sign in with Facebook")}

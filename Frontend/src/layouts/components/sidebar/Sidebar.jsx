@@ -1,51 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../sidebar/Sidebar.scss';
-import all_icon from '../../../assets/img/filter/icon-fabricFilter-all.jpg';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../sidebar/Sidebar.scss";
 
-export const Sidebar = () => {
+const Sidebar = ({ onSelectSubcategory }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [parentCategories, setParentCategories] = useState({});
+  const [activeSubcategory, setActiveSubcategory] = useState(null); // Track active subcategory
 
   useEffect(() => {
-    const fetchCategoriesAndParents = async () => {
-      const categoryIds = [1, 2, 3, 4]; // Thay đổi nếu cần thêm hoặc khác ID
+    const fetchCategories = async () => {
       try {
-        const categoryResponses = await Promise.all(
-          categoryIds.map(id => axios.get(`https://localhost:7244/api/category/${id}`))
-        );
-  
-        const categoriesData = categoryResponses.map(response => response.data);
-        setCategories(categoriesData); // Lưu danh mục con
-  
-        // Lấy CategoryParentID và gọi API để lấy danh mục cha
-        const parentCategoryIds = categoriesData.map(cat => cat.CategoryParentID);
-        const parentResponses = await Promise.all(
-          parentCategoryIds.map(id => axios.get(`https://localhost:7244/api/Category/parent/${id}`))
-        );
-  
-        console.log('Parent Responses:', parentResponses); // Ghi nhật ký phản hồi của danh mục cha
-  
-        // Lưu thông tin danh mục cha vào một object
-        const parentCategoriesData = {};
-        parentResponses.forEach(response => {
-          const parentCategory = response.data;
-          console.log('Parent Category:', parentCategory); // Ghi nhật ký danh mục cha
-          parentCategoriesData[parentCategory.CategoryID] = parentCategory.name;
-        });
-  
-        setParentCategories(parentCategoriesData); // Lưu danh mục cha
+        const response = await axios.get("https://localhost:7194/api/category");
+        if (Array.isArray(response.data.data)) {
+          setCategories(response.data.data);
+        } else {
+          throw new Error("API returned unexpected format: expected an array");
+        }
         setLoading(false);
       } catch (err) {
-        setError(err.message);
+        console.error("Error fetching categories:", err);
+        setError(err.message || "Failed to fetch categories");
         setLoading(false);
       }
     };
-  
-    fetchCategoriesAndParents();
+
+    fetchCategories();
   }, []);
+
+  const getSubcategories = (parentId) => {
+    return Array.isArray(categories)
+      ? categories.filter((category) => category.categoryParentId === parentId)
+      : [];
+  };
+
+  const handleSubcategoryClick = (subcategoryId) => {
+    setActiveSubcategory(subcategoryId); // Set active subcategory on click
+    onSelectSubcategory(subcategoryId);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -55,30 +47,47 @@ export const Sidebar = () => {
     return <p>Error: {error}</p>;
   }
 
+  const parentCategories = categories.filter(
+    (category) => category.categoryParentId === null
+  );
+
   return (
-    <div className="side-menu menu-fabric" id='MnFabric'>
-      <div className="left-filter">
-        <ul className="filter-menu">
-          {/* Hiển thị thông tin danh mục con */}
-          {categories.map((category) => (
-            <li key={category.CategoryID} className="filter-item" data-tog={`e-${category.CategoryID}`}>
-              <a href="javascript:void(0);">
-                <img src={all_icon} alt={category.name} /> {category.name}
-              </a>
+    <div id="nav_menu5" className="widget widget_nav_menu">
+      <div className="menu-widget-container">
+        <ul id="menu-widget" className="menu">
+          {parentCategories.map((category) => (
+            <li
+              key={category.categoryId}
+              className="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children dropdown"
+            >
+              <a>{category.name}</a>
+              <ul className="menu">
+                {getSubcategories(category.categoryId).map((subcategory) => (
+                  <li
+                    key={subcategory.categoryId}
+                    className="menu-item menu-item-type-post_type menu-item-object-page"
+                  >
+                    <a
+                      onClick={() =>
+                        handleSubcategoryClick(subcategory.categoryId)
+                      }
+                      className={
+                        activeSubcategory === subcategory.categoryId
+                          ? "selected"
+                          : ""
+                      }
+                    >
+                      {subcategory.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </li>
-          ))}
-          {/* Hiển thị tên của danh mục cha */}
-          {categories.map((category) => (
-            parentCategories[category.CategoryParentID] && (
-              <li key={category.CategoryParentID} className="filter-item parent-category">
-                <a href="javascript:void(0);">
-                  <img src={all_icon} alt={parentCategories[category.CategoryParentID]} /> {parentCategories[category.CategoryParentID]}
-                </a>
-              </li>
-            )
           ))}
         </ul>
       </div>
     </div>
   );
 };
+
+export default Sidebar;

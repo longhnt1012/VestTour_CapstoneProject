@@ -1,0 +1,271 @@
+#measure {
+    .product-detail-page {
+        float: left;
+        width: 100%;
+    }
+
+    .all {
+        
+        position: relative;
+        margin: 0 auto;
+        width: 1170px;
+        max-width: 100%;
+    }
+
+    .sec-title {
+        color: #000;
+        text-transform: uppercase;
+        font-size: 36px;
+        line-height: 1;
+        margin-bottom: 30px;
+
+        &.center-txt {
+            text-align: center;
+            &:after {
+                margin: 0 auto;
+            }
+        }
+
+        .tt-sub {
+            display: block;
+            font-weight: 400;
+            color: #707070;
+            line-height: 1;
+        }
+
+        &:after {
+            content: '';
+            width: 170px;
+            height: 2px;
+            background-color: #a4712a;
+            display: block;
+            margin-top: 10px;
+        }
+    }
+
+    .form-get-measures {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+
+        .measurement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .measurement-column {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+            h4 {
+                margin-bottom: 15px;
+                color: #333;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
+
+        .inline-controls {
+            margin-bottom: 15px;
+
+            .lb {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .ipgr {
+                display: flex;
+                align-items: center;
+
+                .fcontrol {
+                    flex-grow: 1;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 16px;
+                }
+
+                .unit {
+                    margin-left: 10px;
+                    font-size: 14px;
+                    color: #666;
+                }
+            }
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &.primary-btn {
+                    background-color: #a4712a;
+                    color: white;
+
+                    &:hover {
+                        background-color: #7c5114;
+                    }
+                }
+            }
+        }
+    }
+
+    .woocommerce {
+        form {
+            .form-row {
+                padding: 3px;
+                margin: 0 0 6px;
+
+                &-first {
+                    float: left;
+                    width: 47%;
+                }
+
+                &-last {
+                    float: right;
+                    width: 47%;
+                }
+            }
+
+            &.checkout_coupon,
+            &.login,
+            &.register {
+                border: 1px solid #d3ced2;
+                padding: 20px;
+                margin: 2em 0;
+                text-align: left;
+                border-radius: 5px;
+            }
+        }
+
+        #respond input#submit,
+        a.button,
+        button.button,
+        input.button {
+            font-size: 100%;
+            margin: 0;
+            line-height: 1;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0.618em 1em;
+            font-weight: 700;
+            border-radius: 3px;
+            color: #515151;
+            background-color: #ebe9eb;
+            display: inline-block;
+        }
+
+        .woocommerce-error,
+        .woocommerce-info,
+        .woocommerce-message {
+            padding: 1em 2em 1em 3.5em;
+            margin: 0 0 2em;
+            background-color: #f7f6f7;
+            color: #515151;
+            border-top: 3px solid #1e85be;
+            list-style: none;
+            width: auto;
+            word-wrap: break-word;
+            position: relative;
+
+            &::before {
+                color: #1e85be;
+                font-family: WooCommerce;
+                content: '\e028';
+                position: absolute;
+                top: 1em;
+                left: 1.5em;
+            }
+        }
+    }
+
+    .social-login-url {
+        border: 1px solid;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        height: 40px;
+        line-height: 20px;
+        color: #a4712a;
+        background-color: transparent;
+        border: none;
+        text-align: center;
+        border-radius: 4px;
+        transition: all 0.3s ease-in-out;
+
+        &.primary-btn {
+            background-color: #a4712a;
+            color: white;
+
+            &:hover {
+                background-color: #7b5520;
+                color: white;
+            }
+        }
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px / 1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .fcontrol {
+        appearance: none;
+        width: 100%;
+        height: 40px;
+        font-family: "PoppinsVN", sans-serif;
+        font-size: 14px;
+        border: solid 1px #e1e1e1;
+        padding: 10px 15px;
+        line-height: 20px;
+        outline: 0;
+        transition: all 0.3s ease-in-out;
+        display: block;
+    }
+    
+
+    .form-get-measures {
+        margin: 0 auto;
+        margin-bottom: 40px;
+        width: 770px;
+        max-width: 100%;
+    }
+
+    .form-get-measures p > span, .page-id-21 .right-main p > span {
+        float: left;
+        width: 100%;
+    }
+
+    iframe {
+        width: 48%;
+        float: left;
+        margin: 1%;
+        height: 280px;
+    }
+}
+
+  

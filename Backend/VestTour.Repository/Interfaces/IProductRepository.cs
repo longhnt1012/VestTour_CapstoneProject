@@ -15,4 +15,5 @@ public interface IProductRepository
     Task<List<ProductModel>> GetProductsWithIsCustomFalseAsync();
     Task<List<ProductQuantityModel>> GetProductsWithIsCustomFalseInStoreAsync(int storeId);
     //Task AddProductStyleOptionAsync(ProductStyleOptionModel model);
+    Task<string?> GetProductCodeByIdAsync(int productId);
 }

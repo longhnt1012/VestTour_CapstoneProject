@@ -25,13 +25,14 @@ namespace VestTour.ValidationHelpers
         }
         public static bool IsValidPhone(string? phone)
         {
-            if (string.IsNullOrEmpty(phone))
+            if (phone == null)
             {
-                return false;
+                return true; // Hoặc false tùy vào yêu cầu của bạn
             }
 
-            string phoneRegex = @"^(0|\+84)(\d{9,10})$";  
+            string phoneRegex = @"^(0|\+84)(\d{9,10})$";
             return Regex.IsMatch(phone, phoneRegex);
         }
+
     }
 }

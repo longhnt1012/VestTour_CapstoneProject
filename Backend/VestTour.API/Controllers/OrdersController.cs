@@ -53,7 +53,42 @@ namespace VestTour.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost("staffcreateorder")]
+        public async Task<IActionResult> StaffCreateOrder([FromBody] AddOrderForCustomer orderRequest)
+        {
+            if (orderRequest == null)
+            {
+                return BadRequest("Order request cannot be null.");
+            }
 
+            try
+            {
+                int orderId = await _orderService.CreateOrderForCustomerAsync(orderRequest);
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "Order created successfully.",
+                    OrderId = orderId
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Success = false,
+                    Message = "An error occurred while creating the order.",
+                    Error = ex.Message
+                });
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddNewOrder(OrderModel order)
         {

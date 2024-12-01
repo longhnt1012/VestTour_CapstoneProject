@@ -5,6 +5,7 @@ using VestTour.Repository.Constants;
 using VestTour.Service.Interface;
 using VestTour.Service.Helpers;
 using VestTour.Repository.Helpers;
+using VestTour.Domain.Entities;
 
 namespace VestTour.Service.Services
 {
@@ -48,7 +49,10 @@ namespace VestTour.Service.Services
             {
                 return Error.EmailTaken;
             }
-
+            if (!UserValidate.IsValidPhone(registerModel.Phone))
+            {
+                return Error.InvalidPhone;
+            }
             // Hash the password before storing it
             var hashedPassword = PasswordHelper.HashPassword(registerModel.Password);
             // Generate OTP

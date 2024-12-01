@@ -42,7 +42,22 @@ namespace VestTour.Repository.Repositories
 
             await _context.SaveChangesAsync();
         }
+        public async Task AddOrderDetailAsync(int orderId, int productId, int quantity, decimal price)
+        {
+           
+                var orderDetail = new OrderDetail
+                {
+                    OrderId = orderId,
+                    ProductId = productId ,// Use ProductID from the cart item
+                    Quantity = quantity,
+                    Price = price
+                };
 
+                _context.OrderDetails.Add(orderDetail);
+            
+
+            await _context.SaveChangesAsync();
+        }
         public async Task<List<OrderModel>> GetAllOrderAsync()
         {
             var orders = await _context.Orders!.ToListAsync();
@@ -142,6 +157,12 @@ namespace VestTour.Repository.Repositories
                 order.Status = newStatus;
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task AddOrderDetailAsync(OrderDetailModel orderDetailModel)
+        {
+            var orderDetailEntity = _mapper.Map<OrderDetail>(orderDetailModel);
+            _context.OrderDetails.Add(orderDetailEntity);
+            await _context.SaveChangesAsync();
         }
     }
 }

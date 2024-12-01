@@ -15,6 +15,7 @@ namespace VestTour.Repository.Interface
         public Task<List<OrderModel>> GetOrdersByUserIdAsync(int userId);
         Task AddOrderDetailsAsync(int orderId, List<CartItemModel> cartItems);
         Task ChangeStatusAsync(int orderId, string newStatus);
-
+        Task AddOrderDetailAsync(OrderDetailModel orderDetailModel);
+        Task AddOrderDetailAsync(int orderId, int productId, int quantity, decimal price);
     }
 }

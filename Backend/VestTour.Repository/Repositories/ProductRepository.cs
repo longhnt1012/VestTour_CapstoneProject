@@ -143,6 +143,15 @@ namespace VestTour.Repository.Repositories
 
             return product;
         }
+        public async Task<string?> GetProductCodeByIdAsync(int productId)
+        {
+            var product = await _context.Products
+                .Where(p => p.ProductId == productId)
+                .Select(p => p.ProductCode)
+                .FirstOrDefaultAsync();
+
+            return product;
+        }
 
 
     }

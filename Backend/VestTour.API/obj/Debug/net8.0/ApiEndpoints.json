@@ -1177,6 +1177,22 @@
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "StaffCreateOrder",
+    "RelativePath": "api/Orders/staffcreateorder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderRequest",
+        "Type": "AddOrderForCustomer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
     "Method": "GetOrdersByStoreId",
     "RelativePath": "api/Orders/store/{storeId}",
     "HttpMethod": "GET",

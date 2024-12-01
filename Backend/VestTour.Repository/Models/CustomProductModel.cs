@@ -11,9 +11,8 @@ public class CustomProductModel
     public int FabricID { get; set; }
     public int? LiningID { get; set; }
     public int? MeasurementID { get; set; }
+    public int Quantity { get; set; }
     public List<PickedStyleOptionModel> PickedStyleOptions { get; set; } = new List<PickedStyleOptionModel>();
-
-    // Parameterless constructor for deserialization
     public CustomProductModel() {
         
     }

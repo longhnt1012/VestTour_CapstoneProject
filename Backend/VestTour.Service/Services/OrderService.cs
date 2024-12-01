@@ -14,6 +14,8 @@ using VestTour.Repository.Constants;
 using VestTour.Repository.Interfaces;
 using VestTour.Service.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using VestTour.Repository.Data;
 
 namespace VestTour.Service.Implementation
 {
@@ -27,8 +29,12 @@ namespace VestTour.Service.Implementation
         private readonly IPaymentService _paymentService;
         private readonly IVoucherService _voucherService;
         private readonly IStoreService _storeService;
-        public OrderService(IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService)
+        private readonly IProductRepository _productRepository;
+        private readonly IFabricRepository _fabricRepository;
+        private readonly VestTourDbContext _context;
+        public OrderService(VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
         {
+            _context = context;
             _paymentService = paymentService;
             _httpContextAccessor = httpContextAccessor;
             _orderRepository = orderRepository;
@@ -37,6 +43,8 @@ namespace VestTour.Service.Implementation
             _cartRepo = cartRepo;
             _voucherService = voucherService;
             _storeService = storeService;
+            _productRepository = productRepository;
+            _fabricRepository = fabricRepository;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -57,7 +65,7 @@ namespace VestTour.Service.Implementation
             // Validate the order status
             if (!OrderStatusValidate.IsValidOrderStatus(order.Status ?? "Pending"))
             {
-                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, and Cancel.");
+                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, Cancel and Ready.");
             }
             User? user = order.UserID != null ? await _userService.GetUserByIdAsync(order.UserID.Value) : null;
             if (!DeliveryMethodValidate.IsValidDeliveryMethod(order.DeliveryMethod))
@@ -367,5 +375,144 @@ namespace VestTour.Service.Implementation
 
             return response;
         }
+        private async Task<decimal> CalculatePrice(CustomProductModel customProduct)
+        {
+            decimal basePrice = 100;
+            decimal customizationCost = 0;
+
+            decimal? fabricPrice = await _fabricRepository.GetFabricPriceByIdAsync(customProduct.FabricID);
+            if (fabricPrice.HasValue)
+            {
+                customizationCost += fabricPrice.Value;
+            }
+            customizationCost += customProduct.PickedStyleOptions.Count * 5;
+
+            return basePrice + customizationCost;
+        }
+        public async Task<int> CreateOrderForCustomerAsync(AddOrderForCustomer orderRequest)
+        {
+            if (!orderRequest.Products.Any() && !orderRequest.CustomProducts.Any())
+            {
+                throw new ArgumentException("At least one product (custom or non-custom) must be provided.");
+            }
+
+            decimal totalPrice = 0;
+            var customProductIds = new List<int>(); // List to store custom product IDs
+
+            // Process custom products
+            foreach (var customProduct in orderRequest.CustomProducts)
+            {
+                string productCode = await customProduct.GenerateProductCodeAsync(_fabricRepository);
+                customProduct.SetProductCode(productCode);
+                decimal price = await CalculatePrice(customProduct);
+                var customProductEntity = new ProductModel
+                {
+                    ProductCode = productCode,
+                    CategoryID = customProduct.CategoryID,
+                    FabricID = customProduct.FabricID,
+                    LiningID = customProduct.LiningID,
+                    MeasurementID = customProduct.MeasurementID,
+                    IsCustom = true,
+                    Price = price*customProduct.Quantity // Total price of customizations
+                };
+                
+                totalPrice += (customProductEntity.Price ?? 0) * customProduct.Quantity; // Multiply by quantity
+
+                var productId = await _productRepository.AddProductAsync(customProductEntity);
+                customProductIds.Add(productId); // Save the product ID to the list
+
+                foreach (var styleOption in customProduct.PickedStyleOptions)
+                {
+                    var productStyleOption = new
+                    {
+                        ProductId = productId,
+                        StyleOptionId = styleOption.StyleOptionID
+                    };
+
+                    await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                INSERT INTO ProductStyleOption (ProductId, StyleOptionId) 
+                VALUES ({productStyleOption.ProductId}, {productStyleOption.StyleOptionId})
+            ");
+                }
+            }
+
+            // Process non-custom products
+            foreach (var product in orderRequest.Products)
+            {
+                totalPrice += (product.Price ?? 0) * product.Quantity; // Multiply by quantity
+            }
+
+            // Insert Order
+            var orderEntity = new OrderModel
+            {
+                UserID = orderRequest.UserID,
+                StoreId = orderRequest.StoreId,
+                VoucherId = orderRequest.VoucherId,
+                OrderDate = DateOnly.FromDateTime(DateTime.Now),
+                ShippedDate = orderRequest.ShippedDate,
+                Note = orderRequest.Note,
+                Paid = orderRequest.Paid,
+                GuestName = orderRequest.GuestName,
+                GuestEmail = orderRequest.GuestEmail,
+                GuestAddress = orderRequest.GuestAddress,
+                TotalPrice = totalPrice,
+                Deposit = orderRequest.Deposit,
+                ShippingFee = orderRequest.ShippingFee,
+                DeliveryMethod = orderRequest.DeliveryMethod
+            };
+
+            int orderId = await _orderRepository.AddOrderAsync(orderEntity);
+
+            // Insert Order Details for non-custom products
+            foreach (var product in orderRequest.Products)
+            {
+                var productinstore = await _productRepository.GetProductByIdAsync(product.ProductID);
+                var orderDetail = new OrderDetailModel
+                {
+                    OrderId = orderId,
+                    ProductId = product.ProductID,
+                    Quantity = product.Quantity,
+                    Price = productinstore.Price.Value * product.Quantity // Multiply by quantity
+                };
+
+                await _orderRepository.AddOrderDetailAsync(orderDetail.OrderId,orderDetail.ProductId,orderDetail.Quantity,orderDetail.Price);
+            }
+
+            // Insert Order Details for custom products
+            foreach (var customProductId in customProductIds)
+            {
+                var productCode = await _productRepository.GetProductCodeByIdAsync(customProductId);
+                var productcustom = await _productRepository.GetProductByIdAsync(customProductId);
+
+                var customOrderDetail = new OrderDetailModel
+                {
+                    OrderId = orderId,
+                    ProductId = customProductId,
+                    Quantity = orderRequest.CustomProducts
+                        .First(cp => cp.ProductCode == productCode).Quantity, // Use the quantity from the request
+                    Price = (productcustom.Price ?? 0) * orderRequest.CustomProducts
+                        .First(cp => cp.ProductCode == productCode).Quantity // Multiply by quantity
+                };
+
+                await _orderRepository.AddOrderDetailAsync(customOrderDetail.OrderId, customOrderDetail.ProductId, customOrderDetail.Quantity, customOrderDetail.Price);
+            }
+
+            // Send email confirmation
+            var emailContent = new StringBuilder();
+            emailContent.AppendLine($"Order ID: {orderId}");
+            emailContent.AppendLine($"Total Price: {totalPrice:C}");
+            await _emailHelper.SendEmailAsync(new EmailRequest
+            {
+                To = orderRequest.GuestEmail ?? await _userService.GetEmailByUserIdAsync(orderRequest.UserID ?? 0),
+                Subject = "Order Confirmation",
+                Content = emailContent.ToString()
+            });
+
+            return orderId;
+        }
+
+
+
     }
+
 }

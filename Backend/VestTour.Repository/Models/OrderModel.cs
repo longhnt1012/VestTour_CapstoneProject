@@ -24,8 +24,9 @@ namespace VestTour.Repository.Models
         public string? GuestName { get; set; }
         public string? GuestEmail { get; set; }
         public string? GuestAddress { get; set; }
-       // public string? OrderCode { get; set; }
-       [JsonIgnore]
+        public MeasurementModel? GuestMeasurements { get; set; }
+
+        [JsonIgnore]
         public List<ProductModel> Products { get; set; } = new List<ProductModel>();
         public decimal? TotalPrice { get; set; }
         public decimal? Deposit { get; set; }

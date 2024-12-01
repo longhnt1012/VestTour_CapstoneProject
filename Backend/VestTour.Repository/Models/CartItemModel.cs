@@ -9,5 +9,6 @@
         public decimal Price { get; set; }
         public int Quantity { get; set; } = 1;
         public bool IsCustom { get; set; } // True for custom products, false for regular products
+        public string? Note { get; set; }
     }
 }

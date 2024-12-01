@@ -32,7 +32,9 @@ namespace VestTour.Service.Implementation
         private readonly IProductRepository _productRepository;
         private readonly IFabricRepository _fabricRepository;
         private readonly VestTourDbContext _context;
-        public OrderService(VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
+        private readonly IMeasurementRepository _measurementRepository;
+        private readonly IMeasurementService _measurementService;
+        public OrderService(IMeasurementService measurementService,IMeasurementRepository measurementRepository,VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
         {
             _context = context;
             _paymentService = paymentService;
@@ -45,6 +47,8 @@ namespace VestTour.Service.Implementation
             _storeService = storeService;
             _productRepository = productRepository;
             _fabricRepository = fabricRepository;
+            _measurementRepository = measurementRepository;
+            _measurementService = measurementService;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -214,6 +218,20 @@ namespace VestTour.Service.Implementation
             {
                 throw new InvalidOperationException("No items in cart to confirm.");
             }
+            decimal subFee = 0;
+            string surchargeNote = string.Empty;
+            if (userId.HasValue)
+            {
+                var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
+                if (measurementResponse != null)
+                {
+                    subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
+                    if (subFee > 0)
+                    {
+                        surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
+                    }
+                }
+            }
 
             // Validate delivery method
             //if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
@@ -260,7 +278,8 @@ namespace VestTour.Service.Implementation
                 ShippingFee = shippingFee,
                 Paid = false,
                 Status = "Pending",
-                DeliveryMethod = "Pick up"
+                DeliveryMethod = "Pick up",
+                Note =surchargeNote
             };
 
 
@@ -293,6 +312,7 @@ namespace VestTour.Service.Implementation
                     .AppendLine($"Thank you for your order! Your Order ID is: {orderId}.")
                     .AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}")
                     .AppendLine($"- Total Price: {newOrder.TotalPrice:C}")
+                    .AppendLine($"- Note: {newOrder.Note:C}")
                     .AppendLine($"- Shipping Fee: {newOrder.ShippingFee:C}")
                     .AppendLine($"- Deposit: {newOrder.Deposit:C}")
                     .AppendLine($"- Balance Payment: {newOrder.BalancePayment:C}")
@@ -389,6 +409,10 @@ namespace VestTour.Service.Implementation
 
             return basePrice + customizationCost;
         }
+
+      
+
+
         public async Task<int> CreateOrderForCustomerAsync(AddOrderForCustomer orderRequest)
         {
             if (!orderRequest.Products.Any() && !orderRequest.CustomProducts.Any())

@@ -22,22 +22,26 @@ namespace VestTour.Services
         private readonly IFabricRepository _fabricRepository;
         private readonly IProductService _productService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+       private readonly IMeasurementRepository _measurementRepository;
+        private readonly IMeasurementService _measurementService;
 
         public AddCartService(
+            IMeasurementService measurementService,
             VestTourDbContext context,
             IProductRepository productRepository,
             IAddCartRepository addCartRepository,
             IOrderService orderService,
-            // IProductStyleOptionervice productStyleOptionService,
+           IMeasurementRepository measurementRepository,
             IFabricRepository fabricRepository,
             IProductService productService,
             IHttpContextAccessor httpContextAccessor)
         {
+            _measurementService = measurementService;
             _context = context;
             _productRepository = productRepository;
             _orderService = orderService;
             _addCartRepository = addCartRepository;
-            // _productStyleOptionService = productStyleOptionService;
+            _measurementRepository = measurementRepository;
             _fabricRepository = fabricRepository;
             _productService = productService;
             _httpContextAccessor = httpContextAccessor;
@@ -68,6 +72,22 @@ namespace VestTour.Services
             var id = userId ?? GetOrCreateGuestId();
             CartItemModel cartItem;
 
+            // Retrieve measurements and calculate surcharge
+            decimal subFee = 0;
+            string surchargeNote = string.Empty;
+            if (userId.HasValue)
+            {
+                var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
+                if (measurementResponse != null)
+                {
+                    subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
+                    if (subFee > 0)
+                    {
+                        surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
+                    }
+                }
+            }
+
             if (isCustom && customProduct != null)
             {
                 if (string.IsNullOrEmpty(customProduct.ProductCode))
@@ -79,9 +99,10 @@ namespace VestTour.Services
                 cartItem = new CartItemModel
                 {
                     CustomProduct = customProduct,
-                    Price = price,
+                    Price = price + subFee,
                     Quantity = 1,
-                    IsCustom = true
+                    IsCustom = true,
+                    Note = surchargeNote // Add the surcharge note if applicable
                 };
             }
             else if (!isCustom && productId.HasValue)
@@ -94,7 +115,8 @@ namespace VestTour.Services
                     Product = product,
                     Price = product.Price ?? 0,
                     Quantity = 1,
-                    IsCustom = false
+                    IsCustom = false,
+                    Note = surchargeNote // Add the surcharge note if applicable
                 };
             }
             else
@@ -182,7 +204,7 @@ namespace VestTour.Services
                 {
 
                     var customProduct = item.CustomProduct;
-
+                   
                     var productToAdd = new ProductModel
                     {
                         ProductCode = customProduct.ProductCode,
@@ -190,7 +212,6 @@ namespace VestTour.Services
                         FabricID = customProduct.FabricID,
                         LiningID = customProduct.LiningID,
                         MeasurementID = customProduct.MeasurementID,
-
                         Price = item.Price,
                         IsCustom = true
                     };

@@ -235,6 +235,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.RevenueShare).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
             entity.Property(e => e.DeliveryMethod).HasMaxLength(50);
@@ -439,6 +440,9 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.ContactNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.ImgUrl)
+                .HasMaxLength(255)
+                .HasColumnName("ImgUrl");
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.StaffIDs).HasMaxLength(50);
@@ -523,7 +527,9 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-
+            entity.Property(e => e.AvtUrl)
+                .HasMaxLength(255)
+                .HasColumnName("AvtUrl");
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

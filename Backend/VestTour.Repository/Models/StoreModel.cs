@@ -12,5 +12,6 @@
         public TimeOnly? CloseTime { get; set; }
         public string? StaffIDs { get; set; }
         public int? DistrictID { get; set; }
+        public string? ImgUrl { get; set; }
     }
 }

@@ -124,6 +124,16 @@ namespace VestTour.Controllers
 
             return Ok(timeSlots);
         }
+        [HttpPut("{storeId}/image")]
+        public async Task<IActionResult> UpdateStoreImage(int storeId, [FromBody] string imgUrl)
+        {
+            var result = await _storeService.UpdateStoreImageAsync(storeId, imgUrl);
+
+            if (!result)
+                return NotFound(new { message = "Store not found or failed to update the image." });
+
+            return Ok(new { message = "Store image updated successfully." });
+        }
 
     }
 }

@@ -189,14 +189,14 @@ namespace VestTour.Services
                 .ToListAsync();
             return _mapper.Map<List<BookingModel>>(bookings);
         }
-        public async Task StaffAssistWithBooking(int bookingId, string assistStaffName)
+        public async Task StaffAssistWithBooking(int bookingId, string assistStaffName, string note)
         {
             var booking = await _context.Bookings.FindAsync(bookingId);
             if (booking != null)
             {
-                booking.Status = "Processing";
+                booking.Status = "Confirmed";
                 booking.AssistStaffName = assistStaffName; // Update the staff assist name
-
+                booking.Note = note;
                 _context.Bookings.Update(booking);
                 await _context.SaveChangesAsync();
             }

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using VestTour.Repository.Models;
 using VestTour.Service.Helpers;
 using VestTour.Repository.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace VestTour.Service.Services
 {
@@ -231,6 +232,24 @@ namespace VestTour.Service.Services
         {
             return await _userRepository.GetEmailByUserIdAsync(userId);
         }
+        public async Task UpdateUserAvatarAsync(int userId, string avatarUrl)
+        {
+            if (string.IsNullOrWhiteSpace(avatarUrl))
+            {
+                throw new ArgumentException("Avatar URL cannot be empty.");
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            user.AvtUrl = avatarUrl; // Assuming `Avatar` is the property in the `User` entity
+            await _userRepository.UpdateUserAsync(user);
+        }
+
+
 
 
     }

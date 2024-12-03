@@ -2830,6 +2830,27 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "UpdateAvatar",
+    "RelativePath": "api/User/{userId}/avatar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "avatarUrl",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
     "Method": "ForgotPassword",
     "RelativePath": "api/User/forgot-password",
     "HttpMethod": "POST",

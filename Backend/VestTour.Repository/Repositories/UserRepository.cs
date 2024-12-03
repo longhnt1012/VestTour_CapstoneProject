@@ -44,7 +44,7 @@ namespace VestTour.Repository.Repositories
         public async Task<int> AddUserAsync(UserModel user)
         {
             var newUser = _mapper.Map<User>(user);
-            newUser.Status = "active"; // Default status for new users
+            newUser.Status = "Active"; // Default status for new users
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return newUser.UserId;
@@ -205,6 +205,18 @@ namespace VestTour.Repository.Repositories
         {
             var user = await _context.Users.FindAsync(userId);
             return user?.Email;
+        }
+        public async Task UpdateUserAvatarAsync(int userId, string avatarUrl)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            user.AvtUrl = avatarUrl; // Assuming `Avatar` is the property in the `User` entity
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
 
     }

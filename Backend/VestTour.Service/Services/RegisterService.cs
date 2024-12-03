@@ -66,7 +66,7 @@ namespace VestTour.Service.Services
                 Email = registerModel.Email,
                 Phone=registerModel.Phone,
                 Password = hashedPassword,  // Store the hashed password
-                Status = "deactive",
+                Status = "Deactive",
                 IsConfirmed = false,
                 RoleId = 3
             };
@@ -94,7 +94,7 @@ namespace VestTour.Service.Services
             if (isOtpValid)
             {
                 // Update user status to "active" and set IsConfirmed to true
-                await _userRepository.UpdateEmailConfirmStatusAsync(email, "active", true);
+                await _userRepository.UpdateEmailConfirmStatusAsync(email, "Active", true);
             }
 
             return isOtpValid;

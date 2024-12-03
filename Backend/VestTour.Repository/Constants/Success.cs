@@ -39,6 +39,7 @@
 
 
         public const string BookingsRetrieved = "Bookings Retrieved.";
+        public const string BookingConfirmed = "Booking has been confirmed.";
         public const string BookingCreated = "Booking created successfully.";
         public const string BookingUpdated = "Booking updated successfully.";
         public const string BookingDeleted = "Booking deleted successfully.";

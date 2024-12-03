@@ -319,74 +319,78 @@ public class BookingService : IBookingService
     {
         var response = new ServiceResponse();
 
+        // Validate booking ID
         if (bookingId <= 0)
         {
             response.Success = false;
-            response.Message = Error.InvalidBookingId;
+            response.Message = Error.InvalidBookingId; // Use predefined constant
             return response;
         }
 
-        // Retrieve the staff by ID
+        // Retrieve staff details
         var staff = await _userRepo.GetUserByIdAsync(staffId);
         if (staff == null)
         {
             response.Success = false;
-            response.Message = Error.UserNotFound;
+            response.Message = Error.UserNotFound; // Use predefined constant
             return response;
         }
 
-        // Retrieve the booking by ID
+        // Retrieve booking details
         var booking = await _bookingRepository.GetBookingById(bookingId);
         if (booking == null)
         {
             response.Success = false;
-            response.Message = Error.BookingNotFound;
+            response.Message = Error.BookingNotFound; // Use predefined constant
             return response;
         }
 
-        // Update the booking details
-        booking.Status = BookingEnums.Confirmed.ToString(); 
-        booking.AssistStaffName = staff.Name; // Assign the staff name
+        // Update booking details
+        booking.Status = BookingEnums.Confirmed.ToString(); // Update status to Confirmed
+        booking.AssistStaffName = staff.Name; // Assign assist staff name
+        booking.Note = $"{booking.Service} assist by {staff.Name}"; // Update note
 
         try
         {
-            // Update booking in the repository
-            await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName);
-            
-                var store = await _storeRepository.GetStoreByIdAsync(booking.StoreId);
-           
-           
-            // Prepare and send email confirmation
+            // Save changes to the repository
+            await _bookingRepository.StaffAssistWithBooking(bookingId, booking.AssistStaffName,booking.Note);
+
+            // Retrieve store details for the email
+            var store = await _storeRepository.GetStoreByIdAsync(booking.StoreId);
+
+            // Prepare email content
             var emailRequest = new EmailRequest
             {
                 To = booking.GuestEmail,
                 Subject = "Booking Confirmation",
-                Content = $"Dear {booking.GuestName},\n\nYour booking has been confirmed!\n\n" +
+                Content = $"Dear {booking.GuestName},\n\n" +
+                          $"Your booking has been confirmed!\n\n" +
                           $"Booking ID: {booking.BookingId}\n" +
                           $"Service: {booking.Service}\n" +
                           $"Date: {booking.BookingDate:yyyy-MM-dd}\n" +
                           $"Time: {booking.Time}\n" +
                           $"Store Name: {store.Name}\n" +
-                          $"Store Address: {store.Address}\n"+
+                          $"Store Address: {store.Address}\n" +
                           $"Note: {booking.Note}\n\n" +
-                          "Thank you for choosing VestTour!\n\nBest regards,\nVestTour Team"
+                          "Thank you for choosing VestTour!\n\n" +
+                          "Best regards,\nVestTour Team"
             };
 
+            // Send confirmation email
             await _emailHelper.SendEmailAsync(emailRequest);
 
             response.Success = true;
-            response.Message = Success.StatusUpdated;
+            response.Message = Success.BookingConfirmed; // Use predefined constant
         }
         catch (Exception ex)
         {
-            // Log the exception and return a failure response
-            // Example: _logger.LogError(ex, "Error while assisting with booking.");
             response.Success = false;
-            response.Message = $"An error occurred: {ex.Message}";
+            response.Message = $"An error occurred while confirming the booking: {ex.Message}";
         }
 
         return response;
     }
+
 
 
 }

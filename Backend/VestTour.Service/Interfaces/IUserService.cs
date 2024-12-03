@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,7 @@ namespace VestTour.Service.Interfaces
         Task<string> ForgotPassword(string email);
         Task<string?> GetEmailByUserIdAsync(int? userId);
         Task<string> ResetPasswordAsync(string token, string newPassword);
+        Task UpdateUserAvatarAsync(int userId, string avatarUrl);
+        //Task<string> SaveFileAsync(IFormFile file);
     }
 }

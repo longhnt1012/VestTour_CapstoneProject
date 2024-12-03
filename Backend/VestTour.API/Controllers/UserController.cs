@@ -6,6 +6,7 @@ using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Cors;
+using VestTour.Repository.FileStorage;
 
 namespace VestTour.API.Controllers
 {
@@ -15,10 +16,12 @@ namespace VestTour.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IFileService _fileService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService,IFileService fileService)
         {
             _userService = userService;
+            _fileService = fileService;
         }
 
         // GET: api/user
@@ -156,6 +159,47 @@ namespace VestTour.API.Controllers
 
             return BadRequest(new { Message = result });
         }
+        [HttpPut("{userId}/avatar")]
+        public async Task<IActionResult> UpdateAvatar(int userId, [FromBody] string avatarUrl)
+        {
+            try
+            {
+                await _userService.UpdateUserAvatarAsync(userId, avatarUrl);
+                return Ok(new { message = "Avatar updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
 
+        //[HttpPost("{userId}/avatar")]
+        //public async Task<IActionResult> UploadAvatar(int userId, [FromForm] IFormFile avatarFile)
+        //{
+        //    if (avatarFile == null || avatarFile.Length == 0)
+        //    {
+        //        return BadRequest(new { message = "Invalid file." });
+        //    }
+
+        //    if (!FileHelper.IsValidImage(avatarFile))
+        //    {
+        //        return BadRequest(new { message = "Invalid file type. Only .jpg, .jpeg, .png, .gif are allowed." });
+        //    }
+
+        //    try
+        //    {
+        //        // Save the file using FileService
+        //        var avatarUrl = await _fileService.SaveFileAsync(avatarFile, FileConstant.AvatarSubFolder);
+
+        //        // Update the user's avatar URL in the database
+        //        await _userService.UpdateUserAvatarAsync(userId, avatarUrl);
+
+        //        return Ok(new { message = "Avatar updated successfully", avatarUrl });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { error = ex.Message });
+        //    }
+        //}
     }
 }

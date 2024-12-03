@@ -39,7 +39,7 @@ public partial class Order
 
     public string? GuestAddress { get; set; }
     public string? DeliveryMethod { get; set; }
-    //public string? OrderCode { get; set; }
+    public decimal? RevenueShare { get; set; }
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();

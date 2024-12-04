@@ -164,6 +164,18 @@ namespace VestTour.Repository.Repositories
 
             return (store.OpenTime, store.CloseTime);
         }
+        public async Task<bool> UpdateStoreImageAsync(int storeId, string imgUrl)
+        {
+            var store = await _context.Stores!.FindAsync(storeId);
+
+            if (store == null)
+                return false;
+
+            store.ImgUrl = imgUrl;
+            _context.Stores.Update(store);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
     }
 }

@@ -16,6 +16,7 @@ namespace VestTour.Repository.Interface
         Task<bool> RemoveStaffFromStoreAsync(int storeId, int staffId);
         Task<StoreModel?> GetStoreByStaffIdAsync(int staffId);
         Task<(TimeOnly? OpenTime, TimeOnly? CloseTime)> GetStoreTimingsAsync(int storeId);
+        Task<bool> UpdateStoreImageAsync(int storeId, string imgUrl);
 
     }
 }

@@ -98,6 +98,10 @@ namespace VestTour.Service.Implementation
 
             return GetTimeSlots(openTime.Value, closeTime.Value);
         }
+        public async Task<bool> UpdateStoreImageAsync(int storeId, string imgUrl)
+        {
+            return await _storeRepository.UpdateStoreImageAsync(storeId, imgUrl);
+        }
 
     }
 }

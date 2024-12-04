@@ -2308,6 +2308,27 @@
   },
   {
     "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "UpdateStoreImage",
+    "RelativePath": "api/Store/{storeId}/image",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "imgUrl",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StoreController",
     "Method": "RemoveStaffFromStore",
     "RelativePath": "api/Store/{storeId}/remove-staff/{staffId}",
     "HttpMethod": "DELETE",

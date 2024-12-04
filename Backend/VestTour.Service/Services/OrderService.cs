@@ -278,8 +278,8 @@ namespace VestTour.Service.Implementation
                 ShippingFee = shippingFee,
                 Paid = false,
                 Status = "Pending",
-                DeliveryMethod = "Pick up",
-                Note =surchargeNote
+                DeliveryMethod = deliveryMethod ??= "Pick up",
+                Note = surchargeNote
             };
 
 
@@ -472,6 +472,7 @@ namespace VestTour.Service.Implementation
                 UserID = orderRequest.UserID,
                 StoreId = orderRequest.StoreId,
                 VoucherId = orderRequest.VoucherId,
+                ShipperPartnerId = 4,
                 OrderDate = DateOnly.FromDateTime(DateTime.Now),
                 ShippedDate = orderRequest.ShippedDate,
                 Note = orderRequest.Note,

@@ -30,7 +30,7 @@ namespace VestTour.Repository.Repositories
         {
             return await _context.Users
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword && u.Status == "active" && u.IsConfirmed == true);
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword && u.Status == "Active" && u.IsConfirmed == true);
         }
 
 

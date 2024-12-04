@@ -478,6 +478,7 @@ namespace VestTour.Service.Implementation
                 ShippedDate = orderRequest.ShippedDate,
                 Note = orderRequest.Note,
                 Paid = orderRequest.Paid,
+                Status = "Pending",
                 GuestName = orderRequest.GuestName,
                 GuestEmail = orderRequest.GuestEmail,
                 GuestAddress = orderRequest.GuestAddress,

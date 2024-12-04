@@ -52,7 +52,7 @@ namespace VestTour.Service.Services
                 Email = user.Email,
                 Phone = user.Phone,
                 Password = hashedPassword,  // Store the hashed password
-                Status = "active",
+                Status = "Active",
                 IsConfirmed = true,
                 RoleId = user.RoleId,
             };

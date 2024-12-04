@@ -415,7 +415,8 @@ namespace VestTour.Service.Implementation
 
         public async Task<int> CreateOrderForCustomerAsync(AddOrderForCustomer orderRequest)
         {
-            if (!orderRequest.Products.Any() && !orderRequest.CustomProducts.Any())
+            if ((orderRequest.Products == null || !orderRequest.Products.Any()) &&
+     (orderRequest.CustomProducts == null || !orderRequest.CustomProducts.Any()))
             {
                 throw new ArgumentException("At least one product (custom or non-custom) must be provided.");
             }
@@ -432,7 +433,7 @@ namespace VestTour.Service.Implementation
                 var customProductEntity = new ProductModel
                 {
                     ProductCode = productCode,
-                    CategoryID = customProduct.CategoryID,
+                    CategoryID = 5,
                     FabricID = customProduct.FabricID,
                     LiningID = customProduct.LiningID,
                     MeasurementID = customProduct.MeasurementID,
@@ -506,7 +507,7 @@ namespace VestTour.Service.Implementation
             // Insert Order Details for custom products
             foreach (var customProductId in customProductIds)
             {
-                var productCode = await _productRepository.GetProductCodeByIdAsync(customProductId);
+               // var productCode = await _productRepository.GetProductCodeByIdAsync(customProductId);
                 var productcustom = await _productRepository.GetProductByIdAsync(customProductId);
 
                 var customOrderDetail = new OrderDetailModel
@@ -514,9 +515,9 @@ namespace VestTour.Service.Implementation
                     OrderId = orderId,
                     ProductId = customProductId,
                     Quantity = orderRequest.CustomProducts
-                        .First(cp => cp.ProductCode == productCode).Quantity, // Use the quantity from the request
+                        .First(cp => cp.ProductCode == productcustom.ProductCode).Quantity, // Use the quantity from the request
                     Price = (productcustom.Price ?? 0) * orderRequest.CustomProducts
-                        .First(cp => cp.ProductCode == productCode).Quantity // Multiply by quantity
+                        .First(cp => cp.ProductCode == productcustom.ProductCode).Quantity // Multiply by quantity
                 };
 
                 await _orderRepository.AddOrderDetailAsync(customOrderDetail.OrderId, customOrderDetail.ProductId, customOrderDetail.Quantity, customOrderDetail.Price);
@@ -524,8 +525,52 @@ namespace VestTour.Service.Implementation
 
             // Send email confirmation
             var emailContent = new StringBuilder();
+            emailContent.AppendLine("Thank you for your order!");
             emailContent.AppendLine($"Order ID: {orderId}");
+            emailContent.AppendLine($"Order Date: {DateTime.Now}");
             emailContent.AppendLine($"Total Price: {totalPrice:C}");
+            emailContent.AppendLine();
+            emailContent.AppendLine("Order Details:");
+            emailContent.AppendLine("--------------------------------------------------");
+
+            // Add non-custom products to email
+            if (orderRequest.Products != null && orderRequest.Products.Any())
+            {
+                emailContent.AppendLine("Regular Products:");
+                foreach (var product in orderRequest.Products)
+                {
+                    emailContent.AppendLine($"- Product ID: {product.ProductID}");
+                    emailContent.AppendLine($"  Quantity: {product.Quantity}");
+                    emailContent.AppendLine($"  Price per Unit: {product.Price:C}");
+                    emailContent.AppendLine($"  Subtotal: {(product.Price ?? 0) * product.Quantity:C}");
+                    emailContent.AppendLine("--------------------------------------------------");
+                }
+            }
+
+            // Add custom products to email
+            if (orderRequest.CustomProducts != null && orderRequest.CustomProducts.Any())
+            {
+                emailContent.AppendLine("Custom Products:");
+                foreach (var customProduct in orderRequest.CustomProducts)
+                {
+                    var productcustom = await _productRepository.GetProductByCodeAsync(customProduct.ProductCode);
+                    emailContent.AppendLine($"- Product Code: {customProduct.ProductCode}");
+                    emailContent.AppendLine($"  Fabric ID: {customProduct.FabricID}");
+                    emailContent.AppendLine($"  Lining ID: {customProduct.LiningID}");
+                    emailContent.AppendLine($"  Quantity: {customProduct.Quantity}");
+                    emailContent.AppendLine($"  Customization Price per Unit: {productcustom.Price:C}");
+                    emailContent.AppendLine($"  Subtotal: {(productcustom.Price ?? 0) * customProduct.Quantity:C}");
+                    emailContent.AppendLine($"  Picked Style Options: {string.Join(", ", customProduct.PickedStyleOptions.Select(o => o.StyleOptionID))}");
+                    emailContent.AppendLine("--------------------------------------------------");
+                }
+            }
+
+            // Include summary and footer
+            emailContent.AppendLine();
+            emailContent.AppendLine("Thank you for shopping with us!");
+            emailContent.AppendLine("If you have any questions, please contact our support team.");
+
+            // Send email
             await _emailHelper.SendEmailAsync(new EmailRequest
             {
                 To = orderRequest.GuestEmail ?? await _userService.GetEmailByUserIdAsync(orderRequest.UserID ?? 0),

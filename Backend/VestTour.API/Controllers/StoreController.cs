@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using VestTour.API.FileHandle;
+using VestTour.Service.Services;
 
 namespace VestTour.Controllers
 {
@@ -124,16 +126,37 @@ namespace VestTour.Controllers
 
             return Ok(timeSlots);
         }
-        [HttpPut("{storeId}/image")]
-        public async Task<IActionResult> UpdateStoreImage(int storeId, [FromBody] string imgUrl)
+        
+        [HttpPost("{storeId}/image/upload")]
+        public async Task<IActionResult> UploadImage(int storeId, IFormFile file)
         {
-            var result = await _storeService.UpdateStoreImageAsync(storeId, imgUrl);
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest(new { message = "No file uploaded or file is empty." });
+            }
 
-            if (!result)
-                return NotFound(new { message = "Store not found or failed to update the image." });
+            try
+            {
+                // Handle file upload
+                var uploadHandler = new UploadHandle();
+                string result = uploadHandler.Upload(file);
 
-            return Ok(new { message = "Store image updated successfully." });
+                // Check if upload was successful
+                if (result.StartsWith("Extension is not valid") || result.StartsWith("Maximum size can be"))
+                {
+                    return BadRequest(new { message = result });
+                }
+
+                // Update avatar URL in the database
+                string imageUrl = $"/Uploads/{result}"; // Assuming uploads are served from this path
+                await _storeService.UpdateStoreImageAsync(storeId, imageUrl);
+
+                return Ok(new { message = "Store Image updated successfully", imageUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
-
     }
 }

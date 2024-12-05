@@ -2308,9 +2308,9 @@
   },
   {
     "ContainingType": "VestTour.Controllers.StoreController",
-    "Method": "UpdateStoreImage",
-    "RelativePath": "api/Store/{storeId}/image",
-    "HttpMethod": "PUT",
+    "Method": "UploadImage",
+    "RelativePath": "api/Store/{storeId}/image/upload",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -2320,9 +2320,9 @@
         "IsRequired": true
       },
       {
-        "Name": "imgUrl",
-        "Type": "System.String",
-        "IsRequired": true
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2851,9 +2851,9 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.UserController",
-    "Method": "UpdateAvatar",
-    "RelativePath": "api/User/{userId}/avatar",
-    "HttpMethod": "PUT",
+    "Method": "UploadAvatar",
+    "RelativePath": "api/User/{userId}/avatar/upload",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -2863,9 +2863,9 @@
         "IsRequired": true
       },
       {
-        "Name": "avatarUrl",
-        "Type": "System.String",
-        "IsRequired": true
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

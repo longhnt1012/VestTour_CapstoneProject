@@ -216,17 +216,16 @@ namespace VestTour.Service.Services
             var user = await _userRepository.GetUserByResetTokenAsync(token);
             if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
             {
-                return Error.InvalidToken; // Handle invalid token case
+                return Error.InvalidToken; 
             }
 
-            // Hash the new password
             user.Password = PasswordHelper.HashPassword(newPassword);
-            user.RefreshToken = null; // Clear the reset token
-            user.RefreshTokenExpiryTime = null; // Clear the expiration time
+            user.RefreshToken = null; 
+            user.RefreshTokenExpiryTime = null; 
 
-            await _userRepository.UpdatePasswordUser(user.UserId, user); // Ensure this method updates the user
+            await _userRepository.UpdatePasswordUser(user.UserId, user); 
 
-            return Success.PasswordResetSuccess; // Success message
+            return Success.PasswordResetSuccess; 
         }
         public async Task<string?> GetEmailByUserIdAsync(int? userId)
         {

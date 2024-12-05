@@ -348,7 +348,7 @@ public class BookingService : IBookingService
         // Update booking details
         booking.Status = BookingEnums.Confirmed.ToString(); // Update status to Confirmed
         booking.AssistStaffName = staff.Name; // Assign assist staff name
-        booking.Note = $"Customer note: {booking.Note}{Environment.NewLine}{booking.Service} assist by {staff.Name}";
+        booking.Note = $"Customer note: {booking.Note}. {booking.Service} assist by {staff.Name}";
 
 
 

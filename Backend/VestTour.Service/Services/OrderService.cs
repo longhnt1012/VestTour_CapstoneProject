@@ -34,7 +34,8 @@ namespace VestTour.Service.Implementation
         private readonly VestTourDbContext _context;
         private readonly IMeasurementRepository _measurementRepository;
         private readonly IMeasurementService _measurementService;
-        public OrderService(IMeasurementService measurementService,IMeasurementRepository measurementRepository,VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
+        IProductInStoreService _productInStoreService;
+        public OrderService(IProductInStoreService productInStoreService,IMeasurementService measurementService,IMeasurementRepository measurementRepository,VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
         {
             _context = context;
             _paymentService = paymentService;
@@ -49,6 +50,7 @@ namespace VestTour.Service.Implementation
             _fabricRepository = fabricRepository;
             _measurementRepository = measurementRepository;
             _measurementService = measurementService;
+            _productInStoreService = productInStoreService;
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -493,13 +495,23 @@ namespace VestTour.Service.Implementation
             // Insert Order Details for non-custom products
             foreach (var product in orderRequest.Products)
             {
-                var productinstore = await _productRepository.GetProductByIdAsync(product.ProductID);
+                var productInStore = await _productInStoreService.GetProductInStoreAsync(orderRequest.StoreId ?? 0, product.ProductID);
+                if (productInStore.Data == null || productInStore.Data.Quantity < product.Quantity)
+                {
+                    throw new InvalidOperationException($"Product with ID {product.ProductID} does not have enough stock.");
+                }
+
+                // Cập nhật số lượng sản phẩm trong kho
+                var updatedQuantity = productInStore.Data.Quantity - product.Quantity;
+                await _productInStoreService.UpdateQuantityAsync(orderRequest.StoreId ?? 0, product.ProductID, updatedQuantity);
+
+                var storeProduct = await _productRepository.GetProductByIdAsync(product.ProductID);
                 var orderDetail = new OrderDetailModel
                 {
                     OrderId = orderId,
                     ProductId = product.ProductID,
                     Quantity = product.Quantity,
-                    Price = productinstore.Price.Value * product.Quantity // Multiply by quantity
+                    Price = storeProduct.Price.Value * product.Quantity // Multiply by quantity
                 };
 
                 await _orderRepository.AddOrderDetailAsync(orderDetail.OrderId,orderDetail.ProductId,orderDetail.Quantity,orderDetail.Price);

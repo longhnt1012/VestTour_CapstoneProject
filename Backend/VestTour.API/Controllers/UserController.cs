@@ -6,7 +6,8 @@ using VestTour.Repository.Constants;
 using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Cors;
-using VestTour.Repository.FileStorage;
+using VestTour.API.FileHandle;
+
 
 namespace VestTour.API.Controllers
 {
@@ -16,12 +17,12 @@ namespace VestTour.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IFileService _fileService;
+     
 
-        public UserController(IUserService userService,IFileService fileService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _fileService = fileService;
+
         }
 
         // GET: api/user
@@ -159,13 +160,45 @@ namespace VestTour.API.Controllers
 
             return BadRequest(new { Message = result });
         }
-        [HttpPut("{userId}/avatar")]
-        public async Task<IActionResult> UpdateAvatar(int userId, [FromBody] string avatarUrl)
+        //[HttpPut("{userId}/avatar")]
+        //public async Task<IActionResult> UpdateAvatar(int userId, [FromBody] string avatarUrl)
+        //{
+        //    try
+        //    {
+        //        await _userService.UpdateUserAvatarAsync(userId, avatarUrl);
+        //        return Ok(new { message = "Avatar updated successfully" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { error = ex.Message });
+        //    }
+        //}
+        // POST: api/user/{userId}/avatar/upload
+        [HttpPost("{userId}/avatar/upload")]
+        public async Task<IActionResult> UploadAvatar(int userId, IFormFile file)
         {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest(new { message = "No file uploaded or file is empty." });
+            }
+
             try
             {
+                // Handle file upload
+                var uploadHandler = new UploadHandle();
+                string result = uploadHandler.Upload(file);
+
+                // Check if upload was successful
+                if (result.StartsWith("Extension is not valid") || result.StartsWith("Maximum size can be"))
+                {
+                    return BadRequest(new { message = result });
+                }
+
+                // Update avatar URL in the database
+                string avatarUrl = $"/Uploads/{result}"; // Assuming uploads are served from this path
                 await _userService.UpdateUserAvatarAsync(userId, avatarUrl);
-                return Ok(new { message = "Avatar updated successfully" });
+
+                return Ok(new { message = "Avatar updated successfully", avatarUrl });
             }
             catch (Exception ex)
             {
@@ -173,33 +206,6 @@ namespace VestTour.API.Controllers
             }
         }
 
-        //[HttpPost("{userId}/avatar")]
-        //public async Task<IActionResult> UploadAvatar(int userId, [FromForm] IFormFile avatarFile)
-        //{
-        //    if (avatarFile == null || avatarFile.Length == 0)
-        //    {
-        //        return BadRequest(new { message = "Invalid file." });
-        //    }
 
-        //    if (!FileHelper.IsValidImage(avatarFile))
-        //    {
-        //        return BadRequest(new { message = "Invalid file type. Only .jpg, .jpeg, .png, .gif are allowed." });
-        //    }
-
-        //    try
-        //    {
-        //        // Save the file using FileService
-        //        var avatarUrl = await _fileService.SaveFileAsync(avatarFile, FileConstant.AvatarSubFolder);
-
-        //        // Update the user's avatar URL in the database
-        //        await _userService.UpdateUserAvatarAsync(userId, avatarUrl);
-
-        //        return Ok(new { message = "Avatar updated successfully", avatarUrl });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new { error = ex.Message });
-        //    }
-        //}
     }
 }

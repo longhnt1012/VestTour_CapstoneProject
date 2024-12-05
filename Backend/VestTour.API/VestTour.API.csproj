@@ -26,4 +26,8 @@
 		<ProjectReference Include="..\VestTour.Service\VestTour.Service.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Uploads\" />
+	</ItemGroup>
+
 </Project>

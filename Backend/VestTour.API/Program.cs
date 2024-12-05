@@ -18,7 +18,7 @@ using VestTour.Services;
 using AutoMapper;
 using VestTour.Repository.Configuration;
 using VestTour.Repository.Mapper;
-using VestTour.Repository.FileStorage;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -141,7 +141,7 @@ builder.Services.AddHttpClient<ShippingService>();
 // Configure email settings
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
-builder.Services.AddScoped<IFileService, FileService>();
+
 
 // Add memory cache and OTP service
 builder.Services.AddMemoryCache();

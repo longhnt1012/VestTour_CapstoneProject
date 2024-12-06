@@ -2888,6 +2888,22 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "GetZodiacAndColors",
+    "RelativePath": "api/User/get-zodiac",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "birthDate",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
     "Method": "ResetPassword",
     "RelativePath": "api/User/reset-password",
     "HttpMethod": "POST",

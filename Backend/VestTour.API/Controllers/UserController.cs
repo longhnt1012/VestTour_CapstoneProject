@@ -7,6 +7,7 @@ using VestTour.Service.Interfaces;
 using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Cors;
 using VestTour.API.FileHandle;
+using VestTour.Service.Services;
 
 
 namespace VestTour.API.Controllers
@@ -203,6 +204,24 @@ namespace VestTour.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { error = ex.Message });
+            }
+        }
+        [HttpGet("get-zodiac")]
+        public IActionResult GetZodiacAndColors([FromQuery] DateOnly birthDate)
+        {
+            var zodiacService = new ZodiacService();
+            try
+            {
+                var (zodiacSign, colors) = zodiacService.GetZodiacSignAndColors(birthDate);
+                return Ok(new
+                {
+                    ZodiacSign = zodiacSign,
+                    SuggestedColors = colors
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
 

@@ -91,6 +91,7 @@ namespace VestTour.Service.Implementation
                 Paid = order.Paid,
                 Status = string.IsNullOrEmpty(order.Status) ? "Pending" : order.Status,
                 TotalPrice = order.TotalPrice,
+                RevenueShare = order.TotalPrice * 0.7m,
                 Deposit = order.Deposit,
                 ShippingFee = order.ShippingFee,
                 GuestName = string.IsNullOrEmpty(order.GuestName) ? user?.Name : order.GuestName,
@@ -276,6 +277,7 @@ namespace VestTour.Service.Implementation
                 GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 TotalPrice = Math.Round(totalPrice, 2),
+                RevenueShare = totalPrice * 0.7m,
                 Deposit = deposit,
                 ShippingFee = shippingFee,
                 Paid = false,
@@ -485,6 +487,7 @@ namespace VestTour.Service.Implementation
                 GuestEmail = orderRequest.GuestEmail,
                 GuestAddress = orderRequest.GuestAddress,
                 TotalPrice = totalPrice,
+                RevenueShare = totalPrice * 0.7m,
                 Deposit = orderRequest.Deposit,
                 ShippingFee = orderRequest.ShippingFee,
                 DeliveryMethod = orderRequest.DeliveryMethod

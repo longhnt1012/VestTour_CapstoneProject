@@ -78,6 +78,12 @@ namespace VestTour.Controllers
             var staff = await _storeService.GetStaffByStoreIdAsync(storeId);
             return Ok(staff);
         }
+        [HttpGet("userId/{userId}")]
+        public async Task<IActionResult> GetStoreByUserId(int userId)
+        {
+            var store = await _storeService.GetStoreByUserId(userId);
+            return Ok(store);
+        }
         [HttpPost("{storeId}/add-staff/{staffId}")]
         public async Task<IActionResult> AddStaffToStore(int storeId, int staffId)
         {

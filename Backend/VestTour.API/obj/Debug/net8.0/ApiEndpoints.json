@@ -2413,6 +2413,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "GetStoreByUserId",
+    "RelativePath": "api/Store/userId/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.StyleController",
     "Method": "GetAllStyles",
     "RelativePath": "api/Style",

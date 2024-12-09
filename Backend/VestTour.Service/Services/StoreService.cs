@@ -70,6 +70,10 @@ namespace VestTour.Service.Implementation
         {
             return await _storeRepository.GetStoreByStaffIdAsync(staffId);
         }
+        public async Task<StoreModel?> GetStoreByUserId(int userId)
+        {
+            return await _storeRepository.GetStoreByUserIdAsync(userId);
+        }
         public async Task<(TimeOnly? OpenTime, TimeOnly? CloseTime)> GetStoreTimingsAsync(int storeId)
         {
             return await _storeRepository.GetStoreTimingsAsync(storeId);

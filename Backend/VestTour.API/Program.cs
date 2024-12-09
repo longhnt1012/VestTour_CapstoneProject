@@ -187,8 +187,13 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddSignalR(); // Thêm trước builder.Build()
+
 var app = builder.Build();
 
+
+// Map SignalR endpoints
+app.MapHub<NotificationHub>("/notificationHub");
 // Configure middleware
 if (app.Environment.IsDevelopment())
 {

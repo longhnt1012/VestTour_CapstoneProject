@@ -1603,6 +1603,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
+    "Method": "GetProcessingTailorsByStoreId",
+    "RelativePath": "api/ProcessingTailor/store/{storeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "VestTour.Controllers.ProductController",
     "Method": "GetAllProducts",
     "RelativePath": "api/Product",

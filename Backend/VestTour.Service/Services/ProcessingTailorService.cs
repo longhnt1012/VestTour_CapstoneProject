@@ -234,7 +234,33 @@ namespace VestTour.Service.Services
 
             return response;
         }
-        public async Task<ServiceResponse> ChangeStatusAsync(int processingId, string newStatus)
+        public async Task<ServiceResponse<List<ProcessingTailorModel>>> GetProcessingTailorsByStoreIdAsync(int storeId)
+        {
+            var response = new ServiceResponse<List<ProcessingTailorModel>>();
+
+            if (storeId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidStoreId;
+                return response;
+            }
+
+            try
+            {
+                var processes = await _processingTailorRepository.GetProcessingTailorsByStoreIdAsync(storeId);
+                response.Data = processes;
+                response.Success = processes.Any();
+                response.Message = processes.Any() ? null : Error.ProcessingTailorNotFound;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
+            public async Task<ServiceResponse> ChangeStatusAsync(int processingId, string newStatus)
         {
             var response = new ServiceResponse();
 

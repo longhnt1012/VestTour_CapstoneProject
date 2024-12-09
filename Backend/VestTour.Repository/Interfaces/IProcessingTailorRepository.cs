@@ -21,6 +21,7 @@ namespace VestTour.Repository.Interfaces
         Task ChangeDeliveryStatusAsync(int processingId, string newStatus);
         Task ChangeStageNameAsync(int processingId, string newStage);
         Task<ProcessingTailorModel> GetProcessingTailorsByOrderIdAsync(int orderId);
+        Task<List<ProcessingTailorModel>> GetProcessingTailorsByStoreIdAsync(int storeId);
 
     }
 }

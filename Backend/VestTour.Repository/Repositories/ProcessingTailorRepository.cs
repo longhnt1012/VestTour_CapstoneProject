@@ -68,6 +68,15 @@ namespace VestTour.Repository.Repositories
             
             return _mapper.Map<List<ProcessingTailorModel>>(processingTailors);
         }
+        public async Task<List<ProcessingTailorModel>> GetProcessingTailorsByStoreIdAsync(int storeId)
+        {
+            var processingTailors = await _context.ProcessingTailors
+               .Include(pt => pt.TailorPartner)
+               .Where(pt => pt.TailorPartner.StoreId == storeId)
+               .ToListAsync();
+            return _mapper.Map<List<ProcessingTailorModel>>(processingTailors);
+        }
+
         public async Task ChangeStatusAsync(int processingId, string newStatus)
         {
             var processingTailor = await _context.ProcessingTailors.FindAsync(processingId);

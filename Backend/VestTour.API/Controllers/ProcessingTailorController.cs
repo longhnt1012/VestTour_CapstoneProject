@@ -69,6 +69,17 @@ namespace VestTour.API.Controllers
 
             return Ok(result);
         }
+        [HttpGet("store/{storeId}")]
+        public async Task<IActionResult> GetProcessingTailorsByStoreId(int storeId)
+        {
+            var result = await _processingTailorService.GetProcessingTailorsByStoreIdAsync(storeId);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpPatch("process/status/{id}")]
         public async Task<IActionResult> ChangeStatus(int id, [FromBody] string newStatus)
         {

@@ -30,26 +30,68 @@ public class BookingService : IBookingService
     {
         var response = new ServiceResponse();
 
+        // Validate bookingId
         if (bookingId <= 0)
         {
             response.Success = false;
-            response.Message = Error.InvalidBookingId; // Use a constant from Error class
+            response.Message = Error.InvalidBookingId; // Use a predefined constant
             return response;
         }
 
-        // Check if the status is valid
+        // Validate status
         if (string.IsNullOrEmpty(status) || !Enum.TryParse<BookingEnums>(status, true, out _))
         {
             response.Success = false;
-            response.Message = "Status is not valid. Please provide a valid status."; // Custom error message
+            response.Message = "Status is not valid. Please provide a valid status.";
             return response;
         }
 
-        // Proceed to update the status
+        // Fetch booking details
+        var booking = await _bookingRepository.GetBookingById(bookingId);
+        if (booking == null)
+        {
+            response.Success = false;
+            response.Message = Error.BookingNotFound;
+            return response;
+        }
+
+        // Fetch store details
+        var store = await _storeRepository.GetStoreByIdAsync(booking.StoreId);
         await _bookingRepository.UpdateBookingStatusAsync(bookingId, status);
-        response.Message = Success.StatusUpdated; // Use a constant from Success class
+        var emailRequest = new EmailRequest
+            {
+                To = booking.GuestEmail,
+                Subject = $"Booking {status}",
+                Content = $"Dear {booking.GuestName},\n\n" +
+                          $"Your booking has been confirmed!\n\n" +
+                          $"Booking ID: {booking.BookingId}\n" +
+                          $"Service: {booking.Service}\n" +
+                          $"Date: {booking.BookingDate:yyyy-MM-dd}\n" +
+                          $"Time: {booking.Time}\n" +
+                          $"Store Name: {store.Name}\n" +
+                          $"Store Address: {store.Address}\n" +
+                          $"Note: {booking.Note}\n\n" +
+                          "Thank you for choosing VestTour!\n\n" +
+                          "Best regards,\nVestTour Team"
+            };
+
+            try
+            {
+                await _emailHelper.SendEmailAsync(emailRequest);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = Error.EmailNotFound;
+                return response;
+            }
+        
+
+        response.Success = true;
+        response.Message = Success.StatusUpdated;
         return response;
     }
+
 
     public async Task<ServiceResponse<BookingModel?>> GetBookingByIdAsync(int bookingId)
     {

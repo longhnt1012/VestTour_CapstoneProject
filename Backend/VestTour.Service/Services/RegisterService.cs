@@ -14,12 +14,14 @@ namespace VestTour.Service.Services
         private readonly IUserRepository _userRepository;
         private readonly IEmailHelper _emailHelper;
         private readonly OtpService _otpService;
+        private readonly IMeasurementRepository _measurementRepository;
 
-        public RegisterService(IUserRepository userRepository, IEmailHelper emailHelper, OtpService otpService)
+        public RegisterService(IUserRepository userRepository, IEmailHelper emailHelper, OtpService otpService,IMeasurementRepository measurementRepository)
         {
             _userRepository = userRepository;
             _emailHelper = emailHelper;
             _otpService = otpService;
+            _measurementRepository = measurementRepository;
         }
 
 
@@ -93,8 +95,13 @@ namespace VestTour.Service.Services
 
             if (isOtpValid)
             {
-                // Update user status to "active" and set IsConfirmed to true
                 await _userRepository.UpdateEmailConfirmStatusAsync(email, "Active", true);
+                var user = await _userRepository.GetUserByEmailAsync(email);
+                var newUserMeasure = new MeasurementModel
+                {
+                    UserId = user.UserId
+                };
+                await _measurementRepository.AddMeasurementAsync(newUserMeasure);
             }
 
             return isOtpValid;

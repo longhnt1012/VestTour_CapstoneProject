@@ -23,5 +23,6 @@ namespace VestTour.Repository.Models
 
         public int? OrderId { get; set; }
         public int? ProductId { get; set; }
+        public string? Status { get; set; }
     }
 }

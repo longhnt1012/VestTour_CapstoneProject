@@ -16,11 +16,17 @@ public partial class Store
     public string? ContactNumber { get; set; }
 
     public int? StoreCode { get; set; }
+
     public TimeOnly? OpenTime { get; set; }
+
     public TimeOnly? CloseTime { get; set; }
-    public string? StaffIDs { get; set; }
-    public int? DistrictID { get; set; }
+
+    public string? StaffIds { get; set; }
+
+    public int? DistrictId { get; set; }
+
     public string? ImgUrl { get; set; }
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

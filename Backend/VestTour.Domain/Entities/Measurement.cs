@@ -41,6 +41,8 @@ public partial class Measurement
 
     public decimal? JacketLength { get; set; }
 
+    public string? Status { get; set; }
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     public virtual User? User { get; set; }

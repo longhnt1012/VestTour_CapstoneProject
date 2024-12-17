@@ -70,5 +70,10 @@
         public static string OtpConfirmed { get; set; }
         public static string ResetEmailSent { get; set; }
         public static string PasswordResetSuccess { get; set; }
+
+        public const string ShipmentAdded = "Shipment added successfully.";
+        public const string ShipmentUpdated = "Shipment updated successfully.";
+        public const string ShipmentDeleted = "Shipment deleted successfully.";
+        public const string ShipmentStatusUpdated = "Shipment status updated successfully.";
     }
 }

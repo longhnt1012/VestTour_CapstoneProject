@@ -25,9 +25,8 @@ public partial class Booking
 
     public int? StoreId { get; set; }
 
-   // public decimal? DepositCost { get; set; }
-
     public string? Service { get; set; }
+
     public string? AssistStaffName { get; set; }
 
     public virtual Store? Store { get; set; }

@@ -429,6 +429,7 @@ D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Drawing.Common.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Management.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Memory.Data.dll
+D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Runtime.Caching.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Security.Permissions.dll
@@ -531,4 +532,3 @@ D:\SECapstone\VestTour\VestTour.API\obj\Debug\net8.0\refint\VestTour.API.dll
 D:\SECapstone\VestTour\VestTour.API\obj\Debug\net8.0\VestTour.API.pdb
 D:\SECapstone\VestTour\VestTour.API\obj\Debug\net8.0\VestTour.API.genruntimeconfig.cache
 D:\SECapstone\VestTour\VestTour.API\obj\Debug\net8.0\ref\VestTour.API.dll
-D:\SECapstone\VestTour\VestTour.API\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

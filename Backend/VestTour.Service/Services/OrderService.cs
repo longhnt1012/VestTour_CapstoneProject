@@ -84,7 +84,7 @@ namespace VestTour.Service.Implementation
                 UserID = order.UserID,
                 StoreId = order.StoreId,
                 VoucherId = order.VoucherId,
-                ShipperPartnerId = order.ShipperPartnerId,
+               // ShipperPartnerId = order.ShipperPartnerId,
                 OrderDate = order.OrderDate,
                 ShippedDate = order.ShippedDate,
                 Note = order.Note,
@@ -111,7 +111,7 @@ namespace VestTour.Service.Implementation
             body.AppendLine($"- User ID: {order.UserID}");
             body.AppendLine($"- Store ID: {order.StoreId}");
             body.AppendLine($"- Voucher ID: {order.VoucherId}");
-            body.AppendLine($"- Shipper Partner ID: {order.ShipperPartnerId}");
+            //body.AppendLine($"- Shipper Partner ID: {order.ShipperPartnerId}");
             body.AppendLine($"- Order Date: {order.OrderDate?.ToString("d")}");
             body.AppendLine($"- Shipped Date: {order.ShippedDate?.ToString("d")}");
 
@@ -477,7 +477,7 @@ namespace VestTour.Service.Implementation
                 UserID = orderRequest.UserID,
                 StoreId = orderRequest.StoreId,
                 VoucherId = orderRequest.VoucherId,
-                ShipperPartnerId = 4,
+                //ShipperPartnerId = 4,
                 OrderDate = DateOnly.FromDateTime(DateTime.Now),
                 ShippedDate = orderRequest.ShippedDate,
                 Note = orderRequest.Note,

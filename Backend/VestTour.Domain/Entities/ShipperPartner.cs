@@ -13,5 +13,5 @@ public partial class ShipperPartner
 
     public string? Status { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
 }

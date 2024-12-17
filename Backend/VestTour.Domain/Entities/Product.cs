@@ -25,17 +25,19 @@ public partial class Product
 
     public string? Size { get; set; }
 
+    public string? Status { get; set; }
+
     public virtual Category? Category { get; set; }
 
     public virtual Fabric? Fabric { get; set; }
+
+    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual Lining? Lining { get; set; }
 
     public virtual Measurement? Measurement { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<StyleOption> StyleOptions { get; set; } = new List<StyleOption>();
 }

@@ -102,7 +102,6 @@ namespace VestTour.Repository.Repositories
                 UserID = orderEntity.UserId,
                 StoreId = orderEntity.StoreId,
                 VoucherId = orderEntity.VoucherId,
-                ShipperPartnerId = orderEntity.ShipperPartnerId,
                 OrderDate = orderEntity.OrderDate,
                 ShippedDate = orderEntity.ShippedDate,
                 Note = orderEntity.Note,

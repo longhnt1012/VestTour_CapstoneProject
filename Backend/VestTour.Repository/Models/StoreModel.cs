@@ -13,5 +13,6 @@
         public string? StaffIDs { get; set; }
         public int? DistrictID { get; set; }
         public string? ImgUrl { get; set; }
+        public string? Status { get; set; }
     }
 }

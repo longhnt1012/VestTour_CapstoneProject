@@ -84,6 +84,54 @@ namespace VestTour.Repository.Migrations
 
                     b.ToTable("BankingAccount", (string)null);
                 });
+            modelBuilder.Entity("VestTour.Domain.Entities.Shipment", b =>
+            {
+                b.Property<int>("ShipmentId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("ShipmentID");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShipmentId"));
+
+                b.Property<int>("ShipperPartnerId")
+                    .HasColumnType("int");
+
+                b.Property<string>("TrackNumber")
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
+
+                b.Property<string>("RecipientName")
+                    .HasMaxLength(255)
+                    .HasColumnType("nvarchar(255)");
+
+                b.Property<string>("RecipientAddress")
+                    .HasMaxLength(255)
+                    .HasColumnType("nvarchar(255)");
+
+                b.Property<string>("Status")
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
+
+                b.Property<DateOnly?>("CreateAt")
+                    .HasColumnType("date");
+
+                b.Property<DateOnly?>("ShippedAt")
+                    .HasColumnType("date");
+
+                b.Property<DateOnly?>("DeliveredAt")
+                    .HasColumnType("date");
+
+                b.HasKey("ShipmentId")
+                    .HasName("PK__Shipment");
+
+                b.HasOne("VestTour.Domain.Entities.ShipperPartner", "ShipperPartner")
+                    .WithMany("Shipments")
+                    .HasForeignKey("ShipperPartnerId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.ToTable("Shipment");
+            });
 
             modelBuilder.Entity("VestTour.Domain.Entities.Booking", b =>
                 {
@@ -380,9 +428,9 @@ namespace VestTour.Repository.Migrations
                     b.Property<DateOnly?>("ShippedDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("ShipperPartnerId")
+                    b.Property<int?>("ShipmentId")
                         .HasColumnType("int")
-                        .HasColumnName("ShipperPartnerID");
+                        .HasColumnName("ShipmentID");
 
                     b.Property<decimal?>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
@@ -411,7 +459,7 @@ namespace VestTour.Repository.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.HasIndex("ShipperPartnerId");
+                    b.HasIndex("ShipmentId");
 
                     b.HasIndex("StoreId");
 

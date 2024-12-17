@@ -113,7 +113,7 @@ builder.Services.AddScoped<ITailorPartnerRepository, TailorPartnerRepository>();
 builder.Services.AddScoped<IProcessingTailorRepository, ProcessingTailorRepository>();
 builder.Services.AddScoped<IProductInStoreRepository, ProductInStoreRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
-
+builder.Services.AddScoped<IShipmentRepository, ShipmentRepository>();
 // Register services
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IContactService, ContactService>();
@@ -139,6 +139,7 @@ builder.Services.AddScoped<ITailorPartnerService, TailorPartnerService>();
 builder.Services.AddScoped<IProductInStoreService, ProductInStoreService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddHttpClient<ShippingService>();
+builder.Services.AddScoped<IShipmentService, ShipmentService>();
 // Configure email settings
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();

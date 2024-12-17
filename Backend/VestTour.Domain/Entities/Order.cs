@@ -13,8 +13,6 @@ public partial class Order
 
     public int? VoucherId { get; set; }
 
-    public int? ShipperPartnerId { get; set; }
-
     public DateOnly? OrderDate { get; set; }
 
     public DateOnly? ShippedDate { get; set; }
@@ -38,22 +36,28 @@ public partial class Order
     public string? GuestEmail { get; set; }
 
     public string? GuestAddress { get; set; }
+
     public string? DeliveryMethod { get; set; }
+
     public decimal? RevenueShare { get; set; }
+
+    public int? ShipmentId { get; set; }
+
+    public string? ShipStatus { get; set; }
+
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
-    //public virtual Payment? Payment { get; set; }
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
 
-    public virtual ShipperPartner? ShipperPartner { get; set; }
+    public virtual Shipment? Shipment { get; set; }
 
     public virtual Store? Store { get; set; }
 
     public virtual User? User { get; set; }
 
     public virtual Voucher? Voucher { get; set; }
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

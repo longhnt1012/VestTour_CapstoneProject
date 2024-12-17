@@ -78,11 +78,11 @@ namespace VestTour.Repository.Repositories
         {
             var store = await _context.Stores!.FindAsync(storeId);
 
-            if (store == null || string.IsNullOrEmpty(store.StaffIDs))
+            if (store == null || string.IsNullOrEmpty(store.StaffIds))
                 return new List<UserModel>();
 
             // Parse StaffIDs and fetch related users
-            var staffIds = store.StaffIDs.Split(',').Select(int.Parse).ToList();
+            var staffIds = store.StaffIds.Split(',').Select(int.Parse).ToList();
             var staff = await _context.Users!
                 .Where(u => staffIds.Contains(u.UserId))
                 .ToListAsync();
@@ -102,20 +102,20 @@ namespace VestTour.Repository.Repositories
             var allStores = await _context.Stores!.ToListAsync();
 
             var otherStore = allStores.FirstOrDefault(s =>
-                !string.IsNullOrEmpty(s.StaffIDs) &&
-                s.StaffIDs.Split(',').Select(int.Parse).Contains(staffId)
+                !string.IsNullOrEmpty(s.StaffIds) &&
+                s.StaffIds.Split(',').Select(int.Parse).Contains(staffId)
             );
 
             if (otherStore != null)
                 return false;
-            var staffIds = string.IsNullOrEmpty(store.StaffIDs)
+            var staffIds = string.IsNullOrEmpty(store.StaffIds)
                 ? new List<int>()
-                : store.StaffIDs.Split(',').Select(int.Parse).ToList();
+                : store.StaffIds.Split(',').Select(int.Parse).ToList();
 
             if (staffIds.Contains(staffId))
                 return false; 
             staffIds.Add(staffId);
-            store.StaffIDs = string.Join(',', staffIds);
+            store.StaffIds = string.Join(',', staffIds);
             _context.Stores!.Update(store);
             await _context.SaveChangesAsync();
 
@@ -125,11 +125,11 @@ namespace VestTour.Repository.Repositories
         public async Task<bool> RemoveStaffFromStoreAsync(int storeId, int staffId)
         {
             var store = await _context.Stores!.FirstOrDefaultAsync(s => s.StoreId == storeId);
-            if (store == null || string.IsNullOrEmpty(store.StaffIDs))
+            if (store == null || string.IsNullOrEmpty(store.StaffIds))
             {
                 return false; 
             }
-            var staffIds = store.StaffIDs.Split(',')
+            var staffIds = store.StaffIds.Split(',')
                                          .Select(int.Parse)
                                          .ToList();
 
@@ -140,7 +140,7 @@ namespace VestTour.Repository.Repositories
 
           
             staffIds.Remove(staffId);
-            store.StaffIDs = string.Join(',', staffIds);
+            store.StaffIds = string.Join(',', staffIds);
             _context.Stores.Update(store);
             await _context.SaveChangesAsync();
             return true;
@@ -155,12 +155,12 @@ namespace VestTour.Repository.Repositories
 
             // Fetch all stores with non-null StaffIDs from the database
             var stores = await _context.Stores
-                .Where(store => !string.IsNullOrEmpty(store.StaffIDs))
+                .Where(store => !string.IsNullOrEmpty(store.StaffIds))
                 .ToListAsync();
 
             // Process the StaffIDs in memory
             var store = stores
-                .FirstOrDefault(store => store.StaffIDs
+                .FirstOrDefault(store => store.StaffIds
                     .Split(',')
                     .Select(id => int.Parse(id.Trim()))
                     .Contains(staffId));

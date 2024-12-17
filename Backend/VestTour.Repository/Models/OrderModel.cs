@@ -11,7 +11,7 @@ namespace VestTour.Repository.Models
         public int? UserID { get; set; }
         public int? StoreId { get; set; }
         public int? VoucherId { get; set; }
-        public int? ShipperPartnerId { get; set; }
+        public int? ShipmentId { get; set; }
         public DateOnly? OrderDate { get; set; }
         public DateOnly? ShippedDate { get; set; }
 
@@ -34,6 +34,7 @@ namespace VestTour.Repository.Models
         public decimal? BalancePayment => TotalPrice - Deposit + ShippingFee;
         public string? DeliveryMethod { get; set; }
         public decimal? RevenueShare { get; set; }
+        public string? ShipStatus { get; set; }
 
         // [JsonIgnore]
         public List<OrderDetailModel> OrderDetails { get; set; } = new List<OrderDetailModel>();

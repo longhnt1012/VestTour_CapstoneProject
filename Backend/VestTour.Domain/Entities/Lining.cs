@@ -11,5 +11,7 @@ public partial class Lining
 
     public string? ImageUrl { get; set; }
 
+    public string? Status { get; set; }
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

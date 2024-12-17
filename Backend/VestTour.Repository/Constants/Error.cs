@@ -88,5 +88,12 @@
         public const string InvalidStoreId = "Invalid store ID provided.";
         public static string InvalidOtpOrExpired { get; set; }
         public static string InvalidToken { get; set; }
+
+        public const string InvalidShipmentId = "Invalid shipment ID.";
+        public const string ShipmentNotFound = "Shipment not found";
+        public const string NoShipmentsFound = "No shipments found.";
+        public const string InvalidShipmentData = "Invalid shipment data. Recipient name and status cannot be empty.";
+        public const string InvalidShipmentStatus = "Invalid shipment status.";
+        public const string InvalidRecipientName = "Invalid recipient name. It cannot be empty.";
     }
 }

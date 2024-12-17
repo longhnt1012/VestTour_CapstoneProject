@@ -39,6 +39,7 @@ namespace VestTour.Repository.Mapper
             CreateMap<Feedback, FeedBackForProduct>().ReverseMap();
             CreateMap<Feedback, FeedbackForOrder>().ReverseMap();
             CreateMap<Feedback, ResponseFeedbackModel>().ReverseMap();
+            CreateMap<Shipment, ShipmentModel>().ReverseMap();
 
         }
     }

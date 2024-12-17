@@ -14,5 +14,6 @@ namespace VestTour.Repository.Models
         
         [StringLength(255, ErrorMessage = "Image URL can't exceed 255 characters.")]
         public string? ImageUrl { get; set; }
+        public string? Status { get; set; }
     }
 }

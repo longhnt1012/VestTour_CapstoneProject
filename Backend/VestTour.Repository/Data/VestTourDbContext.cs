@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using VestTour.Domain.Entities;
 
+
+
 namespace VestTour.Repository.Data;
 
 public partial class VestTourDbContext : DbContext
@@ -15,7 +17,6 @@ public partial class VestTourDbContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<BankingAccount> BankingAccounts { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -42,8 +43,9 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<ProductInStore> ProductInStores { get; set; }
 
-
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<Shipment> Shipments { get; set; }
 
     public virtual DbSet<ShipperPartner> ShipperPartners { get; set; }
 
@@ -91,7 +93,7 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Booking");
 
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
-            //entity.Property(e => e.DepositCost).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.AssistStaffName).HasMaxLength(255);
             entity.Property(e => e.GuestEmail)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -102,7 +104,6 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.Service).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
-            entity.Property(e => e.AssistStaffName).HasMaxLength(255);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -128,6 +129,7 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("ImageURL");
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Status).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Fabric>(entity =>
@@ -143,6 +145,7 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("ImageURL");
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Tag).HasMaxLength(255);
         });
 
@@ -158,15 +161,13 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Response).HasMaxLength(255);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.Property(e => e.ProductId).HasColumnName("ProductId");
-
-            entity.HasOne(p => p.Product).WithMany(p => p.Feedbacks)
-                .HasForeignKey(p => p.ProductId)
-                .HasConstraintName("FK__Feedback__ProductId");
-
             entity.HasOne(d => d.Order).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("FK__Feedback__OrderI__5AEE82B9");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Feedbacks)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK__Feedback__Produc__756D6ECB");
 
             entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.UserId)
@@ -184,6 +185,7 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("ImageURL");
             entity.Property(e => e.LiningName).HasMaxLength(255);
+            entity.Property(e => e.Status).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Measurement>(entity =>
@@ -205,6 +207,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.PantsWaist).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Shoulder).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.SleeveLength).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Thigh).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Waist).HasColumnType("decimal(5, 2)");
@@ -223,6 +226,9 @@ public partial class VestTourDbContext : DbContext
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.BalancePayment).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.DeliveryMethod)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Deposit).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.GuestAddress).HasMaxLength(255);
             entity.Property(e => e.GuestEmail)
@@ -230,19 +236,23 @@ public partial class VestTourDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.GuestName).HasMaxLength(255);
             entity.Property(e => e.Note).HasMaxLength(255);
-            entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
+            entity.Property(e => e.RevenueShare).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.ShipStatus).HasMaxLength(50);
+            entity.Property(e => e.ShipmentId).HasColumnName("ShipmentID");
             entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.RevenueShare).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
-            entity.Property(e => e.DeliveryMethod).HasMaxLength(50);
 
-            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ShipperPartnerId)
-                .HasConstraintName("FK__Order__ShipperPa__4222D4EF");
+            entity.HasIndex(e => e.ShipmentId, "UQ__ShipmentOr__3B82F0E018BD59DE").IsUnique();
+
+
+            entity.HasOne(d => d.Shipment).WithOne(p => p.Order)
+                .HasForeignKey<Order>(d => d.ShipmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Order__ShipmentI__7A3223E8");
 
             entity.HasOne(d => d.Store).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.StoreId)
@@ -284,19 +294,20 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("Payment");
 
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Method).HasMaxLength(50);
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.PaymentDetails).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK__Payment__OrderID__74794A92");
+
             entity.HasOne(d => d.User).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Payment__UserID__3B75D760");
-            entity.Property(o => o.OrderId).HasColumnName("OrderID");
-
-            entity.HasOne(o => o.Order).WithMany(p => p.Payments)
-                .HasForeignKey(o => o.OrderId)
-                .HasConstraintName("FK__Payment__OrderID");
         });
 
         modelBuilder.Entity<ProcessingTailor>(entity =>
@@ -306,12 +317,12 @@ public partial class VestTourDbContext : DbContext
             entity.ToTable("ProcessingTailor");
 
             entity.Property(e => e.ProcessingId).HasColumnName("ProcessingID");
+            entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
+            entity.Property(e => e.FixStatus).HasMaxLength(50);
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.StageName).HasMaxLength(100);
             entity.Property(e => e.SampleStatus).HasMaxLength(50);
-            entity.Property(e => e.FixStatus).HasMaxLength(50);
-            entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
+            entity.Property(e => e.StageName).HasMaxLength(100);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.TailorPartnerId).HasColumnName("TailorPartnerID");
 
@@ -346,6 +357,7 @@ public partial class VestTourDbContext : DbContext
                 .HasMaxLength(3)
                 .IsUnicode(false)
                 .HasColumnName("SIZE");
+            entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
@@ -383,13 +395,9 @@ public partial class VestTourDbContext : DbContext
 
         modelBuilder.Entity<ProductInStore>(entity =>
         {
-            entity.ToTable("ProductInStore");
-            entity.HasKey(e => new { e.StoreId, e.ProductId })
-        .HasName("PK_ProductInStore");
-
-            // Map StoreId and ProductId properties to the correct column names
-            entity.Property(e => e.StoreId).HasColumnName("StoreID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+            entity
+                .HasNoKey()
+                .ToTable("ProductInStore");
 
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
@@ -404,7 +412,6 @@ public partial class VestTourDbContext : DbContext
                 .HasConstraintName("FK__ProductIn__Store__6166761E");
         });
 
-      
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE3A7C5056B0");
@@ -413,6 +420,25 @@ public partial class VestTourDbContext : DbContext
 
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.RoleName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Shipment>(entity =>
+        {
+            entity.HasKey(e => e.ShipmentId).HasName("PK__Shipment__5CAD378DF00B5CD5");
+
+            entity.ToTable("Shipment");
+
+            entity.Property(e => e.ShipmentId).HasColumnName("ShipmentID");
+            entity.Property(e => e.RecipientAddress).HasMaxLength(255);
+            entity.Property(e => e.RecipientName).HasMaxLength(100);
+            entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
+            entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.TrackNumber).HasMaxLength(50);
+
+            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Shipments)
+                .HasForeignKey(d => d.ShipperPartnerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Shipment__Shippe__7849DB76");
         });
 
         modelBuilder.Entity<ShipperPartner>(entity =>
@@ -440,17 +466,15 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.ContactNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.ImgUrl)
-                .HasMaxLength(255)
-                .HasColumnName("ImgUrl");
+            entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
+            entity.Property(e => e.ImgUrl).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.StaffIds).HasColumnName("StaffIDs");
             entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.StaffIDs).HasMaxLength(50);
-            entity.Property(e => e.DistrictID).HasColumnName("DistrictID");
+
             entity.HasOne(d => d.User).WithMany(p => p.Stores)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Store__UserID__2D27B809");
-            entity.Property(e => e.StaffIDs).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Style>(entity =>
@@ -461,6 +485,7 @@ public partial class VestTourDbContext : DbContext
 
             entity.Property(e => e.StyleId).HasColumnName("StyleID");
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StyleName).HasMaxLength(255);
         });
 
@@ -474,6 +499,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.OptionType).HasMaxLength(100);
             entity.Property(e => e.OptionValue).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StyleId).HasColumnName("StyleID");
 
             entity.HasOne(d => d.Style).WithMany(p => p.StyleOptions)
@@ -493,15 +519,16 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Location).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
             entity.HasOne(d => d.Store).WithOne(p => p.TailorPartner)
                 .HasForeignKey<TailorPartner>(d => d.StoreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TailorPar__Store__503BEA1C");
-            entity.Property(e => e.UserId).HasColumnName("UserId");
-            entity.HasOne(u => u.User).WithOne(p => p.TailorPartner)
-                .HasForeignKey<TailorPartner>(u=> u.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TailorPar__User");
+
+            entity.HasOne(d => d.User).WithMany(p => p.TailorPartners)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__TailorPar__UserI__73852659");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -514,6 +541,7 @@ public partial class VestTourDbContext : DbContext
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.AvtUrl).HasMaxLength(255);
             entity.Property(e => e.Dob).HasColumnName("DOB");
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.Gender).HasMaxLength(10);
@@ -527,9 +555,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.AvtUrl)
-                .HasMaxLength(255)
-                .HasColumnName("AvtUrl");
+
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -30,6 +30,7 @@ public partial class User
     public string? RefreshToken { get; set; }
 
     public DateTime? RefreshTokenExpiryTime { get; set; }
+
     public string? AvtUrl { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
@@ -45,5 +46,6 @@ public partial class User
     public virtual Role Role { get; set; } = null!;
 
     public virtual ICollection<Store> Stores { get; set; } = new List<Store>();
-    public virtual TailorPartner? TailorPartner { get; set; }
+
+    public virtual ICollection<TailorPartner> TailorPartners { get; set; } = new List<TailorPartner>();
 }

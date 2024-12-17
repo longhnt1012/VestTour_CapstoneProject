@@ -15,6 +15,8 @@ public partial class StyleOption
 
     public decimal? Price { get; set; }
 
+    public string? Status { get; set; }
+
     public virtual Style? Style { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();

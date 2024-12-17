@@ -23,7 +23,7 @@ namespace VestTour.Repository.Models
         [StringLength(255)]
         public string? ImageUrl { get; set; }
         public FabricEnums? Tag { get; set; }
-
+        public string? Status { get; set; }
 
     }
 }

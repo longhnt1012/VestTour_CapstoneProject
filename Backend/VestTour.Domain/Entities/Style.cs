@@ -11,5 +11,7 @@ public partial class Style
 
     public string? Description { get; set; }
 
+    public string? Status { get; set; }
+
     public virtual ICollection<StyleOption> StyleOptions { get; set; } = new List<StyleOption>();
 }

@@ -47,6 +47,7 @@ namespace VestTour.Service.Implementation
 
         public async Task<int> AddProductAsync(ProductModel product)
         {
+
             if (string.IsNullOrEmpty(product.ProductCode))
                 throw new ArgumentException("Product code cannot be empty.");
 

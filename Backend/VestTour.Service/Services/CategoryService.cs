@@ -2,6 +2,7 @@
 using VestTour.Repository.Interface;
 using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
+using VestTour.Repository.ValidationHelper;
 
 public class CategoryService : ICategoryService
 {
@@ -87,7 +88,12 @@ public class CategoryService : ICategoryService
             response.Message = Error.InvalidCategoryName; 
             return response;
         }
-
+        if (!StatusValidate.IsValidStatus(category.Status))
+        {
+            response.Success = false;
+            response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+            return response;
+        }
         try
         {
             var newCategoryId = await _categoryRepository.AddCategoryAsync(category);
@@ -115,7 +121,12 @@ public class CategoryService : ICategoryService
             response.Message = Error.InvalidInputData;
             return response;
         }
-
+        if (!StatusValidate.IsValidStatus(category.Status))
+        {
+            response.Success = false;
+            response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+            return response;
+        }
         try
         {
             await _categoryRepository.UpdateCategoryAsync(id, category);

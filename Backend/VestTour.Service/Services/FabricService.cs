@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Domain.Entities;
 using VestTour.Domain.Enums;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 
 namespace VestTour.Service.Implementation
@@ -62,6 +64,12 @@ namespace VestTour.Service.Implementation
         public async Task<ServiceResponse<int>> AddFabricAsync(FabricModel model)
         {
             var response = new ServiceResponse<int>();
+            if (!StatusValidate.IsValidStatus(model.Status))
+            {
+                response.Success = false;
+                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                return response;
+            }
             try
             {
                 var fabricId = await _fabricRepo.AddFabricAsync(model);
@@ -80,6 +88,12 @@ namespace VestTour.Service.Implementation
         public async Task<ServiceResponse> UpdateFabricAsync(int id, FabricModel model)
         {
             var response = new ServiceResponse();
+            if (!StatusValidate.IsValidStatus(model.Status))
+            {
+                response.Success = false;
+                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                return response;
+            }
             try
             {
                 await _fabricRepo.UpdateFabricAsync(id, model);

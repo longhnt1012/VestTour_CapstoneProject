@@ -1,5 +1,7 @@
 ﻿using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
+using VestTour.Service.Interface;
 using VestTour.Services.Interfaces;
 
 namespace VestTour.Services.Implementation
@@ -13,41 +15,117 @@ namespace VestTour.Services.Implementation
             _liningRepository = liningRepository;
         }
 
-        public async Task<List<LiningModel>> GetAllLiningsAsync()
+        public async Task<ServiceResponse<List<LiningModel>>> GetAllLiningsAsync()
         {
-            return await _liningRepository.GetAllLiningAsync();
+            var response = new ServiceResponse<List<LiningModel>>();
+            try
+            {
+                response.Data = await _liningRepository.GetAllLiningAsync();
+                response.Message = "Linings retrieved successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"Error retrieving linings: {ex.Message}";
+            }
+            return response;
         }
 
-        public async Task<LiningModel> GetLiningByIdAsync(int id)
+        public async Task<ServiceResponse<LiningModel>> GetLiningByIdAsync(int id)
         {
-            return await _liningRepository.GetLiningByIdAsync(id);
+            var response = new ServiceResponse<LiningModel>();
+            try
+            {
+                var lining = await _liningRepository.GetLiningByIdAsync(id);
+                if (lining == null)
+                {
+                    response.Success = false;
+                    response.Message = $"Lining with id {id} not found.";
+                }
+                else
+                {
+                    response.Data = lining;
+                    response.Message = "Lining retrieved successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"Error retrieving lining: {ex.Message}";
+            }
+            return response;
         }
 
-        public async Task<LiningModel> AddLiningAsync(LiningModel model)
+        public async Task<ServiceResponse<LiningModel>> AddLiningAsync(LiningModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.LiningName))
-                throw new ArgumentException("Lining name cannot be null or empty.");
+            var response = new ServiceResponse<LiningModel>();
+            if (!StatusValidate.IsValidStatus(model.Status))
+            {
+                response.Success = false;
+                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                return response;
+            }
+            try
+            {
+                if (string.IsNullOrWhiteSpace(model.LiningName))
+                    throw new ArgumentException("Lining name cannot be null or empty.");
 
-            var newLiningId = await _liningRepository.AddLiningAsync(model);
-            return await _liningRepository.GetLiningByIdAsync(newLiningId);
+                var newLiningId = await _liningRepository.AddLiningAsync(model);
+                response.Data = await _liningRepository.GetLiningByIdAsync(newLiningId);
+                response.Message = "Lining added successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"Error adding lining: {ex.Message}";
+            }
+            return response;
         }
 
-        public async Task UpdateLiningAsync(int id, LiningModel model)
+        public async Task<ServiceResponse> UpdateLiningAsync(int id, LiningModel model)
         {
-            var existingLining = await _liningRepository.GetLiningByIdAsync(id);
-            if (existingLining == null)
-                throw new ArgumentException($"Lining with id {id} not found.");
+            var response = new ServiceResponse();
+            if (!StatusValidate.IsValidStatus(model.Status))
+            {
+                response.Success = false;
+                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                return response;
+            }
+            try
+            {
+                var existingLining = await _liningRepository.GetLiningByIdAsync(id);
+                if (existingLining == null)
+                    throw new ArgumentException($"Lining with id {id} not found.");
 
-            // Preserve existing values for null fields
-            model.LiningName = string.IsNullOrWhiteSpace(model.LiningName) ? existingLining.LiningName : model.LiningName;
-            model.ImageUrl = model.ImageUrl ?? existingLining.ImageUrl;
+                // Preserve existing values for null fields
+                model.LiningName = string.IsNullOrWhiteSpace(model.LiningName) ? existingLining.LiningName : model.LiningName;
+                model.ImageUrl = model.ImageUrl ?? existingLining.ImageUrl;
 
-            await _liningRepository.UpdateLiningAsync(id, model);
+                await _liningRepository.UpdateLiningAsync(id, model);
+                response.Message = "Lining updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"Error updating lining: {ex.Message}";
+            }
+            return response;
         }
 
-        public async Task DeleteLiningAsync(int id)
+        public async Task<ServiceResponse> DeleteLiningAsync(int id)
         {
-            await _liningRepository.DeleteLiningAsync(id);
+            var response = new ServiceResponse();
+            try
+            {
+                await _liningRepository.DeleteLiningAsync(id);
+                response.Message = "Lining deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"Error deleting lining: {ex.Message}";
+            }
+            return response;
         }
     }
 }

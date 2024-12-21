@@ -26,6 +26,7 @@ public partial class Store
     public int? DistrictId { get; set; }
 
     public string? ImgUrl { get; set; }
+    public string? Status { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

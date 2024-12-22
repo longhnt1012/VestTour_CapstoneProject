@@ -22,7 +22,7 @@ namespace VestTour.Repository.Repositories
         public async Task<List<UserModel>> GetUsersByRoleIdAsync(int roleId)
         {
             var users = await _context.Users
-                .Where(u => u.RoleId == roleId && u.Status == "active" && u.IsConfirmed == true)
+                .Where(u => u.RoleId == roleId && u.Status == "Active" && u.IsConfirmed == true)
                 .ToListAsync();
             return _mapper.Map<List<UserModel>>(users);
         }
@@ -168,12 +168,25 @@ namespace VestTour.Repository.Repositories
         //        await _context.SaveChangesAsync();
         //    }
         //}
-
+        public async Task<int> CountOnlineUsersAsync()
+        {
+            return await _context.Users.CountAsync(u => u.IsOnline == true);
+        }
         public async Task<UserModel> GetUserByResetTokenAsync(string resetToken)
         {
             var token = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == resetToken && u.RefreshTokenExpiryTime > DateTime.UtcNow);
 
             return _mapper.Map<UserModel>(token);
+        }
+        public async Task UpdateUserActivityAsync(int userId, bool isOnline)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.IsOnline = isOnline;
+                await _context.SaveChangesAsync();
+            }
+
         }
 
         public async Task UpdatePasswordUser(int userId, UserModel user)

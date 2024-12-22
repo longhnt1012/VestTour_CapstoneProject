@@ -11,7 +11,7 @@ namespace VestTour.Repository.ValidationHelper
         // Define allowed service types with exact matches
         private static readonly HashSet<string> AllowedStatus = new HashSet<string>
     {
-        "Pending", "Shipped", "Delivered", "Finished"
+         "Shipping","Ready", "Finished"
     };
 
         // Method to validate the service type

@@ -224,7 +224,19 @@ namespace VestTour.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        [HttpPost("{userId}/update-activity")]
+        public async Task<IActionResult> UpdateUserActivity(int userId, [FromQuery] bool isOnline)
+        {
+            try
+            {
+                await _userService.UpdateUserActivityAsync(userId, isOnline);
+                return Ok(new { Message = "User activity updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while updating user activity.", Details = ex.Message });
+            }
+        }
 
     }
 }

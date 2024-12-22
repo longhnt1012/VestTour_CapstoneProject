@@ -168,15 +168,27 @@ namespace VestTour.Service.Services
 
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = refreshTokenExpiryTime;
-
+            user.IsOnline = true;
             await _userRepository.UpdateUserAsync(user);
         }
+        //public async Task UpdateLastActiveAndSetOnline(int userId, bool isonline, DateTime lastActive)
+        //{
+        //    var user = await _userRepository.GetUserByIdAsync(userId);
+        //    if (user == null) throw new ArgumentNullException("User not found.");
 
+        //    user.IsOnline = isonline;
+        //    user.LastActive = lastActive;
+
+        //    await _userRepository.UpdateUserAsync(user);
+        //}
         public async Task<User> GetUserByRefreshTokenAsync(string refreshToken)
         {
             return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
         }
-
+        public async Task UpdateUserActivityAsync(int userId, bool isOnline)
+        {
+             await _userRepository.UpdateUserActivityAsync(userId,isOnline);
+        }
         public async Task ClearRefreshTokenAsync(int userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);

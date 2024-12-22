@@ -48,7 +48,7 @@ namespace VestTour.Service.Services
 
             // Store the refresh token and expiration in the database
             await _userService.UpdateRefreshTokenAsync(user.UserId, refreshToken, DateTime.Now.AddDays(7));
-
+           
             return new AuthenticationResponseModel
             {
                 Token = accessToken,

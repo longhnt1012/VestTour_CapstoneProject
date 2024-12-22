@@ -207,7 +207,6 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.PantsWaist).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Shoulder).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.SleeveLength).HasColumnType("decimal(5, 2)");
-            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Thigh).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Waist).HasColumnType("decimal(5, 2)");

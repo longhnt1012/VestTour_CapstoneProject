@@ -23,11 +23,11 @@ namespace VestTour.Repository.Interface
         Task<User> GetUserByRefreshTokenAsync(string refreshToken);
         public Task UpdateEmailConfirmStatusAsync(string email, string status, bool Isconfirm);
         Task<UserModel> GetUserByResetTokenAsync(string resetToken);
-
+        Task<int> CountOnlineUsersAsync();
         public Task UpdatePasswordUser(int userId, UserModel user);
         Task<string?> GetEmailByUserIdAsync(int? userId);
         Task UpdateUserAvatarAsync(int userId, string avatarUrl);
-
+        Task UpdateUserActivityAsync(int userId, bool isOnline);
 
     }
 }

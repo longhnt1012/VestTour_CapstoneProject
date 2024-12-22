@@ -3036,6 +3036,27 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "UpdateUserActivity",
+    "RelativePath": "api/User/{userId}/update-activity",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "isOnline",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
     "Method": "ForgotPassword",
     "RelativePath": "api/User/forgot-password",
     "HttpMethod": "POST",

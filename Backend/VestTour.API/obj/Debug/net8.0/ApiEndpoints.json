@@ -3286,5 +3286,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.AddCartController",
+    "Method": "CreatePayment",
+    "RelativePath": "Cart/createpayment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "isDeposit",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "payAmount",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

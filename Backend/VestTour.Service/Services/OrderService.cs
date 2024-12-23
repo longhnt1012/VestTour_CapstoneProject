@@ -276,11 +276,12 @@ namespace VestTour.Service.Implementation
                 GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
                 GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
                 TotalPrice = Math.Round(totalPrice, 2),
                 RevenueShare = totalPrice * 0.3m,
                 Deposit = deposit,
                 ShippingFee = shippingFee,
-                Paid = false,
+                Paid = true,
                 Status = "Pending",
                 DeliveryMethod = deliveryMethod ??= "Pick up",
                 Note = surchargeNote
@@ -291,16 +292,15 @@ namespace VestTour.Service.Implementation
             int orderId = await _orderRepository.AddOrderAsync(newOrder);
 
             // Retrieve PaymentId from session using IHttpContextAccessor
-            //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+            var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
 
-            //if (paymentId == null)
-            //{
-            //    throw new InvalidOperationException("Please come back to payment.");
-            //}
+            if (paymentId == null)
+            {
+                throw new InvalidOperationException("Please come back to payment.");
+            }
 
-            //await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-            //_httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
-            //_httpContextAccessor.HttpContext?.Session.Remove("tongtien");
+            await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
+            _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
 
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);

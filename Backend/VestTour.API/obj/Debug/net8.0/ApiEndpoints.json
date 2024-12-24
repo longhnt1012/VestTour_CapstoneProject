@@ -1177,6 +1177,22 @@
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "GetOrdersByStatus",
+    "RelativePath": "api/Orders/orderstatus/{status}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
     "Method": "StaffCreateOrder",
     "RelativePath": "api/Orders/staffcreateorder",
     "HttpMethod": "POST",
@@ -1215,6 +1231,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "GetTotalRevenueShare",
+    "RelativePath": "api/Orders/total-revenue-share/{status}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

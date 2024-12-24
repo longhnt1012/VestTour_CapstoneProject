@@ -163,5 +163,19 @@ namespace VestTour.Repository.Repositories
             _context.OrderDetails.Add(orderDetailEntity);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<OrderModel>> GetOrdersByStatusAsync(string status)
+        {
+            var orders = await _context.Orders!
+                .Where(o => o.Status == status)
+                .ToListAsync();
+
+            return _mapper.Map<List<OrderModel>>(orders);
+        }
+        public async Task<decimal> GetTotalRevenueShareByStatusAsync(string status)
+        {
+            return await _context.Orders!
+                .Where(o => o.Status == status)
+                .SumAsync(o => o.RevenueShare ?? 0); // Assuming RevenueShare is nullable
+        }
     }
 }

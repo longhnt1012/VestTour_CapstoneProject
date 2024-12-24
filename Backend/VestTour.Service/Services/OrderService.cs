@@ -205,7 +205,14 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrdersByUserIdAsync(userId);
         }
-
+        public async Task<List<OrderModel>> GetOrdersByStatusAsync(string status)
+        {
+            return await _orderRepository.GetOrdersByStatusAsync(status);
+        }
+        public async Task<decimal> GetTotalRevenueShareByStatusAsync(string status)
+        {
+            return await _orderRepository.GetTotalRevenueShareByStatusAsync(status);
+        }
         public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
@@ -241,11 +248,6 @@ namespace VestTour.Service.Implementation
             //{
             //    throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
             //}
-
-            // Calculate total price
-            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
-
-            // Apply voucher discount if voucherId is provided
             if (voucherId.HasValue)
             {
                 var voucher = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
@@ -263,6 +265,11 @@ namespace VestTour.Service.Implementation
                     shippingFee = 0; // Ensure total price is non-negative
                 }
             }
+            // Calculate total price
+            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity)+shippingFee;
+
+            // Apply voucher discount if voucherId is provided
+           
             // Retrieve user details if applicable
             User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
 

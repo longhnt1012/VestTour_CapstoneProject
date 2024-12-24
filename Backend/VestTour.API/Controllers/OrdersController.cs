@@ -135,7 +135,19 @@ namespace VestTour.Controllers
                 return BadRequest();
             }
         }
-
+        [HttpGet("orderstatus/{status}")]
+        public async Task<IActionResult> GetOrdersByStatus(string status)
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersByStatusAsync(status);
+                return Ok(orders);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
         [HttpGet("{orderId}/details")]
         public async Task<IActionResult> GetOrderDetail(int orderId)
         {
@@ -196,6 +208,12 @@ namespace VestTour.Controllers
             }
 
             return Ok(response);
+        }
+        [HttpGet("total-revenue-share/{status}")]
+        public async Task<IActionResult> GetTotalRevenueShare(string status)
+        {
+            var totalRevenueShare = await _orderService.GetTotalRevenueShareByStatusAsync(status);
+            return Ok(new { TotalRevenueShare = totalRevenueShare });
         }
     }
 }

@@ -83,7 +83,19 @@ namespace VestTour.Controllers
                 return NotFound("No products found for this category.");
             }
         }
-
+        [HttpGet("category-iscustomfalse/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategoryIdIsCustomFalse(int categoryId)
+        {
+            try
+            {
+                var products = await _productService.GetProductsByCategoryIdIsCustomFalseAsync(categoryId);
+                return Ok(products);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("No products found for this category.");
+            }
+        }
         [HttpPost]
         public async Task<ActionResult<int>> AddProduct(ProductModel product)
         {

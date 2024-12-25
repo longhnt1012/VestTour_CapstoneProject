@@ -36,6 +36,14 @@ namespace VestTour.Repository.Repositories
                                          .ToListAsync();
             return _mapper.Map<List<ProductModel>>(products);
         }
+        public async Task<List<ProductModel>> GetProductsByCategoryIdIsCustomFalseAsync(int categoryId)
+        {
+            var products = await _context.Products
+                                         .Where(p => p.CategoryId == categoryId && p.IsCustom == false)
+                                         .ToListAsync();
+            return _mapper.Map<List<ProductModel>>(products);
+        }
+
         public async Task<int> AddProductAsync(ProductModel productModel)
         {
             var product = _mapper.Map<Product>(productModel);

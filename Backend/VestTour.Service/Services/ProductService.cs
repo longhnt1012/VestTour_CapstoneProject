@@ -44,7 +44,15 @@ namespace VestTour.Service.Implementation
 
             return products;
         }
+        public async Task<List<ProductModel>> GetProductsByCategoryIdIsCustomFalseAsync(int categoryId)
+        {
+            var products = await _productRepository.GetProductsByCategoryIdIsCustomFalseAsync(categoryId);
 
+            if (products == null || products.Count == 0)
+                throw new KeyNotFoundException("No products found for this category.");
+
+            return products;
+        }
         public async Task<int> AddProductAsync(ProductModel product)
         {
 

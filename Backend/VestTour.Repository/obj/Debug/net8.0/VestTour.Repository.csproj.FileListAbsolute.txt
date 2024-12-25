@@ -51,21 +51,3 @@ D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\refint\VestTour.Repo
 D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.pdb
 D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.genruntimeconfig.cache
 D:\SECapstone\VestTour\VestTour.Repository\obj\Debug\net8.0\ref\VestTour.Repository.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.deps.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.runtimeconfig.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Repository.pdb
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\bin\Debug\net8.0\VestTour.Domain.pdb
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.AssemblyReference.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.GeneratedMSBuildEditorConfig.editorconfig
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfoInputs.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.AssemblyInfo.cs
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.CoreCompileInputs.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.sourcelink.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.csproj.CopyComplete
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\refint\VestTour.Repository.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.pdb
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\VestTour.Repository.genruntimeconfig.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Repository\obj\Debug\net8.0\ref\VestTour.Repository.dll

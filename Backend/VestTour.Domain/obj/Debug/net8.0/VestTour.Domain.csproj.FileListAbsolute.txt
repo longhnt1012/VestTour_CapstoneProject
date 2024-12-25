@@ -42,18 +42,3 @@ D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\refint\VestTour.Domain.d
 D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.pdb
 D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.genruntimeconfig.cache
 D:\SECapstone\VestTour\VestTour.Domain\obj\Debug\net8.0\ref\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.deps.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.runtimeconfig.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\bin\Debug\net8.0\VestTour.Domain.pdb
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.AssemblyReference.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.GeneratedMSBuildEditorConfig.editorconfig
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfoInputs.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.AssemblyInfo.cs
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.csproj.CoreCompileInputs.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.sourcelink.json
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\refint\VestTour.Domain.dll
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.pdb
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\VestTour.Domain.genruntimeconfig.cache
-D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Domain\obj\Debug\net8.0\ref\VestTour.Domain.dll

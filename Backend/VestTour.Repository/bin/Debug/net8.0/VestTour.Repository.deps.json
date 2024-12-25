@@ -1069,7 +1069,10 @@
           "System.Data.SqlClient": "4.8.6"
         },
         "runtime": {
-          "VestTour.Domain.dll": {}
+          "VestTour.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

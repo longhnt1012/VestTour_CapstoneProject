@@ -163,7 +163,7 @@ namespace VestTour.API.Controllers
             try
             {
                 var userId = GetUserId();
-                var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
+               // var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
                 string paymentDetails = "";
                 paymentDetails = isDeposit ? "Make deposit 50%" : "Paid full";
 

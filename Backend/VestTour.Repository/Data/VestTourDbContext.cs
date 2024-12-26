@@ -45,8 +45,6 @@ public partial class VestTourDbContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
-    public virtual DbSet<Shipment> Shipments { get; set; }
-
     public virtual DbSet<ShipperPartner> ShipperPartners { get; set; }
 
     public virtual DbSet<Store> Stores { get; set; }
@@ -248,11 +246,6 @@ public partial class VestTourDbContext : DbContext
             entity.HasIndex(e => e.ShipmentId, "UQ__ShipmentOr__3B82F0E018BD59DE").IsUnique();
 
 
-            entity.HasOne(d => d.Shipment).WithOne(p => p.Order)
-                .HasForeignKey<Order>(d => d.ShipmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Order__ShipmentI__7A3223E8");
-
             entity.HasOne(d => d.Store).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.StoreId)
                 .HasConstraintName("FK__Order__StoreID__403A8C7D");
@@ -419,25 +412,6 @@ public partial class VestTourDbContext : DbContext
 
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.RoleName).HasMaxLength(100);
-        });
-
-        modelBuilder.Entity<Shipment>(entity =>
-        {
-            entity.HasKey(e => e.ShipmentId).HasName("PK__Shipment__5CAD378DF00B5CD5");
-
-            entity.ToTable("Shipment");
-
-            entity.Property(e => e.ShipmentId).HasColumnName("ShipmentID");
-            entity.Property(e => e.RecipientAddress).HasMaxLength(255);
-            entity.Property(e => e.RecipientName).HasMaxLength(100);
-            entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
-            entity.Property(e => e.Status).HasMaxLength(50);
-            entity.Property(e => e.TrackNumber).HasMaxLength(50);
-
-            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Shipments)
-                .HasForeignKey(d => d.ShipperPartnerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Shipment__Shippe__7849DB76");
         });
 
         modelBuilder.Entity<ShipperPartner>(entity =>

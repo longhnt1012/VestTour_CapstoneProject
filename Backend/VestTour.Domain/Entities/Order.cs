@@ -53,8 +53,6 @@ public partial class Order
 
     public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
 
-    public virtual Shipment? Shipment { get; set; }
-
     public virtual Store? Store { get; set; }
 
     public virtual User? User { get; set; }

@@ -272,7 +272,7 @@ namespace VestTour.Service.Implementation
            
             // Retrieve user details if applicable
             User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
-
+          
             // Create new order
             var newOrder = new OrderModel
             {
@@ -299,15 +299,30 @@ namespace VestTour.Service.Implementation
             int orderId = await _orderRepository.AddOrderAsync(newOrder);
 
             // Retrieve PaymentId from session using IHttpContextAccessor
-            var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
-
-            if (paymentId == null)
+            //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+            int? paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+            if (paymentId.HasValue)
             {
-                throw new InvalidOperationException("Please come back to payment.");
+                // Sử dụng paymentId
+                Console.WriteLine($"PaymentId: {paymentId.Value}");
+                await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
+                _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
+
+                // Add order details from cart items
+               // await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
+            }
+            else
+            {
+                Console.WriteLine("Khong thay paymentId");
             }
 
-            await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-            _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
+            //if (paymentId == null)
+            //{
+            //    throw new InvalidOperationException("Please come back to payment.");
+            //}
+
+            //await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
+            //_httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
 
             // Add order details from cart items
             await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);

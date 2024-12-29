@@ -41,8 +41,6 @@ public partial class Order
 
     public decimal? RevenueShare { get; set; }
 
-    public int? ShipmentId { get; set; }
-
     public string? ShipStatus { get; set; }
 
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();

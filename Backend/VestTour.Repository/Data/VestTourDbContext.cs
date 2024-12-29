@@ -235,7 +235,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.RevenueShare).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.ShipStatus).HasMaxLength(50);
-            entity.Property(e => e.ShipmentId).HasColumnName("ShipmentID");
+           
             entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
@@ -243,7 +243,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
 
-            entity.HasIndex(e => e.ShipmentId, "UQ__ShipmentOr__3B82F0E018BD59DE").IsUnique();
+           
 
 
             entity.HasOne(d => d.Store).WithMany(p => p.Orders)

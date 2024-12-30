@@ -209,6 +209,19 @@ namespace VestTour.Controllers
 
             return Ok(response);
         }
+        [HttpPatch("update-ship-status/{id}")]
+        // [Authorize(Roles = "admin,store manager,staff")]
+        public async Task<IActionResult> ChangeShipStatus(int id, [FromBody] string newStatus)
+        {
+
+            var response = await _orderService.ChangeShipStatusAsync(id, newStatus);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
         [HttpGet("total-revenue-share/{status}")]
         public async Task<IActionResult> GetTotalRevenueShare(string status)
         {

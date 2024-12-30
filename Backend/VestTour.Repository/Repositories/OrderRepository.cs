@@ -114,6 +114,7 @@ namespace VestTour.Repository.Repositories
                 Deposit = orderEntity.Deposit,
                 ShippingFee = orderEntity.ShippingFee,
                 DeliveryMethod = orderEntity.DeliveryMethod,
+                ShipStatus = orderEntity.ShipStatus,
                 //Products = orderEntity.OrderDetails.Select(od => new ProductModel
                 //{
                 //    ProductID = od.ProductId,
@@ -154,6 +155,16 @@ namespace VestTour.Repository.Repositories
             if (order != null)
             {
                 order.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task ChangeShipStatus(int orderId, string newStatus)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+
+            if (order != null)
+            {
+                order.ShipStatus = newStatus;
                 await _context.SaveChangesAsync();
             }
         }

@@ -1251,6 +1251,27 @@
   },
   {
     "ContainingType": "VestTour.Controllers.OrdersController",
+    "Method": "ChangeShipStatus",
+    "RelativePath": "api/Orders/update-ship-status/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.OrdersController",
     "Method": "ChangeStatusName",
     "RelativePath": "api/Orders/updatestatus/{id}",
     "HttpMethod": "PATCH",

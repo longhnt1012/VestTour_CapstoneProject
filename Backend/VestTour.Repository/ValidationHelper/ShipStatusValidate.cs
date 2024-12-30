@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace VestTour.Repository.ValidationHelper
 {
-    public static class ShipmentStatusValidate
+    public static class ShipStatusValidate
     {
         // Define allowed service types with exact matches
         private static readonly HashSet<string> AllowedStatus = new HashSet<string>
     {
-         "Tailoring","Packaging","Shipping","Ready", "Finished"
+        "Confirming", "Tailoring", "Shipping", "Ready", "Finished"
     };
 
         // Method to validate the service type

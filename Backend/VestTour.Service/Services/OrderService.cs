@@ -291,6 +291,7 @@ namespace VestTour.Service.Implementation
                 Paid = true,
                 Status = "Pending",
                 DeliveryMethod = deliveryMethod ??= "Pick up",
+                ShipStatus = "Confirming", 
                 Note = surchargeNote
             };
 
@@ -300,13 +301,13 @@ namespace VestTour.Service.Implementation
 
             // Retrieve PaymentId from session using IHttpContextAccessor
             //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
-            int? paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
+            int? paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("paymentId");
             if (paymentId.HasValue)
             {
                 // Sử dụng paymentId
-                Console.WriteLine($"PaymentId: {paymentId.Value}");
+                Console.WriteLine($"paymentId: {paymentId.Value}");
                 await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-                _httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
+                _httpContextAccessor.HttpContext?.Session.Remove("paymentId");
 
                 // Add order details from cart items
                // await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
@@ -421,6 +422,47 @@ namespace VestTour.Service.Implementation
 
             return response;
         }
+        public async Task<ServiceResponse> ChangeShipStatusAsync(int orderId, string newStatus)
+        {
+            var response = new ServiceResponse();
+
+            if (orderId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidOrderId;
+                return response;
+            }
+
+            if (!ShipStatusValidate.IsValidStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = Error.InvalidOrderStatus;
+                return response;
+            }
+
+            try
+            {
+                var existingOrder = await _orderRepository.GetOrderByIdAsync(orderId);
+
+                if (existingOrder == null)
+                {
+                    response.Success = false;
+                    response.Message = $"{Error.OrderNotFound}: {orderId}";
+                    return response;
+                }
+                await _orderRepository.ChangeShipStatus(orderId, newStatus);
+
+                response.Success = true;
+                response.Message = Success.ShipStatusUpdated;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
         private async Task<decimal> CalculatePrice(CustomProductModel customProduct)
         {
             decimal basePrice = 100;
@@ -509,10 +551,11 @@ namespace VestTour.Service.Implementation
                 GuestEmail = orderRequest.GuestEmail,
                 GuestAddress = orderRequest.GuestAddress,
                 TotalPrice = totalPrice,
-                RevenueShare = totalPrice * 0.7m,
+                RevenueShare = totalPrice * 0.3m,
                 Deposit = orderRequest.Deposit,
                 ShippingFee = orderRequest.ShippingFee,
-                DeliveryMethod = orderRequest.DeliveryMethod
+                DeliveryMethod = orderRequest.DeliveryMethod,
+                ShipStatus = "Confirming"
             };
 
             int orderId = await _orderRepository.AddOrderAsync(orderEntity);

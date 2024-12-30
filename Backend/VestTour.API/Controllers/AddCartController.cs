@@ -188,9 +188,9 @@ namespace VestTour.API.Controllers
                 }
 
                 // Save PaymentId into the session
-                HttpContext.Session.SetInt32("PaymentId", newPaymentResponse.Data);
+                HttpContext.Session.SetInt32("paymentId", newPaymentResponse.Data);
 
-                return Ok(new { Message = "Payment created successfully.", PaymentId = newPaymentResponse.Data });
+                return Ok(new { Message = "Payment created successfully.", paymentId = newPaymentResponse.Data });
             }
             catch (Exception ex)
             {

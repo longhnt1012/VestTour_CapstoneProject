@@ -350,7 +350,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Size)
                 .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasColumnName("SIZE");
+                .HasColumnName("Size");
             entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)

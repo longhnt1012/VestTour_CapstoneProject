@@ -157,17 +157,7 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        //public async Task ClearRefreshTokenAsync(int userId)
-        //{
-        //    var user = await _context.Users.FindAsync(userId);
-        //    if (user != null)
-        //    {
-        //        user.RefreshToken = null;
-        //        user.RefreshTokenExpiryTime = null;
-        //        _context.Users.Update(user);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
+ 
         public async Task<int> CountOnlineUsersAsync()
         {
             return await _context.Users.CountAsync(u => u.IsOnline == true);

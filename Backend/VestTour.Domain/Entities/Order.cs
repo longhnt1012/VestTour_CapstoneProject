@@ -43,6 +43,8 @@ public partial class Order
 
     public string? ShipStatus { get; set; }
 
+    public int? ShipperPartnerId { get; set; }
+
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
@@ -50,6 +52,8 @@ public partial class Order
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
+
+    public virtual ShipperPartner? ShipperPartner { get; set; }
 
     public virtual Store? Store { get; set; }
 

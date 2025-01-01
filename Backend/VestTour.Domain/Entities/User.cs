@@ -32,6 +32,7 @@ public partial class User
     public DateTime? RefreshTokenExpiryTime { get; set; }
 
     public string? AvtUrl { get; set; }
+
     public bool? IsOnline { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();

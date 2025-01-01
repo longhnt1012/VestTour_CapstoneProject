@@ -127,36 +127,7 @@ namespace VestTour.API.Controllers
             return Ok(new { message = "Cart cleared successfully." });
         }
         //[Authorize]
-        [HttpPost("/Cart/create-paypal-order")]
-        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken, bool isDeposit = false)
-        {
-            var userId = GetUserId();
-            var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
-            if (totalPrice <= 0)
-            {
-                return BadRequest("The cart is empty or has invalid items.");
-            }
-            var tongtien = totalPrice.ToString("F2");
-            decimal tienphaitra;
-            if (isDeposit)
-            {
-                tienphaitra = totalPrice / 2;
-                tongtien = tienphaitra.ToString("F2");
-            }
-            HttpContext.Session.SetString("tongtien", tongtien);
-            var donViTienTe = "USD";
-            var maDonHangThamChieu = "OR" + DateTime.Now.Ticks.ToString();
-            try
-            {
-                var response = await _paypalClient.CreateOrder(tongtien, donViTienTe, maDonHangThamChieu);
-                return Ok(response);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-        }
+       
         [HttpPost("/Cart/createpayment")]
         public async Task<IActionResult> CreatePayment( bool isDeposit,decimal payAmount )
         {
@@ -199,69 +170,7 @@ namespace VestTour.API.Controllers
             }
 
         }
-            //[Authorize]
-            [HttpPost("Cart/capture-paypal-order")]
-        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
-        {
-            try
-            {
-                // Capture the PayPal order
-                var response = await _paypalClient.CaptureOrder(orderID);
-                if (response.status != "COMPLETED")
-                {
-                    return BadRequest(new { Error = "PayPal order capture failed." });
-                }
-
-                // Retrieve the "tongtien" from the session
-                var tongtienString = _httpContextAccessor.HttpContext?.Session.GetString("tongtien");
-                if (string.IsNullOrEmpty(tongtienString))
-                {
-                    return BadRequest(new { Error = "Tongtien is not found in the session." });
-                }
-
-                // Validate and parse "tongtien"
-                if (!decimal.TryParse(tongtienString, out var tongtien))
-                {
-                    return BadRequest(new { Error = "Invalid format for tongtien." });
-                }
-
-                // Get the user ID and calculate the total cart price
-                var userId = GetUserId();
-                var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
-
-                // Determine payment details
-                string paymentDetails = tongtien < totalPrice ? "Make deposit 50%" : "Paid full";
-
-                // Create a PaymentModel object
-                var payment = new PaymentModel
-                {
-                    UserId = userId,
-                    OrderId = 26, // You might want to replace this hardcoded value with a dynamic one
-                    Amount = tongtien,
-                    Method = "PayPal",
-                    PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    PaymentDetails = paymentDetails,
-                    Status = "Success"
-                };
-
-                // Save the payment record
-                var newPaymentResponse = await _paymentService.AddNewPaymentAsync(payment);
-                if (!newPaymentResponse.Success)
-                {
-                    return BadRequest(new { Error = newPaymentResponse.Message });
-                }
-
-                // Save PaymentId into the session
-                HttpContext.Session.SetInt32("PaymentId", newPaymentResponse.Data);
-
-                return Ok(new { Message = "Payment created successfully.", PaymentId = newPaymentResponse.Data });
-            }
-            catch (Exception ex)
-            {
-                // Return error details
-                return BadRequest(new { Error = ex.Message });
-            }
-        }
+         
 
 
     }

@@ -17,22 +17,6 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.AddCartController",
-    "Method": "CapturePaypalOrder",
-    "RelativePath": "api/AddCart/Cart/capture-paypal-order",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "orderID",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.API.Controllers.AddCartController",
     "Method": "ClearCart",
     "RelativePath": "api/AddCart/clear",
     "HttpMethod": "DELETE",
@@ -3206,22 +3190,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "VestTour.API.Controllers.AddCartController",
-    "Method": "CreatePaypalOrder",
-    "RelativePath": "Cart/create-paypal-order",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "isDeposit",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      }
-    ],
     "ReturnTypes": []
   },
   {

@@ -34,7 +34,7 @@ namespace VestTour.Repository.Models
         public string? DeliveryMethod { get; set; }
         public decimal? RevenueShare { get; set; }
         public string? ShipStatus { get; set; }
-
+        public int? ShipperPartnerId { get; set; }
         // [JsonIgnore]
         public List<OrderDetailModel> OrderDetails { get; set; } = new List<OrderDetailModel>();
     }

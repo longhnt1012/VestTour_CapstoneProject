@@ -11,11 +11,11 @@ namespace VestTour.Service.Implementation
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-       // private readonly IProductStyleOptionRepository _productStyleOptionRepository;
+     
         public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
-           // _productStyleOptionRepository = productStyleOptionRepository;
+          
         }
 
         public async Task<List<ProductModel>> GetAllProductsAsync()

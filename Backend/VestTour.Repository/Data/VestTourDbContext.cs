@@ -17,6 +17,7 @@ public partial class VestTourDbContext : DbContext
         : base(options)
     {
     }
+
     public virtual DbSet<BankingAccount> BankingAccounts { get; set; }
 
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -235,7 +236,7 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.Note).HasMaxLength(255);
             entity.Property(e => e.RevenueShare).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.ShipStatus).HasMaxLength(50);
-           
+            entity.Property(e => e.ShipperPartnerId).HasColumnName("ShipperPartnerID");
             entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
@@ -243,8 +244,9 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
 
-           
-
+            entity.HasOne(d => d.ShipperPartner).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.ShipperPartnerId)
+                .HasConstraintName("FK__Order__ShipperPa__0697FACD");
 
             entity.HasOne(d => d.Store).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.StoreId)
@@ -443,8 +445,11 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.ImgUrl).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.StaffIds).HasColumnName("StaffIDs");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.Status).HasMaxLength(50);
+
             entity.HasOne(d => d.User).WithMany(p => p.Stores)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Store__UserID__2D27B809");

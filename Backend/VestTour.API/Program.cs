@@ -29,7 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 // Configure DbContext
 builder.Services.AddDbContext<VestTourDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDb")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("VestTourDB")));
 
 // Add Swagger
 builder.Services.AddSwaggerGen(c =>

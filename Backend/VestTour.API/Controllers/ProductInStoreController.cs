@@ -40,7 +40,23 @@ namespace VestTour.API.Controllers
 
             return Ok(response);
         }
+        [HttpPut("{storeId:int}/{productId:int}")]
+        public async Task<IActionResult> UpdateProductInStore(int storeId, int productId, [FromBody] ProductInStoreModel productInStore)
+        {
+            if (productInStore == null)
+            {
+                return BadRequest("Product data is required.");
+            }
 
+            var result = await _productInStoreService.UpdateProductInStoreAsync(storeId, productId, productInStore);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result.Message);
+        }
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<int>>> AddProductInStore(ProductInStoreModel productInStore)
         {
@@ -51,15 +67,6 @@ namespace VestTour.API.Controllers
             return CreatedAtAction(nameof(GetProductInStore), new { storeId = productInStore.StoreID, productId = response.Data }, response);
         }
 
-        //[HttpPut("{storeId}/{productId}")]
-        //public async Task<ActionResult<ServiceResponse>> UpdateProductInStore(int storeId, int productId, ProductInStoreModel productInStore)
-        //{
-        //    var response = await _productInStoreService.UpdateProductInStoreAsync(storeId, productId, productInStore);
-        //    if (!response.Success)
-        //        return BadRequest(response);
-
-        //    return Ok(response);
-        //}
 
         [HttpDelete("{storeId}/{productId}")]
         public async Task<ActionResult<ServiceResponse>> DeleteProductInStore(int storeId, int productId)
@@ -71,17 +78,21 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
 
-        [HttpPatch("{storeId}/{productId}/quantity")]
-        public async Task<ActionResult<ServiceResponse>> UpdateQuantity(int storeId, int productId, [FromBody] int quantity)
+        [HttpPost("updatequantity/{storeId}/{productId}/{quantity}")]
+        public async Task<ActionResult<ServiceResponse>> UpdateQuantity(int storeId, int productId, int quantity)
         {
-            var response = await _productInStoreService.UpdateQuantityAsync(storeId, productId, quantity);
+           
+                var response = await _productInStoreService.UpdateQuantityAsync(storeId, productId, quantity);
 
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
+                if (!response.Success)
+                {
+                    return BadRequest(response);
+                }
 
-            return Ok(response);
+                return Ok(response);
+            
+         
+          
         }
     }
 }

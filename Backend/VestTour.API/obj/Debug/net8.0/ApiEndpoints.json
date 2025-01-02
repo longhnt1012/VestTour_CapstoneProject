@@ -1933,6 +1933,32 @@
   },
   {
     "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
+    "Method": "UpdateProductInStore",
+    "RelativePath": "api/ProductInStore/{storeId}/{productId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productInStore",
+        "Type": "VestTour.Repository.Models.ProductInStoreModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
     "Method": "DeleteProductInStore",
     "RelativePath": "api/ProductInStore/{storeId}/{productId}",
     "HttpMethod": "DELETE",
@@ -1965,8 +1991,8 @@
   {
     "ContainingType": "VestTour.API.Controllers.ProductInStoreController",
     "Method": "UpdateQuantity",
-    "RelativePath": "api/ProductInStore/{storeId}/{productId}/quantity",
-    "HttpMethod": "PATCH",
+    "RelativePath": "api/ProductInStore/updatequantity/{storeId}/{productId}/{quantity}",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [

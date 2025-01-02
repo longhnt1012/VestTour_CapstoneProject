@@ -76,6 +76,7 @@ namespace VestTour.Repository.Repositories
             if (productInStore != null)
             {
                 productInStore.Quantity = quantity;
+                _context.Update(productInStore);
                 await _context.SaveChangesAsync();
             }
         }

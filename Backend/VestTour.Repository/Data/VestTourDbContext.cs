@@ -389,11 +389,12 @@ public partial class VestTourDbContext : DbContext
 
         modelBuilder.Entity<ProductInStore>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("ProductInStore");
+            entity.ToTable("ProductInStore");
+            entity.HasKey(e => new { e.StoreId, e.ProductId });
 
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
+            entity.Property(e => e.ProductId).HasColumnName("ProductId");
+        
 
             entity.HasOne(d => d.Product).WithMany()
                 .HasForeignKey(d => d.ProductId)

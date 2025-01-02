@@ -91,9 +91,9 @@ namespace VestTour.API.Controllers
             var userId = GetUserId();
             try
             {
-                await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress, deposit, shippingfee, deliverymethod, storeId, voucherId);
-
-                return Ok("Order confirmed successfully.");
+                var newOrderResponse =  await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress, deposit, shippingfee, deliverymethod, storeId, voucherId);
+                return Ok(new { Message = "Order confirmed successfully.", OrderId = newOrderResponse });
+          
             }
             catch (KeyNotFoundException ex)
             {

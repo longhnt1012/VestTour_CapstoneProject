@@ -24,8 +24,8 @@ namespace VestTour.Service.Implementation
         private readonly IOrderRepository _orderRepository;
         private readonly IEmailHelper _emailHelper;
         private readonly IUserService _userService;
-        private readonly IAddCartRepository _cartRepo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+       // private readonly IAddCartRepository _cartRepo;
+      //  private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPaymentService _paymentService;
         private readonly IVoucherService _voucherService;
         private readonly IStoreService _storeService;
@@ -34,16 +34,18 @@ namespace VestTour.Service.Implementation
         private readonly VestTourDbContext _context;
         private readonly IMeasurementRepository _measurementRepository;
         private readonly IMeasurementService _measurementService;
-        IProductInStoreService _productInStoreService;
-        public OrderService(IProductInStoreService productInStoreService,IMeasurementService measurementService,IMeasurementRepository measurementRepository,VestTourDbContext context, IHttpContextAccessor httpContextAccessor, IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IAddCartRepository cartRepo, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
+        private readonly IProductInStoreService _productInStoreService;
+        private readonly IProductService _productService;
+        public OrderService(IProductService productService,IProductInStoreService productInStoreService,IMeasurementService measurementService,IMeasurementRepository measurementRepository,VestTourDbContext context,IOrderRepository orderRepository, IEmailHelper emailHelper, IUserService userService, IPaymentService paymentService, IVoucherService voucherService, IStoreService storeService, IProductRepository productRepository, IFabricRepository fabricRepository)
         {
             _context = context;
+            _productService = productService;
             _paymentService = paymentService;
-            _httpContextAccessor = httpContextAccessor;
+          //  _httpContextAccessor = httpContextAccessor;
             _orderRepository = orderRepository;
             _emailHelper = emailHelper;
             _userService = userService;
-            _cartRepo = cartRepo;
+          //  _cartRepo = cartRepo;
             _voucherService = voucherService;
             _storeService = storeService;
             _productRepository = productRepository;
@@ -51,6 +53,7 @@ namespace VestTour.Service.Implementation
             _measurementRepository = measurementRepository;
             _measurementService = measurementService;
             _productInStoreService = productInStoreService;
+
         }
 
         public async Task<List<OrderModel>> GetAllOrdersAsync()
@@ -217,164 +220,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        public async Task ConfirmCartOrderAsync(int? userId, string? guestName , string? guestEmail , string? guestAddress, decimal deposit , decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId )
-        {
-            // Generate a guest ID if userId is null
-            int id = userId ?? GenerateGuestId();
-
-            // Retrieve cart items for the user or guest
-            var cartItems = await _cartRepo.GetUserCartAsync(id);
-            if (cartItems == null || cartItems.Count == 0)
-            {
-                throw new InvalidOperationException("No items in cart to confirm.");
-            }
-            decimal subFee = 0;
-            string surchargeNote = string.Empty;
-            if (userId.HasValue)
-            {
-                var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
-                if (measurementResponse != null)
-                {
-                    subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
-                    if (subFee > 0)
-                    {
-                        surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
-                    }
-                }
-            }
-
-            // Validate delivery method
-            //if (!DeliveryMethodValidate.IsValidDeliveryMethod(deliveryMethod))
-            //{
-            //    throw new ArgumentException($"Invalid delivery method: {deliveryMethod}. Allowed values are 'Pick up' and 'Delivery'.");
-            //}
-            if (voucherId.HasValue)
-            {
-                var voucher = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
-                if (voucher == null || !voucher.Success || voucher.Data == null)
-                {
-                    throw new ArgumentException("Invalid or expired voucher.");
-                }
-
-                // Calculate the discount
-                decimal discountAmount = voucher.Data.DiscountNumber ?? 0;
-                var newshippingFee = shippingFee - shippingFee * discountAmount;
-                shippingFee = newshippingFee;
-                if (shippingFee < 0)
-                {
-                    shippingFee = 0; // Ensure total price is non-negative
-                }
-            }
-            // Calculate total price
-            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity)+shippingFee;
-
-            // Apply voucher discount if voucherId is provided
-           
-            // Retrieve user details if applicable
-            User? user = userId.HasValue ? await _userService.GetUserByIdAsync(userId.Value) : null;
-          
-            // Create new order
-            var newOrder = new OrderModel
-            {
-                UserID = user?.UserId,
-                VoucherId = voucherId,
-                StoreId = storeId,
-                ShipperPartnerId = 4,
-                GuestName = string.IsNullOrEmpty(guestName) ? user?.Name : guestName,
-                GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
-                GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
-                OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
-                TotalPrice = Math.Round(totalPrice, 2),
-                RevenueShare = totalPrice * 0.3m,
-                Deposit = deposit,
-                ShippingFee = shippingFee,
-                Paid = true,
-                Status = "Pending",
-                DeliveryMethod = deliveryMethod ??= "Pick up",
-                ShipStatus = "Confirming", 
-                Note = surchargeNote
-            };
-
-
-            // Save the order to the database
-            int orderId = await _orderRepository.AddOrderAsync(newOrder);
-
-            // Retrieve PaymentId from session using IHttpContextAccessor
-            //var paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("PaymentId");
-            int? paymentId = _httpContextAccessor.HttpContext?.Session.GetInt32("paymentId");
-            if (paymentId.HasValue)
-            {
-                // Sử dụng paymentId
-                Console.WriteLine($"paymentId: {paymentId.Value}");
-                await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-                _httpContextAccessor.HttpContext?.Session.Remove("paymentId");
-
-                // Add order details from cart items
-               // await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
-            }
-            else
-            {
-                Console.WriteLine("Khong thay paymentId");
-            }
-
-            //if (paymentId == null)
-            //{
-            //    throw new InvalidOperationException("Please come back to payment.");
-            //}
-
-            //await _paymentService.UpdatePaymentOrderIdAsync(paymentId.Value, orderId);
-            //_httpContextAccessor.HttpContext?.Session.Remove("PaymentId");
-
-            // Add order details from cart items
-            await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
-
-            // Send confirmation email
-            string recipientEmail = user?.Email ?? guestEmail;
-            if (!string.IsNullOrEmpty(recipientEmail))
-            {
-                var subject = "Order Confirmation";
-                var body = new StringBuilder();
-                body.AppendLine("Dear Customer,")
-                    .AppendLine()
-                    .AppendLine($"Thank you for your order! Your Order ID is: {orderId}.")
-                    .AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}")
-                    .AppendLine($"- Total Price: {newOrder.TotalPrice:C}")
-                    .AppendLine($"- Note: {newOrder.Note:C}")
-                    .AppendLine($"- Shipping Fee: {newOrder.ShippingFee:C}")
-                    .AppendLine($"- Deposit: {newOrder.Deposit:C}")
-                    .AppendLine($"- Balance Payment: {newOrder.BalancePayment:C}")
-                    .AppendLine($"- Delivery Method: {newOrder.DeliveryMethod}")
-                    .AppendLine()
-                    .AppendLine("Order Details:");
-                foreach (var item in cartItems)
-                {
-                    string productCode = item.CustomProduct?.ProductCode ?? item.Product?.ProductCode ?? "Unknown Product";
-
-                    body.AppendLine($"- Product: {productCode}")
-                        .AppendLine($"  Price: {item.Price:C}")
-                        .AppendLine($"  Quantity: {item.Quantity}")
-                        .AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}")
-                        .AppendLine();
-                }
-
-                body.AppendLine("We appreciate your business and look forward to serving you again!")
-                    .AppendLine()
-                    .AppendLine("Best regards,")
-                    .AppendLine("Matcha VestTailor Team");
-
-                var emailRequest = new EmailRequest
-                {
-                    To = recipientEmail,
-                    Subject = subject,
-                    Content = body.ToString()
-                };
-                await _emailHelper.SendEmailAsync(emailRequest);
-            }
-
-            // Clear the cart
-            await _cartRepo.RemoveAllFromCartAsync(id);
-        }
+        
 
 
         private int GenerateGuestId()
@@ -535,7 +381,7 @@ namespace VestTour.Service.Implementation
             {
                 totalPrice += (product.Price ?? 0) * product.Quantity; // Multiply by quantity
             }
-
+            //var  user = await _userService.GetUserByIdAsync(orderRequest.UserID);
             // Insert Order
             var orderEntity = new OrderModel
             {

@@ -4,6 +4,8 @@ using VestTour.Domain.Entities;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Interfaces;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
+using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
 namespace VestTour.Service.Implementation
@@ -53,24 +55,63 @@ namespace VestTour.Service.Implementation
 
             return products;
         }
-        public async Task<int> AddProductAsync(ProductModel product)
+        public async Task<ServiceResponse<int>> AddProductAsync(ProductModel product)
         {
+            var response = new ServiceResponse<int>();
 
+            // Validate product code
             if (string.IsNullOrEmpty(product.ProductCode))
-                throw new ArgumentException("Product code cannot be empty.");
+            {
+                response.Success = false;
+                response.Message = "Product code cannot be empty.";
+                return response;
+            }
+            if (!ItemStatusValidate.IsValidStatus(product.Status))
+            {
+                response.Success = false;
+                response.Message = "Invalid product status.";
+                return response;
+            }
+            // Add the product
+            var productId = await _productRepository.AddProductAsync(product);
 
-            return await _productRepository.AddProductAsync(product);
+            response.Success = true;
+            response.Message = "Product added successfully.";
+            response.Data = productId; // Return the product ID
+
+            return response;
         }
 
-        public async Task UpdateProductAsync(int id, ProductModel product)
+
+        public async Task<ServiceResponse> UpdateProductAsync(int id, ProductModel product)
         {
-           
+            var response = new ServiceResponse();
+
+            // Validate product status
+            if (!ItemStatusValidate.IsValidStatus(product.Status))
+            {
+                response.Success = false;
+                response.Message = "Invalid product status.";
+                return response;
+            }
+
+            // Check if the product exists
             var existingProduct = await _productRepository.GetProductByIdAsync(id);
             if (existingProduct == null)
-                throw new KeyNotFoundException("Product not found.");
+            {
+                response.Success = false;
+                response.Message = "Product not found.";
+                return response;
+            }
 
+            // Update the product
             await _productRepository.UpdateProductAsync(id, product);
+
+            response.Success = true;
+            response.Message = "Product updated successfully.";
+            return response;
         }
+
 
         public async Task DeleteProductAsync(int id)
         {
@@ -98,7 +139,24 @@ namespace VestTour.Service.Implementation
 
             return productDetails;
         }
-       
+
+        public async Task<ServiceResponse> UpdateStatusAsync(int productId, string newStatus)
+        {
+            var response = new ServiceResponse();
+            if (!ItemStatusValidate.IsValidStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = "Invalid product status.";
+                return response;
+            }
+            await _productRepository.UpdateStatusAsync(productId, newStatus);
+
+            // Return success response
+            response.Success = true;
+            response.Message = "Product status updated successfully.";
+
+            return response;
+        }
 
     }
 }

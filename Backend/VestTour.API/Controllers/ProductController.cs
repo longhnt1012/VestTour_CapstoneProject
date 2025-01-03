@@ -137,7 +137,7 @@ namespace VestTour.Controllers
         public async Task<IActionResult> GetProductsWithIsCustomFalse()
         {
             var products = await _productService.GetProductsWithIsCustomFalseAsync();
-            if (products == null || products.Count == 0)
+            if (products == null)
             {
                 return NotFound(Error.ProductNotFound);
             }
@@ -149,12 +149,25 @@ namespace VestTour.Controllers
         public async Task<IActionResult> GetProductsWithIsCustomFalseInStoreAsync(int storeId)
         {
             var products = await _productService.GetProductsWithIsCustomFalseInStoreAsync(storeId);
-            if (products == null || products.Count == 0)
+            if (products == null)
             {
                 return NotFound(Error.ProductNotFound);
             }
 
             return Ok(products);
         }
+        [HttpPut("{productId}/update-status")]
+        public async Task<IActionResult> UpdateProductStatus(int productId, [FromBody] string status)
+        {
+            var result = await _productService.UpdateStatusAsync(productId, status);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { Message = result.Message });
+            }
+
+            return Ok(new { Message = result.Message });
+        }
+
     }
 }

@@ -27,9 +27,13 @@ namespace VestTour.Repository.Repositories
         // Get store by ID
         public async Task<StoreModel?> GetStoreByIdAsync(int? storeId)
         {
-            var store = await _context.Stores!.FindAsync(storeId);
+            var store = await _context.Stores!
+                .Where(s => s.StoreId == storeId )  // Adding the condition for "Active" status
+                .FirstOrDefaultAsync();
+
             return _mapper.Map<StoreModel>(store);
         }
+
 
         // Add a new store
         public async Task<int> AddStoreAsync(StoreModel storeModel)
@@ -124,7 +128,7 @@ namespace VestTour.Repository.Repositories
     
         public async Task<bool> RemoveStaffFromStoreAsync(int storeId, int staffId)
         {
-            var store = await _context.Stores!.FirstOrDefaultAsync(s => s.StoreId == storeId);
+            var store = await _context.Stores!.FirstOrDefaultAsync(s => s.StoreId == storeId );
             if (store == null || string.IsNullOrEmpty(store.StaffIds))
             {
                 return false; 
@@ -189,6 +193,14 @@ namespace VestTour.Repository.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
+        public async Task UpdateStatusAsync(int storeId, string newStatus)
+        {
+            var store = await _context.Stores.FindAsync(storeId);
+            if (store != null)
+            {
+                store.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

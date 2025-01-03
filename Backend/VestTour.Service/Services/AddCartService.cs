@@ -178,7 +178,7 @@ namespace VestTour.Services
 
                     // Save custom product and retrieve its ID
                     var productId = await _productService.AddProductAsync(productToAdd);
-                    item.Product = new ProductModel { ProductID = productId };
+                    item.Product = new ProductModel { ProductID = productId.Data };
 
                     // Save product style options to the join table
                     foreach (var pickedOption in customProduct.PickedStyleOptions)

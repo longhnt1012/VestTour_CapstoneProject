@@ -10,5 +10,6 @@ namespace VestTour.Services.Interfaces
         Task<ServiceResponse<LiningModel>> AddLiningAsync(LiningModel model);
         Task<ServiceResponse> UpdateLiningAsync(int id, LiningModel model);
         Task<ServiceResponse> DeleteLiningAsync(int id);
+        Task<ServiceResponse> UpdateStatusAsync(int itemId, string newStatus);
     }
 }

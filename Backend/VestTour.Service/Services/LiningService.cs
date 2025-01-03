@@ -1,5 +1,7 @@
-﻿using VestTour.Repository.Interface;
+﻿using VestTour.Domain.Entities;
+using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.Repositories;
 using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 using VestTour.Services.Interfaces;
@@ -59,10 +61,10 @@ namespace VestTour.Services.Implementation
         public async Task<ServiceResponse<LiningModel>> AddLiningAsync(LiningModel model)
         {
             var response = new ServiceResponse<LiningModel>();
-            if (!StatusValidate.IsValidStatus(model.Status))
+            if (!ItemStatusValidate.IsValidStatus(model.Status))
             {
                 response.Success = false;
-                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                response.Message = "Status is not valid. Allowed statuses are: Available, Unavailable.";
                 return response;
             }
             try
@@ -85,10 +87,10 @@ namespace VestTour.Services.Implementation
         public async Task<ServiceResponse> UpdateLiningAsync(int id, LiningModel model)
         {
             var response = new ServiceResponse();
-            if (!StatusValidate.IsValidStatus(model.Status))
+            if (!ItemStatusValidate.IsValidStatus(model.Status))
             {
                 response.Success = false;
-                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                response.Message = "Status is not valid. Allowed statuses are: Available, Unavailable.";
                 return response;
             }
             try
@@ -125,6 +127,23 @@ namespace VestTour.Services.Implementation
                 response.Success = false;
                 response.Message = $"Error deleting lining: {ex.Message}";
             }
+            return response;
+        }
+        public async Task<ServiceResponse> UpdateStatusAsync(int itemId, string newStatus)
+        {
+            var response = new ServiceResponse();
+            if (!ItemStatusValidate.IsValidStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = "Invalid lining status. Status must be Available or Unavailable";
+                return response;
+            }
+            await _liningRepository.UpdateStatusAsync(itemId, newStatus);
+
+            // Return success response
+            response.Success = true;
+            response.Message = "Lining status updated successfully.";
+
             return response;
         }
     }

@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.Repositories;
+using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
@@ -26,15 +28,65 @@ namespace VestTour.Service.Implementation
             return await _storeRepository.GetStoreByIdAsync(id);
         }
 
-        public async Task<int> CreateStoreAsync(StoreModel storeModel)
+        public async Task<ServiceResponse<int>> CreateStoreAsync(StoreModel storeModel)
         {
-            return await _storeRepository.AddStoreAsync(storeModel);
+            var response = new ServiceResponse<int>();
+
+            try
+            {
+                // Validate store status
+                if (!StatusValidate.IsValidStatus(storeModel.Status))
+                {
+                    response.Success = false;
+                    response.Message = "Invalid status. Status must be Active or Deactive.";
+                    return response;
+                }
+
+                // Add the store
+                var storeId = await _storeRepository.AddStoreAsync(storeModel);
+
+                response.Success = true;
+                response.Message = "Store created successfully.";
+                response.Data = storeId; // Return the store ID
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred while creating the store: {ex.Message}";
+            }
+
+            return response;
         }
 
-        public async Task UpdateStoreAsync(int id, StoreModel storeModel)
+        public async Task<ServiceResponse> UpdateStoreAsync(int id, StoreModel storeModel)
         {
-            await _storeRepository.UpdateStoreAsync(id, storeModel);
+            var response = new ServiceResponse();
+
+            try
+            {
+                // Validate store status
+                if (!StatusValidate.IsValidStatus(storeModel.Status))
+                {
+                    response.Success = false;
+                    response.Message = "Invalid status. Status must be Active or Deactive.";
+                    return response;
+                }
+
+                // Update the store
+                await _storeRepository.UpdateStoreAsync(id, storeModel);
+
+                response.Success = true;
+                response.Message = "Store updated successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred while updating the store: {ex.Message}";
+            }
+
+            return response;
         }
+
 
         public async Task DeleteStoreAsync(int id)
         {
@@ -106,6 +158,22 @@ namespace VestTour.Service.Implementation
         {
             return await _storeRepository.UpdateStoreImageAsync(storeId, imgUrl);
         }
+        public async Task<ServiceResponse> UpdateStatusAsync(int storeId, string newStatus)
+        {
+            var response = new ServiceResponse();
+            if (!StatusValidate.IsValidStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = "Invalid status. Status must be Active or Deactive";
+                return response;
+            }
+            await _storeRepository.UpdateStatusAsync(storeId, newStatus);
 
+            // Return success response
+            response.Success = true;
+            response.Message = "store status updated successfully.";
+
+            return response;
+        }
     }
 }

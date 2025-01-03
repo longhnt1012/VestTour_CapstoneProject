@@ -570,6 +570,37 @@
   },
   {
     "ContainingType": "VestTour.Controllers.CategoryController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/Category/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.Controllers.CategoryController",
     "Method": "GetCategoriesByParentId",
     "RelativePath": "api/Category/parent/{parentId}",
     "HttpMethod": "GET",
@@ -876,17 +907,27 @@
   },
   {
     "ContainingType": "VestTour.Controllers.LiningsController",
-    "Method": "GetAllLining",
+    "Method": "GetAllLiningsAsync",
     "RelativePath": "api/Linings",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[System.Collections.Generic.List\u00601[[VestTour.Repository.Models.LiningModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.Controllers.LiningsController",
-    "Method": "AddNewLining",
+    "Method": "AddLiningAsync",
     "RelativePath": "api/Linings",
     "HttpMethod": "POST",
     "IsController": true,
@@ -898,11 +939,21 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[VestTour.Repository.Models.LiningModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.Controllers.LiningsController",
-    "Method": "GetLiningByID",
+    "Method": "GetLiningByIdAsync",
     "RelativePath": "api/Linings/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -914,11 +965,21 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse\u00601[[VestTour.Repository.Models.LiningModel, VestTour.Repository, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.Controllers.LiningsController",
-    "Method": "UpdateLining",
+    "Method": "UpdateLiningAsync",
     "RelativePath": "api/Linings/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -935,11 +996,21 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.Controllers.LiningsController",
-    "Method": "DeleteLining",
+    "Method": "DeleteLiningAsync",
     "RelativePath": "api/Linings/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -951,7 +1022,48 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.Controllers.LiningsController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/Linings/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.API.Controllers.LoginController",
@@ -1740,6 +1852,27 @@
   },
   {
     "ContainingType": "VestTour.Controllers.ProductController",
+    "Method": "UpdateProductStatus",
+    "RelativePath": "api/Product/{productId}/update-status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.ProductController",
     "Method": "GetProductById",
     "RelativePath": "api/Product/basic/{id}",
     "HttpMethod": "GET",
@@ -2382,6 +2515,27 @@
   },
   {
     "ContainingType": "VestTour.Controllers.StoreController",
+    "Method": "UpdateProductStatus",
+    "RelativePath": "api/Store/{id}/update-status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StoreController",
     "Method": "AddStaffToStore",
     "RelativePath": "api/Store/{storeId}/add-staff/{staffId}",
     "HttpMethod": "POST",
@@ -2617,6 +2771,37 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "VestTour.Controllers.StyleController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/Style/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "VestTour.Controllers.StyleOptionController",
     "Method": "GetAllStyleOptions",
     "RelativePath": "api/StyleOption",
@@ -2724,6 +2909,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.Controllers.StyleOptionController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/StyleOption/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.API.Controllers.TailorPartnerController",
@@ -2959,6 +3175,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VestTour.API.Controllers.UserController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/User/{id}/update-pass",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newPass",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "VestTour.API.Controllers.UserController",

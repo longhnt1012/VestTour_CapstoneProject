@@ -161,6 +161,14 @@ namespace VestTour.Repository.Repositories
             return product;
         }
 
-
+        public async Task UpdateStatusAsync(int productId, string newStatus)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product != null)
+            {
+                product.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

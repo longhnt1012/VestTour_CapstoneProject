@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using VestTour.Service.Interface;
 
 namespace VestTour.Controllers
 {
@@ -65,6 +66,17 @@ namespace VestTour.Controllers
         {
             await _styleService.DeleteStyleAsync(id);
             return NoContent();
+        }
+        [HttpPatch("{id}/status")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
+        {
+            var response = await _styleService.UpdateStatusAsync(id, newStatus);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
         }
     }
 }

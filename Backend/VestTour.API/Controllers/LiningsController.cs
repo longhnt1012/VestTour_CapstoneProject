@@ -5,6 +5,8 @@ using VestTour.Repository.Interface;
 using VestTour.Repository.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using VestTour.Service.Interface;
+using VestTour.Services.Interfaces;
 
 namespace VestTour.Controllers
 {
@@ -13,94 +15,84 @@ namespace VestTour.Controllers
     [ApiController]
     public class LiningsController : ControllerBase
     {
-        private readonly ILiningRepository _liningRepo;
+        private readonly ILiningService _liningService;
 
-        public LiningsController(ILiningRepository repo)
+        // Constructor to inject LiningService
+        public LiningsController(ILiningService liningService)
         {
-            _liningRepo = repo;
+            _liningService = liningService;
         }
 
+        // Get all linings
         [HttpGet]
-        public async Task<IActionResult> GetAllLining()
+        public async Task<ActionResult<ServiceResponse<List<LiningModel>>>> GetAllLiningsAsync()
         {
-            try
+            var response = await _liningService.GetAllLiningsAsync();
+            if (response.Success)
             {
-                return Ok(await _liningRepo.GetAllLiningAsync());
+                return Ok(response);
             }
-            catch
-            {
-                return BadRequest();
-            }
+            return BadRequest(response);
         }
 
+        // Get lining by ID
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetLiningByID(int id)
+        public async Task<ActionResult<ServiceResponse<LiningModel>>> GetLiningByIdAsync(int id)
         {
-            try
+            var response = await _liningService.GetLiningByIdAsync(id);
+            if (response.Success)
             {
-                var lining = await _liningRepo.GetLiningByIdAsync(id);
-                return lining == null ? NotFound() : Ok(lining);
+                return Ok(response);
             }
-            catch
-            {
-                return BadRequest();
-            }
+            return NotFound(response);
         }
 
+        // Add new lining
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddNewLining(LiningModel model)
+        public async Task<ActionResult<ServiceResponse<LiningModel>>> AddLiningAsync([FromBody] LiningModel model)
         {
-            var newLiningID = await _liningRepo.AddLiningAsync(model);
-            var lining = await _liningRepo.GetLiningByIdAsync(newLiningID);
-            return lining == null ? NotFound() : Ok(lining);
+            var response = await _liningService.AddLiningAsync(model);
+            if (response.Success)
+            {
+                return CreatedAtAction(nameof(GetLiningByIdAsync), new { id = response.Data.LiningId }, response);
+            }
+            return BadRequest(response);
         }
 
+        // Update existing lining
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager")]
-        public async Task<IActionResult> UpdateLining(int id, LiningModel model)
+        public async Task<ActionResult<ServiceResponse>> UpdateLiningAsync(int id, [FromBody] LiningModel model)
         {
-            try
+            var response = await _liningService.UpdateLiningAsync(id, model);
+            if (response.Success)
             {
-                if (id != model.LiningId)
-                {
-                    return NotFound();
-                }
-                if (id != null)
-                {
-                    await _liningRepo.UpdateLiningAsync(id, model);
-                    return Ok(Success.SuccessUpdateLining);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return Ok(response);
             }
-            catch
-            {
-                return BadRequest();
-            }
+            return BadRequest(response);
         }
+
+        // Delete a lining
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteLining(int id)
+        public async Task<ActionResult<ServiceResponse>> DeleteLiningAsync(int id)
         {
-            try
+            var response = await _liningService.DeleteLiningAsync(id);
+            if (response.Success)
             {
-                if (id != null)
-                {
-                    await _liningRepo.DeleteLiningAsync(id);
-                    return Ok(Success.SuccessDeleteLining);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return Ok(response);
             }
-            catch
+            return BadRequest(response);
+        }
+
+        // Update status of a lining
+        [HttpPatch("{id}/status")]
+        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
+        {
+            var response = await _liningService.UpdateStatusAsync(id, newStatus);
+            if (response.Success)
             {
-                return BadRequest();
+                return Ok(response);
             }
+            return BadRequest(response);
         }
     }
 }

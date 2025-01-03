@@ -58,6 +58,15 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task UpdateStatusAsync(int itemId, string newStatus)
+        {
+            var item = await _context.Linings.FindAsync(itemId);
+            if (item != null)
+            {
+                item.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 
 }

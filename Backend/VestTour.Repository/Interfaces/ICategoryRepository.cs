@@ -10,5 +10,6 @@ namespace VestTour.Repository.Interface
         Task UpdateCategoryAsync(int id, CategoryModel category);
         Task DeleteCategoryAsync(int categoryId);
         Task<List<CategoryModel>> GetCategoriesByParentIdAsync(int parentId);
+        Task UpdateStatusAsync(int itemId, string newStatus);
     }
 }

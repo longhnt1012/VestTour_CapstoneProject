@@ -9,8 +9,8 @@ namespace VestTour.Service.Interfaces
     {
         Task<List<StoreModel>> GetAllStoresAsync();
         Task<StoreModel?> GetStoreByIdAsync(int id);
-        Task<int> CreateStoreAsync(StoreModel storeModel);
-        Task UpdateStoreAsync(int id, StoreModel storeModel);
+        Task<ServiceResponse<int>> CreateStoreAsync(StoreModel storeModel);
+        Task<ServiceResponse> UpdateStoreAsync(int id, StoreModel storeModel);
         Task DeleteStoreAsync(int id);
         Task<List<UserModel>> GetStaffByStoreIdAsync(int storeId);
         Task<bool> AddStaffToStoreAsync(int storeId, int staffId);
@@ -21,5 +21,6 @@ namespace VestTour.Service.Interfaces
         Task<List<string>> GetStoreTimeSlotsAsync(int storeId);
         Task<bool> UpdateStoreImageAsync(int storeId, string imgUrl);
         Task<StoreModel?> GetStoreByUserId(int userId);
+        Task<ServiceResponse> UpdateStatusAsync(int storeId, string newStatus);
     }
 }

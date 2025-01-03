@@ -221,6 +221,15 @@ namespace VestTour.Repository.Repositories
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateUserPassAsync(int userId, string password)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.Password = password;
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }

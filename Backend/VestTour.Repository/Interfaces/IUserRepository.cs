@@ -28,6 +28,7 @@ namespace VestTour.Repository.Interface
         Task<string?> GetEmailByUserIdAsync(int? userId);
         Task UpdateUserAvatarAsync(int userId, string avatarUrl);
         Task UpdateUserActivityAsync(int userId, bool isOnline);
+        Task UpdateUserPassAsync(int userId, string password);
 
     }
 }

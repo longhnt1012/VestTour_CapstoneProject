@@ -8,6 +8,8 @@ using VestTour.Repository.Models;
 using Microsoft.AspNetCore.Cors;
 using VestTour.API.FileHandle;
 using VestTour.Service.Services;
+using VestTour.Service.Implementation;
+using VestTour.Service.Interface;
 
 
 namespace VestTour.API.Controllers
@@ -236,6 +238,17 @@ namespace VestTour.API.Controllers
             {
                 return StatusCode(500, new { Message = "An error occurred while updating user activity.", Details = ex.Message });
             }
+        }
+        [HttpPatch("{id}/update-pass")]
+        [Authorize]
+        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newPass)
+        {
+            var response = await _userService.UpdateUserPassAsync(id, newPass);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
         }
 
     }

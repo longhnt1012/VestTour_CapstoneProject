@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 
@@ -24,6 +25,12 @@ namespace VestTour.Service.Services
             var response = new ServiceResponse<int>();
             try
             {
+                if (!PaymentStatusValidate.IsValidStatus(payment.Status))
+                {
+                    response.Success = false;
+                    response.Message = "Status not valid. Allowed types are:Success , Failed.";
+                    return response;
+                }
                 if (payment == null)
                 {
                     response.Success = false;
@@ -123,6 +130,12 @@ namespace VestTour.Service.Services
             var response = new ServiceResponse();
             try
             {
+                if (!PaymentStatusValidate.IsValidStatus(payment.Status))
+                {
+                    response.Success = false;
+                    response.Message = "Status not valid. Allowed types are:Success , Failed.";
+                    return response;
+                }
                 if (id <= 0 || payment == null || id != payment.PaymentId)
                 {
                     response.Success = false;

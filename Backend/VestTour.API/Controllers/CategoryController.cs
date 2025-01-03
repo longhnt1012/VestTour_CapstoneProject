@@ -94,5 +94,16 @@ namespace VestTour.Controllers
             }
             return NoContent();
         }
+        [HttpPatch("{id}/status")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
+        {
+            var response = await _categoryService.UpdateStatusAsync(id, newStatus);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }

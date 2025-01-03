@@ -192,7 +192,7 @@ var app = builder.Build();
 
 
 // Map SignalR endpoints
-app.MapHub<NotificationHub>("/notificationHub");
+
 // Configure middleware
 if (app.Environment.IsDevelopment())
 {

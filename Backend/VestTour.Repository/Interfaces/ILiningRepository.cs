@@ -13,6 +13,7 @@ namespace VestTour.Repository.Interface
         public Task UpdateLiningAsync(int id, LiningModel lining);
 
         public Task DeleteLiningAsync(int id);
+        Task UpdateStatusAsync(int itemId, string newStatus);
     }
 }
 

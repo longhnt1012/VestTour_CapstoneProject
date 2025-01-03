@@ -62,5 +62,14 @@ namespace VestTour.Repository.Repositories
                 .ToListAsync();
             return _mapper.Map<List<CategoryModel>>(categories);
         }
+        public async Task UpdateStatusAsync(int itemId, string newStatus)
+        {
+            var item = await _context.Styles.FindAsync(itemId);
+            if (item != null)
+            {
+                item.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

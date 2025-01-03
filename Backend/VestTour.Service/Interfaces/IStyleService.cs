@@ -1,6 +1,7 @@
 ﻿using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Interfaces
 {
@@ -8,9 +9,11 @@ namespace VestTour.Service.Interfaces
     {
         Task<List<StyleModel>> GetAllStylesAsync();
         Task<StyleModel?> GetStyleByIdAsync(int id);
-        Task<int> AddStyleAsync(StyleModel styleModel);
-        Task UpdateStyleAsync(int id, StyleModel styleModel);
+        Task<ServiceResponse<int>> AddStyleAsync(StyleModel styleModel);
+        Task<ServiceResponse> UpdateStyleAsync(int id, StyleModel styleModel);
         Task DeleteStyleAsync(int id);
-       
+        Task<ServiceResponse> UpdateStatusAsync(int itemId, string newStatus);
+
+
     }
 }

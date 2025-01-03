@@ -19,14 +19,14 @@ public class BookingService : IBookingService
     private readonly IUserRepository _userRepo; // Add IUserRepository for user details
     private readonly IEmailHelper _emailHelper;
     private readonly IStoreRepository _storeRepository;
-    private readonly IHubContext<NotificationHub> _hubContext;
-    public BookingService(IHubContext<NotificationHub> hubContext,IBookingRepository bookingRepository, IUserRepository userRepo, IEmailHelper emailHelper,IStoreRepository storeRepository)
+
+    public BookingService( IBookingRepository bookingRepository, IUserRepository userRepo, IEmailHelper emailHelper,IStoreRepository storeRepository)
     {
         _bookingRepository = bookingRepository;
         _userRepo = userRepo;
         _emailHelper = emailHelper;
         _storeRepository = storeRepository;
-        _hubContext = hubContext;
+  
     }
 
     public async Task<ServiceResponse> UpdateBookingStatusAsync(int bookingId, string status)
@@ -166,7 +166,7 @@ public class BookingService : IBookingService
         response.Message = Success.BookingCreated; // Use a constant from Success class
 
         var notificationMessage = $"New booking created: {booking.GuestName} for {booking.Service} on {booking.BookingDate:yyyy-MM-dd} at {booking.Time}.";
-        await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
+       // await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
         // Use a constant from Success class
         return response;
     }
@@ -272,7 +272,7 @@ public class BookingService : IBookingService
             response.Message = Success.BookingCreated; // Use a constant from Success class
             response.Message = Success.BookingCreated;
             var notificationMessage = $"New booking created: {booking.GuestName} for {booking.Service} on {booking.BookingDate:yyyy-MM-dd} at {booking.Time}.";
-            await _hubContext.Clients.All.SendAsync("ReceiveNotification", notificationMessage);
+           
 
         }
 

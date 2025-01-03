@@ -15,6 +15,9 @@ using VestTour.Repository.Models;
 using VestTour.Service.Helpers;
 using VestTour.Repository.Helpers;
 using Microsoft.AspNetCore.Http;
+using VestTour.Repository.Repositories;
+using VestTour.Repository.ValidationHelper;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Services
 {
@@ -259,7 +262,31 @@ namespace VestTour.Service.Services
             user.AvtUrl = avatarUrl; // Assuming `Avatar` is the property in the `User` entity
             await _userRepository.UpdateUserAsync(user);
         }
+        public async Task<ServiceResponse> UpdateUserPassAsync(int userId, string password)
+        {
+            var response = new ServiceResponse();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidUserId;
+                return response;
+            }
+            if (password.Length < 6 || password.Length > 18 || password == "")
+            {
+                response.Success = false;
+                response.Message = "Invalid password. Password must be 6 to 18 characters";
+                return response;
+            }
+            var newPass = PasswordHelper.HashPassword(password);
+            await _userRepository.UpdateUserPassAsync(userId, newPass);
 
+            // Return success response
+            response.Success = true;
+            response.Message = "User password updated successfully.";
+
+            return response;
+        }
 
 
 

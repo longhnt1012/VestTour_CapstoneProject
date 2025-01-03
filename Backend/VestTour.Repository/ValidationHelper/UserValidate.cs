@@ -16,7 +16,7 @@ namespace VestTour.ValidationHelpers
         }
         public static bool IsValidName(string name)
         {
-            return !string.IsNullOrWhiteSpace(name) && name.Length >= 5 && name.Length <= 25;
+            return !string.IsNullOrWhiteSpace(name) && name.Length >= 4 && name.Length <= 25;
         }
 
          public static bool IsValidGender(string gender)
@@ -30,7 +30,7 @@ namespace VestTour.ValidationHelpers
                 return true; // Hoặc false tùy vào yêu cầu của bạn
             }
 
-            string phoneRegex = @"^(0|\+84)(\d{9,10})$";
+            string phoneRegex = @"^(\+?\d{1,3})?(\d{9,15})$";
             return Regex.IsMatch(phone, phoneRegex);
         }
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VestTour.Domain.Entities;
 using VestTour.Repository.Models;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Interfaces
 {
@@ -28,5 +29,6 @@ namespace VestTour.Service.Interfaces
         Task<string> ResetPasswordAsync(string token, string newPassword);
         Task UpdateUserAvatarAsync(int userId, string avatarUrl);
         Task UpdateUserActivityAsync(int userId, bool isOnline);
+        Task<ServiceResponse> UpdateUserPassAsync(int userId, string password);
     }
 }

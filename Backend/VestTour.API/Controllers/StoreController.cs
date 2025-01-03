@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using VestTour.API.FileHandle;
 using VestTour.Service.Services;
+using VestTour.Service.Implementation;
 
 namespace VestTour.Controllers
 {
@@ -163,6 +164,18 @@ namespace VestTour.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+        [HttpPut("{id}/update-status")]
+        public async Task<IActionResult> UpdateProductStatus(int id, [FromBody] string status)
+        {
+            var result = await _storeService.UpdateStatusAsync(id, status);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { Message = result.Message });
+            }
+
+            return Ok(new { Message = result.Message });
         }
     }
 }

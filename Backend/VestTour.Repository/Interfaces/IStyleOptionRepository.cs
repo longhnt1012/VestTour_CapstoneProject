@@ -11,6 +11,7 @@ namespace VestTour.Repository.Interface
         Task<StyleOptionModel?> GetStyleOptionByIdAsync(int id);    // Get style option by ID
         Task<int> AddStyleOptionAsync(StyleOptionModel styleOption); // Add a new style option
         Task UpdateStyleOptionAsync(int id, StyleOptionModel styleOption); // Update an existing style option
-        Task DeleteStyleOptionAsync(int id);                          // Delete a style option by ID
+        Task DeleteStyleOptionAsync(int id);
+        Task UpdateStatusAsync(int itemId, string newStatus);// Delete a style option by ID
     }
 }

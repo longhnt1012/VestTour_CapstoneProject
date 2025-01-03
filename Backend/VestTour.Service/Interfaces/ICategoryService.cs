@@ -12,5 +12,6 @@ namespace VestTour.Service.Interface
         Task<ServiceResponse> UpdateCategoryAsync(int id, CategoryModel category);
         Task<ServiceResponse> DeleteCategoryAsync(int categoryId);
         Task<ServiceResponse<List<CategoryModel>>> GetCategoriesByParentIdAsync(int parentId);
+        Task<ServiceResponse> UpdateStatusAsync(int productId, string newStatus);
     }
 }

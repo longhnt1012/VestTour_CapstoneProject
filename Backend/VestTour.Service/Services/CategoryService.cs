@@ -3,6 +3,7 @@ using VestTour.Repository.Interface;
 using VestTour.Service.Interface;
 using VestTour.Repository.Constants;
 using VestTour.Repository.ValidationHelper;
+using VestTour.Repository.Repositories;
 
 public class CategoryService : ICategoryService
 {
@@ -88,10 +89,10 @@ public class CategoryService : ICategoryService
             response.Message = Error.InvalidCategoryName; 
             return response;
         }
-        if (!StatusValidate.IsValidStatus(category.Status))
+        if (!ItemStatusValidate.IsValidStatus(category.Status))
         {
             response.Success = false;
-            response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+            response.Message = "Invalid category status. Allowed status: Available / Unavailable";
             return response;
         }
         try
@@ -121,10 +122,10 @@ public class CategoryService : ICategoryService
             response.Message = Error.InvalidInputData;
             return response;
         }
-        if (!StatusValidate.IsValidStatus(category.Status))
+        if (!ItemStatusValidate.IsValidStatus(category.Status))
         {
             response.Success = false;
-            response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+            response.Message = "Invalid category status. Allowed status: Available / Unavailable";
             return response;
         }
         try
@@ -198,6 +199,23 @@ public class CategoryService : ICategoryService
             response.Success = false;
             response.Message = $"An error occurred: {ex.Message}"; 
         }
+
+        return response;
+    }
+    public async Task<ServiceResponse> UpdateStatusAsync(int productId, string newStatus)
+    {
+        var response = new ServiceResponse();
+        if (!ItemStatusValidate.IsValidStatus(newStatus))
+        {
+            response.Success = false;
+            response.Message = "Invalid category status. Allowed status: Available / Unavailable";
+            return response;
+        }
+        await _categoryRepository.UpdateStatusAsync(productId, newStatus);
+
+        // Return success response
+        response.Success = true;
+        response.Message = "Category status updated successfully.";
 
         return response;
     }

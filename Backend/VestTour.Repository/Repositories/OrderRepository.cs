@@ -110,6 +110,7 @@ namespace VestTour.Repository.Repositories
                 GuestName = orderEntity.GuestName,
                 GuestEmail = orderEntity.GuestEmail,
                 GuestAddress = orderEntity.GuestAddress,
+                GuestPhone= orderEntity.GuestPhone,
                 TotalPrice = orderEntity.TotalPrice,
                 Deposit = orderEntity.Deposit,
                 ShippingFee = orderEntity.ShippingFee,
@@ -187,6 +188,15 @@ namespace VestTour.Repository.Repositories
             return await _context.Orders!
                 .Where(o => o.Status == status)
                 .SumAsync(o => o.RevenueShare ?? 0); // Assuming RevenueShare is nullable
+        }
+        public async Task SetPaidTrue(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order != null)
+            {
+                order.Paid = true;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

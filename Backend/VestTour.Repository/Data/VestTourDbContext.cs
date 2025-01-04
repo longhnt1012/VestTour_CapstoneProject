@@ -229,6 +229,7 @@ public partial class VestTourDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Deposit).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.GuestAddress).HasMaxLength(255);
+            entity.Property(e => e.GuestPhone).HasMaxLength(12);
             entity.Property(e => e.GuestEmail)
                 .HasMaxLength(255)
                 .IsUnicode(false);

@@ -147,7 +147,7 @@ namespace VestTour.Services
 
             await _addCartRepository.AddToCartAsync(id, cartItem);
         }
-        public async Task<int> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId)
+        public async Task<int> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress , string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId)
         {
             // Generate a guest ID if userId is null
             int id = userId ?? GenerateGuestId();
@@ -249,13 +249,14 @@ namespace VestTour.Services
                 GuestName = string.IsNullOrEmpty(guestName) ? user?.Name : guestName,
                 GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
                 GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
+                GuestPhone = string.IsNullOrEmpty(guestPhone) ? user?.Phone : guestPhone,
                 OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
                 TotalPrice = Math.Round(totalPrice, 2),
                 RevenueShare = totalPrice * 0.3m,
                 Deposit = deposit,
                 ShippingFee = shippingFee,
-                Paid = true,
+                Paid = false,
                 Status = "Pending",
                 DeliveryMethod = deliveryMethod ?? "Pick up",
                 ShipStatus = "Confirming",

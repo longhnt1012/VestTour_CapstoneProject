@@ -11,6 +11,7 @@ public class AddOrderForCustomer
     public string? GuestName { get; set; }
     public string? GuestEmail { get; set; }
     public string? GuestAddress { get; set; }
+    public string? GuestPhone { get; set; }
     public decimal? Deposit { get; set; }
     public decimal? ShippingFee { get; set; }
     public string? DeliveryMethod { get; set; }

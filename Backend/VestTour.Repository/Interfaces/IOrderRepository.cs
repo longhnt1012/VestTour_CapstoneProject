@@ -20,5 +20,6 @@ namespace VestTour.Repository.Interface
         Task AddOrderDetailAsync(int orderId, int productId, int quantity, decimal price);
         Task<List<OrderModel>> GetOrdersByStatusAsync(string status);
         Task<decimal> GetTotalRevenueShareByStatusAsync(string status);
+        Task SetPaidTrue(int orderId);
     }
 }

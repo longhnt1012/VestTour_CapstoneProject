@@ -100,6 +100,7 @@ namespace VestTour.Service.Implementation
                 GuestName = string.IsNullOrEmpty(order.GuestName) ? user?.Name : order.GuestName,
                 GuestEmail = string.IsNullOrEmpty(order.GuestEmail) ? user?.Email : order.GuestEmail,
                 GuestAddress = string.IsNullOrEmpty(order.GuestAddress) ? user?.Address : order.GuestAddress,
+                GuestPhone = string.IsNullOrEmpty(order.GuestPhone) ? user?.Phone : order.GuestPhone,
                 DeliveryMethod = order.DeliveryMethod
             };
 
@@ -397,6 +398,7 @@ namespace VestTour.Service.Implementation
                 GuestName = orderRequest.GuestName,
                 GuestEmail = orderRequest.GuestEmail,
                 GuestAddress = orderRequest.GuestAddress,
+                GuestPhone = orderRequest.GuestPhone,
                 TotalPrice = totalPrice,
                 RevenueShare = totalPrice * 0.3m,
                 Deposit = orderRequest.Deposit,
@@ -508,7 +510,17 @@ namespace VestTour.Service.Implementation
 
             return orderId;
         }
+        public async Task<ServiceResponse> SetPaidTrue(int orderId)
+        {
+            var response = new ServiceResponse();
+           
+            await _orderRepository.SetPaidTrue(orderId);
 
+            response.Success = true;
+            response.Message = "Style status updated successfully.";
+
+            return response;
+        }
 
 
     }

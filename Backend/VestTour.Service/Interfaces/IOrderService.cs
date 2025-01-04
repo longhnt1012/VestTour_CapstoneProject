@@ -22,5 +22,6 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse> ChangeShipStatusAsync(int orderId, string newStatus);
         Task<decimal> GetTotalRevenueShareByStatusAsync(string status);
         Task<int> CreateOrderForCustomerAsync(AddOrderForCustomer orderRequest);
+        Task<ServiceResponse> SetPaidTrue(int orderId);
     }
 }

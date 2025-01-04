@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using VestTour.Service.Services;
 using Microsoft.AspNetCore.Cors;
+using VestTour.Service.Interface;
 
 namespace VestTour.Controllers
 {
@@ -228,5 +229,17 @@ namespace VestTour.Controllers
             var totalRevenueShare = await _orderService.GetTotalRevenueShareByStatusAsync(status);
             return Ok(new { TotalRevenueShare = totalRevenueShare });
         }
+        [HttpPut("SetPaidTrue/{orderId}")]
+        public async Task<IActionResult> SetPaidTrue(int orderId)
+        {
+            var response = await _orderService.SetPaidTrue(orderId);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
     }
 }

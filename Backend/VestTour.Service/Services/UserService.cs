@@ -274,8 +274,8 @@ namespace VestTour.Service.Services
                 return response;
             }
 
-            // Validate user credentials
-            var user = await _userRepository.GetUserByEmailAndPasswordAsync(email, oldPassword);
+            string hashOldPass = PasswordHelper.HashPassword(oldPassword);
+            var user = await _userRepository.GetUserByEmailAndPasswordAsync(email, hashOldPass);
             if (user == null)
             {
                 response.Success = false;

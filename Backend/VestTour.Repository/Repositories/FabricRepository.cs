@@ -130,7 +130,15 @@ namespace VestTour.Repository.Repositories
             return _mapper.Map<List<FabricModel>>(fabrics);
         }
 
-
+        public async Task UpdateStatusAsync(int itemId, string newStatus)
+        {
+            var item = await _context.Fabrics.FindAsync(itemId);
+            if (item != null)
+            {
+                item.Status = newStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 

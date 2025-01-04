@@ -722,6 +722,37 @@
   },
   {
     "ContainingType": "VestTour.Controllers.FabricsController",
+    "Method": "UpdateStatusAsync",
+    "RelativePath": "api/Fabrics/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "VestTour.Service.Interface.ServiceResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "VestTour.Controllers.FabricsController",
     "Method": "GetFabricByTag",
     "RelativePath": "api/Fabrics/tag/{tag}",
     "HttpMethod": "GET",

@@ -19,6 +19,8 @@ using AutoMapper;
 using VestTour.Repository.Configuration;
 using VestTour.Repository.Mapper;
 using Microsoft.Extensions.FileProviders;
+using VestTour.Services.Interfaces;
+using VestTour.Services.Implementation;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -137,6 +139,7 @@ builder.Services.AddScoped<IProcessingTailorService, ProcessingTailorService>();
 builder.Services.AddScoped<ITailorPartnerService, TailorPartnerService>();
 builder.Services.AddScoped<IProductInStoreService, ProductInStoreService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ILiningService, LiningService>();
 builder.Services.AddHttpClient<ShippingService>();
 // Configure email settings
 builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("MailSettings"));

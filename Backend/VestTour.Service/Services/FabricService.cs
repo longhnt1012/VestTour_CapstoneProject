@@ -5,6 +5,7 @@ using VestTour.Domain.Entities;
 using VestTour.Domain.Enums;
 using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
+using VestTour.Repository.Repositories;
 using VestTour.Repository.ValidationHelper;
 using VestTour.Service.Interface;
 
@@ -139,6 +140,23 @@ namespace VestTour.Service.Implementation
                 response.Success = false;
                 response.Message = $"An error occurred: {ex.Message}";
             }
+            return response;
+        }
+        public async Task<ServiceResponse> UpdateStatusAsync(int itemId, string newStatus)
+        {
+            var response = new ServiceResponse();
+            if (!ItemStatusValidate.IsValidStatus(newStatus))
+            {
+                response.Success = false;
+                response.Message = "Invalid style status. Status must be Available or Unavailable";
+                return response;
+            }
+            await _fabricRepo.UpdateStatusAsync(itemId, newStatus);
+
+            // Return success response
+            response.Success = true;
+            response.Message = "Style status updated successfully.";
+
             return response;
         }
     }

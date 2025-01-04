@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using VestTour.Service.Interface;
 using Microsoft.AspNetCore.Cors;
+using VestTour.Service.Implementation;
 
 namespace VestTour.Controllers
 {
@@ -71,6 +72,17 @@ namespace VestTour.Controllers
 
             var response = await _fabricService.GetFabricByTagAsync(tag);
             return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
+        }
+        [HttpPatch("{id}/status")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
+        {
+            var response = await _fabricService.UpdateStatusAsync(id, newStatus);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
         }
     }
 }

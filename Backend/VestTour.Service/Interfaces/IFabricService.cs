@@ -14,5 +14,6 @@ namespace VestTour.Service.Interface
         Task<ServiceResponse> UpdateFabricAsync(int id, FabricModel model);
         Task<ServiceResponse> DeleteFabricAsync(int fabricId);
         Task<ServiceResponse<List<FabricModel>>> GetFabricByTagAsync(FabricEnums? tag);
+        Task<ServiceResponse> UpdateStatusAsync(int itemId, string newStatus);
     }
 }

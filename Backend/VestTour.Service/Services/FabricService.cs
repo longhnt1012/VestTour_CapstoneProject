@@ -65,10 +65,10 @@ namespace VestTour.Service.Implementation
         public async Task<ServiceResponse<int>> AddFabricAsync(FabricModel model)
         {
             var response = new ServiceResponse<int>();
-            if (!StatusValidate.IsValidStatus(model.Status))
+            if (!ItemStatusValidate.IsValidStatus(model.Status))
             {
                 response.Success = false;
-                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                response.Message = "Invalid style status. Status must be Available or Unavailable";
                 return response;
             }
             try
@@ -89,10 +89,10 @@ namespace VestTour.Service.Implementation
         public async Task<ServiceResponse> UpdateFabricAsync(int id, FabricModel model)
         {
             var response = new ServiceResponse();
-            if (!StatusValidate.IsValidStatus(model.Status))
+            if (!ItemStatusValidate.IsValidStatus(model.Status))
             {
                 response.Success = false;
-                response.Message = "Status not valid. Allowed types are:Active , Deactive.";
+                response.Message = "Invalid style status. Status must be Available or Unavailable";
                 return response;
             }
             try

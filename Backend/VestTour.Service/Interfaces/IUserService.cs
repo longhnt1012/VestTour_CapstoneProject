@@ -29,6 +29,6 @@ namespace VestTour.Service.Interfaces
         Task<string> ResetPasswordAsync(string token, string newPassword);
         Task UpdateUserAvatarAsync(int userId, string avatarUrl);
         Task UpdateUserActivityAsync(int userId, bool isOnline);
-        Task<ServiceResponse> UpdateUserPassAsync(int userId, string password);
+        Task<ServiceResponse> UpdateUserPassAsync(string email, string oldPassword, string newPassword);
     }
 }

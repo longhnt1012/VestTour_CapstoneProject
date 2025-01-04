@@ -213,10 +213,7 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrdersByStatusAsync(status);
         }
-        public async Task<decimal> GetTotalRevenueShareByStatusAsync(string status)
-        {
-            return await _orderRepository.GetTotalRevenueShareByStatusAsync(status);
-        }
+       
         public async Task<OrderModel?> GetOrderDetailByIdAsync(int orderId)
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);

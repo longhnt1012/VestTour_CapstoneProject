@@ -183,12 +183,7 @@ namespace VestTour.Repository.Repositories
 
             return _mapper.Map<List<OrderModel>>(orders);
         }
-        public async Task<decimal> GetTotalRevenueShareByStatusAsync(string status)
-        {
-            return await _context.Orders!
-                .Where(o => o.Status == status)
-                .SumAsync(o => o.RevenueShare ?? 0); // Assuming RevenueShare is nullable
-        }
+      
         public async Task SetPaidTrue(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);

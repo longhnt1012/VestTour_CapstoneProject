@@ -164,5 +164,41 @@ namespace VestTour.Service.Services
 
             return response;
         }
+        public async Task<ServiceResponse<TailorPartnerModel>> GetTailorPartnersByUserIdAsync(int userId)
+        {
+            var response = new ServiceResponse<TailorPartnerModel>();
+
+            if (userId <= 0)
+            {
+                response.Success = false;
+                response.Message = Error.InvalidUserId;
+                return response;
+            }
+
+            try
+            {
+                var tailorPartners = await _tailorPartnerRepository.GetTailorPartnerByUserIdAsync(userId);
+
+                if (tailorPartners != null)
+                {
+                    response.Data = tailorPartners;
+                    response.Success = true;
+                    response.Message = "Tailor partner retrieved successfully.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = "No tailor partner found for the specified user.";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
+        }
     }
 }

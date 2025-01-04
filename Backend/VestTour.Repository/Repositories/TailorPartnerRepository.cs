@@ -34,6 +34,14 @@ namespace VestTour.Repository.Repositories
             var tailorPartner = await _context.TailorPartners.FindAsync(tailorPartnerId);
             return _mapper.Map<TailorPartnerModel>(tailorPartner);
         }
+        public async Task<TailorPartnerModel?> GetTailorPartnerByUserIdAsync(int userId)
+        {
+            var tailorPartner = await _context.TailorPartners
+                                              .FirstOrDefaultAsync(tp => tp.UserId == userId);
+
+            return _mapper.Map<TailorPartnerModel>(tailorPartner);
+        }
+
 
         public async Task<int> AddTailorPartnerAsync(TailorPartnerModel tailorPartner)
         {

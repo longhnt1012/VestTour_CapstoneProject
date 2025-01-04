@@ -241,14 +241,22 @@ namespace VestTour.API.Controllers
         }
         [HttpPatch("{id}/update-pass")]
         [Authorize]
-        public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newPass)
+        public async Task<IActionResult> UpdateUserPassword([FromQuery] string email, [FromQuery] string oldPassword, [FromQuery] string newPassword)
         {
-            var response = await _userService.UpdateUserPassAsync(id, newPass);
-            if (response.Success)
+            // Validate parameters
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword))
             {
-                return Ok(response);
+                return BadRequest("All fields are required.");
             }
-            return BadRequest(response);
+
+            var response = await _userService.UpdateUserPassAsync(email, oldPassword, newPassword);
+
+            if (!response.Success)
+            {
+                return BadRequest(new { response.Message });
+            }
+
+            return Ok(new { response.Message });
         }
 
     }

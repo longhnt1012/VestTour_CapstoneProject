@@ -31,7 +31,13 @@ namespace VestTour.API.Controllers
             var response = await _tailorPartnerService.GetAllTailorPartnersAsync();
             return response.Success ? Ok(response) : NotFound(response);
         }
-
+        [HttpGet("get-by-user/{userId}")]
+        public async Task<IActionResult> GetTailorPartnerByUserId(int userId)
+        {
+            var response = await _tailorPartnerService.GetTailorPartnersByUserIdAsync(userId);
+            return response.Success ? Ok(response) : NotFound(response);
+           
+        }
         [HttpPost]
         public async Task<IActionResult> AddTailorPartner(TailorPartnerModel tailorPartner)
         {

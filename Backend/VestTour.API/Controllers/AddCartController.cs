@@ -126,50 +126,8 @@ namespace VestTour.API.Controllers
             await _addCartService.ClearCartAsync(userId);
             return Ok(new { message = "Cart cleared successfully." });
         }
-        //[Authorize]
+
        
-        [HttpPost("/Cart/createpayment")]
-        public async Task<IActionResult> CreatePayment( bool isDeposit,decimal payAmount )
-        {
-            try
-            {
-                var userId = GetUserId();
-               // var totalPrice = await _addCartService.GetTotalPriceAsync(userId);
-                string paymentDetails = "";
-                paymentDetails = isDeposit ? "Make deposit 50%" : "Paid full";
-
-
-                // Create a PaymentModel object
-                var payment = new PaymentModel
-                {
-                    UserId = userId,
-                    OrderId = null, // You might want to replace this hardcoded value with a dynamic one
-                    Amount = payAmount,
-                    Method = "PayPal",
-                    PaymentDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    PaymentDetails = paymentDetails,
-                    Status = "Success"
-                };
-
-                // Save the payment record
-                var newPaymentResponse = await _paymentService.AddNewPaymentAsync(payment);
-                if (!newPaymentResponse.Success)
-                {
-                    return BadRequest(new { Error = newPaymentResponse.Message });
-                }
-
-                // Save PaymentId into the session
-                HttpContext.Session.SetInt32("paymentId", newPaymentResponse.Data);
-
-                return Ok(new { Message = "Payment created successfully.", paymentId = newPaymentResponse.Data });
-            }
-            catch (Exception ex)
-            {
-                // Return error details
-                return BadRequest(new { Error = ex.Message });
-            }
-
-        }
          
 
 

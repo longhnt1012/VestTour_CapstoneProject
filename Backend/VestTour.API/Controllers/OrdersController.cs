@@ -223,12 +223,7 @@ namespace VestTour.Controllers
 
             return Ok(response);
         }
-        [HttpGet("total-revenue-share/{status}")]
-        public async Task<IActionResult> GetTotalRevenueShare(string status)
-        {
-            var totalRevenueShare = await _orderService.GetTotalRevenueShareByStatusAsync(status);
-            return Ok(new { TotalRevenueShare = totalRevenueShare });
-        }
+      
         [HttpPut("SetPaidTrue/{orderId}")]
         public async Task<IActionResult> SetPaidTrue(int orderId)
         {

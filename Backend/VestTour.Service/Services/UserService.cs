@@ -262,24 +262,40 @@ namespace VestTour.Service.Services
             user.AvtUrl = avatarUrl; // Assuming `Avatar` is the property in the `User` entity
             await _userRepository.UpdateUserAsync(user);
         }
-        public async Task<ServiceResponse> UpdateUserPassAsync(int userId, string password)
+        public async Task<ServiceResponse> UpdateUserPassAsync(string email, string oldPassword, string newPassword)
         {
             var response = new ServiceResponse();
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
+
+            // Validate new password requirements
+            if (string.IsNullOrEmpty(newPassword) || newPassword.Length < 6 || newPassword.Length > 18)
             {
                 response.Success = false;
-                response.Message = Error.InvalidUserId;
+                response.Message = "Invalid password. Password must be between 6 and 18 characters.";
                 return response;
             }
-            if (password.Length < 6 || password.Length > 18 || password == "")
+
+            // Validate user credentials
+            var user = await _userRepository.GetUserByEmailAndPasswordAsync(email, oldPassword);
+            if (user == null)
             {
                 response.Success = false;
-                response.Message = "Invalid password. Password must be 6 to 18 characters";
+                response.Message = "Invalid password.";
                 return response;
             }
-            var newPass = PasswordHelper.HashPassword(password);
-            await _userRepository.UpdateUserPassAsync(userId, newPass);
+
+            // Check if the refresh token has expired
+            if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
+            {
+                response.Success = false;
+                response.Message = "User session has expired.";
+                return response;
+            }
+
+            // Hash the new password
+            var newHashedPassword = PasswordHelper.HashPassword(newPassword);
+
+            // Update the user's password in the database
+            await _userRepository.UpdateUserPassAsync(user.UserId, newHashedPassword);
 
             // Return success response
             response.Success = true;
@@ -287,6 +303,7 @@ namespace VestTour.Service.Services
 
             return response;
         }
+
 
 
 

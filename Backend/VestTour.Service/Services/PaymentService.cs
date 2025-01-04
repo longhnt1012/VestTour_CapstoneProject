@@ -25,6 +25,7 @@ namespace VestTour.Service.Services
             var response = new ServiceResponse<int>();
             try
             {
+                payment.Status = "Success";
                 if (!PaymentStatusValidate.IsValidStatus(payment.Status))
                 {
                     response.Success = false;

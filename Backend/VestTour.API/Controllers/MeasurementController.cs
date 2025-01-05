@@ -45,9 +45,6 @@ namespace VestTour.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMeasurement(int id, MeasurementModel measurementModel)
         {
-            if (id != measurementModel.MeasurementId)
-                return BadRequest("Measurement ID mismatch.");
-
             var response = await _measurementService.UpdateMeasurementAsync(id, measurementModel);
             return response.Success ? NoContent() : BadRequest(response);
         }

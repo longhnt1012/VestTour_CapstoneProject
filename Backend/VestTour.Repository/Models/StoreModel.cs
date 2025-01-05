@@ -1,4 +1,6 @@
-﻿namespace VestTour.Repository.Models
+﻿using VestTour.Domain.Entities;
+
+namespace VestTour.Repository.Models
 {
     public class StoreModel
     {
@@ -14,5 +16,6 @@
         public int? DistrictID { get; set; }
         public string? ImgUrl { get; set; }
         public string? Status { get; set; }
+        public TailorPartner? TailorPartner { get; set; }
     }
 }

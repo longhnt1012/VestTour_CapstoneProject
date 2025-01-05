@@ -19,6 +19,7 @@ namespace VestTour.Repository.Interface
         Task<bool> UpdateStoreImageAsync(int storeId, string imgUrl);
         Task<StoreModel?> GetStoreByUserIdAsync(int userId);
         Task UpdateStatusAsync(int storeId, string newStatus);
+        Task<StoreModel?> GetTailorPartnerByManagerID(int userId);
 
     }
 }

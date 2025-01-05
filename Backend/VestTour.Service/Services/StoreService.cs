@@ -27,7 +27,10 @@ namespace VestTour.Service.Implementation
         {
             return await _storeRepository.GetStoreByIdAsync(id);
         }
-
+        public async Task<StoreModel?> GetTailorPartnerByManagerID(int id)
+        {
+            return await _storeRepository.GetTailorPartnerByManagerID(id);
+        }
         public async Task<ServiceResponse<int>> CreateStoreAsync(StoreModel storeModel)
         {
             var response = new ServiceResponse<int>();

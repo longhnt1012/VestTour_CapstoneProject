@@ -9,6 +9,7 @@ namespace VestTour.Service.Interfaces
     {
         Task<List<StoreModel>> GetAllStoresAsync();
         Task<StoreModel?> GetStoreByIdAsync(int id);
+        Task<StoreModel?> GetTailorPartnerByManagerID(int id);
         Task<ServiceResponse<int>> CreateStoreAsync(StoreModel storeModel);
         Task<ServiceResponse> UpdateStoreAsync(int id, StoreModel storeModel);
         Task DeleteStoreAsync(int id);

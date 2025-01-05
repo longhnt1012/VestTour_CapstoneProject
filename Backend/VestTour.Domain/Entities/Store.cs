@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace VestTour.Domain.Entities;
 
@@ -32,7 +33,7 @@ public partial class Store
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
+    [JsonIgnore]
     public virtual TailorPartner? TailorPartner { get; set; }
 
     public virtual User? User { get; set; }

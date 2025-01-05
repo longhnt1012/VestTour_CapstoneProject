@@ -77,7 +77,42 @@ namespace VestTour.Repository.Repositories
             // Map the result to StoreModel and return
             return _mapper.Map<StoreModel>(store);
         }
+        public async Task<StoreModel?> GetTailorPartnerByManagerID(int userId)
+        {
+            if (userId <= 0)
+                return null;
 
+            // Fetch the store along with its single TailorPartner entity
+            var store = await _context.Stores!
+                .Include(s => s.TailorPartner) // Eagerly load the TailorPartner
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (store == null)
+                return null;
+
+            // Map the store to StoreModel
+            var storeModel = new StoreModel
+            {
+                StoreId = store.StoreId,
+                UserId = store.UserId ?? 0,
+                Name = store.Name,
+                Address = store.Address,
+                ContactNumber = store.ContactNumber,
+                StoreCode = store.StoreCode,
+                OpenTime = store.OpenTime,
+                CloseTime = store.CloseTime,
+                StaffIDs = store.StaffIds,
+                DistrictID = store.DistrictId,
+                ImgUrl = store.ImgUrl,
+                Status = store.Status,
+                TailorPartner = store.TailorPartner // Single TailorPartner
+            };
+
+
+            return _mapper.Map<StoreModel>(storeModel);
+            
+            
+        }
         public async Task<List<UserModel>> GetStaffByStoreIdAsync(int? storeId)
         {
             var store = await _context.Stores!.FindAsync(storeId);

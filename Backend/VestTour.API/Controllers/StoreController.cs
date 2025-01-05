@@ -85,6 +85,12 @@ namespace VestTour.Controllers
             var store = await _storeService.GetStoreByUserId(userId);
             return Ok(store);
         }
+        [HttpGet("manager-userId/{userId}")]
+        public async Task<IActionResult> GetTailorPartnerByManagerID(int userId)
+        {
+            var store = await _storeService.GetTailorPartnerByManagerID(userId);
+            return Ok(store);
+        }
         [HttpPost("{storeId}/add-staff/{staffId}")]
         public async Task<IActionResult> AddStaffToStore(int storeId, int staffId)
         {

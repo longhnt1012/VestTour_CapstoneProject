@@ -65,12 +65,12 @@
         "IsRequired": false
       },
       {
-        "Name": "shippingfee",
+        "Name": "shippingFee",
         "Type": "System.Decimal",
         "IsRequired": false
       },
       {
-        "Name": "deliverymethod",
+        "Name": "deliveryMethod",
         "Type": "System.String",
         "IsRequired": false
       },

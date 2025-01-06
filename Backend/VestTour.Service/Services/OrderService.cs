@@ -218,7 +218,32 @@ namespace VestTour.Service.Implementation
         {
             return await _orderRepository.GetOrderDetailByIdAsync(orderId);
         }
-        
+
+        public async Task<ServiceResponse<int>> AddOrderAsync(OrderModel orderModel)
+        {
+            try
+            {
+                // Call the AddOrderAsync method to create a new order and get the order ID
+                int orderId = await _orderRepository.AddOrderAsync(orderModel);
+
+                // Return a successful response with the order ID
+                return new ServiceResponse<int>
+                {
+                    Data = orderId,
+                    Success = true,
+                    Message = "Order created successfully."
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions and return an error response
+                return new ServiceResponse<int>
+                {
+                    Success = false,
+                    Message = $"An error occurred while creating the order: {ex.Message}"
+                };
+            }
+        }
 
 
         private int GenerateGuestId()

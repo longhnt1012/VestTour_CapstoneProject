@@ -86,14 +86,46 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
-        public async Task<IActionResult> ConfirmOrder(string? guestName, string? guestEmail, string? guestAddress, string? guestPhone, decimal deposit, decimal shippingfee, string deliverymethod, int storeId, int? voucherId)
+        public async Task<IActionResult> ConfirmOrder(
+    string? guestName,
+    string? guestEmail,
+    string? guestAddress,
+    string? guestPhone,
+    decimal deposit,
+    decimal shippingFee,
+    string? deliveryMethod,
+    int storeId,
+    int? voucherId)
         {
             var userId = GetUserId();
             try
             {
-                var newOrderResponse =  await _addCartService.ConfirmOrderAsync(userId, guestName, guestEmail, guestAddress,guestPhone , deposit, shippingfee, deliverymethod, storeId, voucherId);
-                return Ok(new { Message = "Order confirmed successfully.", OrderId = newOrderResponse });
-          
+                // Call the service method
+                var newOrderResponse = await _addCartService.ConfirmOrderAsync(
+                    userId,
+                    guestName,
+                    guestEmail,
+                    guestAddress,
+                    guestPhone,
+                    deposit,
+                    shippingFee,
+                    deliveryMethod,
+                    storeId,
+                    voucherId);
+
+                if (!newOrderResponse.Success)
+                {
+                    return BadRequest(newOrderResponse.Message);
+                }
+
+                // Extract the actual order ID
+                int orderId = newOrderResponse.Data;
+
+                return Ok(new
+                {
+                    Message = "Order confirmed successfully!",
+                    OrderId = orderId
+                });
             }
             catch (KeyNotFoundException ex)
             {
@@ -103,11 +135,8 @@ namespace VestTour.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
-            }
         }
+
 
         [HttpDelete("remove/{productCode}")]
         public async Task<IActionResult> RemoveFromCart(int? userId, string productCode)

@@ -11,6 +11,7 @@ using VestTour.Repository.Interface;
 using VestTour.Repository.Models;
 using VestTour.Repository.Repositories;
 using VestTour.Service.Implementation;
+using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 using VestTour.Service.Services;
 
@@ -147,174 +148,171 @@ namespace VestTour.Services
 
             await _addCartRepository.AddToCartAsync(id, cartItem);
         }
-        public async Task<int> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress , string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId)
+        public async Task<ServiceResponse<int>> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId)
         {
-            // Generate a guest ID if userId is null
-            int id = userId ?? GenerateGuestId();
-
-            // Retrieve cart items for the user or guest
-            var cartItems = await _addCartRepository.GetUserCartAsync(id);
-            if (cartItems == null || cartItems.Count == 0)
+            try
             {
-                throw new InvalidOperationException("No items in cart to confirm.");
-            }
+                // Generate a guest ID if userId is null
+                int id = userId ?? GenerateGuestId();
 
-            // Process custom products and save them to the database
-            foreach (var item in cartItems)
-            {
-                if (item.IsCustom)
+                // Retrieve cart items for the user or guest
+                var cartItems = await _addCartRepository.GetUserCartAsync(id);
+                if (cartItems == null || cartItems.Count == 0)
                 {
-                    var customProduct = item.CustomProduct;
-                    var productToAdd = new ProductModel
-                    {
-                        ProductCode = customProduct.ProductCode,
-                        CategoryID = customProduct.CategoryID,
-                        FabricID = customProduct.FabricID,
-                        LiningID = customProduct.LiningID,
-                        MeasurementID = customProduct.MeasurementID,
-                        Price = item.Price,
-                        IsCustom = true
-                    };
-
-                    // Save custom product and retrieve its ID
-                    var productId = await _productService.AddProductAsync(productToAdd);
-                    item.Product = new ProductModel { ProductID = productId.Data };
-
-                    // Save product style options to the join table
-                    foreach (var pickedOption in customProduct.PickedStyleOptions)
-                    {
-                        await _context.Database.ExecuteSqlInterpolatedAsync($@"
-                    INSERT INTO ProductStyleOption (ProductId, StyleOptionId) 
-                    VALUES ({productId}, {pickedOption.StyleOptionID})");
-                    }
-                }
-                else
-                {
-                    var productInStore = await _productInStoreService.GetProductInStoreAsync(storeId, item.ProductID.Value);
-                    if (productInStore.Data == null || productInStore.Data.Quantity < item.Quantity)
-                    {
-                        throw new InvalidOperationException($"Product with ID {item.ProductID} does not have enough stock.");
-                    }
-
-                    // Cập nhật số lượng sản phẩm trong kho
-                    var updatedQuantity = productInStore.Data.Quantity - item.Quantity;
-                    await _productInStoreService.UpdateQuantityAsync(storeId, item.ProductID.Value, updatedQuantity);
-                }
-            }
-
-            User? user = null;
-            decimal subFee = 0;
-            string surchargeNote = string.Empty;
-
-            if (userId.HasValue)
-            {
-                user = await _userService.GetUserByIdAsync(userId.Value);
-                if (user == null)
-                {
-                    throw new InvalidOperationException($"User with ID {userId.Value} not found.");
+                    return new ServiceResponse<int> { Success = false, Message = "No items in cart to confirm." };
                 }
 
-                var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
-                if (measurementResponse != null)
-                {
-                    subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
-                    if (subFee > 0)
-                    {
-                        surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
-                    }
-                }
-            }
-           if (voucherId.HasValue)
-            {
-                var voucher = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
-                if (voucher == null || !voucher.Success || voucher.Data == null)
-                {
-                    throw new ArgumentException("Invalid or expired voucher.");
-                }
-
-                decimal discountAmount = voucher.Data.DiscountNumber ?? 0;
-                shippingFee -= shippingFee * discountAmount;
-                if (shippingFee < 0) shippingFee = 0;
-            }
-
-            // Calculate total price
-            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity) + shippingFee;
-
-            var newOrder = new OrderModel
-            {
-                UserID = user?.UserId,
-                VoucherId = voucherId,
-                StoreId = storeId,
-                ShipperPartnerId = 4,
-                GuestName = string.IsNullOrEmpty(guestName) ? user?.Name : guestName,
-                GuestEmail = string.IsNullOrEmpty(guestEmail) ? user?.Email : guestEmail,
-                GuestAddress = string.IsNullOrEmpty(guestAddress) ? user?.Address : guestAddress,
-                GuestPhone = string.IsNullOrEmpty(guestPhone) ? user?.Phone : guestPhone,
-                OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
-                TotalPrice = Math.Round(totalPrice, 2),
-                RevenueShare = totalPrice * 0.3m,
-                Deposit = deposit,
-                ShippingFee = shippingFee,
-                Paid = false,
-                Status = "Pending",
-                DeliveryMethod = deliveryMethod ?? "Pick up",
-                ShipStatus = "Confirming",
-                Note = surchargeNote
-            };
-            // Save the order to the database
-            int orderId = await _orderRepository.AddOrderAsync(newOrder);
-
-            // Save order details
-            await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
-
-            // Send confirmation email
-            string recipientEmail = user?.Email ?? guestEmail;
-            if (!string.IsNullOrEmpty(recipientEmail))
-            {
-                var subject = "Order Confirmation";
-                var body = new StringBuilder();
-                body.AppendLine("Dear Customer,")
-                    .AppendLine()
-                    .AppendLine($"Thank you for your order! Your Order ID is: {orderId}.")
-                    .AppendLine($"- Order Date: {newOrder.OrderDate?.ToString("d")}")
-                    .AppendLine($"- Total Price: {newOrder.TotalPrice:C}")
-                    .AppendLine($"- Note: {newOrder.Note}")
-                    .AppendLine($"- Shipping Fee: {newOrder.ShippingFee:C}")
-                    .AppendLine($"- Deposit: {newOrder.Deposit:C}")
-                    .AppendLine($"- Delivery Method: {newOrder.DeliveryMethod}")
-                    .AppendLine()
-                    .AppendLine("Order Details:");
-
+                // Process cart items
                 foreach (var item in cartItems)
                 {
-                    string productCode = item.CustomProduct?.ProductCode ?? item.Product?.ProductCode ?? "Unknown Product";
-                    body.AppendLine($"- Product: {productCode}")
-                        .AppendLine($"  Price: {item.Price:C}")
-                        .AppendLine($"  Quantity: {item.Quantity}")
-                        .AppendLine($"  Subtotal: {(item.Price * item.Quantity):C}")
-                        .AppendLine();
+                    if (item.IsCustom)
+                    {
+                        var customProduct = item.CustomProduct;
+                        var productToAdd = new ProductModel
+                        {
+                            ProductCode = customProduct.ProductCode,
+                            CategoryID = customProduct.CategoryID,
+                            FabricID = customProduct.FabricID,
+                            LiningID = customProduct.LiningID,
+                            MeasurementID = customProduct.MeasurementID,
+                            Price = item.Price,
+                            IsCustom = true
+                        };
+
+                        var productIdResponse = await _productService.AddProductAsync(productToAdd);
+                        if (!productIdResponse.Success)
+                        {
+                            return new ServiceResponse<int> { Success = false, Message = "Failed to add custom product." };
+                        }
+
+                        item.Product = new ProductModel { ProductID = productIdResponse.Data };
+
+                        // Save product style options using EF Core
+                        foreach (var pickedOption in customProduct.PickedStyleOptions)
+                        {
+                            await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                INSERT INTO ProductStyleOption (ProductId, StyleOptionId) 
+                VALUES ({productIdResponse.Data}, {pickedOption.StyleOptionID})");
+                        }
+                    }
+                
+                    else
+                    {
+                        // Validate stock for regular products
+                        var productInStoreResponse = await _productInStoreService.GetProductInStoreAsync(storeId, item.ProductID.Value);
+                        if (!productInStoreResponse.Success || productInStoreResponse.Data == null || productInStoreResponse.Data.Quantity < item.Quantity)
+                        {
+                            return new ServiceResponse<int> { Success = false, Message = $"Product with ID {item.ProductID} does not have enough stock." };
+                        }
+
+                        // Update product stock
+                        var updatedQuantity = productInStoreResponse.Data.Quantity - item.Quantity;
+                        await _productInStoreService.UpdateQuantityAsync(storeId, item.ProductID.Value, updatedQuantity);
+                    }
                 }
 
-                body.AppendLine("We appreciate your business and look forward to serving you again!")
-                    .AppendLine()
-                    .AppendLine("Best regards,")
-                    .AppendLine("Matcha VestTailor Team");
+                // Calculate additional charges and validate voucher
+                decimal subFee = 0;
+                string surchargeNote = string.Empty;
 
-                var emailRequest = new EmailRequest
+                if (userId.HasValue)
                 {
-                    To = recipientEmail,
-                    Subject = subject,
-                    Content = body.ToString()
+                    var user = await _userService.GetUserByIdAsync(userId.Value);
+                    guestName ??= user.Name;
+                    guestEmail ??= user.Email;
+                    guestAddress ??= user.Address;
+                    guestPhone ??= user.Phone;
+                    if (user == null)
+                    {
+                        return new ServiceResponse<int> { Success = false, Message = $"User with ID {userId.Value} not found." };
+                    }
+
+                    var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
+                    if (measurement != null)
+                    {
+                        subFee = _measurementService.CalculateMeasurementSurcharge(measurement);
+                        if (subFee > 0)
+                        {
+                            surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
+                        }
+                    }
+                }
+
+                if (voucherId.HasValue)
+                {
+                    var voucherResponse = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
+                    if (!voucherResponse.Success || voucherResponse.Data == null)
+                    {
+                        return new ServiceResponse<int> { Success = false, Message = "Invalid or expired voucher." };
+                    }
+
+                    decimal discountAmount = voucherResponse.Data.DiscountNumber ?? 0;
+                    shippingFee -= shippingFee * discountAmount;
+                    shippingFee = Math.Max(shippingFee, 0);
+                }
+
+                // Calculate total price
+                decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity) + shippingFee;
+
+                // Create order
+                var newOrder = new OrderModel
+                {
+                    UserID = userId,
+                    VoucherId = voucherId,
+                    StoreId = storeId,
+                    ShipperPartnerId = 4,
+                    GuestName = guestName,
+                    GuestEmail = guestEmail,
+                    GuestAddress = guestAddress,
+                    GuestPhone = guestPhone,
+                    OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
+                    TotalPrice = Math.Round(totalPrice, 2),
+                    RevenueShare = totalPrice * 0.3m,
+                    Deposit = deposit,
+                    ShippingFee = shippingFee,
+                    Paid = false,
+                    Status = "Pending",
+                    DeliveryMethod = deliveryMethod ?? "Pick up",
+                    ShipStatus = "Confirming",
+                    Note = surchargeNote
                 };
-                await _emailHelper.SendEmailAsync(emailRequest);
+
+                var orderResponse = await _orderService.AddOrderAsync(newOrder);
+                if (!orderResponse.Success)
+                {
+                    return new ServiceResponse<int> { Success = false, Message = "Failed to save the order." };
+                }
+
+                int orderId = orderResponse.Data;
+
+                // Save order details
+                await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
+
+                // Send confirmation email
+                string recipientEmail = guestEmail;
+                if (!string.IsNullOrEmpty(recipientEmail))
+                {
+                    var emailRequest = new EmailRequest
+                    {
+                        To = recipientEmail,
+                        Subject = "Order Confirmation",
+                        Content = $"Thank you for your order! Your Order ID is: {orderId}."
+                    };
+                    await _emailHelper.SendEmailAsync(emailRequest);
+                }
+
+                // Clear the cart
+                await _addCartRepository.RemoveAllFromCartAsync(id);
+
+                return new ServiceResponse<int> { Success = true, Data = orderId, Message = "Order confirmed successfully." };
             }
-
-            // Clear the cart
-            await _addCartRepository.RemoveAllFromCartAsync(id);
-
-            return orderId;
+            catch (Exception ex)
+            {
+                return new ServiceResponse<int> { Success = false, Message = ex.Message };
+            }
         }
+
 
 
         public async Task<CartModel> GetUserCartAsync(int? userId)

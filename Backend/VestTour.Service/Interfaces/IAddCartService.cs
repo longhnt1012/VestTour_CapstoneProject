@@ -1,6 +1,7 @@
 ﻿using VestTour.Repository.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VestTour.Service.Interface;
 
 namespace VestTour.Service.Interfaces
 {
@@ -12,7 +13,7 @@ namespace VestTour.Service.Interfaces
         Task<CartModel> GetUserCartAsync(int? userId);
         Task DecreaseQuantityAsync(int? userId, string productCode);
         Task IncreaseQuantityAsync(int? userId, string productCode);
-        Task<int> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, string? GuestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId);
+        Task<ServiceResponse<int>> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId);
         Task<decimal> GetTotalPriceAsync(int? userId);
     }
 }

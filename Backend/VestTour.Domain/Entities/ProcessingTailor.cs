@@ -13,7 +13,7 @@ public partial class ProcessingTailor
 
     public string? SampleStatus { get; set; }
 
-    public int ProductID { get; set; }
+    public int OrderId { get; set; }
 
     public string? Note { get; set; }
 
@@ -29,7 +29,7 @@ public partial class ProcessingTailor
 
     public string? Status { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Order Order { get; set; } = null!;
 
     public virtual TailorPartner TailorPartner { get; set; } = null!;
 }

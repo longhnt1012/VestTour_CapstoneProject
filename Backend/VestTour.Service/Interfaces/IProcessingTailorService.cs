@@ -21,7 +21,7 @@ namespace VestTour.Service.Interfaces
         Task<ServiceResponse> ChangeFixStatusAsync(int processingId, string newStatus);
         Task<ServiceResponse> ChangeDeliveryStatusAsync(int processingId, string newStatus);
         Task<ServiceResponse> ChangeStageNameAsync(int processingId, string newStage);
-        Task<ServiceResponse<ProcessingTailorModel>> GetProcessingTailorsByProductIdAsync(int productId);
+        Task<ServiceResponse<ProcessingTailorModel>> GetProcessingTailorsByOrderIdAsync(int orderId);
         Task<ServiceResponse<List<ProcessingTailorModel>>> GetProcessingTailorsByStoreIdAsync(int storeId);
     }
 }

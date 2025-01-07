@@ -127,7 +127,6 @@ namespace VestTour.Service.Implementation
             {
 
                 body.AppendLine($"-- Product Code: {product.ProductCode}");
-                body.AppendLine($"-- Size: {product.Size}");
                 body.AppendLine($"-- Custom: {(product.IsCustom ? "Yes" : "No")}");
                 body.AppendLine($"-- Price: {product.Price:C}");
                 if (!string.IsNullOrEmpty(product.ImgURL))
@@ -425,7 +424,7 @@ namespace VestTour.Service.Implementation
             var formattedNote = orderRequest.Note ?? string.Empty;
             if (!string.IsNullOrEmpty(surchargeNote))
             {
-                formattedNote += "  |  " + surchargeNote; 
+                formattedNote += " | " + surchargeNote; 
             }
             // Insert Order
             var orderEntity = new OrderModel

@@ -51,7 +51,7 @@ public partial class Order
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
-   
+    public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
 
     public virtual ShipperPartner? ShipperPartner { get; set; }
 

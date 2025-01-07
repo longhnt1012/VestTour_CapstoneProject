@@ -59,7 +59,6 @@ namespace VestTour.Service.Implementation
         {
             var response = new ServiceResponse<int>();
 
-            // Validate product code
             if (string.IsNullOrEmpty(product.ProductCode))
             {
                 response.Success = false;

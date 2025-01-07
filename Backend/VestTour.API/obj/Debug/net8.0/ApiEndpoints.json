@@ -1716,13 +1716,13 @@
   {
     "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
     "Method": "GetByOrderIdAsync",
-    "RelativePath": "api/ProcessingTailor/GetByProductId/{productId}",
+    "RelativePath": "api/ProcessingTailor/GetByOrderId/{orderId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "productId",
+        "Name": "orderId",
         "Type": "System.Int32",
         "IsRequired": true
       }

@@ -17,7 +17,7 @@ namespace VestTour.Repository.Models
         public string? FixStatus { get; set; }
         public string? DeliveryStatus { get; set; }
         public string? Status { get; set; }
-        public int ProductID { get; set; }
+        public int OrderId { get; set; }
 
         public string? Note { get; set; }
 

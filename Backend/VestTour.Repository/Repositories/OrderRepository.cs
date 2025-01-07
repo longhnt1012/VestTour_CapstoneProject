@@ -116,22 +116,15 @@ namespace VestTour.Repository.Repositories
                 ShippingFee = orderEntity.ShippingFee,
                 DeliveryMethod = orderEntity.DeliveryMethod,
                 ShipStatus = orderEntity.ShipStatus,
-                //Products = orderEntity.OrderDetails.Select(od => new ProductModel
-                //{
-                //    ProductID = od.ProductId,
-                //    ProductCode = od.Product?.ProductCode,
-                //    FabricID  = od.Product?.FabricId,
-                //    LiningID = od.Product?.LiningId,
-
-                //    Price = od.Product?.Price ?? 0
-                    
-                //}).ToList(),
+                
                 OrderDetails = orderEntity.OrderDetails.Select(od => new OrderDetailModel
                 {
                     OrderId = orderEntity.OrderId,
                     ProductId = od.ProductId,
+                    ProductCode =od.Product.ProductCode,
                     Quantity = od.Quantity.Value,
                     Price = od.Price.Value
+
                 }).ToList()
             };
 

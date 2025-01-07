@@ -40,5 +40,4 @@ public partial class Product
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual ICollection<StyleOption> StyleOptions { get; set; } = new List<StyleOption>();
-    public virtual ICollection<ProcessingTailor> ProcessingTailors { get; set; } = new List<ProcessingTailor>();
 }

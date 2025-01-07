@@ -425,7 +425,7 @@ namespace VestTour.Service.Implementation
             var formattedNote = orderRequest.Note ?? string.Empty;
             if (!string.IsNullOrEmpty(surchargeNote))
             {
-                formattedNote += " | " + surchargeNote; 
+                formattedNote += "  |  " + surchargeNote; 
             }
             // Insert Order
             var orderEntity = new OrderModel

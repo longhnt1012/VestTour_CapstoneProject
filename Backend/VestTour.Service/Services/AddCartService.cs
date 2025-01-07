@@ -253,7 +253,7 @@ namespace VestTour.Services
                 var formattedNote = note ?? string.Empty;
                 if (!string.IsNullOrEmpty(surchargeNote))
                 {
-                    formattedNote += note+"  |  " + surchargeNote;
+                    formattedNote +="  |  " + surchargeNote;
                 }
                 // Create order
                 var newOrder = new OrderModel

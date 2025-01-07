@@ -95,7 +95,8 @@ namespace VestTour.API.Controllers
     decimal shippingFee,
     string? deliveryMethod,
     int storeId,
-    int? voucherId)
+    int? voucherId,
+    string? note)
         {
             var userId = GetUserId();
             try
@@ -111,7 +112,8 @@ namespace VestTour.API.Controllers
                     shippingFee,
                     deliveryMethod,
                     storeId,
-                    voucherId);
+                    voucherId,
+                    note);
 
                 if (!newOrderResponse.Success)
                 {

@@ -229,16 +229,16 @@ namespace VestTour.Service.Implementation
         }
         public decimal CalculateMeasurementSurcharge(MeasurementModel measurement)
         {
-            if (measurement.Height > 190m && measurement.Weight > 100m)
+            if (measurement.Height > 190m || measurement.Weight > 100m)
             {
-                return 20m; // Additional $20 for extreme size
+                return 20m; 
             }
-            else if (measurement.Height > 180m && measurement.Weight > 80m)
+            else if (measurement.Height > 180m || measurement.Weight > 85m)
             {
-                return 10m; // Additional $10 for larger size
+                return 10m;
             }
 
-            return 0m; // No additional cost
+            return 0m; 
         }
 
     }

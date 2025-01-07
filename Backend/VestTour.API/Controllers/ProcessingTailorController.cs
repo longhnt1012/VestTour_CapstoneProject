@@ -140,13 +140,13 @@ namespace VestTour.API.Controllers
 
             return Ok(response);
         }
-        [HttpGet("GetByOrderId/{orderId}")]
-        public async Task<IActionResult> GetByOrderIdAsync(int orderId)
+        [HttpGet("GetByProductId/{productId}")]
+        public async Task<IActionResult> GetByOrderIdAsync(int productId)
         {
-            if (orderId <= 0)
+            if (productId <= 0)
                 return BadRequest("Invalid Order ID");
 
-            var response = await _processingTailorService.GetProcessingTailorsByOrderIdAsync(orderId);
+            var response = await _processingTailorService.GetProcessingTailorsByProductIdAsync(productId);
             if (!response.Success)
                 return NotFound(response.Message);
 

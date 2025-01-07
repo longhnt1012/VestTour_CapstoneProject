@@ -95,23 +95,24 @@ namespace VestTour.Services
             CartItemModel cartItem;
 
             // Retrieve measurements and calculate surcharge
-            decimal subFee = 0;
-            string surchargeNote = string.Empty;
-            if (userId.HasValue)
-            {
-                var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
-                if (measurementResponse != null)
-                {
-                    subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
-                    if (subFee > 0)
-                    {
-                        surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
-                    }
-                }
-            }
+            
 
             if (isCustom && customProduct != null)
             {
+                decimal subFee = 0;
+                string surchargeNote = string.Empty;
+                if (userId.HasValue)
+                {
+                    var measurementResponse = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
+                    if (measurementResponse != null)
+                    {
+                        subFee = _measurementService.CalculateMeasurementSurcharge(measurementResponse);
+                        if (subFee > 0)
+                        {
+                            surchargeNote = $"An additional fee of {subFee:C} per unit has been applied due to exceeding standard measurements.";
+                        }
+                    }
+                }
                 if (string.IsNullOrEmpty(customProduct.ProductCode))
                 {
                     customProduct.ProductCode = await customProduct.GenerateProductCodeAsync(_fabricRepository);
@@ -137,8 +138,7 @@ namespace VestTour.Services
                     Product = product,
                     Price = product.Price ?? 0,
                     Quantity = 1,
-                    IsCustom = false,
-                    Note = surchargeNote // Add the surcharge note if applicable
+                    IsCustom = false
                 };
             }
             else
@@ -148,7 +148,7 @@ namespace VestTour.Services
 
             await _addCartRepository.AddToCartAsync(id, cartItem);
         }
-        public async Task<ServiceResponse<int>> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId)
+        public async Task<ServiceResponse<int>> ConfirmOrderAsync(int? userId, string? guestName, string? guestEmail, string? guestAddress, string? guestPhone, decimal deposit, decimal shippingFee, string? deliveryMethod, int storeId, int? voucherId,string? note)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace VestTour.Services
                         subFee = _measurementService.CalculateMeasurementSurcharge(measurement);
                         if (subFee > 0)
                         {
-                            surchargeNote = "An additional fee has been applied due to exceeding standard measurements.";
+                            surchargeNote = $"An additional fee of {subFee:C} per unit has been applied due to exceeding standard measurements.";
                         }
                     }
                 }
@@ -246,14 +246,15 @@ namespace VestTour.Services
                         return new ServiceResponse<int> { Success = false, Message = "Invalid or expired voucher." };
                     }
 
-                    decimal discountAmount = voucherResponse.Data.DiscountNumber ?? 0;
-                    shippingFee -= shippingFee * discountAmount;
-                    shippingFee = Math.Max(shippingFee, 0);
                 }
 
                 // Calculate total price
                 decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity) + shippingFee;
-
+                var formattedNote = note ?? string.Empty;
+                if (!string.IsNullOrEmpty(surchargeNote))
+                {
+                    formattedNote += note+"  |  " + surchargeNote;
+                }
                 // Create order
                 var newOrder = new OrderModel
                 {
@@ -275,7 +276,7 @@ namespace VestTour.Services
                     Status = "Pending",
                     DeliveryMethod = deliveryMethod ?? "Pick up",
                     ShipStatus = "Confirming",
-                    Note = surchargeNote
+                    Note = formattedNote
                 };
 
                 var orderResponse = await _orderService.AddOrderAsync(newOrder);
@@ -384,7 +385,7 @@ namespace VestTour.Services
 
         private async Task<decimal> CalculatePrice(CustomProductModel customProduct)
         {
-            decimal basePrice = 100;
+            decimal basePrice = 10;
             decimal customizationCost = 0;
 
             decimal? fabricPrice = await _fabricRepository.GetFabricPriceByIdAsync(customProduct.FabricID);
@@ -392,7 +393,6 @@ namespace VestTour.Services
             {
                 customizationCost += fabricPrice.Value;
             }
-            customizationCost += customProduct.PickedStyleOptions.Count * 5;
 
             return basePrice + customizationCost;
         }

@@ -17,6 +17,8 @@
         public const string InvalidDobFormat = "Invalid Date of Birth format. Please use MM-DD-YYYY.";
         public const string EmailNotFound = "The provided email is not associated with any user.";
         // Fabric-related errors
+        public const string InvalidProductId = "Invalid product ID.";
+
         public const string InvalidFabricId = "Invalid Fabric ID.";
         public const string FabricNotFound = "Fabric not found.";
         public const string FabricAddFailed = "Failed to add fabric.";

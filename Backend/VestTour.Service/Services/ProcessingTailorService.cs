@@ -465,20 +465,20 @@ namespace VestTour.Service.Services
 
             return response;
         }
-        public async Task<ServiceResponse<ProcessingTailorModel>> GetProcessingTailorsByOrderIdAsync(int orderId)
+        public async Task<ServiceResponse<ProcessingTailorModel>> GetProcessingTailorsByProductIdAsync(int productId)
         {
             var response = new ServiceResponse<ProcessingTailorModel?>();
 
-            if (orderId <= 0)
+            if (productId <= 0)
             {
                 response.Success = false;
-                response.Message = Error.InvalidOrderId;
+                response.Message = Error.InvalidProductId;
                 return response;
             }
 
             try
             {
-                var processingTailors = await _processingTailorRepository.GetProcessingTailorsByOrderIdAsync(orderId);
+                var processingTailors = await _processingTailorRepository.GetProcessingTailorsByProductIdAsync(productId);
                 response.Data = processingTailors;
                 response.Success = processingTailors != null;
                 response.Message = processingTailors != null ? null : Error.ProcessingTailorNotFound;

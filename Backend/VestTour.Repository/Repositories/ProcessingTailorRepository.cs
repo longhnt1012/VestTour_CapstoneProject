@@ -127,10 +127,10 @@ namespace VestTour.Repository.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<ProcessingTailorModel> GetProcessingTailorsByOrderIdAsync(int orderId)
+        public async Task<ProcessingTailorModel> GetProcessingTailorsByProductIdAsync(int productId)
         {
             var processingTailor = await _context.ProcessingTailors
-                .FirstOrDefaultAsync(pt => pt.OrderId == orderId);
+                .FirstOrDefaultAsync(pt => pt.ProductID == productId);
 
             return processingTailor == null ? null : _mapper.Map<ProcessingTailorModel>(processingTailor);
         }

@@ -83,6 +83,11 @@
         "Name": "voucherId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      },
+      {
+        "Name": "note",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1711,13 +1716,13 @@
   {
     "ContainingType": "VestTour.API.Controllers.ProcessingTailorController",
     "Method": "GetByOrderIdAsync",
-    "RelativePath": "api/ProcessingTailor/GetByOrderId/{orderId}",
+    "RelativePath": "api/ProcessingTailor/GetByProductId/{productId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderId",
+        "Name": "productId",
         "Type": "System.Int32",
         "IsRequired": true
       }

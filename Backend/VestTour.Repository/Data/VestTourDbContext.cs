@@ -315,16 +315,16 @@ public partial class VestTourDbContext : DbContext
             entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
             entity.Property(e => e.FixStatus).HasMaxLength(50);
             entity.Property(e => e.Note).HasMaxLength(255);
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.ProductID).HasColumnName("ProductID");
             entity.Property(e => e.SampleStatus).HasMaxLength(50);
             entity.Property(e => e.StageName).HasMaxLength(100);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.TailorPartnerId).HasColumnName("TailorPartnerID");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.ProcessingTailors)
-                .HasForeignKey(d => d.OrderId)
+            entity.HasOne(d => d.Product).WithMany(p => p.ProcessingTailors)
+                .HasForeignKey(d => d.ProductID)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Processin__Order__56E8E7AB");
+                .HasConstraintName("FK__Processin__Prod__56E8E7AB");
 
             entity.HasOne(d => d.TailorPartner).WithMany(p => p.ProcessingTailors)
                 .HasForeignKey(d => d.TailorPartnerId)

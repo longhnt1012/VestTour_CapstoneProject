@@ -29,7 +29,7 @@ namespace VestTour.Repository.Models
         public decimal? TotalPrice { get; set; }
         public decimal? Deposit { get; set; }
         public decimal? ShippingFee { get; set; }
-        public decimal? BalancePayment => TotalPrice - Deposit + ShippingFee;
+        public decimal? BalancePayment => TotalPrice - Deposit;
         public string? DeliveryMethod { get; set; }
         public decimal? RevenueShare { get; set; }
         public string? ShipStatus { get; set; }

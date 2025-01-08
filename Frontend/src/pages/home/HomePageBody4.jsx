@@ -25,13 +25,13 @@ export const HomePageBody4 = () => {
     const fetchFeedbackData = async () => {
       try {
         // Fetch feedback data
-        const feedbackResponse = await fetch('https://localhost:7194/api/Feedback/all');
+        const feedbackResponse = await fetch('https://vesttour.xyz/api/Feedback/all');
         const feedbackData = await feedbackResponse.json();
 
         // Fetch user data for each feedback
         const feedbacksWithUser = await Promise.all(
           feedbackData.map(async (feedback) => {
-            const userResponse = await fetch(`https://localhost:7194/api/User/${feedback.userId}`);
+            const userResponse = await fetch(`https://vesttour.xyz/api/User/${feedback.userId}`);
             const userData = await userResponse.json();
             return {
               ...feedback,
@@ -52,7 +52,7 @@ export const HomePageBody4 = () => {
   return (
     <>
     {/* link-info */}
-    <section className='kpart sec k-sec'>
+    {/* <section className='kpart sec k-sec'>
         <div className="decor-sec">
             <img src="https://adongsilk.com/template/images/review-decor.png" alt="" />
         </div>
@@ -89,7 +89,7 @@ export const HomePageBody4 = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
     {/* feedback */}
     <section className='fback sec'>

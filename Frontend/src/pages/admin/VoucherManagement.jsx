@@ -12,8 +12,11 @@ import {
   InputAdornment,
   Alert,
   CircularProgress,
+  Fade,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import "./VoucherManagement.scss";
 
 const VoucherManagement = () => {
@@ -37,7 +40,7 @@ const VoucherManagement = () => {
     const fetchVoucherData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://localhost:7194/api/Voucher");
+        const response = await fetch("https://vesttour.xyz/api/Voucher");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -74,7 +77,7 @@ const VoucherManagement = () => {
             const updatedVoucher = { ...voucher, status: newStatus };
             try {
               const response = await fetch(
-                `https://localhost:7194/api/Voucher/${voucher.voucherId}`,
+                `https://vesttour.xyz/api/Voucher/${voucher.voucherId}`,
                 {
                   method: "PUT",
                   headers: {
@@ -138,7 +141,9 @@ const VoucherManagement = () => {
 
   const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
-  const handleAdd = async () => {
+  const handleAdd = async (e) => {
+    e.preventDefault();
+
     if (!validateForm()) return;
 
     if (!isValidDateStart(newVoucher.dateStart)) {
@@ -154,7 +159,8 @@ const VoucherManagement = () => {
     }
 
     try {
-      const response = await fetch("https://localhost:7194/api/Voucher", {
+      setIsLoading(true);
+      const response = await fetch("https://vesttour.xyz/api/Voucher", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -163,14 +169,26 @@ const VoucherManagement = () => {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Error adding new voucher");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error adding new voucher");
       }
 
-      const addedVoucher = await response.json();
-      setVoucherData([...voucherData, addedVoucher]);
-      setError(null);
+      // Fetch updated data after successful addition
+      const fetchResponse = await fetch("https://vesttour.xyz/api/Voucher");
+      if (!fetchResponse.ok) {
+        throw new Error("Failed to refresh voucher data");
+      }
+      const updatedData = await fetchResponse.json();
+      setVoucherData(updatedData);
+
       setShowSuccessMessage(true);
+
+      // Hide success message after 2 seconds
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 1000);
+
+      // Reset form
       setNewVoucher({
         voucherId: null,
         status: "Pending",
@@ -180,9 +198,13 @@ const VoucherManagement = () => {
         dateStart: "",
         dateEnd: "",
       });
+
+      setError(null);
     } catch (error) {
       console.error("Error adding new voucher:", error);
-      setError(error.message);
+      setError(error.message || "Failed to add voucher");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -198,36 +220,36 @@ const VoucherManagement = () => {
   };
 
   const handleUpdate = async () => {
-    if (!validateForm()) return;
-
-    if (!validateVoucherCode(newVoucher.voucherCode)) {
-      setError(
-        "Voucher code must be in the format 'BIGSALExx' or 'FREESHIPxx', where 'xx' is two digits."
-      );
-      return;
-    }
-
-    if (
-      voucherData.some(
-        (voucher) =>
-          voucher.voucherCode === newVoucher.voucherCode &&
-          voucher.voucherId !== editIndex
-      )
-    ) {
-      setError("Voucher code already exists. Please use a unique code.");
-      return;
-    }
-
-    if (!isValidDateStart(newVoucher.dateStart)) {
-      setError(
-        "Start date cannot be in the past. Please select today or a future date."
-      );
-      return;
-    }
-
     try {
+      if (!validateForm()) return;
+
+      if (!validateVoucherCode(newVoucher.voucherCode)) {
+        setError(
+          "Voucher code must be in the format 'BIGSALExx' or 'FREESHIPxx', where 'xx' is two digits."
+        );
+        return;
+      }
+
+      if (
+        voucherData.some(
+          (voucher) =>
+            voucher.voucherCode === newVoucher.voucherCode &&
+            voucher.voucherId !== editIndex
+        )
+      ) {
+        setError("Voucher code already exists. Please use a unique code.");
+        return;
+      }
+
+      if (!isValidDateStart(newVoucher.dateStart)) {
+        setError(
+          "Start date cannot be in the past. Please select today or a future date."
+        );
+        return;
+      }
+
       const response = await fetch(
-        `https://localhost:7194/api/Voucher/${editIndex}`,
+        `https://vesttour.xyz/api/Voucher/${editIndex}`,
         {
           method: "PUT",
           headers: {
@@ -237,58 +259,47 @@ const VoucherManagement = () => {
         }
       );
 
-      if (!response.ok) {
-        let errorMessage = "Error updating voucher";
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          const errorText = await response.text();
-          errorMessage = errorText || errorMessage;
-        }
-        throw new Error(errorMessage);
+      // Check specifically for 204 No Content response
+      if (response.status === 204) {
+        // Update the local state directly
+        setVoucherData(
+          voucherData.map((v) =>
+            v.voucherId === editIndex ? { ...v, ...newVoucher } : v
+          )
+        );
+
+        setShowSuccessMessage(true);
+
+        // Hide success message after 2 seconds
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 2000);
+
+        // Reset form and state
+        setNewVoucher({
+          voucherId: null,
+          status: "Pending",
+          voucherCode: "",
+          description: "",
+          discountNumber: 0,
+          dateStart: "",
+          dateEnd: "",
+        });
+        setEditIndex(null);
+        setError(null);
+        return;
       }
 
-      const updatedVoucher = await response.json();
-      const updatedVouchers = voucherData.map((v) =>
-        v.voucherId === editIndex ? updatedVoucher : v
-      );
-      setVoucherData(updatedVouchers);
-      setNewVoucher({
-        voucherId: null,
-        status: "Pending",
-        voucherCode: "",
-        description: "",
-        discountNumber: 0,
-        dateStart: "",
-        dateEnd: "",
-      });
-      setEditIndex(null);
-      setError(null);
-      setShowSuccessMessage(true);
+      // Handle error cases
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          errorText || `Error updating voucher: ${response.status}`
+        );
+      }
     } catch (error) {
       console.error("Error updating voucher:", error);
-      setError(error.message);
-    }
-  };
-
-  const handleDelete = async (voucherId) => {
-    try {
-      const response = await fetch(
-        `https://localhost:7194/api/Voucher/${voucherId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Error deleting voucher");
-      }
-      setVoucherData(voucherData.filter((v) => v.voucherId !== voucherId));
-      setError(null);
-    } catch (error) {
-      console.error("Error deleting voucher:", error);
-      setError(error.message);
+      setError(error.message || "Failed to update voucher");
     }
   };
 
@@ -313,21 +324,66 @@ const VoucherManagement = () => {
     }
   };
 
+  const handleCancel = () => {
+    setEditIndex(null);
+    setNewVoucher({
+      voucherId: null,
+      status: "Pending",
+      voucherCode: "",
+      description: "",
+      discountNumber: 0,
+      dateStart: "",
+      dateEnd: "",
+    });
+  };
+
   return (
     <div className="voucher-management">
       <h2>Voucher Management</h2>
       {error && <Alert severity="error">{error}</Alert>}
+      {showSuccessMessage && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            paddingTop: "20px",
+            zIndex: 9999,
+          }}
+        >
+          <Alert
+            severity="success"
+            style={{
+              padding: "1rem 2rem",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+              width: "auto",
+              minWidth: "300px",
+              fontSize: "1.1rem",
+            }}
+          >
+            Voucher successfully updated/added!
+          </Alert>
+        </div>
+      )}
 
       {isLoading ? (
-        <div
-          style={{ display: "flex", justifyContent: "center", padding: "2rem" }}
-        >
+        <div className="loading-container">
           <CircularProgress />
         </div>
       ) : (
         <>
           <div className="header">
-            <div className="form">
+            <form
+              className="form"
+              onSubmit={handleAdd}
+              style={{ marginRight: "20px" }}
+            >
               <TextField
                 label="Voucher Code"
                 name="voucherCode"
@@ -378,23 +434,51 @@ const VoucherManagement = () => {
                 }}
               />
               {editIndex ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleUpdate}
-                >
-                  Update Voucher
-                </Button>
+                <>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    onClick={handleUpdate}
+                    startIcon={<EditIcon />}
+                    sx={{
+                      backgroundColor: "#2196F3",
+                      color: "white",
+                      textTransform: "uppercase",
+                      "&:hover": {
+                        backgroundColor: "#1976d2",
+                      },
+                    }}
+                  >
+                    Update Voucher
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleCancel}
+                    sx={{
+                      marginLeft: "1rem",
+                      color: "#D946EF",
+                      borderColor: "#D946EF",
+                      textTransform: "none",
+                      "&:hover": {
+                        borderColor: "#D946EF",
+                        backgroundColor: "rgba(217, 70, 239, 0.04)",
+                      },
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </>
               ) : (
                 <Button
+                  type="submit"
                   variant="contained"
                   color="secondary"
-                  onClick={handleAdd}
+                  startIcon={<AddIcon />}
                 >
                   Add Voucher
                 </Button>
               )}
-            </div>
+            </form>
 
             <TextField
               label="Search by Voucher Code"
@@ -445,16 +529,8 @@ const VoucherManagement = () => {
                         variant="outlined"
                         color="primary"
                         onClick={() => handleEdit(v)}
-                        style={{ marginRight: "0.5rem" }}
                       >
                         Edit
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => handleDelete(v.voucherId)}
-                      >
-                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -462,13 +538,6 @@ const VoucherManagement = () => {
               </TableBody>
             </Table>
           </TableContainer>
-
-          {showSuccessMessage && (
-            <div className="success-message">
-              <p>Added/Updated successfully!</p>
-              <button onClick={() => window.location.reload()}>Refresh</button>
-            </div>
-          )}
         </>
       )}
     </div>

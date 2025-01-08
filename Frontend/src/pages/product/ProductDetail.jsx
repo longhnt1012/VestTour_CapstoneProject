@@ -8,6 +8,7 @@ import './ProductDetail.scss';
 import { addToGuestCart } from '../../utils/cartUtil';
 import { format } from 'date-fns';
 import { FaStar, FaRegStar, FaUser, FaCalendarAlt, FaPencilAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import measurementSizeChart from '../../assets/img/elements/measurement_size_chart.jpg'; // Adjust the path as necessary
 
 const StarRating = ({ rating, onRatingChange }) => {
   const [hover, setHover] = useState(0);
@@ -46,6 +47,34 @@ const ProductDetailPage = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const feedbacksPerPage = 4;
+  const [styleOptions, setStyleOptions] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [selectedSize, setSelectedSize] = useState(product?.size || null);
+
+  const sizes = ['S  ', 'M  ', 'L  ', 'XL  '];
+
+  const SizeSelector = () => {
+    return (
+      <div className="size-selector">
+        <div className="size-label">Size: {selectedSize}</div>
+        <div className="size-options">
+          {sizes.map((size) => (
+            <button
+              key={size}
+              className={`size-btn ${selectedSize === size ? 'selected' : ''} ${
+                product.size === size ? 'available' : 'unavailable'
+              }`}
+              onClick={() => setSelectedSize(size)}
+              disabled={product.size !== size}
+            >
+              {size}
+              {product.size !== size && <div className="crossed-line" />}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   // Calculate pagination values
   const indexOfLastFeedback = currentPage * feedbacksPerPage;
@@ -61,14 +90,14 @@ const ProductDetailPage = () => {
   const fetchFeedbacks = async () => {
     try {
       // First fetch feedbacks
-      const feedbackResponse = await axios.get(`https://localhost:7194/api/Feedback/product/${id}`);
+      const feedbackResponse = await axios.get(`https://vesttour.xyz/api/Feedback/product/${id}`);
       const feedbackData = feedbackResponse.data;
       setFeedbacks(feedbackData);
 
       // Then fetch user details one by one
       for (const feedback of feedbackData) {
         try {
-          const userResponse = await axios.get(`https://localhost:7194/api/User/${feedback.userId}`);
+          const userResponse = await axios.get(`https://vesttour.xyz/api/User/${feedback.userId}`);
           setUserNames(prev => ({
             ...prev,
             [feedback.userId]: userResponse.data.name
@@ -91,8 +120,23 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://localhost:7194/api/Product/details/${id}`);
-        setProduct(response.data);
+        const [productResponse, storeResponse] = await Promise.all([
+          axios.get(`https://vesttour.xyz/api/Product/details/${id}`),
+          axios.get('https://vesttour.xyz/api/ProductInStore')
+        ]);
+
+        setProduct(productResponse.data);
+        if (productResponse.data && productResponse.data.styleOptions) {
+          setStyleOptions(productResponse.data.styleOptions);
+        }
+
+        // Calculate total quantity across all stores
+        const totalQuantity = storeResponse.data.data
+          .filter(item => item.productID === parseInt(id))
+          .reduce((sum, item) => sum + item.quantity, 0);
+        
+        setQuantity(totalQuantity);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -105,7 +149,18 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = async () => {
     const token = localStorage.getItem('token');
-    
+    const userId = localStorage.getItem("userID");
+
+    if (!userId) {
+      toast.error('You must be logged in to add items to the cart.');
+      return;
+    }
+
+    if (!selectedSize) {
+      toast.error('Please select a size before adding to cart.');
+      return;
+    }
+
     if (!token) {
       // Guest user - add to localStorage
       addToGuestCart(product, false);
@@ -115,11 +170,10 @@ const ProductDetailPage = () => {
 
     try {
       const productID = product.productID;
-      const userId = parseInt(localStorage.getItem("userID"));
       const isCustom = false;
-  
+
       const productToAdd = {
-        userId: userId, 
+        userId: parseInt(userId),
         isCustom: isCustom,
         productId: productID,
         customProduct: {
@@ -133,39 +187,39 @@ const ProductDetailPage = () => {
           ]
         }
       };
-  
+
       console.log("Sending product to add to cart:", productToAdd);
-// Gửi dữ liệu lên API
-const response = await fetch("https://localhost:7194/api/AddCart/addtocart", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-  body: JSON.stringify(productToAdd),
-});
+      // Gửi dữ liệu lên API
+      const response = await fetch("https://vesttour.xyz/api/AddCart/addtocart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(productToAdd),
+      });
 
-// Kiểm tra mã trạng thái HTTP
-if (!response.ok) {
-  const errorText = await response.text(); // Đọc phản hồi dưới dạng văn bản
-  console.error("API returned error:", errorText); // Log lỗi ra console
-  throw new Error("Failed to add product to cart: " + errorText);
-}
+      // Kiểm tra mã trạng thái HTTP
+      if (!response.ok) {
+        const errorText = await response.text(); // Đọc phản hồi dưới dạng văn bản
+        console.error("API returned error:", errorText); // Log lỗi ra console
+        throw new Error("Failed to add product to cart: " + errorText);
+      }
 
-// Nếu API trả về thông báo chuỗi đơn giản (như 'Product added to cart.')
-const resultText = await response.text(); // Đọc phản hồi dưới dạng văn bản
-console.log("API response:", resultText); // Log thông báo trả về từ API
+      // Nếu API trả về thông báo chuỗi đơn giản (như 'Product added to cart.')
+      const resultText = await response.text(); // Đọc phản hồi dưới dạng văn bản
+      console.log("API response:", resultText); // Log thông báo trả về từ API
 
-if (resultText.includes("Product added to cart")) {
-  toast.success('Product added to cart.');
-} else {
-  toast.error('Failed to add product to cart.');
-}
-} catch (error) {
-// Xử lý lỗi nếu có
-console.log("error:", error);
-toast.error("Failed to add to cart. Please try again.");
-}
+      if (resultText.includes("Product added to cart")) {
+        toast.success('Product added to cart.');
+      } else {
+        toast.error('Failed to add product to cart.');
+      }
+    } catch (error) {
+      // Xử lý lỗi nếu có
+      console.log("error:", error);
+      toast.error("Failed to add to cart. Please try again.");
+    }
   };
   
   const handleSubmitFeedback = async (e) => {
@@ -180,8 +234,8 @@ toast.error("Failed to add to cart. Please try again.");
     }
 
     try {
-      // Get current date in YYYY-MM-DD format
-      const currentDate = new Date().toLocaleDateString('en-CA'); // 'en-CA' gives YYYY-MM-DD format
+      
+      const currentDate = new Date().toLocaleDateString('en-CA'); 
       console.log('Current Date:', currentDate);
 
       const feedbackData = {
@@ -196,7 +250,7 @@ toast.error("Failed to add to cart. Please try again.");
 
       console.log('Feedback Data to be sent:', feedbackData);
 
-      const response = await fetch('https://localhost:7194/api/Feedback/feedbackforproduct', {
+      const response = await fetch('https://vesttour.xyz/api/Feedback/feedbackforproduct', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -218,7 +272,7 @@ toast.error("Failed to add to cart. Please try again.");
       fetchFeedbacks();
     } catch (error) {
       console.error('Full error:', error);
-      toast.error('Unable to submit review. Please check console for details');
+      toast.error('Unable to submit review.');
     }
   };
 
@@ -238,14 +292,24 @@ toast.error("Failed to add to cart. Please try again.");
             <div className="right-pd-info">
               <h1 className="pd-name">{product.productCode}</h1>
               <dl className="pdinfo-dl">
-                <dt>Size:</dt>
-                <dd>{product.size}</dd>
                 <dt>Fabric:</dt>
                 <dd>{product.fabricName}</dd>
                 <dt>Lining:</dt>
                 <dd>{product.liningName}</dd>
+                <dt>Style:</dt>
+                <dd>{styleOptions.map(option => (
+                <li key={option.styleOptionId}>
+                  {option.optionType}: {option.optionValue}
+                </li>
+              ))}</dd>
               </dl>
+              <SizeSelector />
               <p className="price">From {product.price} USD</p>
+              {/* <p className="availability">
+                Status: <span className={quantity > 0 ? 'in-stock' : 'out-of-stock'}>
+                  {quantity > 0 ? 'Available' : 'Out of Stock'}
+                </span>
+              </p> */}
             </div>
             <div className="right-pd-info">
               <div className="actions-link">
@@ -253,7 +317,11 @@ toast.error("Failed to add to cart. Please try again.");
                   Choose between personalizing the product or add it like we designed it to your cart
                 </p>
                 <Link to="/custom-suits" className="btn primary-btn">Customize</Link>
-                <button onClick={handleAddToCart} className="btn gray-btn">
+                <button 
+                  onClick={handleAddToCart} 
+                  className="btn gray-btn"
+                  disabled={quantity <= 0}
+                >
                   Add to Cart
                 </button>
               </div>
@@ -276,118 +344,122 @@ toast.error("Failed to add to cart. Please try again.");
 
             </div>
           </div>
-        </div>
 
-        {/* Related Products Section */}
-        
-        <div className="feedback-section">
-          <h2 className="feedback-title">
-            <FaStar className="title-icon" />
-            Customer Reviews ({feedbacks.length})
-          </h2>
-          
-          {/* Feedback submission form */}
-          <div className="feedback-form">
-            <h3>
-              <FaPencilAlt className="form-icon" />
-              Write Your Review
-            </h3>
-            <form onSubmit={handleSubmitFeedback}>
-              <div className="rating-select">
-                <label>Rating:</label>
-                <StarRating 
-                  rating={newFeedback.rating}
-                  onRatingChange={(value) => setNewFeedback(prev => ({
-                    ...prev,
-                    rating: value
-                  }))}
-                />
-              </div>
-              
-              <div className="comment-input">
-                <label>Comment:</label>
-                <textarea
-                  value={newFeedback.comment}
-                  onChange={(e) => setNewFeedback(prev => ({
-                    ...prev,
-                    comment: e.target.value
-                  }))}
-                  required
-                  placeholder="Write your review here..."
-                />
-              </div>
-              
-              <button type="submit" className="submit-feedback">
-                Submit Review
-              </button>
-            </form>
+          {/* Add the size chart image here */}
+          <div className="size-chart">
+            <img src={measurementSizeChart} alt="Cloth Size Chart" />
           </div>
 
-          {/* Existing feedback display */}
-          {feedbacks.length === 0 ? (
-            <p className="no-feedback">No reviews yet for this product.</p>
-          ) : (
-            <>
-              <div className="feedback-list">
-                {currentFeedbacks.map(feedback => (
-                  <div key={feedback.feedbackId} className="feedback-item">
-                    <div className="feedback-header">
-                      <div className="user-info">
-                        <FaUser className="user-icon" />
-                        <span className="user-name">{userNames[feedback.userId] || 'Anonymous'}</span>
-                      </div>
-                      <div className="rating-date">
-                        <span className="rating">
-                          {[...Array(5)].map((_, index) => (
-                            <span key={index}>
-                              {index < feedback.rating ? <FaStar className="star-filled" /> : <FaRegStar className="star-empty" />}
-                            </span>
-                          ))}
-                        </span>
-                        <span className="date">
-                          <FaCalendarAlt className="calendar-icon" />
-                          {format(new Date(feedback.dateSubmitted), 'MMM dd, yyyy')}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="comment">{feedback.comment}</p>
-                  </div>
-                ))}
-              </div>
-              
-              {totalPages > 1 && (
-                <div className="pagination">
-                  <button 
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                  >
-                    <FaChevronLeft />
-                  </button>
-                  
-                  {[...Array(totalPages)].map((_, index) => (
-                    <button
-                      key={index + 1}
-                      onClick={() => handlePageChange(index + 1)}
-                      className={`pagination-btn ${currentPage === index + 1 ? 'active' : ''}`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                  
-                  <button 
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-btn"
-                  >
-                    <FaChevronRight />
-                  </button>
+          {/* Related Products Section */}
+          
+          <div className="feedback-section">
+            <h2 className="feedback-title">
+              <FaStar className="title-icon" />
+              Customer Reviews ({feedbacks.length})
+            </h2>
+            
+            {/* Feedback submission form */}
+            <div className="feedback-form">
+              <h3>
+                <FaPencilAlt className="form-icon" />
+                Write Your Review
+              </h3>
+              <form onSubmit={handleSubmitFeedback}>
+                <div className="rating-select">
+                  <label>Rating:</label>
+                  <StarRating 
+                    rating={newFeedback.rating}
+                    onRatingChange={(value) => setNewFeedback(prev => ({
+                      ...prev,
+                      rating: value
+                    }))}
+                  />
                 </div>
-              )}
-            </>
-          )}
+                
+                <div className="comment-input">
+                  <label>Comment:</label>
+                  <textarea
+                    value={newFeedback.comment}
+                    onChange={(e) => setNewFeedback(prev => ({
+                      ...prev,
+                      comment: e.target.value
+                    }))}
+                    required
+                    placeholder="Write your review here..."
+                  />
+                </div>
+                
+                <button type="submit" className="submit-feedback">
+                  Submit Review
+                </button>
+              </form>
+            </div>
+
+            {/* Existing feedback display */}
+            {feedbacks.length === 0 ? (
+              <p className="no-feedback">No reviews yet for this product.</p>
+            ) : (
+              <>
+                <div className="feedback-list">
+                  {currentFeedbacks.map(feedback => (
+                    <div key={feedback.feedbackId} className="feedback-item">
+                      <div className="feedback-header">
+                        <div className="user-info">
+                          <FaUser className="user-icon" />
+                          <span className="user-name">{userNames[feedback.userId] || 'Anonymous'}</span>
+                        </div>
+                        <div className="rating-date">
+                          <span className="rating">
+                            {[...Array(5)].map((_, index) => (
+                              <span key={index}>
+                                {index < feedback.rating ? <FaStar className="star-filled" /> : <FaRegStar className="star-empty" />}
+                              </span>
+                            ))}
+                          </span>
+                          <span className="date">
+                            <FaCalendarAlt className="calendar-icon" />
+                            {format(new Date(feedback.dateSubmitted), 'MMM dd, yyyy')}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="comment">{feedback.comment}</p>
+                    </div>
+                  ))}
+                </div>
+                
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <button 
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="pagination-btn"
+                    >
+                      <FaChevronLeft />
+                    </button>
+                    
+                    {[...Array(totalPages)].map((_, index) => (
+                      <button
+                        key={index + 1}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`pagination-btn ${currentPage === index + 1 ? 'active' : ''}`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                    
+                    <button 
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="pagination-btn"
+                    >
+                      <FaChevronRight />
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
-        
       </main>
       <Footer />
     </>

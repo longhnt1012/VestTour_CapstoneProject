@@ -11,9 +11,14 @@ import {
   Scissors,
   Package,
   Ruler,
+  Search,
+  Filter,
+  X,
+  DollarSign,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import "./TailorDashboard.scss";
+import { CircularProgress } from "@mui/material";
 
 const statusColors = {
   "Not Start": "bg-yellow-300 text-yellow-800",
@@ -26,21 +31,26 @@ const statusColors = {
 };
 
 const LoadingSpinner = () => (
-  <div className="loading-spinner-overlay">
-    <div className="loading-spinner">
-      <div className="spinner"></div>
-      <span className="loading-text">Loading...</span>
-    </div>
+  <div className="fixed inset-0 flex justify-center items-center">
+    <CircularProgress size={40} thickness={4} />
   </div>
 );
 
 const TailorDashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [orderDetails, setOrderDetails] = useState({});
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [searchOrderId, setSearchOrderId] = useState("");
+  const [stageFilter, setStageFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ordersPerPage] = useState(10);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const STAGES = {
     MAKE_SAMPLE: "Make Sample",
     FIX: "Fix",
@@ -56,21 +66,63 @@ const TailorDashboard = () => {
       : null;
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("userID");
-    localStorage.removeItem("roleID");
-    localStorage.removeItem("token");
-    navigate("/signin");
+  const isDateOverdue = (dateString) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+    return date < today;
   };
+
+  const [tailorPartnerId, setTailorPartnerId] = useState(null);
+  const userID = localStorage.getItem("userID");
+
+  const fetchTailorPartnerId = async () => {
+    try {
+      if (!userID) {
+        throw new Error("User ID not found");
+      }
+
+      const response = await fetch(
+        `https://vesttour.xyz/api/TailorPartner/get-by-user/${userID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success && data.data?.tailorPartnerId) {
+        setTailorPartnerId(data.data.tailorPartnerId);
+        return data.data.tailorPartnerId;
+      } else {
+        throw new Error("Failed to get tailor partner ID");
+      }
+    } catch (error) {
+      console.error("Error fetching tailor partner ID:", error);
+      setError("Error fetching tailor partner details");
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (userID) {
+      fetchTailorPartnerId().then(() => {
+        fetchOrders();
+      });
+    }
+  }, [userID]);
 
   const fetchStyleName = async (styleId) => {
     try {
       const response = await fetch(
-        `https://localhost:7194/api/Style/${styleId}`,
+        `https://vesttour.xyz/api/Style/${styleId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,9 +146,9 @@ const TailorDashboard = () => {
   const fetchOrderDetails = async (orderId) => {
     try {
       console.log(`Fetching order details for orderId: ${orderId}`);
-      // Step 1: Fetch order details to get productId
+      // Step 1: Fetch order details to get productId and quantity
       const orderResponse = await fetch(
-        `https://localhost:7194/api/Orders/${orderId}/details`,
+        `https://vesttour.xyz/api/Orders/${orderId}/details`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -116,65 +168,25 @@ const TailorDashboard = () => {
         return { error: `No order details found for order ${orderId}` };
       }
 
-      const { productId } = orderData.orderDetails[0];
-      if (!productId) {
-        console.log(`No productId found in order details for order ${orderId}`);
-        return { error: `No productId found for order ${orderId}` };
-      }
-
-      console.log(`Order details fetched. ProductId: ${productId}`);
-
-      // Step 2: Fetch product details to get measurementId
-      const productResponse = await fetch(
-        `https://localhost:7194/api/Product/details/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        }
+      // Find all SUIT products in the order details
+      const suitProducts = orderData.orderDetails.filter((detail) =>
+        detail.productCode.startsWith("SUIT")
       );
 
-      if (!productResponse.ok) {
-        throw new Error(`HTTP error! Status: ${productResponse.status}`);
+      if (suitProducts.length === 0) {
+        console.log(`No SUIT products found in order ${orderId}`);
+        return { error: `No SUIT products found in order ${orderId}` };
       }
 
-      const productData = await productResponse.json();
-      if (!productData || !productData.productID) {
-        console.log(`No product data found for productId ${productId}`);
-        return { error: `No product data found for productId ${productId}` };
-      }
+      // Fetch details for all SUIT products
+      const productsDetails = await Promise.all(
+        suitProducts.map(async (suitProduct) => {
+          const productId = suitProduct.productId;
+          console.log(`SUIT product found. ProductId: ${productId}`);
 
-      console.log(
-        `Product details fetched. MeasurementId: ${productData.measurementID}`
-      );
-
-      // Fetch style name for each style option
-      const styleOptionsWithNames = await Promise.all(
-        productData.styleOptions.map(async (option) => {
-          try {
-            const styleName = await fetchStyleName(option.styleId);
-            return { ...option, styleName };
-          } catch (error) {
-            console.error(
-              `Error fetching style name for styleId ${option.styleId}:`,
-              error
-            );
-            return { ...option, styleName: "N/A" };
-          }
-        })
-      );
-
-      // Step 3: Fetch measurement data
-      let measurementData = null;
-      let measurementError = null;
-      if (productData.measurementID) {
-        try {
-          console.log(
-            `Fetching measurement data for measurementId: ${productData.measurementID}`
-          );
-          const measurementResponse = await fetch(
-            `https://localhost:7194/api/Measurement/${productData.measurementID}`,
+          // Step 2: Fetch product details
+          const productResponse = await fetch(
+            `https://vesttour.xyz/api/Product/details/${productId}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -183,37 +195,72 @@ const TailorDashboard = () => {
             }
           );
 
-          if (measurementResponse.ok) {
-            measurementData = await measurementResponse.json();
-            console.log(
-              "Measurement data fetched successfully:",
-              measurementData
-            );
-          } else {
-            measurementError = `Error fetching measurement data: ${measurementResponse.status}`;
-            console.error(measurementError);
+          if (!productResponse.ok) {
+            throw new Error(`HTTP error! Status: ${productResponse.status}`);
           }
-        } catch (error) {
-          measurementError = `Error fetching measurement data: ${error.message}`;
-          console.error(measurementError);
-        }
-      } else {
-        measurementError = "No measurementId found in product data";
-        console.log(measurementError);
-      }
+
+          const productData = await productResponse.json();
+          if (!productData || !productData.productID) {
+            console.log(`No product data found for productId ${productId}`);
+            return null;
+          }
+
+          // Fetch style names for the product
+          const styleOptionsWithNames = await Promise.all(
+            productData.styleOptions.map(async (option) => {
+              const styleName = await fetchStyleName(option.styleId);
+              return { ...option, styleName };
+            })
+          );
+
+          // Fetch measurement data if available
+          let measurementData = null;
+          let measurementError = null;
+          if (productData.measurementID) {
+            try {
+              const measurementResponse = await fetch(
+                `https://vesttour.xyz/api/Measurement/${productData.measurementID}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (measurementResponse.ok) {
+                measurementData = await measurementResponse.json();
+              } else {
+                measurementError = `Error fetching measurement data: ${measurementResponse.status}`;
+              }
+            } catch (error) {
+              measurementError = `Error fetching measurement data: ${error.message}`;
+            }
+          }
+
+          return {
+            productId,
+            productCode: suitProduct.productCode,
+            quantity: suitProduct.quantity,
+            price: suitProduct.price,
+            fabricName: productData.fabricName,
+            liningName: productData.liningName,
+            styleOptions: styleOptionsWithNames,
+            measurement: measurementData,
+            measurementError: measurementError,
+          };
+        })
+      );
 
       return {
-        productId,
-        fabricName: productData.fabricName,
-        liningName: productData.liningName,
-        styleOptions: styleOptionsWithNames,
+        products: productsDetails.filter(Boolean),
         orderInfo: {
           status: orderData.status,
           guestName: orderData.guestName,
           orderDate: orderData.orderDate,
+          totalPrice: orderData.totalPrice,
+          deposit: orderData.deposit,
         },
-        measurement: measurementData,
-        measurementError: measurementError,
       };
     } catch (error) {
       console.error(
@@ -229,7 +276,7 @@ const TailorDashboard = () => {
   const fetchProcessingStatus = async (processingId) => {
     try {
       const response = await fetch(
-        `https://localhost:7194/api/ProcessingTailor/${processingId}`,
+        `https://vesttour.xyz/api/ProcessingTailor/${processingId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -256,9 +303,16 @@ const TailorDashboard = () => {
   const fetchOrders = async () => {
     try {
       setIsLoading(true);
+
+      const currentTailorPartnerId =
+        tailorPartnerId || (await fetchTailorPartnerId());
+      if (!currentTailorPartnerId) {
+        throw new Error("Could not determine tailor partner ID");
+      }
+
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "https://localhost:7194/api/ProcessingTailor",
+        `https://vesttour.xyz/api/ProcessingTailor/assigned-to/${currentTailorPartnerId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -275,14 +329,62 @@ const TailorDashboard = () => {
       const updatedOrders = await Promise.all(
         (data.data || []).map(async (order) => {
           const status = await fetchProcessingStatus(order.processingId);
+
+          // Check for overdue dates based on current stage
+          let isDue = false;
+          // Only check for due status if not in Delivery stage with Finish status
+          if (
+            status !== "Finish" &&
+            !(
+              order.stageName === STAGES.DELIVERY &&
+              order.stageStatus === "Finish"
+            )
+          ) {
+            switch (order.stageName) {
+              case STAGES.MAKE_SAMPLE:
+                isDue = isDateOverdue(order.dateSample);
+                break;
+              case STAGES.FIX:
+                isDue = isDateOverdue(order.dateFix);
+                break;
+              case STAGES.DELIVERY:
+                isDue = isDateOverdue(order.dateDelivery);
+                break;
+            }
+
+            // If order is overdue, update the status to "Due" in the backend
+            if (isDue && status !== "Due") {
+              try {
+                const dueUpdateResponse = await fetch(
+                  `https://vesttour.xyz/api/ProcessingTailor/process/status/${order.processingId}`,
+                  {
+                    method: "PATCH",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify("Due"),
+                  }
+                );
+
+                if (!dueUpdateResponse.ok) {
+                  console.error("Failed to update status to Due");
+                }
+              } catch (error) {
+                console.error("Error updating due status:", error);
+              }
+            }
+          }
+
           return {
             ...order,
             stageName: order.stageName || "Make Sample",
             stageStatus: order.stageStatus || "Doing",
-            status: status || order.status,
+            status: isDue ? "Due" : status || order.status,
           };
         })
       );
+
       setOrders(updatedOrders);
 
       // Fetch details for each order
@@ -322,220 +424,222 @@ const TailorDashboard = () => {
     try {
       const token = localStorage.getItem("token");
 
-      // If the order is in "Not Start" and in the "Make Sample" stage, update order status first
+      // Don't allow updates if status is Due
+      if (order.status === "Due") {
+        return;
+      }
+
+      const skipFixStage = !order.dateFix; // Check if dateFix is missing
+
+      // Initial "Not Start" to "Doing" transition
       if (
         order.status === "Not Start" &&
         order.stageName === STAGES.MAKE_SAMPLE
       ) {
-        // Update order status to "Doing"
-        const processingResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/process/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Doing"), // Send status "Doing"
-          }
+        // Optimistically update the local state
+        setOrders((prevOrders) =>
+          prevOrders.map((o) =>
+            o.processingId === order.processingId
+              ? { ...o, status: "Doing", stageStatus: "Doing" }
+              : o
+          )
         );
 
-        if (!processingResponse.ok) {
-          throw new Error(
-            `Failed to update processing status: ${processingResponse.status}`
-          );
-        }
-
-        // Update stage status to "Doing" for "Make Sample"
-        const stageStatusResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/sample/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Doing"), // Set stage status to "Doing"
-          }
-        );
-
-        if (!stageStatusResponse.ok) {
-          throw new Error(
-            `Failed to update stage status: ${stageStatusResponse.status}`
-          );
-        }
+        // Make API calls
+        await Promise.all([
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/process/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Doing"),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/sample/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Doing"),
+            }
+          ),
+        ]);
       }
-      // If the stage is "Make Sample" and order status is "Doing", move to "Fix"
+      // Make Sample to next stage transition
       else if (
         order.stageName === STAGES.MAKE_SAMPLE &&
         order.status === "Doing"
       ) {
-        // Update the stage status of "Make Sample" to "Finish"
-        const makeSampleFinishResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/sample/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Finish"), // Stage status "Finish"
-          }
+        const nextStage = skipFixStage ? STAGES.DELIVERY : STAGES.FIX;
+
+        // Optimistically update the local state
+        setOrders((prevOrders) =>
+          prevOrders.map((o) =>
+            o.processingId === order.processingId
+              ? {
+                  ...o,
+                  stageName: nextStage,
+                  stageStatus: "Doing",
+                  sampleStatus: "Finish",
+                }
+              : o
+          )
         );
 
-        if (!makeSampleFinishResponse.ok) {
-          throw new Error(
-            `Failed to update Make Sample stage status: ${makeSampleFinishResponse.status}`
-          );
-        }
-
-        // Change stage name to "Fix"
-        const stageUpdateResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/stagename/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(STAGES.FIX), // Update stage name to "Fix"
-          }
-        );
-
-        if (!stageUpdateResponse.ok) {
-          throw new Error(
-            `Failed to update stage name to Fix: ${stageUpdateResponse.status}`
-          );
-        }
-
-        // Set stage status for "Fix" to "Doing"
-        const fixStatusResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/fix/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Doing"), // Stage status "Doing"
-          }
-        );
-
-        if (!fixStatusResponse.ok) {
-          throw new Error(
-            `Failed to update Fix stage status: ${fixStatusResponse.status}`
-          );
-        }
+        // Make API calls
+        await Promise.all([
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/sample/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Finish"),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/stagename/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(nextStage),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/${skipFixStage ? "delivery" : "fix"}/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Doing"),
+            }
+          ),
+        ]);
       }
-      // If the stage is "Fix" and order status is "Doing", move to "Delivery"
+      // Fix to Delivery transition
       else if (order.stageName === STAGES.FIX && order.status === "Doing") {
-        // Update the stage status of "Fix" to "Finish"
-        const fixFinishResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/fix/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Finish"), // Stage status "Finish"
-          }
+        // Optimistically update the local state
+        setOrders((prevOrders) =>
+          prevOrders.map((o) =>
+            o.processingId === order.processingId
+              ? {
+                  ...o,
+                  stageName: STAGES.DELIVERY,
+                  fixStatus: "Finish",
+                  deliveryStatus: "Doing",
+                }
+              : o
+          )
         );
 
-        if (!fixFinishResponse.ok) {
-          throw new Error(
-            `Failed to update Fix stage status: ${fixFinishResponse.status}`
-          );
-        }
-
-        // Change stage name to "Delivery"
-        const stageUpdateResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/stagename/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(STAGES.DELIVERY), // Update stage name to "Delivery"
-          }
-        );
-
-        if (!stageUpdateResponse.ok) {
-          throw new Error(
-            `Failed to update stage name to Delivery: ${stageUpdateResponse.status}`
-          );
-        }
-
-        // Set stage status for "Delivery" to "Doing"
-        const deliveryStatusResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/delivery/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Doing"), // Stage status "Doing"
-          }
-        );
-
-        if (!deliveryStatusResponse.ok) {
-          throw new Error(
-            `Failed to update Delivery stage status: ${deliveryStatusResponse.status}`
-          );
-        }
+        // Make API calls
+        await Promise.all([
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/fix/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Finish"),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/stagename/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(STAGES.DELIVERY),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/delivery/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Doing"),
+            }
+          ),
+        ]);
       }
-      // Final Update when Delivery is finished, change Stage Status and Order Status to "Finish"
+      // Final Delivery completion
       else if (
         order.stageName === STAGES.DELIVERY &&
         order.status === "Doing"
       ) {
-        // Update the stage status of "Delivery" to "Finish"
-        const deliveryFinishResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/delivery/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Finish"), // Stage status "Finish"
-          }
+        // Optimistically update the local state
+        setOrders((prevOrders) =>
+          prevOrders.map((o) =>
+            o.processingId === order.processingId
+              ? {
+                  ...o,
+                  status: "Finish",
+                  deliveryStatus: "Finish",
+                }
+              : o
+          )
         );
 
-        if (!deliveryFinishResponse.ok) {
-          throw new Error(
-            `Failed to update Delivery stage status: ${deliveryFinishResponse.status}`
-          );
-        }
-
-        // Update order status to "Finish"
-        const orderFinishResponse = await fetch(
-          `https://localhost:7194/api/ProcessingTailor/process/status/${order.processingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify("Finish"), // Order status "Finish"
-          }
-        );
-
-        if (!orderFinishResponse.ok) {
-          throw new Error(
-            `Failed to update order status to Finish: ${orderFinishResponse.status}`
-          );
-        }
+        // Make API calls
+        await Promise.all([
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/delivery/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Finish"),
+            }
+          ),
+          fetch(
+            `https://vesttour.xyz/api/ProcessingTailor/process/status/${order.processingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify("Finish"),
+            }
+          ),
+        ]);
       }
 
-      // After making the necessary updates, fetch the updated orders list
-      await fetchOrders();
+      // After successful update, show success message
+      setSuccessMessage("Order status successfully updated!");
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setSuccessMessage("");
+      }, 2000);
+
       setError(null);
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error.message);
+      fetchOrders();
     }
   };
 
@@ -543,18 +647,99 @@ const TailorDashboard = () => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
   };
 
+  const getFilteredOrders = () => {
+    return orders
+      .sort((a, b) => {
+        // Sort by Order ID (highest/newest first)
+        return b.orderId - a.orderId;
+      })
+      .filter((order) => {
+        const statusMatch =
+          statusFilter === "all" || order.status === statusFilter;
+        const searchMatch = order.orderId.toString().includes(searchOrderId);
+        const stageMatch =
+          stageFilter === "all" || order.stageName === stageFilter;
+
+        return statusMatch && searchMatch && stageMatch;
+      });
+  };
+
+  const filteredOrders = getFilteredOrders();
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = filteredOrders.slice(
+    indexOfFirstOrder,
+    indexOfLastOrder
+  );
+  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userID");
+    // Any other auth items that need to be cleared...
+
+    // Redirect to login page
+    navigate("/signin");
+  };
+
   return (
     <div className="dashboard">
-      <aside className="sidebar">
-        <div className="logo">
-          <img src="/dappr-logo.png" alt="Dappr Logo" />
+      {showSuccessMessage && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            paddingTop: "20px",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#4caf50",
+              color: "white",
+              padding: "1rem 2rem",
+              borderRadius: "4px",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+              width: "auto",
+              minWidth: "300px",
+              fontSize: "1.1rem",
+              textAlign: "center",
+            }}
+          >
+            {successMessage}
+          </div>
         </div>
+      )}
+
+      <aside className="sidebar">
         <nav>
-          <button>
+          <button
+            onClick={() => navigate("/tailor")}
+            className={location.pathname === "/tailor" ? "active" : ""}
+          >
             <Home />
           </button>
           <button>
             <LayoutDashboard />
+          </button>
+          <button
+            onClick={() => navigate("/tailor/revenue")}
+            className={location.pathname === "/tailor/revenue" ? "active" : ""}
+          >
+            <DollarSign />
           </button>
           <button>
             <Users />
@@ -586,179 +771,372 @@ const TailorDashboard = () => {
           </div>
         </header>
 
-        {error && <div className="error">{error}</div>}
+        {location.pathname === "/tailor" ? (
+          <>
+            {error && <div className="error">{error}</div>}
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <div className="dashboard-content">
+                <div className="filters-section">
+                  <div className="filters-header">
+                    <h3>Processing Orders</h3>
+                    <div className="filters-summary">
+                      <span>{filteredOrders.length} orders found</span>
+                      {(statusFilter !== "all" ||
+                        stageFilter !== "all" ||
+                        searchOrderId) && (
+                        <button
+                          className="clear-filters"
+                          onClick={() => {
+                            setStatusFilter("all");
+                            setStageFilter("all");
+                            setSearchOrderId("");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          Clear Filters
+                        </button>
+                      )}
+                    </div>
+                  </div>
 
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="dashboard-content">
-            <h3>Processing Orders</h3>
-            <table className="orders-table">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Stage Name</th>
-                  <th>Order Status</th>
-                  <th>Note</th>
-                  <th>Date Sample</th>
-                  <th>Date Fix</th>
-                  <th>Date Delivery</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => {
-                  const details = orderDetails[order.orderId] || {};
-                  return (
-                    <React.Fragment key={order.processingId}>
-                      <tr>
-                        <td>{order.orderId}</td>
-                        <td>{order.stageName}</td>
-                        <td>
-                          <span
-                            className={`status-label ${order.status.toLowerCase().replace(" ", "-")}`}
-                          >
-                            {order.status}
-                          </span>
-                        </td>
-                        <td>{order.note}</td>
-                        <td>{order.dateSample}</td>
-                        <td>{order.dateFix}</td>
-                        <td>{order.dateDelivery}</td>
-                        <td>
-                          <button
-                            onClick={() => handleUpdate(order)}
-                            disabled={order.status === "Finish"}
-                          >
-                            Update Status
+                  <div className="filters-container">
+                    <div className="search-box">
+                      <Search className="search-icon" size={20} />
+                      <input
+                        type="text"
+                        placeholder="Search by Order ID..."
+                        value={searchOrderId}
+                        onChange={(e) => {
+                          setSearchOrderId(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                      />
+                      {searchOrderId && (
+                        <button
+                          className="clear-search"
+                          onClick={() => {
+                            setSearchOrderId("");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          <X size={16} />
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="filter-group">
+                      <div className="filter-label">
+                        <Filter size={18} />
+                        <span>Filters:</span>
+                      </div>
+
+                      <div className="select-wrapper">
+                        <select
+                          value={statusFilter}
+                          onChange={(e) => {
+                            setStatusFilter(e.target.value);
+                            setCurrentPage(1);
+                          }}
+                        >
+                          <option value="all">All Status</option>
+                          <option value="Not Start">Not Start</option>
+                          <option value="Doing">Doing</option>
+                          <option value="Finish">Finish</option>
+                          <option value="Due">Due</option>
+                        </select>
+                        <ChevronDown size={16} className="select-icon" />
+                      </div>
+
+                      <div className="select-wrapper">
+                        <select
+                          value={stageFilter}
+                          onChange={(e) => {
+                            setStageFilter(e.target.value);
+                            setCurrentPage(1);
+                          }}
+                        >
+                          <option value="all">All Stages</option>
+                          <option value="Make Sample">Make Sample</option>
+                          <option value="Fix">Fix</option>
+                          <option value="Delivery">Delivery</option>
+                        </select>
+                        <ChevronDown size={16} className="select-icon" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {(statusFilter !== "all" || stageFilter !== "all") && (
+                    <div className="active-filters">
+                      <span className="active-filters-label">
+                        Active Filters:
+                      </span>
+                      {statusFilter !== "all" && (
+                        <div className="filter-tag">
+                          Status: {statusFilter}
+                          <button onClick={() => setStatusFilter("all")}>
+                            <X size={14} />
                           </button>
-                          <button
-                            onClick={() => toggleOrderDetails(order.orderId)}
-                          >
-                            {expandedOrder === order.orderId ? (
-                              <ChevronUp />
-                            ) : (
-                              <ChevronDown />
-                            )}
+                        </div>
+                      )}
+                      {stageFilter !== "all" && (
+                        <div className="filter-tag">
+                          Stage: {stageFilter}
+                          <button onClick={() => setStageFilter("all")}>
+                            <X size={14} />
                           </button>
-                        </td>
-                      </tr>
-                      {expandedOrder === order.orderId && (
-                        <tr>
-                          <td colSpan="8">
-                            <div className="order-details bg-white shadow-lg rounded-lg p-6 mt-4">
-                              <div className="grid grid-cols-2 gap-8">
-                                <div className="order-info">
-                                  <h4 className="text-xl font-semibold mb-4 flex items-center">
-                                    <Package className="mr-2" /> Order Details
-                                  </h4>
-                                  <div className="bg-gray-100 p-4 rounded-md">
-                                    <p className="mb-2">
-                                      <span className="font-semibold">
-                                        Order ID:
-                                      </span>{" "}
-                                      {order.orderId}
-                                    </p>
-                                    <p className="mb-2">
-                                      <span className="font-semibold">
-                                        Guest Name:
-                                      </span>{" "}
-                                      {details.orderInfo?.guestName || "N/A"}
-                                    </p>
-                                    <p className="mb-2">
-                                      <span className="font-semibold">
-                                        Order Date:
-                                      </span>{" "}
-                                      {details.orderInfo?.orderDate || "N/A"}
-                                    </p>
-                                  </div>
-                                  <h5 className="text-lg font-semibold mt-4 mb-2 flex items-center">
-                                    <Scissors className="mr-2" /> Product
-                                    Details
-                                  </h5>
-                                  <div className="bg-gray-100 p-4 rounded-md">
-                                    <p className="mb-2">
-                                      <span className="font-semibold">
-                                        Fabric:
-                                      </span>{" "}
-                                      {details.fabricName || "N/A"}
-                                    </p>
-                                    <p className="mb-2">
-                                      <span className="font-semibold">
-                                        Lining:
-                                      </span>{" "}
-                                      {details.liningName || "N/A"}
-                                    </p>
-                                  </div>
-                                  <h6 className="text-md font-semibold mt-4 mb-2">
-                                    Style Options
-                                  </h6>
-                                  <div className="bg-gray-100 p-4 rounded-md">
-                                    {details.styleOptions &&
-                                      details.styleOptions.map(
-                                        (option, index) => (
-                                          <div key={index} className="mb-2">
-                                            <p>
-                                              <span className="font-semibold">
-                                                Style:
-                                              </span>{" "}
-                                              {option.styleName || "N/A"}
-                                            </p>
-                                            <p>
-                                              <span className="font-semibold">
-                                                Type:
-                                              </span>{" "}
-                                              {option.optionType || "N/A"}
-                                            </p>
-                                            <p>
-                                              <span className="font-semibold">
-                                                Value:
-                                              </span>{" "}
-                                              {option.optionValue || "N/A"}
-                                            </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <table className="orders-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Stage Name</th>
+                      <th>Stage Status</th>
+                      <th>Note</th>
+                      <th>Date Sample</th>
+                      <th>Date Fix</th>
+                      <th>Date Delivery</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentOrders.map((order) => {
+                      const details = orderDetails[order.orderId] || {};
+                      return (
+                        <React.Fragment key={order.processingId}>
+                          <tr>
+                            <td>{order.orderId}</td>
+                            <td>{order.stageName}</td>
+                            <td>
+                              <span
+                                className={`status-label ${order.status.toLowerCase().replace(" ", "-")}`}
+                              >
+                                {order.status}
+                              </span>
+                            </td>
+                            <td>{order.note}</td>
+                            <td>{order.dateSample}</td>
+                            <td>{order.dateFix}</td>
+                            <td>{order.dateDelivery}</td>
+                            <td>
+                              <button
+                                onClick={() => handleUpdate(order)}
+                                disabled={
+                                  order.status === "Due" ||
+                                  order.status === "Finish"
+                                }
+                                className={`${
+                                  order.status === "Due" ||
+                                  order.status === "Finish"
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : ""
+                                }`}
+                              >
+                                Update Status
+                              </button>
+                              <button
+                                onClick={() =>
+                                  toggleOrderDetails(order.orderId)
+                                }
+                              >
+                                {expandedOrder === order.orderId ? (
+                                  <ChevronUp />
+                                ) : (
+                                  <ChevronDown />
+                                )}
+                              </button>
+                            </td>
+                          </tr>
+                          {expandedOrder === order.orderId && (
+                            <tr>
+                              <td colSpan="8">
+                                <div className="order-details bg-white shadow-lg rounded-lg p-6 mt-4">
+                                  <div className="grid grid-cols-2 gap-8">
+                                    <div className="order-info">
+                                      <h4 className="text-xl font-semibold mb-4 flex items-center">
+                                        <Package className="mr-2" /> Order
+                                        Details
+                                      </h4>
+                                      <div className="bg-gray-100 p-4 rounded-md">
+                                        <p className="mb-2">
+                                          <span className="font-semibold">
+                                            Order ID:
+                                          </span>{" "}
+                                          {order.orderId}
+                                        </p>
+                                        <p className="mb-2">
+                                          <span className="font-semibold">
+                                            Guest Name:
+                                          </span>{" "}
+                                          {details.orderInfo?.guestName ||
+                                            "N/A"}
+                                        </p>
+                                        <p className="mb-2">
+                                          <span className="font-semibold">
+                                            Order Date:
+                                          </span>{" "}
+                                          {details.orderInfo?.orderDate ||
+                                            "N/A"}
+                                        </p>
+                                      </div>
+
+                                      {details.products?.map(
+                                        (product, productIndex) => (
+                                          <div
+                                            key={product.productId}
+                                            className="mt-4"
+                                          >
+                                            <h5 className="text-lg font-semibold mb-2 flex items-center">
+                                              <Scissors className="mr-2" />{" "}
+                                              Product {productIndex + 1} -{" "}
+                                              {product.productCode}
+                                            </h5>
+                                            <div className="bg-gray-100 p-4 rounded-md">
+                                              <p className="mb-2">
+                                                <span className="font-semibold">
+                                                  Quantity:
+                                                </span>{" "}
+                                                {product.quantity}
+                                              </p>
+                                              <p className="mb-2">
+                                                <span className="font-semibold">
+                                                  Price:
+                                                </span>{" "}
+                                                ${product.price}
+                                              </p>
+                                              <p className="mb-2">
+                                                <span className="font-semibold">
+                                                  Fabric:
+                                                </span>{" "}
+                                                {product.fabricName || "N/A"}
+                                              </p>
+                                              <p className="mb-2">
+                                                <span className="font-semibold">
+                                                  Lining:
+                                                </span>{" "}
+                                                {product.liningName || "N/A"}
+                                              </p>
+
+                                              <h6 className="text-md font-semibold mt-4 mb-2">
+                                                Style Options
+                                              </h6>
+                                              {product.styleOptions?.map(
+                                                (option, index) => (
+                                                  <div
+                                                    key={index}
+                                                    className="mb-2"
+                                                  >
+                                                    <p>
+                                                      <span className="font-semibold">
+                                                        Style:
+                                                      </span>{" "}
+                                                      {option.styleName ||
+                                                        "N/A"}
+                                                    </p>
+                                                    <p>
+                                                      <span className="font-semibold">
+                                                        Type:
+                                                      </span>{" "}
+                                                      {option.optionType ||
+                                                        "N/A"}
+                                                    </p>
+                                                    <p>
+                                                      <span className="font-semibold">
+                                                        Value:
+                                                      </span>{" "}
+                                                      {option.optionValue ||
+                                                        "N/A"}
+                                                    </p>
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+
+                                            <div className="measurements mt-4">
+                                              <h6 className="text-md font-semibold mb-2">
+                                                Measurements
+                                              </h6>
+                                              {product.measurementError ? (
+                                                <p className="text-red-500 bg-red-100 p-4 rounded-md">
+                                                  {product.measurementError}
+                                                </p>
+                                              ) : product.measurement ? (
+                                                <div className="grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded-md">
+                                                  {Object.entries(
+                                                    product.measurement
+                                                  ).map(([key, value]) => (
+                                                    <p
+                                                      key={key}
+                                                      className="capitalize"
+                                                    >
+                                                      <span className="font-semibold">
+                                                        {key}:
+                                                      </span>{" "}
+                                                      {value || "N/A"}
+                                                    </p>
+                                                  ))}
+                                                </div>
+                                              ) : (
+                                                <p className="bg-yellow-100 p-4 rounded-md text-yellow-700">
+                                                  No measurement data available.
+                                                </p>
+                                              )}
+                                            </div>
                                           </div>
                                         )
                                       )}
+                                    </div>
                                   </div>
                                 </div>
-                                <div className="measurements">
-                                  <h4 className="text-xl font-semibold mb-4 flex items-center">
-                                    <Ruler className="mr-2" /> Measurements
-                                  </h4>
-                                  {details.measurementError ? (
-                                    <p className="text-red-500 bg-red-100 p-4 rounded-md">
-                                      {details.measurementError}
-                                    </p>
-                                  ) : details.measurement ? (
-                                    <div className="grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded-md">
-                                      {Object.entries(details.measurement).map(
-                                        ([key, value]) => (
-                                          <p key={key} className="capitalize">
-                                            <span className="font-semibold">
-                                              {key}:
-                                            </span>{" "}
-                                            {value || "N/A"}
-                                          </p>
-                                        )
-                                      )}
-                                    </div>
-                                  ) : (
-                                    <p className="bg-yellow-100 p-4 rounded-md text-yellow-700">
-                                      No measurement data available.
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </tbody>
+                </table>
+
+                <div className="pagination">
+                  <button
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
+                    className="pagination-button"
+                  >
+                    Previous
+                  </button>
+
+                  <div className="pagination-numbers">
+                    {[...Array(totalPages)].map((_, index) => (
+                      <button
+                        key={index + 1}
+                        onClick={() => paginate(index + 1)}
+                        className={`pagination-number ${currentPage === index + 1 ? "active" : ""}`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                    className="pagination-button"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <Outlet />
         )}
       </main>
     </div>

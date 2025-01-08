@@ -1,0 +1,52 @@
+.voucher-available {
+  padding: 24px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a237e;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+  }
+
+  .error-alert {
+    margin-bottom: 16px;
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .search-icon {
+      padding: 10px;
+    }
+
+    .search-input {
+      margin-left: 8px;
+      flex: 1;
+    }
+  }
+
+  .table-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .voucher-row {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}

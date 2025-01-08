@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Address.scss";
 
-const Address = ({ initialAddress, onAddressChange }) => {
+const Address = ({ initialAddress, onAddressChange, resetAddress, setResetAddress }) => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedWard, setSelectedWard] = useState(null);
@@ -12,6 +12,7 @@ const Address = ({ initialAddress, onAddressChange }) => {
   const [userAddress, setUserAddress] = useState("");
   const [error, setError] = useState(null);
   const [manualAddress, setManualAddress] = useState(initialAddress || "");
+  const [isAddressValid, setIsAddressValid] = useState(false);
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -29,10 +30,25 @@ const Address = ({ initialAddress, onAddressChange }) => {
     loadInitialData();
   }, [initialAddress]);
 
+  useEffect(() => {
+    // Reset states when resetAddress prop changes
+    if (resetAddress) {
+      setSelectedProvince("");
+      setSelectedDistrict(null);
+      setSelectedWard(null);
+      setWards([]);
+      setDistricts([]);
+      setManualAddress(""); // Reset manual address if needed
+      console.log("Address fields reset");
+      // Đặt lại resetAddress về false
+      setResetAddress(false);
+    }
+  }, [resetAddress]);
+
   const fetchProvinces = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:7194/api/Shipping/provinces"
+        "https://vesttour.xyz/api/Shipping/provinces"
       );
       if (response.data) {
         setProvinces(response.data);
@@ -48,7 +64,7 @@ const Address = ({ initialAddress, onAddressChange }) => {
 
     try {
       const response = await axios.get(
-        `https://localhost:7194/api/Shipping/districts?provinceId=${provinceID}`
+        `https://vesttour.xyz/api/Shipping/districts?provinceId=${provinceID}`
       );
       if (response.data) {
         console.log("Districts API Response:", response.data);
@@ -65,7 +81,7 @@ const Address = ({ initialAddress, onAddressChange }) => {
 
     try {
       const response = await axios.get(
-        `https://localhost:7194/api/Shipping/wards?districtId=${districtId}`
+        `https://vesttour.xyz/api/Shipping/wards?districtId=${districtId}`
       );
       if (response.data) {
         console.log("Wards API Response:", response.data);
@@ -75,6 +91,15 @@ const Address = ({ initialAddress, onAddressChange }) => {
       console.error("Error fetching wards:", error);
       setError("Không thể tải danh sách phường/xã");
     }
+  };
+
+  const validateAddress = () => {
+    const isValid = manualAddress.trim() !== "" && 
+                    selectedProvince && 
+                    selectedDistrict && 
+                    selectedWard;
+    setIsAddressValid(isValid);
+    return isValid;
   };
 
   const handleProvinceChange = (e) => {
@@ -97,66 +122,64 @@ const Address = ({ initialAddress, onAddressChange }) => {
     } else {
       setDistricts([]);
     }
+    validateAddress();
   };
 
   const handleDistrictChange = (e) => {
     const districtId = e.target.value;
     if (!districtId) {
-      setSelectedDistrict(null);
-      setSelectedWard(null);
-      setWards([]);
-      return;
+        setSelectedDistrict(null);
+        setSelectedWard(null);
+        setWards([]);
+        return;
     }
 
     const district = districts.find(
-      (d) => d.districtID === parseInt(districtId)
+        (d) => d.districtID === parseInt(districtId)
     );
     console.log("District Selection:", {
-      districtId: districtId,
-      districtName: district?.districtName,
-      fullDistrictData: district,
+        districtId: districtId,
+        districtName: district?.districtName,
+        fullDistrictData: district,
     });
 
     if (district) {
-      setSelectedDistrict(district);
-      fetchWards(district.districtID);
+        setSelectedDistrict(district);
+        setSelectedWard(null);
+        fetchWards(district.districtID);
     }
+    validateAddress();
   };
 
   const handleWardChange = (e) => {
     const wardCode = e.target.value;
     if (!wardCode) {
-      setSelectedWard(null);
-      return;
+        setSelectedWard(null);
+        return;
     }
 
     const ward = wards.find((w) => w.wardCode === wardCode);
-    console.log("Ward Selection:", {
-      wardCode: wardCode,
-      wardName: ward?.wardName,
-      fullWardData: ward,
-    });
-
     if (ward && selectedDistrict) {
-      setSelectedWard(ward);
-      const fullAddress = `${ward.wardName}, ${selectedDistrict.districtName}`;
+        setSelectedWard(ward);
+        
+        const fullAddress = `${manualAddress}`;
 
-      const addressData = {
-        fullAddress,
-        wardCode: ward.wardCode,
-        districtId: selectedDistrict.districtID,
-      };
+        const addressData = {
+            fullAddress,
+            wardCode: ward.wardCode,
+            districtId: selectedDistrict.districtID,
+        };
 
-      console.log("Final Address Data:", addressData);
-
-      onAddressChange(addressData);
+        onAddressChange(addressData);
     }
+    validateAddress();
   };
 
   const handleManualAddressChange = (e) => {
     const newAddress = e.target.value;
     setManualAddress(newAddress);
     onAddressChange({ fullAddress: newAddress });
+    validateAddress();
   };
 
   if (error) {
@@ -177,6 +200,9 @@ const Address = ({ initialAddress, onAddressChange }) => {
           className="address-input"
           required
         />
+        {!isAddressValid && (
+          <span className="error-message">Please fill in all address fields.</span>
+        )}
       </div>
 
       <div className="select-group">

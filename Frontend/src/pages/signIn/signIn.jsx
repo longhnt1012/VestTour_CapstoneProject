@@ -1,11 +1,11 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Divider from "@mui/material/Divider";
-import FormLabel from "@mui/material/FormLabel";
+import { Box } from "@mui/material";
+import { Button } from "@mui/material";
+import { Checkbox } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
+import { Divider } from "@mui/material";
+import { FormLabel } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
@@ -104,7 +104,7 @@ export default function SignIn(props) {
 
     setIsLoading(true);
     try {
-      const response = await fetch("https://localhost:7194/api/Login/login", {
+      const response = await fetch("https://vesttour.xyz/api/Login/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -297,7 +297,7 @@ export default function SignIn(props) {
               </span>
             </Typography>
           </Box>
-          <Divider>or</Divider>
+          {/* <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
               type="button"
@@ -317,7 +317,7 @@ export default function SignIn(props) {
             >
               Sign in with Facebook
             </Button>
-          </Box>
+          </Box> */}
         </Card>
       </SignInContainer>
     </AppTheme>

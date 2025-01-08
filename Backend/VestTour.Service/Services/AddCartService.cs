@@ -14,6 +14,7 @@ using VestTour.Service.Implementation;
 using VestTour.Service.Interface;
 using VestTour.Service.Interfaces;
 using VestTour.Service.Services;
+using VestTour.ValidationHelpers;
 
 namespace VestTour.Services
 {
@@ -237,6 +238,9 @@ namespace VestTour.Services
                         }
                     }
                 }
+                decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
+                decimal newShippingFee = shippingFee;
+                decimal newPrice = totalPrice;
 
                 if (voucherId.HasValue)
                 {
@@ -246,10 +250,30 @@ namespace VestTour.Services
                         return new ServiceResponse<int> { Success = false, Message = "Invalid or expired voucher." };
                     }
 
+                    string voucherCode = voucherResponse.Data.VoucherCode;
+
+                    if (StringValidate.IsValidVoucherCode(voucherCode))
+                    {
+                        decimal discount = voucherResponse.Data.DiscountNumber.Value; // Convert discount number to percentage
+
+                        if (voucherCode.StartsWith("FREESHIP", StringComparison.OrdinalIgnoreCase))
+                        {
+                            newShippingFee = shippingFee * (1 - discount);
+                        }
+                        else if (voucherCode.StartsWith("BIGSALE", StringComparison.OrdinalIgnoreCase))
+                        {
+                            newPrice = totalPrice * (1 - discount);
+                        }
+                    }
+                    else
+                    {
+                        return new ServiceResponse<int> { Success = false, Message = "Voucher code is invalid." };
+                    }
                 }
 
-                // Calculate total price
-                decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity) + shippingFee;
+                // Calculate the new total price
+                decimal newTotalPrice = Math.Round(newPrice + newShippingFee, 2); // Round to 2 decimal places
+
                 var formattedNote = note ?? string.Empty;
                 if (!string.IsNullOrEmpty(surchargeNote))
                 {
@@ -268,10 +292,10 @@ namespace VestTour.Services
                     GuestPhone = guestPhone,
                     OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
-                    TotalPrice = Math.Round(totalPrice, 2),
-                    RevenueShare = totalPrice * 0.3m,
+                    TotalPrice = Math.Round(newTotalPrice, 2),
+                    RevenueShare = newTotalPrice * 0.3m,
                     Deposit = deposit,
-                    ShippingFee = shippingFee,
+                    ShippingFee = newShippingFee,
                     Paid = false,
                     Status = "Pending",
                     DeliveryMethod = deliveryMethod ?? "Pick up",

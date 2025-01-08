@@ -33,7 +33,7 @@ namespace VestTour.Repository.Repositories
         {
             var now = DateOnly.FromDateTime(DateTime.UtcNow);
             var voucher = await _context.Vouchers!
-                .Where(v => v.VoucherId == voucherId && v.DateStart <= now && v.DateEnd >= now)
+                .Where(v => v.VoucherId == voucherId)
                 .FirstOrDefaultAsync();
 
             return _mapper.Map<VoucherModel?>(voucher);

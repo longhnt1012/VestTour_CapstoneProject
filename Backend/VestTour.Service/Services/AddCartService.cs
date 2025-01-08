@@ -247,7 +247,7 @@ namespace VestTour.Services
                     var voucherResponse = await _voucherService.GetVoucherByIdAsync(voucherId.Value);
                     if (!voucherResponse.Success || voucherResponse.Data == null)
                     {
-                        return new ServiceResponse<int> { Success = false, Message = "Invalid or expired voucher." };
+                        return new ServiceResponse<int> { Success = false, Message = "Invalid voucher." };
                     }
 
                     string voucherCode = voucherResponse.Data.VoucherCode;

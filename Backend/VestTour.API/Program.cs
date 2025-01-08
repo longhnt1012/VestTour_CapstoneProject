@@ -87,7 +87,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
         builder
-            //.WithOrigins("https://tailorfortourist.vercel.app/")
+            //.WithOrigins("https://tailorfortourist.vercel.app")
             .WithOrigins("http://localhost:5173")// Replace with your frontend URL
             .AllowAnyMethod()
             .AllowAnyHeader()

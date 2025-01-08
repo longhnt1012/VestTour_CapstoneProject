@@ -357,7 +357,7 @@ namespace VestTour.Service.Implementation
                 throw new ArgumentException("At least one product (custom or non-custom) must be provided.");
             }
 
-            decimal totalPrice = 0;
+            
             var customProductIds = new List<int>(); // List to store custom product IDs
 
             decimal subFee = 0;
@@ -396,7 +396,7 @@ namespace VestTour.Service.Implementation
                     Price = totalCustomProductPrice
                 };
 
-                totalPrice += totalCustomProductPrice;
+               
 
                 var productId = await _productRepository.AddProductAsync(customProductEntity);
                 customProductIds.Add(productId);
@@ -416,11 +416,7 @@ namespace VestTour.Service.Implementation
                 }
             }
 
-            // Process non-custom products
-            foreach (var product in orderRequest.Products)
-            {
-                totalPrice += (product.Price ?? 0) * product.Quantity; // Multiply by quantity
-            }
+            
             var formattedNote = orderRequest.Note ?? string.Empty;
             if (!string.IsNullOrEmpty(surchargeNote))
             {
@@ -442,8 +438,8 @@ namespace VestTour.Service.Implementation
                 GuestEmail = orderRequest.GuestEmail,
                 GuestAddress = orderRequest.GuestAddress,
                 GuestPhone = orderRequest.GuestPhone,
-                TotalPrice = totalPrice,
-                RevenueShare = totalPrice * 0.3m,
+                TotalPrice = orderRequest.TotalPrice,
+                RevenueShare = orderRequest.TotalPrice * 0.3m,
                 Deposit = orderRequest.Deposit,
                 ShippingFee = orderRequest.ShippingFee,
                 DeliveryMethod = orderRequest.DeliveryMethod,
@@ -501,7 +497,7 @@ namespace VestTour.Service.Implementation
             emailContent.AppendLine("Thank you for your order!");
             emailContent.AppendLine($"Order ID: {orderId}");
             emailContent.AppendLine($"Order Date: {DateTime.Now}");
-            emailContent.AppendLine($"Total Price: {totalPrice:C}");
+            emailContent.AppendLine($"Total Price: {orderRequest.TotalPrice:C}");
             emailContent.AppendLine();
             emailContent.AppendLine("Order Details:");
             emailContent.AppendLine("--------------------------------------------------");

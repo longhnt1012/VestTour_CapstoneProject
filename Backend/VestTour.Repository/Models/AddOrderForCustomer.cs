@@ -13,6 +13,7 @@ public class AddOrderForCustomer
     public string? GuestAddress { get; set; }
     public string? GuestPhone { get; set; }
     public decimal? Deposit { get; set; }
+    public decimal? Price { get; set; }
     public decimal? ShippingFee { get; set; }
     public string? DeliveryMethod { get; set; }
     public List<BuyProductModel>? Products { get; set; } = new();

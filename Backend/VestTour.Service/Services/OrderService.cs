@@ -334,7 +334,7 @@ namespace VestTour.Service.Implementation
         }
         private async Task<decimal> CalculatePrice(CustomProductModel customProduct)
         {
-            decimal basePrice = 10;
+            decimal basePrice = 0;
             decimal customizationCost = 0;
 
             decimal? fabricPrice = await _fabricRepository.GetFabricPriceByIdAsync(customProduct.FabricID);

@@ -4,6 +4,8 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./MeasureList.scss"; // Import the new styles
+import { toast } from "react-toastify";
+import { TablePagination, Box, Button } from "@mui/material";
 
 const MeasureList = () => {
   const [users, setUsers] = useState([]);
@@ -15,20 +17,21 @@ const MeasureList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [editingMeasurement, setEditingMeasurement] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // Add search state
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const usersPerPage = 7; // Number of users per page
 
-  const API_URL = "https://localhost:7194/api/Measurement";
-  const USER_API_URL = "https://localhost:7194/api/User";
+  const API_URL = "https://vesttour.xyz/api/Measurement";
+  const USER_API_URL = "https://vesttour.xyz/api/User";
 
-  // Fetch all users
+  // Update the users fetch to filter roleId === 3
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`${USER_API_URL}`);
-        const userMap = response.data.reduce((acc, user) => {
-          acc[user.userId] = user;
-          return acc;
-        }, {});
-        setUsers(userMap);
+        const response = await axios.get(USER_API_URL);
+        // Filter users with roleId === 3
+        const filteredUsers = response.data.filter(user => user.roleId === 3);
+        setUsers(filteredUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -36,12 +39,16 @@ const MeasureList = () => {
     fetchUsers();
   }, []);
 
-  // Fetch all measurements
+  // Fetch measurements for each user
   useEffect(() => {
     const fetchMeasurements = async () => {
       try {
         const response = await axios.get(API_URL);
-        setMeasurements(response.data);
+        const measurementMap = response.data.reduce((acc, measurement) => {
+          acc[measurement.userId] = measurement;
+          return acc;
+        }, {});
+        setMeasurements(measurementMap);
       } catch (error) {
         console.error("Error fetching measurements:", error);
       }
@@ -55,6 +62,7 @@ const MeasureList = () => {
       const response = await axios.put(`${API_URL}/${measurementId}`, {
         ...values,
         userId: userId,
+        measurementId: measurementId,
       });
       setMeasurements(
         measurements.map((m) =>
@@ -103,10 +111,26 @@ const MeasureList = () => {
     pantsLength: Yup.number()
       .required("Pants length is required")
       .min(50, "Pants length should be at least 50cm"),
+    age: Yup.number()
+      .required("Age is required")
+      .min(0, "Age cannot be negative"),
+    chest: Yup.number()
+      .required("Chest size is required")
+      .min(30, "Chest size should be at least 30cm"),
+    shoulder: Yup.number()
+      .required("Shoulder size is required")
+      .min(20, "Shoulder size should be at least 20cm"),
+    sleeveLength: Yup.number()
+      .required("Sleeve length is required")
+      .min(20, "Sleeve length should be at least 20cm"),
+    jacketLength: Yup.number()
+      .required("Jacket length is required")
+      .min(50, "Jacket length should be at least 50cm"),
   });
 
   const formik = useFormik({
     initialValues: {
+      measurementId: editMeasurementId || 0,
       weight: "",
       height: "",
       neck: "",
@@ -118,24 +142,29 @@ const MeasureList = () => {
       crotch: "",
       thigh: "",
       pantsLength: "",
+      age: "",
+      chest: "",
+      shoulder: "",
+      sleeveLength: "",
+      jacketLength: ""
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
         if (selectedUser) {
-          if (editMeasurementId) {
-            updateMeasurementByUserId(
-              selectedUser.userId,
-              editMeasurementId,
-              values
-            );
-          } else {
-            const response = await axios.post(API_URL, {
-              ...values,
-              userId: selectedUser.userId,
-            });
-            setMeasurements([...measurements, response.data]);
-          }
+          const payload = {
+            ...values,
+            userId: selectedUser.userId,
+          };
+
+          console.log("Updating measurement with payload:", payload);
+
+          await updateMeasurementByUserId(
+            selectedUser.userId,
+            values.measurementId,
+            payload
+          );
+
           formik.resetForm();
         } else {
           console.error("No user selected");
@@ -147,51 +176,40 @@ const MeasureList = () => {
     enableReinitialize: true,
   });
 
-  const handleEdit = (measurement) => {
-    setEditingMeasurement(measurement);
-    setShowCreateModal(true);
-    createFormik.setValues({
-      weight: measurement.weight,
-      height: measurement.height,
-      neck: measurement.neck,
-      hip: measurement.hip,
-      waist: measurement.waist,
-      armhole: measurement.armhole,
-      biceps: measurement.biceps,
-      pantsWaist: measurement.pantsWaist,
-      crotch: measurement.crotch,
-      thigh: measurement.thigh,
-      pantsLength: measurement.pantsLength,
-      age: measurement.age,
-      chest: measurement.chest,
-      shoulder: measurement.shoulder,
-      sleeveLength: measurement.sleeveLength,
-      jacketLength: measurement.jacketLength
-    });
-    setSelectedUserId(measurement.userId);
-  };
-
-  const handleDelete = async (measurementId) => {
-    try {
-      if (window.confirm('Are you sure you want to delete this measurement?')) {
-        console.log('Deleting measurement:', measurementId);
-        
-        await axios.delete(`${API_URL}/${measurementId}`);
-        
-        setMeasurements(measurements.filter(m => m.measurementId !== measurementId));
-        
-        alert('Measurement deleted successfully!');
-      }
-    } catch (error) {
-      console.error('Error deleting measurement:', error);
-      console.log('Error response data:', error.response?.data);
-      alert('Failed to delete measurement. Please try again.');
+  const handleEdit = (userId) => {
+    const measurement = measurements[userId];
+    if (measurement) {
+      setEditingMeasurement(measurement);
+      setSelectedUserId(userId);
+      setShowCreateModal(true);
+      createFormik.setValues({
+        userId: measurement.userId,
+        weight: measurement.weight,
+        height: measurement.height,
+        neck: measurement.neck,
+        hip: measurement.hip,
+        waist: measurement.waist,
+        armhole: measurement.armhole,
+        biceps: measurement.biceps,
+        pantsWaist: measurement.pantsWaist,
+        crotch: measurement.crotch,
+        thigh: measurement.thigh,
+        pantsLength: measurement.pantsLength,
+        age: measurement.age,
+        chest: measurement.chest,
+        shoulder: measurement.shoulder,
+        sleeveLength: measurement.sleeveLength,
+        jacketLength: measurement.jacketLength
+      });
     }
   };
 
-  const handleViewDetail = (measurement) => {
-    setSelectedMeasurement(measurement);
-    setShowDetailModal(true);
+  const handleViewDetail = (userId) => {
+    const measurement = measurements[userId];
+    if (measurement) {
+      setSelectedMeasurement(measurement);
+      setShowDetailModal(true);
+    }
   };
 
   const closeDetailModal = () => {
@@ -199,9 +217,34 @@ const MeasureList = () => {
     setSelectedMeasurement(null);
   };
 
+  // Function to update the measurements state after create/edit/delete
+  const updateMeasurementsState = (measurementData, isEdit = false) => {
+    setMeasurements(prevMeasurements => {
+      const updatedMeasurements = { ...prevMeasurements };
+      if (isEdit) {
+        updatedMeasurements[measurementData.userId] = measurementData; // Update existing measurement
+      } else {
+        updatedMeasurements[measurementData.userId] = measurementData; // Add new measurement
+      }
+      return updatedMeasurements;
+    });
+  };
+
+  const fetchMeasurements = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      const measurementMap = response.data.reduce((acc, measurement) => {
+        acc[measurement.userId] = measurement;
+        return acc;
+      }, {});
+      setMeasurements(measurementMap);
+    } catch (error) {
+      console.error("Error fetching measurements:", error);
+    }
+  };
+
   const createFormik = useFormik({
     initialValues: {
-      measurementId: 0,
       userId: 0,
       weight: 0,
       height: 0,
@@ -220,32 +263,17 @@ const MeasureList = () => {
       sleeveLength: 0,
       jacketLength: 0
     },
-    validationSchema: Yup.object({
-      weight: Yup.number().required('This field is required'),
-      height: Yup.number().required('This field is required'),
-      neck: Yup.number().required('This field is required'),
-      hip: Yup.number().required('This field is required'),
-      waist: Yup.number().required('This field is required'),
-      armhole: Yup.number().required('This field is required'),
-      biceps: Yup.number().required('This field is required'),
-      pantsWaist: Yup.number().required('This field is required'),
-      crotch: Yup.number().required('This field is required'),
-      thigh: Yup.number().required('This field is required'),
-      pantsLength: Yup.number().required('This field is required'),
-      age: Yup.number().required('This field is required'),
-      chest: Yup.number().required('This field is required'),
-      shoulder: Yup.number().required('This field is required'),
-      sleeveLength: Yup.number().required('This field is required'),
-      jacketLength: Yup.number().required('This field is required')
-    }),
+    validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         if (!selectedUserId) {
           alert('Please enter user ID');
           return;
         }
-
+    
         const measurementData = {
+          // Thêm measurementId khi đang trong chế độ edit
+          ...(editingMeasurement && { measurementId: editingMeasurement.measurementId }),
           userId: Number(selectedUserId),
           weight: Number(values.weight) || 0,
           height: Number(values.height) || 0,
@@ -264,37 +292,82 @@ const MeasureList = () => {
           sleeveLength: Number(values.sleeveLength) || 0,
           jacketLength: Number(values.jacketLength) || 0
         };
-
+    
         let response;
-        
+    
         if (editingMeasurement) {
-          measurementData.measurementId = editingMeasurement.measurementId;
-          console.log('Updating measurement:', measurementData);
-          response = await axios.put(`${API_URL}/${editingMeasurement.measurementId}`, measurementData);
-          
-          setMeasurements(measurements.map(m => 
-            m.measurementId === editingMeasurement.measurementId ? response.data : m
-          ));
-          alert('Measurement updated successfully!');
+          // Update measurement
+          await axios.put(`${API_URL}/${editingMeasurement.measurementId}`, measurementData);
+          updateMeasurementsState(measurementData, true);
+          toast.success('Measurement updated successfully!');
         } else {
-          console.log('Creating new measurement:', measurementData);
+          // Create new measurement
           response = await axios.post(API_URL, measurementData);
-          setMeasurements([...measurements, response.data]);
-          alert('Measurement created successfully!');
+          updateMeasurementsState(response.data);
+          toast.success('Measurement created successfully!');
         }
 
+        await fetchMeasurements();
+    
+        // Reset form and states
         setShowCreateModal(false);
         resetForm();
         setSelectedUserId(null);
         setEditingMeasurement(null);
-
+    
       } catch (error) {
         console.error('Error saving measurement:', error);
-        console.log('Error response data:', error.response?.data);
-        alert('Failed to save measurement. Please try again.');
+        toast.error('An unexpected error occurred. Please try again.');
       }
     }
   });
+
+  // Add filtered users logic
+  const filteredUsers = users
+    .filter(user => user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => b.userId - a.userId); 
+
+  // Calculate the current users to display
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser); // Get users for the current page
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Cập nhật state measurements ngay sau khi thêm hoặc cập nhật
+  const handleAddOrUpdateMeasurement = async (measurementData) => {
+    try {
+      let response;
+      if (editingMeasurement) {
+        // Update measurement
+        response = await axios.put(`${API_URL}/${editingMeasurement.measurementId}`, measurementData);
+        setMeasurements(prevMeasurements => ({
+          ...prevMeasurements,
+          [measurementData.userId]: response.data
+        }));
+        toast.success('Measurement updated successfully!');
+      } else {
+        // Create new measurement
+        response = await axios.post(API_URL, measurementData);
+        setMeasurements(prevMeasurements => ({
+          ...prevMeasurements,
+          [measurementData.userId]: response.data
+        }));
+        toast.success('Measurement created successfully!');
+      }
+
+      // Reset form and states
+      setShowCreateModal(false);
+      createFormik.resetForm();
+      setEditingMeasurement(null);
+    } catch (error) {
+      console.error('Error saving measurement:', error);
+      toast.error('An unexpected error occurred. Please try again.');
+    }
+  };
 
   return (
     <div className="measure-list-container">
@@ -302,15 +375,14 @@ const MeasureList = () => {
         <h2>Customer Measurements</h2>
         <div className="actions">
           <div className="search-bar">
-            <input type="text" placeholder="Search customer..." />
-            <button className="primary-button">Search</button>
+            <input 
+              type="text" 
+              placeholder="Search by email..." 
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
           </div>
-          <button 
-            className="primary-button create-button"
-            onClick={() => setShowCreateModal(true)}
-          >
-            Create New Measurement
-          </button>
+          
         </div>
       </div>
 
@@ -318,6 +390,7 @@ const MeasureList = () => {
         <table className="customers-table">
           <thead>
             <tr>
+              <th>User ID</th>
               <th>Customer Name</th>
               <th>Email</th>
               <th>Phone</th>
@@ -326,33 +399,43 @@ const MeasureList = () => {
             </tr>
           </thead>
           <tbody>
-            {measurements.map((measurement) => {
-              const user = users[measurement.userId];
+            {currentUsers.map((user) => {  // Changed from filteredUsers to currentUsers
+              const measurement = measurements[user.userId];
               return (
-                <tr key={measurement.measurementId}>
-                  <td>{user?.name}</td>
-                  <td>{user?.email}</td>
-                  <td>{user?.phone}</td>
-                  <td>{user?.gender}</td>
+                <tr key={user.userId}>
+                  <td>{user.userId}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                  <td>{user.gender}</td>
                   <td className="actions">
-                    <button 
-                      className="btn-view"
-                      onClick={() => handleViewDetail(measurement)}
-                    >
-                      View Details
-                    </button>
-                    <button 
-                      className="btn-edit"
-                      onClick={() => handleEdit(measurement)}
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      className="btn-delete"
-                      onClick={() => handleDelete(measurement.measurementId)}
-                    >
-                      Delete
-                    </button>
+                    {measurement && (
+                      <>
+                        <button 
+                          className="btn-view"
+                          onClick={() => handleViewDetail(user.userId)}
+                        >
+                          View Details
+                        </button>
+                        <button 
+                          className="btn-edit"
+                          onClick={() => handleEdit(user.userId)}
+                        >
+                          Edit
+                        </button>
+                      </>
+                    )}
+                    {!measurement && (
+                      <button 
+                        className="btn-add"
+                        onClick={() => {
+                          setSelectedUserId(user.userId);
+                          setShowCreateModal(true);
+                        }}
+                      >
+                        Add Measurement
+                      </button>
+                    )}
                   </td>
                 </tr>
               );
@@ -360,6 +443,20 @@ const MeasureList = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        {Array.from({ length: Math.ceil(filteredUsers.length / usersPerPage) }, (_, index) => (
+          <Button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            variant={currentPage === index + 1 ? 'contained' : 'outlined'}
+            sx={{ mx: 0.5 }}
+          >
+            {index + 1}
+          </Button>
+        ))}
+      </Box>
 
       {/* Measurement Detail Modal */}
       {showDetailModal && selectedMeasurement && (
@@ -372,8 +469,16 @@ const MeasureList = () => {
             
             <div className="modal-body">
               <div className="customer-header">
-                <h4>{users[selectedMeasurement.userId]?.name}</h4>
-                <p>{users[selectedMeasurement.userId]?.email} • {users[selectedMeasurement.userId]?.phone}</p>
+                {console.log("Users Data:", users)}
+                {(() => {
+                  const user = users.find(user => user.userId === selectedMeasurement.userId);
+                  return (
+                    <>
+                      <h4>{user ? user.name : "Tên không có sẵn"}</h4>
+                      <p>{user ? user.email : ""} • {user ? user.phone : ""}</p>
+                    </>
+                  );
+                })()}
               </div>
 
               <div className="measurements-detail">
@@ -465,6 +570,17 @@ const MeasureList = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>{editMeasurementId ? "Edit Measurement" : "Add Measurement"}</h3>
+            <div className="customer-header">
+              {(() => {
+                const user = users.find(user => user.userId === selectedUser.userId);
+                return (
+                  <>
+                    <h4>{user ? user.name : "Tên không có sẵn"}</h4>
+                    <p>{user ? user.email : ""} • {user ? user.phone : ""}</p>
+                  </>
+                );
+              })()}
+            </div>
             <form onSubmit={formik.handleSubmit} className="measurement-form">
               <div className="form-grid">
                 <div className="form-group">
@@ -514,23 +630,17 @@ const MeasureList = () => {
             
             <div className="modal-body">
               <div className="customer-header">
-                <div className="detail-item">
-                  <span>User ID</span>
-                  <input
-                    type="number"
-                    value={selectedUserId || ''}
-                    onChange={(e) => setSelectedUserId(Number(e.target.value))}
-                    placeholder="Enter user ID"
-                    className={
-                      createFormik.touched.userId && !selectedUserId 
-                        ? "error-input" 
-                        : ""
-                    }
-                  />
-                  {createFormik.touched.userId && !selectedUserId && (
-                    <div className="error-message">This field is required</div>
-                  )}
-                </div>
+                {(() => {
+                  console.log("Selected User ID:", selectedUserId);
+                  const user = users.find(user => user.userId === selectedUserId);
+                  console.log("Found User:", user);
+                  return (
+                    <>
+                      <h4>{user ? user.name : "Tên không có sẵn"}</h4>
+                      <p>{user ? user.email : ""} • {user ? user.phone : ""}</p>
+                    </>
+                  );
+                })()}
               </div>
 
               <form onSubmit={createFormik.handleSubmit}>

@@ -19,6 +19,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet("{bookingId}")]
+    [Authorize]
     public async Task<IActionResult> GetBookingById(int bookingId)
     {
         var response = await _bookingService.GetBookingByIdAsync(bookingId);
@@ -29,6 +30,7 @@ public class BookingController : ControllerBase
         return Ok(new { Message = Success.BookingRetrieved, Data = response.Data });
     }
     [HttpGet("user-booking")]
+    [Authorize]
     public async Task<IActionResult> GetUserBooking([FromQuery] int? userId, [FromQuery] string? guestName, [FromQuery] string? email, [FromQuery] DateOnly? startDate, [FromQuery] DateOnly? endDate)
     {
         // Call the service method that handles the logic for filtering bookings
@@ -42,6 +44,7 @@ public class BookingController : ControllerBase
         return Ok(result.Data);
     }
     [HttpGet("last-booking")]
+    [Authorize]
     public async Task<IActionResult> GetLastBooking([FromQuery] int? userId, [FromQuery] string? guestName, [FromQuery] string? email)
     {
         // Call the service method to get the last booking
@@ -56,7 +59,7 @@ public class BookingController : ControllerBase
         return Ok(lastBooking); // Return 200 with the last booking details
     }
     [HttpGet]
-    //[Authorize(Roles = "admin,store manager,staff")]
+    [Authorize(Roles = "admin,store manager,staff")]
     public async Task<IActionResult> GetAllBookings()
     {
         var response = await _bookingService.GetAllBookingsAsync();
@@ -78,7 +81,7 @@ public class BookingController : ControllerBase
         return CreatedAtAction(nameof(GetBookingById), new { bookingId = response.Data }, new { Message = response.Message, BookingId = response.Data });
     }
     [HttpPost("loggedin-user-booking")]
-    //[Authorize(Roles = "customer")]
+    [Authorize(Roles = "customer")]
     public async Task<IActionResult> CreateBookingForLoggedInUser(BookingModel model)
     {
         // Get the UserId from JWT claims
@@ -109,7 +112,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "admin,store manager,staff")]
+    [Authorize(Roles = "admin,store manager,staff")]
     public async Task<IActionResult> UpdateBooking(int id, [FromBody] BookingModel booking)
     {
         var response = await _bookingService.UpdateBookingAsync(id, booking);
@@ -121,7 +124,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpDelete("{bookingId}")]
-    //[Authorize(Roles = "admin,store manager,staff")]
+    [Authorize(Roles = "admin,store manager,staff")]
     public async Task<IActionResult> DeleteBooking(int bookingId)
     {
         var response = await _bookingService.DeleteBookingAsync(bookingId);
@@ -132,7 +135,7 @@ public class BookingController : ControllerBase
         return Ok(new { Message = response.Message });
     }
     [HttpPut("status/{bookingId}")]
-    //[Authorize(Roles = "admin,store manager,staff")]
+    [Authorize(Roles = "admin,store manager,staff")]
     public async Task<IActionResult> UpdateBookingStatus(int bookingId, [FromBody] string status)
     {
         var response = await _bookingService.UpdateBookingStatusAsync(bookingId, status);
@@ -145,13 +148,14 @@ public class BookingController : ControllerBase
 
 
     [HttpGet("count")]
-   // [Authorize(Roles = "admin,store manager,staff")]
+   [Authorize(Roles = "admin,store manager,staff")]
     public async Task<IActionResult> GetTotalBookingCount()
     {
         var response = await _bookingService.GetTotalBookingCountAsync();
         return Ok(new { TotalBookings = response.Data });
     }
     [HttpGet("booking/{storeId}")]
+    [Authorize]
     public async Task<IActionResult> GetBookingsByStoreId(int storeId)
     {
         var result = await _bookingService.GetBookingsByStoreIdAsync(storeId);
@@ -164,6 +168,7 @@ public class BookingController : ControllerBase
         return Ok(result.Data);
     }
     [HttpPut("{bookingId}/assist")]
+    [Authorize(Roles ="staff")]
     public async Task<IActionResult> StaffAssistWithBooking(int bookingId, [FromQuery] int staffId )
     {
         

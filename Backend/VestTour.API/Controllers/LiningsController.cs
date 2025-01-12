@@ -49,6 +49,7 @@ namespace VestTour.Controllers
 
         // Add new lining
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse<LiningModel>>> AddLiningAsync([FromBody] LiningModel model)
         {
             var response = await _liningService.AddLiningAsync(model);
@@ -61,6 +62,7 @@ namespace VestTour.Controllers
 
         // Update existing lining
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse>> UpdateLiningAsync(int id, [FromBody] LiningModel model)
         {
             var response = await _liningService.UpdateLiningAsync(id, model);
@@ -73,6 +75,7 @@ namespace VestTour.Controllers
 
         // Delete a lining
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse>> DeleteLiningAsync(int id)
         {
             var response = await _liningService.DeleteLiningAsync(id);
@@ -85,6 +88,7 @@ namespace VestTour.Controllers
 
         // Update status of a lining
         [HttpPatch("{id}/status")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
         {
             var response = await _liningService.UpdateStatusAsync(id, newStatus);

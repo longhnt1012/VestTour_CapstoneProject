@@ -40,6 +40,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpGet("mycart")]
+        //[Authorize(Roles = "Customer")]
         public async Task<ActionResult<CartModel>> ViewUserCart()
         {
             var userId = GetUserId();
@@ -86,6 +87,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> ConfirmOrder(
     string? guestName,
     string? guestEmail,

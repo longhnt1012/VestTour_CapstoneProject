@@ -23,7 +23,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "admin,store manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetAllOrder()
         {
             try
@@ -38,6 +38,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetOrderByID(int id)
         {
             try
@@ -55,6 +56,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPost("staffcreateorder")]
+        [Authorize(Roles = "staff")]
         public async Task<IActionResult> StaffCreateOrder([FromBody] AddOrderForCustomer orderRequest)
         {
             if (orderRequest == null)
@@ -91,6 +93,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNewOrder(OrderModel order)
         {
             try
@@ -106,7 +109,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "admin,store manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> UpdateOrder(int id, OrderModel order)
         {
             try
@@ -150,6 +153,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpGet("{orderId}/details")]
+        [Authorize]
         public async Task<IActionResult> GetOrderDetail(int orderId)
         {
             try
@@ -184,7 +188,7 @@ namespace VestTour.Controllers
         
 
         [HttpGet("store/{storeId}")]
-        //[Authorize(Roles = "admin,store manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetOrdersByStoreId(int storeId)
         {
             try
@@ -198,7 +202,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPatch("updatestatus/{id}")]
-       // [Authorize(Roles = "admin,store manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> ChangeStatusName(int id, [FromBody] string newStatus)
         {
 
@@ -211,7 +215,7 @@ namespace VestTour.Controllers
             return Ok(response);
         }
         [HttpPatch("update-ship-status/{id}")]
-        // [Authorize(Roles = "admin,store manager,staff")]
+        [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> ChangeShipStatus(int id, [FromBody] string newStatus)
         {
 
@@ -225,6 +229,7 @@ namespace VestTour.Controllers
         }
       
         [HttpPut("SetPaidTrue/{orderId}")]
+        [Authorize]
         public async Task<IActionResult> SetPaidTrue(int orderId)
         {
             var response = await _orderService.SetPaidTrue(orderId);

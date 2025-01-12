@@ -23,6 +23,8 @@ import {
   PercentIcon,
 } from "lucide-react";
 import "./ProfitCalculation.scss";
+import html2pdf from "html2pdf.js";
+import { calculateStoreRevenue } from "../../utils/revenueCalculator";
 
 ChartJS.register(
   CategoryScale,
@@ -42,6 +44,8 @@ const ProfitCalculation = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("all");
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     fetchData();
@@ -50,28 +54,58 @@ const ProfitCalculation = () => {
   const fetchData = async () => {
     setLoading(true);
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userID");
 
     try {
-      const [ordersResponse, bookingsResponse] = await Promise.all([
-        fetch("https://localhost:7194/api/Orders", {
+      const [bookingsResponse, storeResponse] = await Promise.all([
+        fetch("https://vesttour.xyz/api/Booking", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("https://localhost:7194/api/Booking", {
+        fetch(`https://vesttour.xyz/api/Store/userId/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
-      if (!ordersResponse.ok || !bookingsResponse.ok) {
+      if (!bookingsResponse.ok || !storeResponse.ok) {
         throw new Error("Failed to fetch data");
       }
 
-      const ordersData = await ordersResponse.json();
       const bookingsData = await bookingsResponse.json();
+      const storeData = await storeResponse.json();
+      const storeId = storeData.storeId;
 
       console.log("Fetched bookings data:", bookingsData);
+      console.log("Fetched store data:", storeData);
 
-      setOrders(Array.isArray(ordersData) ? ordersData : []);
-      setBookings(Array.isArray(bookingsData) ? bookingsData : []);
+      const ordersResponse = await fetch(
+        `https://vesttour.xyz/api/Orders/store/${storeId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!ordersResponse.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
+      const ordersData = await ordersResponse.json();
+
+      // Fetch details for each order
+      const ordersWithDetails = await Promise.all(
+        ordersData.map(async (order) => {
+          const revenueData = await calculateStoreRevenue(order.orderId);
+
+          return {
+            ...order,
+            calculatedRevenue: revenueData.storeRevenue,
+            revenueShare: revenueData.suitTotal * 0.3,
+            suitTotal: revenueData.suitTotal,
+          };
+        })
+      );
+
+      setOrders(ordersWithDetails);
+      setBookings(Array.isArray(bookingsData.data) ? bookingsData.data : []);
     } catch (err) {
       console.error("Error fetching data:", err);
       setError("Failed to load data");
@@ -99,39 +133,50 @@ const ProfitCalculation = () => {
     const monthlyProfit = new Array(12).fill(0);
     const monthlyBookings = new Array(12).fill(0);
 
-    // Process orders
+    const filterByMonthAndYear = (date) => {
+      const orderDate = new Date(date);
+      const orderYear = orderDate.getFullYear();
+
+      if (selectedMonth === "all") {
+        return orderYear === selectedYear;
+      }
+      return (
+        orderYear === selectedYear &&
+        orderDate.getMonth() === parseInt(selectedMonth)
+      );
+    };
+
+    // Process orders with year filter
     orders.forEach((order) => {
-      const date = new Date(order.orderDate);
-      const month = date.getMonth();
-      monthlyRevenue[month] += order.totalPrice || 0;
-      monthlyProfit[month] += (order.totalPrice || 0) * 0.4;
+      if (
+        order.shipStatus === "Finished" &&
+        filterByMonthAndYear(order.orderDate)
+      ) {
+        const date = new Date(order.orderDate);
+        const month = date.getMonth();
+        monthlyRevenue[month] += order.calculatedRevenue || 0;
+        monthlyProfit[month] += order.revenueShare || 0;
+      }
     });
 
-    console.log("Processing bookings:", bookings);
-
-    // Process bookings with explicit logging
+    // Process bookings for current year only
     if (bookings && bookings.length > 0) {
       bookings.forEach((booking) => {
-        try {
-          // Extract month from booking date (format: "YYYY-MM-DD")
-          const month = parseInt(booking.bookingDate.split("-")[1]) - 1; // Convert to 0-based month
-          console.log(
-            `Processing booking for month: ${month + 1}, date: ${booking.bookingDate}`
-          );
+        const bookingYear = booking.bookingDate.split("-")[0];
+        if (
+          parseInt(bookingYear) === selectedYear &&
+          filterByMonthAndYear(booking.bookingDate)
+        ) {
+          const month = parseInt(booking.bookingDate.split("-")[1]) - 1;
           monthlyBookings[month] = (monthlyBookings[month] || 0) + 1;
-        } catch (error) {
-          console.error(`Error processing booking:`, booking, error);
         }
       });
     }
 
-    console.log("Monthly bookings data:", monthlyBookings);
-
-    // Calculate total bookings for current year
-    const currentYear = new Date().getFullYear();
+    // Calculate total bookings for current year only
     const totalBookings = bookings.filter((booking) => {
       const bookingYear = booking.bookingDate.split("-")[0];
-      return parseInt(bookingYear) === currentYear;
+      return parseInt(bookingYear) === selectedYear;
     }).length;
 
     return {
@@ -145,12 +190,25 @@ const ProfitCalculation = () => {
 
   const monthlyData = processMonthlyData();
 
-  // Calculate totals
-  const totalRevenue = orders.reduce(
-    (sum, order) => sum + (order.totalPrice || 0),
-    0
-  );
-  const totalProfit = totalRevenue * 0.4; // Assuming 40% profit margin
+  // Calculate totals for selected year
+  const calculateTotals = () => {
+    return orders
+      .filter((order) => {
+        const orderYear = new Date(order.orderDate).getFullYear();
+        return order.shipStatus === "Finished" && orderYear === selectedYear;
+      })
+      .reduce(
+        (totals, order) => ({
+          revenue: totals.revenue + (order.calculatedRevenue || 0),
+          profit: totals.profit + (order.revenueShare || 0),
+        }),
+        { revenue: 0, profit: 0 }
+      );
+  };
+
+  const totals = calculateTotals();
+  const totalRevenue = totals.revenue;
+  const totalProfit = totals.profit;
   const profitMargin =
     totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
@@ -163,7 +221,7 @@ const ProfitCalculation = () => {
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
-        label: "Profit",
+        label: "Revenue Share",
         data: monthlyData.profit,
         backgroundColor: "rgba(75, 192, 192, 0.5)",
       },
@@ -174,7 +232,7 @@ const ProfitCalculation = () => {
     labels: monthlyData.labels,
     datasets: [
       {
-        label: "Profit Trend",
+        label: "Revenue Share Trend",
         data: monthlyData.profit,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1,
@@ -224,6 +282,7 @@ const ProfitCalculation = () => {
     scales: {
       y: {
         beginAtZero: true,
+        suggestedMax: 10,
         ticks: {
           stepSize: 1,
           precision: 0,
@@ -243,9 +302,8 @@ const ProfitCalculation = () => {
       case "profit":
         return <Line data={profitTrendData} options={chartOptions} />;
       case "bookings":
-        console.log("Rendering booking chart with data:", bookingData);
         return (
-          <div style={{ height: "400px" }}>
+          <div className="chart-wrapper">
             <Bar
               key={JSON.stringify(bookingData)}
               data={bookingData}
@@ -258,34 +316,105 @@ const ProfitCalculation = () => {
     }
   };
 
+  // Remove hardcoded changes/values from StatCards
+  const statCardsData = {
+    topRow: [
+      {
+        title: "Total Revenue",
+        value: `$${totalRevenue.toFixed(2)}`,
+        subtext: `for ${selectedYear}`,
+        icon: <DollarSignIcon />,
+        className: "revenue",
+      },
+      {
+        title: "Average Monthly Revenue",
+        value: `$${(totalRevenue / 12).toFixed(2)}`,
+        subtext: "per month",
+        icon: <DollarSignIcon />,
+        className: "revenue",
+      },
+      {
+        title: "Peak Revenue Month",
+        value:
+          monthlyData.labels[
+            monthlyData.revenue.indexOf(Math.max(...monthlyData.revenue))
+          ],
+        subtext: `$${Math.max(...monthlyData.revenue).toFixed(2)}`,
+        icon: <TrendingUpIcon />,
+        className: "revenue",
+      },
+    ],
+    middleRow: [
+      {
+        title: "Revenue Share",
+        value: `$${totalProfit.toFixed(2)}`,
+        subtext: `for ${selectedYear}`,
+        icon: <DollarSignIcon />,
+        className: "profit",
+      },
+      {
+        title: "Average Monthly Revenue Share",
+        value: `$${(totalProfit / 12).toFixed(2)}`,
+        subtext: "per month",
+        icon: <DollarSignIcon />,
+        className: "profit",
+      },
+      {
+        title: "Peak Revenue Share Month",
+        value:
+          monthlyData.labels[
+            monthlyData.profit.indexOf(Math.max(...monthlyData.profit))
+          ],
+        subtext: `$${Math.max(...monthlyData.profit).toFixed(2)}`,
+        icon: <TrendingUpIcon />,
+        className: "profit",
+      },
+    ],
+  };
+
+  const generatePDF = () => {
+    const element = document.getElementById("profit-calculation-content");
+    const opt = {
+      margin: 1,
+      filename: "venue-statistics.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <div className="profit-calculation">
-      <h1>Venue and Profit Statistics</h1>
+      <div className="title">Revenue and Profit Statistics</div>
 
-      <div className="stat-cards">
-        <StatCard
-          title="Total Revenue"
-          value={`$${totalRevenue.toFixed(2)}`}
-          change="+15%"
-          icon={<DollarSignIcon />}
-          positive
-          className="revenue"
-        />
-        <StatCard
-          title="Total Profit"
-          value={`$${totalProfit.toFixed(2)}`}
-          change="+8%"
-          icon={<TrendingUpIcon />}
-          positive
-          className="profit"
-        />
-        <StatCard
-          title="Profit Margin"
-          value={`${profitMargin.toFixed(1)}%`}
-          change="-2%"
-          icon={<PercentIcon />}
-          className="margin"
-        />
+      <div className="controls">
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+          className="year-filter"
+        >
+          <option value={2024}>2024</option>
+          <option value={2025}>2025</option>
+        </select>
+
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          className="month-filter"
+        >
+          <option value="all">All Months</option>
+          {monthlyData.labels.map((month, index) => (
+            <option key={month} value={index}>
+              {month}
+            </option>
+          ))}
+        </select>
+
+        <button onClick={generatePDF} className="print-button">
+          Download PDF
+        </button>
       </div>
 
       <div className="chart-navigation">
@@ -293,13 +422,13 @@ const ProfitCalculation = () => {
           active={activeTab === "revenue"}
           onClick={() => setActiveTab("revenue")}
         >
-          Revenue & Profit
+          Revenue & Revenue Share
         </TabButton>
         <TabButton
           active={activeTab === "profit"}
           onClick={() => setActiveTab("profit")}
         >
-          Profit Trend
+          Revenue Share Trend
         </TabButton>
         <TabButton
           active={activeTab === "bookings"}
@@ -309,63 +438,31 @@ const ProfitCalculation = () => {
         </TabButton>
       </div>
 
-      <div className="chart-container">
-        <h2>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Chart</h2>
-        {loading ? (
-          <p>Loading data...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : (
-          <div className="chart-wrapper">{renderActiveChart()}</div>
-        )}
-      </div>
+      <div id="profit-calculation-content">
+        <div className="stat-cards">
+          {statCardsData.topRow.map((card, index) => (
+            <StatCard key={index} {...card} />
+          ))}
+        </div>
 
-      <div className="stat-cards">
-        <StatCard
-          title="Average Event Size"
-          value="150"
-          subtext="guests per event"
-          icon={<UsersIcon />}
-        />
-        <StatCard
-          title="Booking Rate"
-          value="85%"
-          change="+5%"
-          icon={<CalendarIcon />}
-          positive
-        />
-        <StatCard
-          title="Repeat Customers"
-          value="32%"
-          subtext="of total bookings"
-          icon={<RepeatIcon />}
-        />
-      </div>
+        <div className="chart-container">
+          <h2>
+            {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Chart
+          </h2>
+          {loading ? (
+            <p>Loading data...</p>
+          ) : error ? (
+            <p>Error: {error}</p>
+          ) : (
+            <div className="chart-wrapper">{renderActiveChart()}</div>
+          )}
+        </div>
 
-      <div className="stat-cards">
-        <StatCard
-          title="Total Bookings"
-          value={monthlyData.totalBookings.toString()}
-          subtext={`for ${new Date().getFullYear()}`}
-          icon={<CalendarIcon />}
-        />
-        <StatCard
-          title="Average Monthly Bookings"
-          value={(monthlyData.totalBookings / 12).toFixed(1)}
-          subtext="per month"
-          icon={<CalendarIcon />}
-          positive
-        />
-        <StatCard
-          title="Peak Booking Month"
-          value={
-            monthlyData.labels[
-              monthlyData.bookings.indexOf(Math.max(...monthlyData.bookings))
-            ]
-          }
-          subtext={`${Math.max(...monthlyData.bookings)} bookings`}
-          icon={<TrendingUpIcon />}
-        />
+        <div className="stat-cards">
+          {statCardsData.middleRow.map((card, index) => (
+            <StatCard key={index} {...card} />
+          ))}
+        </div>
       </div>
     </div>
   );

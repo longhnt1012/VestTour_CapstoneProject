@@ -46,7 +46,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateFabric(int id, FabricModel model)
         {
             if (id != model.FabricID)

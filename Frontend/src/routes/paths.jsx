@@ -26,6 +26,7 @@ import OrderList from "../pages/staff/staffManager/OrderList";
 import BookingList from "../pages/staff/staffManager/BookingList";
 import ShipmentList from "../pages/staff/staffManager/ShipmentList";
 import MeasureList from "../pages/staff/staffManager/MeasureList";
+import CreateAccount from "../pages/staff/staffManager/CreateAccount";
 
 import OrderHistory from "../pages/profile/OrderHistory";
 import Measurement from "../pages/profile/Measurement";
@@ -35,11 +36,11 @@ import BookingThanks from "../pages/booking/BookingThanks";
 
 import StaffManagement from "../pages/managerdashboard/StaffManagement";
 import ManagerDashboard from "../pages/managerdashboard/ManagerDashboard";
+import ProductManagement from "../pages/managerdashboard/ProductManagement.jsx";
+import BookingManagement from "../pages/managerdashboard/BookingManagement.jsx";
 import FabricDetailPage from "../pages/fabric/FabricDetail";
 
 import ErrorBoundary from "../pages/ErrorBoundary/ErrorBoundary";
-import ProfitCalculation from "../pages/managerdashboard/ProfitCalculation";
-import ShipmentTracker from "../pages/managerdashboard/ShipmentTracker";
 
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserManagement from "../pages/admin/UserManagement";
@@ -47,18 +48,30 @@ import FabricManagement from "../pages/admin/FabricManagement";
 import StoreManagement from "../pages/admin/StoreManagement";
 import LiningManagement from "../pages/admin/LiningManagement";
 import VoucherManagement from "../pages/admin/VoucherManagement";
+import ShipperManagement from "../pages/admin/ShipperManagement.jsx";
 
-import Payment from "../pages/payment/payment";
+import Payment from "../pages/payment/Payment.jsx";
 import ContactUs from "../pages/contact/ContactUs";
 import OrderDetails from "../pages/orderDetails/OrderDetails";
 import CreatePassword from "../pages/signIn/CreatePassword";
 import ProtectedRoute from "../pages/ProtectedRoute/ProtectedRoute";
 import TailorDashboard from "../pages/tailor/TailorDashboard";
 import Feedback from "../pages/profile/Feedback";
+import VoucherAvailable from "../pages/managerdashboard/VoucherAvailable";
+import TailorRevenue from "../pages/tailor/TailorRevenue.jsx";
+import ProfitCalculation from "../pages/managerdashboard/ProfitCalculation";
+import StoreRevenue from "../pages/admin/StoreRevenue.jsx";
+
 export const routes = [
   {
     path: "/",
-    element: <HomePage />,
+    element: (
+      <ProtectedRoute
+        element={<HomePage />}
+        allowedRoles={["customer"]}
+        allowGuestAccess={true}
+      />
+    ),
   },
   {
     path: "/admin",
@@ -86,6 +99,14 @@ export const routes = [
         path: "voucher-management",
         element: <VoucherManagement />,
       },
+      {
+        path: "store-revenue",
+        element: <StoreRevenue />,
+      },
+      {
+        path: "shipper-management",
+        element: <ShipperManagement />,
+      },
     ],
   },
   {
@@ -104,12 +125,20 @@ export const routes = [
         element: <StaffManagement />,
       },
       {
-        path: "statistics",
-        element: <ProfitCalculation />,
+        path: "product",
+        element: <ProductManagement />,
       },
       {
-        path: "shipment",
-        element: <ShipmentTracker />,
+        path: "booking",
+        element: <BookingManagement />,
+      },
+      {
+        path: "voucheravailable",
+        element: <VoucherAvailable />,
+      },
+      {
+        path: "profitcalculation",
+        element: <ProfitCalculation />,
       },
     ],
   },
@@ -129,6 +158,12 @@ export const routes = [
         allowedRoles={["tailor partner"]}
       />
     ),
+    children: [
+      {
+        path: "revenue",
+        element: <TailorRevenue />,
+      },
+    ],
   },
   {
     path: "/booking",
@@ -219,7 +254,9 @@ export const routes = [
   },
   {
     path: "/staff",
-    element: <StaffDashboard />,
+    element: (
+      <ProtectedRoute element={<StaffDashboard />} allowedRoles={["staff"]} />
+    ),
     children: [
       {
         path: "",
@@ -241,11 +278,21 @@ export const routes = [
         path: "measurement",
         element: <MeasureList />,
       },
+      {
+        path: "account",
+        element: <CreateAccount />,
+      },
     ],
   },
   {
     path: "/custom-suits",
-    element: <CustomSuit />,
+    element: (
+      <ProtectedRoute
+        element={<CustomSuit />}
+        allowedRoles={["customer"]}
+        allowGuestAccess={false}
+      />
+    ),
     children: [
       {
         path: "",

@@ -10,5 +10,6 @@ namespace VestTour.Repository.Models
     {
         
         public int StyleOptionID { get; set; }
+        
     }
 }

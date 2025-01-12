@@ -17,16 +17,18 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  Box,
 } from "@mui/material";
 import { Edit, Delete, Add } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
+import TablePagination from "@mui/material/TablePagination";
 
-const BASE_URL = "https://localhost:7194/api";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  fontWeight: "bold",
+const CustomStyledTableCell = styled(TableCell)(({ theme }) => ({
+  color: 'white !important',
+  fontWeight: 'bold',
+  padding: '1rem',
+  textAlign: 'left',
   backgroundColor: theme.palette.primary.main,
-  color: theme.palette.common.white,
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -37,37 +39,21 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const fetchAllShipments = async () => {
-  const response = await fetch(`${BASE_URL}/ShipperPartner`);
-  if (!response.ok) throw new Error("Failed to fetch shipments");
+const BASE_URL = "https://vesttour.xyz/api";
+
+const fetchStoreByStaffId = async (staffId) => {
+  const response = await fetch(`${BASE_URL}/Store/GetStoreByStaff/${staffId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch store");
+  }
   return response.json();
 };
 
-const createShipment = async (shipmentData) => {
-  const response = await fetch(`${BASE_URL}/ShipperPartner`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(shipmentData),
-  });
-  if (!response.ok) throw new Error("Failed to create shipment");
-  return response.json();
-};
-
-const updateShipment = async (id, shipmentData) => {
-  const response = await fetch(`${BASE_URL}/ShipperPartner/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(shipmentData),
-  });
-  if (!response.ok) throw new Error("Failed to update shipment");
-  return response.json();
-};
-
-const deleteShipment = async (id) => {
-  const response = await fetch(`${BASE_URL}/ShipperPartner/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) throw new Error("Failed to delete shipment");
+const fetchOrdersByStoreId = async (storeId) => {
+  const response = await fetch(`${BASE_URL}/Orders/store/${storeId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch orders");
+  }
   return response.json();
 };
 
@@ -75,72 +61,106 @@ const ShipmentList = () => {
   const [shipments, setShipments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [formState, setFormState] = useState({
-    shipperPartnerId: "",
-    shipperPartnerName: "",
-    phone: "",
-    company: "",
-    status: "",
-  });
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [page, setPage] = useState(0);
+  const rowsPerPage = 7;
+
+  // Mảng trạng thái theo thứ tự
+  const statusOrder = [
+    "Confirming",
+    "Tailoring",
+    "Shipping",
+    "Ready",
+    "Finished",
+  ];
 
   useEffect(() => {
-    const fetchShipments = async () => {
+    const fetchOrders = async () => {
       try {
-        const data = await fetchAllShipments();
-        setShipments(data);
+        const userId = localStorage.getItem("userID");
+        if (!userId) {
+          throw new Error("User ID not found");
+        }
+        const storeData = await fetchStoreByStaffId(userId);
+        const shipmentsData = await fetchOrdersByStoreId(storeData.storeId);
+        setShipments(shipmentsData);
+        setLoading(false);
       } catch (err) {
         setError(err.message);
-      } finally {
         setLoading(false);
       }
     };
-    fetchShipments();
+
+    fetchOrders();
   }, []);
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteShipment(id);
-      setShipments((prevShipments) =>
-        prevShipments.filter((shipment) => shipment.shipperPartnerId !== id)
-      );
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      if (isEditMode) {
-        await updateShipment(formState.shipperPartnerId, formState);
-      } else {
-        await createShipment(formState);
-      }
-      setOpen(false);
-      setFormState({
-        shipperPartnerId: "",
-        shipperPartnerName: "",
-        phone: "",
-        company: "",
-        status: "",
-      });
-      const data = await fetchAllShipments();
-      setShipments(data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleEdit = (shipment) => {
-    setFormState(shipment);
-    setIsEditMode(true);
-    setOpen(true);
-  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
+  const sortedShipments = [...shipments].sort((a, b) => b.orderId - a.orderId);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const paginatedShipments = sortedShipments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  const statusStyles = {
+    Tailoring: { background: "#a5b4fc", color: "#1e1b4b" },    // Soft indigo
+    Confirming: { background: "#fecdd3", color: "#881337" },   // Soft pink
+    Shipping: { background: "#fef08a", color: "#854d0e" },     // Soft yellow
+    Ready: { background: "#bfdbfe", color: "#14532d" },        // Soft green
+    Finished: { background: "#86efac", color: "#1e3a8a" },     // Soft blue
+  };
+
+  const getStatusStyles = (status) => statusStyles[status] || { background: "white", color: "white" };
+
+  // Hàm xác định trạng thái tiếp theo
+  const getNextStatus = (currentStatus) => {
+    const currentIndex = statusOrder.indexOf(currentStatus);
+    return currentIndex < statusOrder.length - 1 ? statusOrder[currentIndex + 1] : currentStatus; // Trả về trạng thái tiếp theo
+  };
+
+  // Hàm cập nhật trạng thái đơn hàng
+  const updateShipmentStatus = async (id, currentStatus) => {
+    const newStatus = getNextStatus(currentStatus); // Lấy trạng thái tiếp theo
+    console.log("Updating shipment status:", id, newStatus); // Ghi log thông tin
+
+    try {
+      const response = await fetch(`${BASE_URL}/Orders/update-ship-status/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newStatus),
+      });
+
+      console.log("Response status:", response.status);
+      const responseData = await response.text();
+      console.log("Response data:", responseData);
+
+      if (!response.ok) {
+        throw new Error(`Failed to update shipment status: ${responseData}`);
+      }
+
+      // Cập nhật trạng thái trong state
+      setShipments((prevShipments) =>
+        prevShipments.map((shipment) =>
+          shipment.orderId === id ? { ...shipment, shipStatus: newStatus } : shipment
+        )
+      );
+    } catch (error) {
+      console.error("Error updating shipment status:", error);
+      setError(error.message);
+    }
+  };
 
   return (
     <div>
@@ -148,147 +168,77 @@ const ShipmentList = () => {
         Shipment Management
       </Typography>
 
-      <StyledButton
-        variant="contained"
-        startIcon={<Add />}
-        onClick={() => {
-          setOpen(true);
-          setIsEditMode(false);
-        }}
-        sx={{ mb: 2 }}
-      >
-        Add Shipment
-      </StyledButton>
-
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Shipper ID</StyledTableCell>
-              <StyledTableCell>Shipper Name</StyledTableCell>
-              <StyledTableCell>Phone</StyledTableCell>
-              <StyledTableCell>Company</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
-              <StyledTableCell>Actions</StyledTableCell>
+              <CustomStyledTableCell>Order ID</CustomStyledTableCell>
+              <CustomStyledTableCell>Guest Name</CustomStyledTableCell>
+              <CustomStyledTableCell>Guest Email</CustomStyledTableCell>
+              <CustomStyledTableCell>Guest Address</CustomStyledTableCell>
+              <CustomStyledTableCell>Order Date</CustomStyledTableCell>
+              <CustomStyledTableCell>Shipped Date</CustomStyledTableCell>
+              <CustomStyledTableCell>Ship Status</CustomStyledTableCell>
+              <CustomStyledTableCell>Delivery Method</CustomStyledTableCell>
+              <CustomStyledTableCell>Total Price</CustomStyledTableCell>
+              <CustomStyledTableCell>Actions</CustomStyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {shipments.map((shipment) => (
-              <TableRow key={shipment.shipperPartnerId} hover>
-                <TableCell>{shipment.shipperPartnerId}</TableCell>
-                <TableCell>{shipment.shipperPartnerName}</TableCell>
-                <TableCell>{shipment.phone}</TableCell>
-                <TableCell>{shipment.company}</TableCell>
-                <TableCell>{shipment.status}</TableCell>
-                <TableCell>
-                  <Tooltip title="Edit Shipment">
-                    <IconButton
-                      onClick={() => handleEdit(shipment)}
-                      sx={{ color: "primary.main" }}
+            {paginatedShipments.map((shipment) => {
+              const { background, color } = getStatusStyles(shipment.shipStatus);
+              return (
+                <TableRow key={shipment.orderId} hover>
+                  <TableCell>{shipment.orderId}</TableCell>
+                  <TableCell>{shipment.guestName}</TableCell>
+                  <TableCell>{shipment.guestEmail}</TableCell>
+                  <TableCell>{shipment.guestAddress}</TableCell>
+                  <TableCell>{formatDate(shipment.orderDate)}</TableCell>
+                  <TableCell>{formatDate(shipment.shippedDate)}</TableCell>
+                  <TableCell>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        backgroundColor: background,
+                        color: color,
+                        padding: "0.2rem 0.5rem",
+                        borderRadius: "4px",
+                      }}
                     >
-                      <Edit />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete Shipment">
-                    <IconButton
-                      onClick={() => handleDelete(shipment.shipperPartnerId)}
-                      sx={{ color: "secondary.main" }}
-                    >
-                      <Delete />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
+                      {shipment.shipStatus}
+                    </span>
+                  </TableCell>
+                  <TableCell>{shipment.deliveryMethod}</TableCell>
+                  <TableCell>{shipment.totalPrice}</TableCell>
+                  <TableCell>
+                    <Tooltip title="Update Status">
+                      <IconButton
+                        onClick={() => updateShipmentStatus(shipment.orderId, shipment.shipStatus)}
+                        sx={{ color: "primary.main" }}
+                      >
+                        <Edit />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {/* Dialog for Add/Edit Shipment Form */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>
-          {isEditMode ? "Edit Shipment" : "Add Shipment"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ mb: 2 }}>
-            Please fill out the form below to {isEditMode ? "edit" : "add"} a
-            shipment.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Shipper ID"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={formState.shipperPartnerId}
-            onChange={(e) =>
-              setFormState({ ...formState, shipperPartnerId: e.target.value })
-            }
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Shipper's Name"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={formState.shipperPartnerName}
-            onChange={(e) =>
-              setFormState({ ...formState, shipperPartnerName: e.target.value })
-            }
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Phone"
-            type="number"
-            fullWidth
-            variant="outlined"
-            value={formState.phone}
-            onChange={(e) =>
-              setFormState({ ...formState, phone: e.target.value })
-            }
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Company"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={formState.company}
-            onChange={(e) =>
-              setFormState({ ...formState, company: e.target.value })
-            }
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Status"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={formState.status}
-            onChange={(e) =>
-              setFormState({ ...formState, status: e.target.value })
-            }
-            sx={{ mb: 2 }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)} color="secondary">
-            Cancel
-          </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        {Array.from({ length: Math.ceil(shipments.length / rowsPerPage) }, (_, index) => (
           <Button
-            onClick={handleFormSubmit}
-            variant="contained"
-            color="primary"
+            key={index}
+            onClick={() => setPage(index)}
+            variant={page === index ? 'contained' : 'outlined'}
+            sx={{ mx: 0.5 }}
           >
-            {isEditMode ? "Update" : "Create"}
+            {index + 1}
           </Button>
-        </DialogActions>
-      </Dialog>
+        ))}
+      </Box>
     </div>
   );
 };

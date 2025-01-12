@@ -10,6 +10,7 @@ namespace VestTour.Controllers
     [Route("api/[controller]")]
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class BankingAccountsController : ControllerBase
     {
         private readonly IBankingAccountRepository _AccountRepo;
@@ -32,6 +33,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpGet("{id}")]
+        
         public async Task<IActionResult> GetBankingAccountByID(int id)
         {
             try

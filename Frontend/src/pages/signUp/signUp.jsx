@@ -1,11 +1,11 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
+import { Box } from "@mui/material";
+import { Button } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { Divider } from "@mui/material";
+import { FormLabel } from "@mui/material";
+import { FormControl } from "@mui/material";
+import { Link } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -154,7 +154,7 @@ export default function SignUp() {
     setIsOtpLoading(true);
     try {
       const response = await fetch(
-        "https://localhost:7194/api/Register/confirm-email",
+        "https://vesttour.xyz/api/Register/confirm-email",
         {
           method: "POST",
           headers: {
@@ -204,7 +204,7 @@ export default function SignUp() {
     };
 
     try {
-      const response = await fetch("https://localhost:7194/api/Register", {
+      const response = await fetch("https://vesttour.xyz/api/Register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

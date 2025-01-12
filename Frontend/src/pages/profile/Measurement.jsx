@@ -6,22 +6,22 @@ const Measurement = () => {
   const [formData, setFormData] = useState({
     measurementId: 0,
     userId: 0,
-    weight: 0,
-    height: 0,
-    neck: 0,
-    chest: 0,
-    waist: 0,
-    hip: 0,
-    shoulder: 0,
-    sleeveLength: 0,
-    biceps: 0,
-    armhole: 0,
-    jacketLength: 0,
-    pantsWaist: 0,
-    crotch: 0,
-    thigh: 0,
-    pantsLength: 0,
-    age: 0,
+    weight: "",
+    height: "",
+    neck: "",
+    chest: "",
+    waist: "",
+    hip: "",
+    shoulder: "",
+    sleeveLength: "",
+    biceps: "",
+    armhole: "",
+    jacketLength: "",
+    pantsWaist: "",
+    crotch: "",
+    thigh: "",
+    pantsLength: "",
+    age: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [measurementId, setMeasurementId] = useState(null);
@@ -36,7 +36,7 @@ const Measurement = () => {
 
       try {
         const response = await fetch(
-          `https://localhost:7194/api/Measurement/user/${userID}`
+          `https://vesttour.xyz/api/Measurement/user/${userID}`
         );
         if (!response.ok) {
           if (response.status === 404) {
@@ -63,7 +63,14 @@ const Measurement = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (!/^\d*$/.test(value)) {
+      return;
+    }
+    const numericValue = Number(value);
+    if (numericValue < 0) {
+      return;
+    }
+    setFormData({ ...formData, [name]: numericValue });
   };
 
   const validateFields = () => {
@@ -82,28 +89,32 @@ const Measurement = () => {
       "crotch",
       "thigh",
       "pantsLength",
+      "weight",
+      "height",
+      "age"
     ];
 
     numberFields.forEach((field) => {
-      if (!formData[field]) {
+      if (formData[field] === undefined || formData[field] === null || formData[field] === "") {
         newErrors[field] = "This field is required";
       } else if (
         isNaN(formData[field]) ||
-        formData[field] < 0 ||
-        formData[field] > 200
+        formData[field] < 0
       ) {
+        newErrors[field] = "Please enter a valid number (0 or greater)";
+      } else if (formData[field] > 200) {
         newErrors[field] = "Please enter a valid number (0-200)";
       }
     });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // return true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
     if (validateFields()) {
       // If validation passes, post data to the API
-      fetch("https://localhost:7194/api/Measurement", {
+      fetch("https://vesttour.xyz/api/Measurement", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,8 +154,8 @@ const Measurement = () => {
           body: JSON.stringify({ ...formData, userId: userID }),
         };
         const url = measurementId
-          ? `https://localhost:7194/api/Measurement/${measurementId}`
-          : "https://localhost:7194/api/Measurement";
+          ? `https://vesttour.xyz/api/Measurement/${measurementId}`
+          : "https://vesttour.xyz/api/Measurement";
 
         const response = await fetch(url, requestOptions);
 
@@ -158,12 +169,13 @@ const Measurement = () => {
         if (!measurementId) {
           const createdData = await response.json();
           setMeasurementId(createdData.measurementId);
-          console.log("Measurement data created successfully");
+          alert("Measurement added successfully!");
         } else {
-          console.log("Measurement data updated successfully");
+          alert("Measurement updated successfully!");
         }
       } catch (error) {
         console.error("Error saving measurement data:", error);
+        alert("An error occurred while saving the measurement data.");
       }
     }
 

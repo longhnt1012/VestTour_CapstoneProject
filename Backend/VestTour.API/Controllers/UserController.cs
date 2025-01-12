@@ -30,7 +30,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/user
         [HttpGet]
-       // [Authorize(Roles = "admin")]
+       [Authorize]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -39,7 +39,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/user/{id}
         [HttpGet("{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -52,7 +52,7 @@ namespace VestTour.API.Controllers
 
         // POST: api/user
         [HttpPost]
-        //[Authorize(Roles = "admin,store manager")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> AddUser([FromBody] UserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace VestTour.API.Controllers
 
         // DELETE: api/user/{id}
         [HttpDelete("{id}")]
-       // [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -108,7 +108,7 @@ namespace VestTour.API.Controllers
 
         // PUT: api/user/{id}/status
         [HttpPut("{id}/status")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string status)
         {
             if (string.IsNullOrWhiteSpace(status))
@@ -132,7 +132,7 @@ namespace VestTour.API.Controllers
         }
         // GET: api/user/role/4
         [HttpGet("role/{roleId:int}")]
-        //[Authorize(Roles = "admin, store manager")]
+        [Authorize(Roles = "admin, store manager")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsersByRole(int roleId)
         {
             var users = await _userService.GetUsersByRoleAsync(roleId);
@@ -240,7 +240,7 @@ namespace VestTour.API.Controllers
             }
         }
         [HttpPatch("{id}/update-pass")]
-        [Authorize]
+        [Authorize(Roles ="customer")]
         public async Task<IActionResult> UpdateUserPassword([FromQuery] string email, [FromQuery] string oldPassword, [FromQuery] string newPassword)
         {
             // Validate parameters

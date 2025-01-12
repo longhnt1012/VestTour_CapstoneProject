@@ -21,7 +21,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet]
-       // [Authorize(Roles = "admin,store manager,staff")]
+       [Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> GetMeasurements()
         {
             var response = await _measurementService.GetAllMeasurementsAsync();
@@ -29,6 +29,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetMeasurement(int id)
         {
             var response = await _measurementService.GetMeasurementByIdAsync(id);
@@ -36,6 +37,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "customer,staff")]
         public async Task<IActionResult> CreateMeasurement(MeasurementModel measurementModel)
         {
             var response = await _measurementService.AddMeasurementAsync(measurementModel);
@@ -43,6 +45,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "customer,staff")]
         public async Task<IActionResult> UpdateMeasurement(int id, MeasurementModel measurementModel)
         {
             if (id != measurementModel.MeasurementId)
@@ -53,7 +56,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-       // [Authorize(Roles = "admin,store manager,staff")]
+       [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteMeasurement(int id)
         {
             var response = await _measurementService.DeleteMeasurementAsync(id);
@@ -61,6 +64,7 @@ namespace VestTour.Controllers
         }
 
         [HttpGet("user/{userId}")]
+        [Authorize]
         public async Task<IActionResult> GetMeasurementByUserId(int userId)
         {
             var response = await _measurementService.GetMeasurementByUserIdAsync(userId);

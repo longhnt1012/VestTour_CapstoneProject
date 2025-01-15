@@ -43,7 +43,7 @@ namespace VestTour.API.Controllers
 
         // Add a new voucher
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> AddVoucher([FromBody] VoucherModel voucherModel)
         {
             if (!ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace VestTour.API.Controllers
 
         // Update an existing voucher
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateVoucher(int id, [FromBody] UpdateVoucherModel updateModel)
         {
             if (!ModelState.IsValid)
@@ -73,7 +73,7 @@ namespace VestTour.API.Controllers
 
         // Delete a voucher by ID
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVoucher(int id)
         {
             var response = await _voucherService.DeleteVoucherAsync(id);

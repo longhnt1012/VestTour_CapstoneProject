@@ -59,7 +59,7 @@ namespace VestTour.API.Controllers
             return Ok(result.Message);
         }
         [HttpPost]
-        [Authorize(Roles = "admin,store manager")]
+       // [Authorize(Roles = "admin,store manager")]
         public async Task<ActionResult<ServiceResponse<int>>> AddProductInStore(ProductInStoreModel productInStore)
         {
             var response = await _productInStoreService.AddProductInStoreAsync(productInStore);
@@ -71,7 +71,7 @@ namespace VestTour.API.Controllers
 
 
         [HttpDelete("{storeId}/{productId}")]
-        [Authorize(Roles = "admin,store manager")]
+       // [Authorize(Roles = "admin,store manager")]
         public async Task<ActionResult<ServiceResponse>> DeleteProductInStore(int storeId, int productId)
         {
             var response = await _productInStoreService.DeleteProductInStoreAsync(storeId, productId);
@@ -82,7 +82,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("updatequantity/{storeId}/{productId}/{quantity}")]
-        [Authorize]
+       // [Authorize]
         public async Task<ActionResult<ServiceResponse>> UpdateQuantity(int storeId, int productId, int quantity)
         {
            

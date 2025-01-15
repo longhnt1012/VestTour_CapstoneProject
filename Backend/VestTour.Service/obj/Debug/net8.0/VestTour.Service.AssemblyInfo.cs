@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VestTour.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c87d600a2a8516e8dd17145c5145d2435903e83")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9281ab1608cdac20e917d06b9b20691fd74b131e")]
 [assembly: System.Reflection.AssemblyProductAttribute("VestTour.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VestTour.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

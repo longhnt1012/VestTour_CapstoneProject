@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = VestTour.Service
-build_property.ProjectDir = D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Service\
+build_property.ProjectDir = C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

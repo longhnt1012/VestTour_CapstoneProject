@@ -42,7 +42,7 @@ namespace VestTour.Controllers
 
         // POST: api/ShipperPartner
         [HttpPost]
-        [Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> CreateShipperPartner(ShipperPartnerModel shipperPartnerModel)
         {
             var newShipperPartnerId = await _shipperPartnerService.CreateShipperPartnerAsync(shipperPartnerModel);
@@ -51,7 +51,7 @@ namespace VestTour.Controllers
 
         // PUT: api/ShipperPartner/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateShipperPartner(int id, ShipperPartnerModel shipperPartnerModel)
         {
             if (id != shipperPartnerModel.ShipperPartnerId)
@@ -64,7 +64,7 @@ namespace VestTour.Controllers
 
         // DELETE: api/ShipperPartner/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteShipperPartner(int id)
         {
             await _shipperPartnerService.DeleteShipperPartnerAsync(id);

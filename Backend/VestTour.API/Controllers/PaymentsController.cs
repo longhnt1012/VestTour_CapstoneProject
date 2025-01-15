@@ -21,7 +21,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/Payments
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var response = await _paymentService.GetAllPaymentsAsync();
@@ -34,7 +34,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/Payments/{id}
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetPaymentById(int id)
         {
             var response = await _paymentService.GetPaymentByIdAsync(id);
@@ -47,7 +47,7 @@ namespace VestTour.API.Controllers
 
         // POST: api/Payments
         [HttpPost]
-        [Authorize(Roles = "customer, staff")]
+       // [Authorize(Roles = "customer, staff")]
         public async Task<IActionResult> AddPayment([FromBody] PaymentModel payment)
         {
             if (payment == null)
@@ -65,7 +65,7 @@ namespace VestTour.API.Controllers
 
         // PUT: api/Payments/{id}
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+      //  [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdatePayment(int id, [FromBody] PaymentModel payment)
         {
             if (payment == null || id <= 0)
@@ -83,7 +83,7 @@ namespace VestTour.API.Controllers
 
         // DELETE: api/Payments/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
 
         public async Task<IActionResult> DeletePayment(int id)
         {
@@ -102,7 +102,7 @@ namespace VestTour.API.Controllers
 
         // PATCH: api/Payments/{paymentId}/order/{orderId}
         [HttpPatch("{paymentId}/order/{orderId}")]
-        [Authorize(Roles = "customer")]
+       // [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdatePaymentOrderId(int paymentId, int orderId)
         {
             try
@@ -116,7 +116,7 @@ namespace VestTour.API.Controllers
             }
         }
         [HttpGet("by-order/{orderId}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> GetPaymentsByOrderId(int orderId)
         {
             var response = await _paymentService.GetPaymentsByOrderIdAsync(orderId);
@@ -129,7 +129,7 @@ namespace VestTour.API.Controllers
 
         // GET: api/Payments/by-user/{userId}
         [HttpGet("by-user/{userId}")]
-        [Authorize]
+      //  [Authorize]
         public async Task<IActionResult> GetPaymentsByUserId(int userId)
         {
             var response = await _paymentService.GetPaymentsByUserIdAsync(userId);

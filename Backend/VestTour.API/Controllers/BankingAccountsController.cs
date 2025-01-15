@@ -10,7 +10,7 @@ namespace VestTour.Controllers
     [Route("api/[controller]")]
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
-    [Authorize(Roles = "admin")]
+   
     public class BankingAccountsController : ControllerBase
     {
         private readonly IBankingAccountRepository _AccountRepo;

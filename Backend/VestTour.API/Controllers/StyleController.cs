@@ -40,7 +40,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> AddStyle(StyleModel styleModel)
         {
             var newStyleId = await _styleService.AddStyleAsync(styleModel);
@@ -48,7 +48,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager")]
+        //[Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateStyle(int id, StyleModel styleModel)
         {
             if (id != styleModel.StyleId)
@@ -61,14 +61,14 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+      //  [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteStyle(int id)
         {
             await _styleService.DeleteStyleAsync(id);
             return NoContent();
         }
         [HttpPatch("{id}/status")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
         {
             var response = await _styleService.UpdateStatusAsync(id, newStatus);

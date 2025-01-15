@@ -45,7 +45,7 @@ namespace VestTour.Controllers
 
         // POST: api/Store
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<int>> CreateStore(StoreModel storeModel)
         {
             var newStoreId = await _storeService.CreateStoreAsync(storeModel);
@@ -54,7 +54,7 @@ namespace VestTour.Controllers
 
         // PUT: api/Store/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager")]
+       // [Authorize(Roles = "admin,store manager")]
         public async Task<IActionResult> UpdateStore(int id, StoreModel storeModel)
         {
             if (id != storeModel.StoreId)
@@ -67,7 +67,7 @@ namespace VestTour.Controllers
 
         // DELETE: api/Store/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteStore(int id)
         {
             await _storeService.DeleteStoreAsync(id);

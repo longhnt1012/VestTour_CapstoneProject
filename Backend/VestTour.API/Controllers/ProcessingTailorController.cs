@@ -22,7 +22,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "tailor partner")]
+       // [Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> GetProcessingTailorById(int id)
         {
             var response = await _processingTailorService.GetProcessingTailorByIdAsync(id);
@@ -30,7 +30,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> GetAllProcessingTailors()
         {
             var response = await _processingTailorService.GetAllProcessingTailorsAsync();
@@ -38,7 +38,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "tailor partner, store manager")]
+        //[Authorize(Roles = "tailor partner, store manager")]
         public async Task<IActionResult> AddProcessingTailor(ProcessingTailorModel processingTailor)
         {
             var response = await _processingTailorService.AddProcessingTailorAsync(processingTailor);
@@ -51,7 +51,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> UpdateProcessingTailor(int id, ProcessingTailorModel processingTailor)
         {
             var response = await _processingTailorService.UpdateProcessingTailorAsync(id, processingTailor);
@@ -59,14 +59,14 @@ namespace VestTour.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> DeleteProcessingTailor(int id)
         {
             var response = await _processingTailorService.DeleteProcessingTailorAsync(id);
             return response.Success ? NoContent() : NotFound(response);
         }
         [HttpGet("assigned-to/{tailorPartnerId}")]
-        [Authorize(Roles = "tailor partner,staff,store manager")]
+       // [Authorize(Roles = "tailor partner,staff,store manager")]
         public async Task<IActionResult> GetProcessesByTailorPartnerId(int tailorPartnerId)
         {
             var result = await _processingTailorService.GetProcessAssignedByTailorPartnerIdAsync(tailorPartnerId);
@@ -77,7 +77,7 @@ namespace VestTour.API.Controllers
             return Ok(result);
         }
         [HttpGet("store/{storeId}")]
-        [Authorize(Roles = "tailor partner,staff,store manager")]
+       // [Authorize(Roles = "tailor partner,staff,store manager")]
         public async Task<IActionResult> GetProcessingTailorsByStoreId(int storeId)
         {
             var result = await _processingTailorService.GetProcessingTailorsByStoreIdAsync(storeId);
@@ -89,7 +89,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPatch("process/status/{id}")]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> ChangeStatus(int id, [FromBody] string newStatus)
         {
            
@@ -102,7 +102,7 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
         [HttpPatch("sample/status/{id}")]
-        [Authorize(Roles = "tailor partner")]
+       // [Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> ChangeSampleStatus(int id, [FromBody] string newStatus)
         {
 
@@ -115,7 +115,7 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
         [HttpPatch("fix/status/{id}")]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> ChangeFixStatus(int id, [FromBody] string newStatus)
         {
 
@@ -128,7 +128,7 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
         [HttpPatch("delivery/status/{id}")]
-        [Authorize(Roles = "tailor partner")]
+       // [Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> ChangeDeliveryStatus(int id, [FromBody] string newStatus)
         {
 
@@ -141,7 +141,7 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
         [HttpPatch("stagename/{id}")]
-        [Authorize(Roles = "tailor partner")]
+        //[Authorize(Roles = "tailor partner")]
         public async Task<IActionResult> ChangeStageName(int id, [FromBody] string newStage)
         {
 
@@ -154,7 +154,7 @@ namespace VestTour.API.Controllers
             return Ok(response);
         }
         [HttpGet("GetByOrderId/{orderId}")]
-        [Authorize(Roles = "tailor partner, staff, store manager")]
+        //[Authorize(Roles = "tailor partner, staff, store manager")]
         public async Task<IActionResult> GetByOrderIdAsync(int orderId)
         {
             if (orderId <= 0)

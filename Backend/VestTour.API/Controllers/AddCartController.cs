@@ -87,7 +87,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("confirmorder")]
-        [Authorize(Roles = "customer")]
+       // [Authorize(Roles = "customer")]
         public async Task<IActionResult> ConfirmOrder(
     string? guestName,
     string? guestEmail,

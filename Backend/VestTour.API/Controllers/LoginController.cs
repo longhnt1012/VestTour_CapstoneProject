@@ -45,7 +45,7 @@ namespace VestTour.API.Controllers
         }
 
         [HttpPost("refresh-token")]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer")]
         public async Task<IActionResult> RefreshToken([FromBody] TokenApiModel request)
         {
             // Validate access token and get principal

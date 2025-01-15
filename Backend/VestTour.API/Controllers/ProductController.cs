@@ -97,7 +97,7 @@ namespace VestTour.Controllers
             }
         }
         [HttpPost]
-        [Authorize(Roles = "customer,staff,store manager, admin")]
+       // [Authorize(Roles = "customer,staff,store manager, admin")]
         public async Task<ActionResult<int>> AddProduct(ProductModel product)
         {
             var productId = await _productService.AddProductAsync(product);
@@ -105,7 +105,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin,store manager,staff")]
+        //[Authorize(Roles = "admin,store manager,staff")]
         public async Task<IActionResult> UpdateProduct(int id, ProductModel product)
         {
             try
@@ -120,7 +120,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try
@@ -158,7 +158,7 @@ namespace VestTour.Controllers
             return Ok(products);
         }
         [HttpPut("{productId}/update-status")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateProductStatus(int productId, [FromBody] string status)
         {
             var result = await _productService.UpdateStatusAsync(productId, status);

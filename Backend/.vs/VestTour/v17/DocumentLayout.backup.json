@@ -1,0 +1,1424 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\vouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\vouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\styleoptioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\styleoptioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\stylecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\stylecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\storecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\storecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\shippingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\shippingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\shipperpartnercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\shipperpartnercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\productinstorecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\productinstorecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\processingtailorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\processingtailorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\paymentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\paymentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\measurementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\measurementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\liningscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\liningscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\feedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\feedbackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\fabricscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\fabricscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\bookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\bankingaccountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\bankingaccountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\controllers\\addcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\controllers\\addcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\addcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\addcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iaddcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iaddcartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\cartmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\cartmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\addcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\addcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\iaddcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\iaddcartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\interfaces\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\interfaces\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\liningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\liningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\bookingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\bookingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\styleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\styleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\cartitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\cartitemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\paypalclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\paypalclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\productdetailsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\productdetailsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\pickedstyleoptionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\pickedstyleoptionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\helpers\\emailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\helpers\\emailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\repositories\\fabricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\repositories\\fabricrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iregisterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iregisterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\helpers\\iemailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\helpers\\iemailhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\interfaces\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\interfaces\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\configuration\\emailconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\configuration\\emailconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\models\\emailrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\models\\emailrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\data\\vesttourdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\data\\vesttourdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F1460BA0-6DE4-4A5E-8325-3141FFA3E594}|VestTour.API\\VestTour.API.csproj|solutionrelative:vesttour.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\common\\pagination.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\common\\pagination.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\vesttour.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\vesttour.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\common\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\common\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.service\\vesttour.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2F7D0EEF-C9CA-412D-AFA2-E3DA814CB7BA}|VestTour.Service\\VestTour.Service.csproj|solutionrelative:vesttour.service\\vesttour.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\constants\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\constants\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.repository\\constants\\success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD018043-1C0D-4556-A96D-625602CBB29E}|VestTour.Repository\\VestTour.Repository.csproj|solutionrelative:vesttour.repository\\constants\\success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\statusenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\statusenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\roleenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\roleenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\genderenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\genderenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|c:\\users\\dell\\documents\\github\\capstone_group22\\vesttour_capstoneproject\\backend\\vesttour.domain\\enums\\fabricenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B59DB408-F7A3-44A3-B9A1-5F45383F93C3}|VestTour.Domain\\VestTour.Domain.csproj|solutionrelative:vesttour.domain\\enums\\fabricenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 558,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VoucherController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\VoucherController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\VoucherController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\VoucherController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\VoucherController.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAIwEsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:17:37.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StyleOptionController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StyleOptionController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\StyleOptionController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StyleOptionController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\StyleOptionController.cs*",
+              "ViewState": "AgIAADkAAAAAAAAAAAAowEcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:16:17.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StyleController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StyleController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\StyleController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StyleController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\StyleController.cs*",
+              "ViewState": "AgIAAEcAAAAAAAAAAAA9wEYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:16:01.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ShipperPartnerController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ShipperPartnerController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\ShipperPartnerController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ShipperPartnerController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\ShipperPartnerController.cs*",
+              "ViewState": "AgIAADQAAAAAAAAAAAAkwEIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:15:07.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ProductInStoreController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProductInStoreController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\ProductInStoreController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProductInStoreController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\ProductInStoreController.cs*",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAowFQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:14:47.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TokenController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\TokenController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\TokenController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\TokenController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\TokenController.cs*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\UserController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\UserController.cs*",
+              "ViewState": "AgIAAPUAAAAAAAAAAAAiwPIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProductController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\ProductController.cs*",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAcwKAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:14:24.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProcessingTailorController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProcessingTailorController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\ProcessingTailorController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ProcessingTailorController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\ProcessingTailorController.cs*",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAiwJwAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:13:26.034Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ShippingController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ShippingController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\ShippingController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\ShippingController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\ShippingController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StoreController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StoreController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\StoreController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\StoreController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\StoreController.cs*",
+              "ViewState": "AgIAAK4AAAAAAAAAAAA+wEUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PaymentsController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\PaymentsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\PaymentsController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\PaymentsController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\PaymentsController.cs*",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAwwIMAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:12:25.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MeasurementController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\MeasurementController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\MeasurementController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\MeasurementController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\MeasurementController.cs*",
+              "ViewState": "AgIAADkAAAAAAAAAAAAowEIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:11:28.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RegisterController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\RegisterController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\RegisterController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\RegisterController.cs",
+              "RelativeToolTip": "VestTour.API\\Controllers\\RegisterController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwD8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FeedbackController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FeedbackController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\FeedbackController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FeedbackController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\FeedbackController.cs*",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAUwIAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:10:39.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\CategoryController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\CategoryController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\CategoryController.cs*",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAwwGEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:09:59.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "BankingAccountsController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BankingAccountsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\BankingAccountsController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BankingAccountsController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\BankingAccountsController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:09:16.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\UserService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\UserService.cs",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAAwOIAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\OrdersController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\OrdersController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\OrdersController.cs*",
+              "ViewState": "AgIAANwAAAAAAAAAAAAIwOcAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.885Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IUserService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IUserService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IUserService.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAArwBoAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.713Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LiningsController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LiningsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\LiningsController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LiningsController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\LiningsController.cs*",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAswFoAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\LoginController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\LoginController.cs*",
+              "ViewState": "AgIAADYAAAAAAAAAAAAuwC8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Program.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Program.cs",
+              "RelativeToolTip": "VestTour.API\\Program.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAAAFsAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.701Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "FabricsController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FabricsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\FabricsController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\FabricsController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\FabricsController.cs*",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAswEwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\UserRepository.cs",
+              "ViewState": "AQIAALcAAAAAAAAAAAAQwLgAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.697Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "BookingsController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BookingsController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\BookingsController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\BookingsController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\BookingsController.cs*",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAcwKoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OrderService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\OrderService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OrderService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\OrderService.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAA+wEwAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IOrderService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IOrderService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IOrderService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IOrderService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IOrderService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.685Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "AddCartController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\AddCartController.cs",
+              "RelativeDocumentMoniker": "VestTour.API\\Controllers\\AddCartController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\AddCartController.cs*",
+              "RelativeToolTip": "VestTour.API\\Controllers\\AddCartController.cs*",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAYwFkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "IAddCartService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IAddCartService.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAiwA4AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Dockerfile",
+              "RelativeDocumentMoniker": "VestTour.API\\Dockerfile",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Dockerfile",
+              "RelativeToolTip": "VestTour.API\\Dockerfile",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAwwBIAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-01-15T07:08:15.617Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "AddCartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\AddCartRepository.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAiwCgAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.725Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "AddCartService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\AddCartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\AddCartService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\AddCartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\AddCartService.cs",
+              "ViewState": "AQIAANoAAAAAAAAAAADgv+8AAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "IAddCartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IAddCartRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "CartModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\CartModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\CartModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.753Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IUserRepository.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAEwBoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.761Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "IBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Interfaces\\IBookingRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "VestTour.Domain\\Entities\\User.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAcwC0AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.781Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "UserModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\UserModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\UserModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\UserModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\UserModel.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAqwB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.801Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "BookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\BookingRepository.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAIwE8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "LiningService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\LiningService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\LiningService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\LiningService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\LiningService.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAA5wAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.813Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\CartService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\CartService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\CartService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\CartService.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.817Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "BookingModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\BookingModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\BookingModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\BookingModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\BookingModel.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAgwBwAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\BookingService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\BookingService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\BookingService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\BookingService.cs",
+              "ViewState": "AQIAAPsAAAAAAAAAAAAiwBEBAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.829Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "ResetPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ResetPasswordModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.833Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "ForgotPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ForgotPasswordModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "RegisterModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\RegisterModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\RegisterModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\RegisterModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\RegisterModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.845Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "StyleService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\StyleService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\StyleService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\StyleService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\StyleService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.849Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\TokenService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\TokenService.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.857Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "OrderRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\OrderRepository.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAAAEYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.865Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\appsettings.json",
+              "RelativeDocumentMoniker": "VestTour.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\appsettings.json",
+              "RelativeToolTip": "VestTour.API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-15T07:08:15.869Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "CartItemModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartItemModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\CartItemModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\CartItemModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\CartItemModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "OtpService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OtpService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\OtpService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\OtpService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\OtpService.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAYwC8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "OrderModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\OrderModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\OrderModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\OrderModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\OrderModel.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAA1wCAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.897Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "PaypalClient.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\PaypalClient.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\PaypalClient.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\PaypalClient.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\PaypalClient.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAqwDkAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\Booking.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Entities\\Booking.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Entities\\Booking.cs",
+              "RelativeToolTip": "VestTour.Domain\\Entities\\Booking.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwCMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.913Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "ProductDetailsModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ProductDetailsModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "ProductModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\ProductModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ProductModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\ProductModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "PickedStyleOptionModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\PickedStyleOptionModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.939Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "FabricRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "RelativeToolTip": "VestTour.Repository\\Repositories\\FabricRepository.cs",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAAAGMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.946Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "EmailHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "RelativeToolTip": "VestTour.Repository\\Helpers\\EmailHelper.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAiwDsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.953Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "IBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IBookingService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IBookingService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IBookingService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IBookingService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAswA0AAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "RegisterService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\RegisterService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Services\\RegisterService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Services\\RegisterService.cs",
+              "RelativeToolTip": "VestTour.Service\\Services\\RegisterService.cs",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAcwGIAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 82,
+              "Title": "ConfirmRequest.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\ConfirmRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T07:17:58.184Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "IRegisterService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IRegisterService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:15.993Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "IEmailHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "RelativeToolTip": "VestTour.Repository\\Helpers\\IEmailHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.001Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IEmailService.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Interfaces\\IEmailService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Interfaces\\IEmailService.cs",
+              "RelativeToolTip": "VestTour.Service\\Interfaces\\IEmailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 83,
+              "Title": "InventoryController.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Structure GIthub\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Controllers\\InventoryController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-25T08:33:03.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "EmailConfig.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "RelativeToolTip": "VestTour.Repository\\Configuration\\EmailConfig.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.035Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "EmailRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\EmailRequest.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Models\\EmailRequest.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Models\\EmailRequest.cs",
+              "RelativeToolTip": "VestTour.Repository\\Models\\EmailRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "VestTourDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "RelativeToolTip": "VestTour.Repository\\Data\\VestTourDbContext.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAAwDgAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "VestTour.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "VestTour.API\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-15T07:08:16.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "VestTour.Repository.csproj",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+              "RelativeDocumentMoniker": "VestTour.Repository\\VestTour.Repository.csproj",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj",
+              "RelativeToolTip": "VestTour.Repository\\VestTour.Repository.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-15T07:08:16.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "JWTSettings.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Common\\JWTSettings.cs",
+              "RelativeDocumentMoniker": "VestTour.Service\\Common\\JWTSettings.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Common\\JWTSettings.cs",
+              "RelativeToolTip": "VestTour.Service\\Common\\JWTSettings.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.228Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 80,
+              "Title": "Success.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Success.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T03:20:13.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 81,
+              "Title": "Error.cs",
+              "DocumentMoniker": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs",
+              "ToolTip": "D:\\FPT University\\Semester_9_2024\\C#\\Github\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\Constants\\Error.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T03:20:13.41Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "VestTour.Service.csproj",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+              "RelativeDocumentMoniker": "VestTour.Service\\VestTour.Service.csproj",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj",
+              "RelativeToolTip": "VestTour.Service\\VestTour.Service.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-15T07:08:16.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "Pagination.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Common\\Pagination.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Common\\Pagination.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Common\\Pagination.cs",
+              "RelativeToolTip": "VestTour.Repository\\Common\\Pagination.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "Error.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Error.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Constants\\Error.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Error.cs",
+              "RelativeToolTip": "VestTour.Repository\\Constants\\Error.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "Success.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Success.cs",
+              "RelativeDocumentMoniker": "VestTour.Repository\\Constants\\Success.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\Constants\\Success.cs",
+              "RelativeToolTip": "VestTour.Repository\\Constants\\Success.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.275Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 76,
+              "Title": "StatusEnums.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\StatusEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\StatusEnums.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\StatusEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\StatusEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 77,
+              "Title": "RoleEnums.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\RoleEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\RoleEnums.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\RoleEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\RoleEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.481Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 78,
+              "Title": "GenderEnums.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\GenderEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\GenderEnums.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\GenderEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\GenderEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.487Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 79,
+              "Title": "FabricEnums.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\FabricEnums.cs",
+              "RelativeDocumentMoniker": "VestTour.Domain\\Enums\\FabricEnums.cs",
+              "ToolTip": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Domain\\Enums\\FabricEnums.cs",
+              "RelativeToolTip": "VestTour.Domain\\Enums\\FabricEnums.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T07:08:16.493Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

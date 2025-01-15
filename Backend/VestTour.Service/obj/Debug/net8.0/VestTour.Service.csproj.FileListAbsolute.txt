@@ -69,3 +69,21 @@ D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\V
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\refint\VestTour.Service.dll
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.pdb
 D:\FPT University\Semester_9_2024\C#\MinhNhut\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\ref\VestTour.Service.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.deps.json
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Service.pdb
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Domain.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Repository.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Repository.pdb
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\bin\Debug\net8.0\VestTour.Domain.pdb
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.csproj.AssemblyReference.cache
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.AssemblyInfoInputs.cache
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.AssemblyInfo.cs
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.sourcelink.json
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.75BC0BF8.Up2Date
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\refint\VestTour.Service.dll
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\VestTour.Service.pdb
+C:\Users\Dell\Documents\GitHub\Capstone_Group22\VestTour_CapstoneProject\Backend\VestTour.Service\obj\Debug\net8.0\ref\VestTour.Service.dll

@@ -38,7 +38,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+      //  [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddNewFabric(FabricModel model)
         {
             var response = await _fabricService.AddFabricAsync(model);
@@ -46,7 +46,7 @@ namespace VestTour.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+      //  [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateFabric(int id, FabricModel model)
         {
             if (id != model.FabricID)
@@ -57,7 +57,7 @@ namespace VestTour.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+      //  [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteFabric(int id)
         {
             var response = await _fabricService.DeleteFabricAsync(id);
@@ -74,7 +74,7 @@ namespace VestTour.Controllers
             return response.Success ? Ok(response.Data) : StatusCode(500, response.Message);
         }
         [HttpPatch("{id}/status")]
-        [Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse>> UpdateStatusAsync(int id, [FromBody] string newStatus)
         {
             var response = await _fabricService.UpdateStatusAsync(id, newStatus);

@@ -67,7 +67,7 @@ namespace VestTour.API.Controllers
         }
         // Add feedback for product
         [HttpPost("feedbackforproduct")]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer")]
         public async Task<IActionResult> AddFeedbackForProduct([FromBody] FeedBackForProduct feedback)
         {
             if (feedback == null)
@@ -82,7 +82,7 @@ namespace VestTour.API.Controllers
 
         // Add feedback for order
         [HttpPost("feedbackfororder")]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer")]
         public async Task<IActionResult> AddFeedbackForOrder([FromBody] FeedbackForOrder feedback)
         {
             if (feedback == null)
@@ -97,7 +97,7 @@ namespace VestTour.API.Controllers
 
         // Update feedback for product
         [HttpPut("updateproductfeedback/{feedbackId}")]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateFeedbackForProduct(int feedbackId, [FromBody] FeedBackForProduct feedback)
         {
             if (feedback == null)
@@ -112,7 +112,7 @@ namespace VestTour.API.Controllers
 
         // Update feedback for order
         [HttpPut("updateorderfeedbackorder/{feedbackId}")]
-        [Authorize(Roles = "customer")]
+       // [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateFeedbackForOrder(int feedbackId, [FromBody] FeedbackForOrder feedback)
         {
             if (feedback == null)
@@ -126,7 +126,7 @@ namespace VestTour.API.Controllers
         }
         // Endpoint to update feedback
         [HttpPut("response/{feedbackId}")]
-        [Authorize(Roles = "staff")]
+        //[Authorize(Roles = "staff")]
         public async Task<IActionResult> ResponseFeedback(int feedbackId, [FromBody] ResponseFeedbackModel responsefeedbackModel)
         {
             var response = await _feedbackService.ResponseFeedbackAsync(feedbackId, responsefeedbackModel);

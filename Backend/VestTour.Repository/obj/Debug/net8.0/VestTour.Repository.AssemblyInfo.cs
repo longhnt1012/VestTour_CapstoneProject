@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VestTour.Repository")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c87d600a2a8516e8dd17145c5145d2435903e83")]
 [assembly: System.Reflection.AssemblyProductAttribute("VestTour.Repository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VestTour.Repository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

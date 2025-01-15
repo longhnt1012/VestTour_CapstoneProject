@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("80032cbc-af49-4bdc-b605-7c3f0d17da65")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("VestTour.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c87d600a2a8516e8dd17145c5145d2435903e83")]
 [assembly: System.Reflection.AssemblyProductAttribute("VestTour.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VestTour.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

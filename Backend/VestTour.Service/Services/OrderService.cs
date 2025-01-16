@@ -74,7 +74,7 @@ namespace VestTour.Service.Implementation
             // Validate the order status
             if (!OrderStatusValidate.IsValidOrderStatus(order.Status ?? "Pending"))
             {
-                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, Cancel and Ready.");
+                throw new ArgumentException($"Invalid order status: {order.Status}. Allowed values are Pending, Processing, Finish, Cancel.");
             }
             User? user = order.UserID != null ? await _userService.GetUserByIdAsync(order.UserID.Value) : null;
             if (!DeliveryMethodValidate.IsValidDeliveryMethod(order.DeliveryMethod))
@@ -418,7 +418,7 @@ namespace VestTour.Service.Implementation
 
             
             var formattedNote = orderRequest.Note ?? string.Empty;
-            if (!string.IsNullOrEmpty(surchargeNote))
+            if (!string.IsNullOrEmpty(surchargeNote)&& orderRequest.CustomProducts.Any())
             {
                 formattedNote += " | " + surchargeNote; 
             }

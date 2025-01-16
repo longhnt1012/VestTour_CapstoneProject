@@ -164,11 +164,23 @@ namespace VestTour.Services
                 }
 
                 // Process cart items
+                decimal subFee = 0;
+                string surchargeNote = string.Empty;
                 foreach (var item in cartItems)
                 {
                     if (item.IsCustom)
                     {
                         var customProduct = item.CustomProduct;
+
+                        var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
+                        if (measurement != null)
+                        {
+                            subFee = _measurementService.CalculateMeasurementSurcharge(measurement);
+                            if (subFee > 0)
+                            {
+                                surchargeNote = $"An additional fee of {subFee:C} per unit has been applied due to exceeding standard measurements.";
+                            }
+                        }
                         var productToAdd = new ProductModel
                         {
                             ProductCode = customProduct.ProductCode,
@@ -176,10 +188,11 @@ namespace VestTour.Services
                             FabricID = customProduct.FabricID,
                             LiningID = customProduct.LiningID,
                             MeasurementID = customProduct.MeasurementID,
-                            Price = item.Price,
+                            Price = item.Price+subFee,
                             IsCustom = true
                         };
-
+                        
+                       
                         var productIdResponse = await _productService.AddProductAsync(productToAdd);
                         if (!productIdResponse.Success)
                         {
@@ -213,8 +226,7 @@ namespace VestTour.Services
                 }
 
                 // Calculate additional charges and validate voucher
-                decimal subFee = 0;
-                string surchargeNote = string.Empty;
+               
 
                 if (userId.HasValue)
                 {
@@ -228,15 +240,7 @@ namespace VestTour.Services
                         return new ServiceResponse<int> { Success = false, Message = $"User with ID {userId.Value} not found." };
                     }
 
-                    var measurement = await _measurementRepository.GetMeasurementByUserIdAsync(userId.Value);
-                    if (measurement != null)
-                    {
-                        subFee = _measurementService.CalculateMeasurementSurcharge(measurement);
-                        if (subFee > 0)
-                        {
-                            surchargeNote = $"An additional fee of {subFee:C} per unit has been applied due to exceeding standard measurements.";
-                        }
-                    }
+                    
                 }
                 decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
                 decimal newShippingFee = shippingFee;
@@ -275,7 +279,7 @@ namespace VestTour.Services
                 decimal newTotalPrice = Math.Round(newPrice + newShippingFee, 2); // Round to 2 decimal places
 
                 var formattedNote = note ?? string.Empty;
-                if (!string.IsNullOrEmpty(surchargeNote))
+                if (!string.IsNullOrEmpty(surchargeNote) )
                 {
                     formattedNote +="  |  " + surchargeNote;
                 }
@@ -291,7 +295,7 @@ namespace VestTour.Services
                     GuestAddress = guestAddress,
                     GuestPhone = guestPhone,
                     OrderDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)),
+                    ShippedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(5)),
                     TotalPrice = Math.Round(newTotalPrice, 2),
                     RevenueShare = newTotalPrice * 0.3m,
                     Deposit = deposit,

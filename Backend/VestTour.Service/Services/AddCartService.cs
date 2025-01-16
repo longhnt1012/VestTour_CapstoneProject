@@ -319,18 +319,74 @@ namespace VestTour.Services
                 await _orderRepository.AddOrderDetailsAsync(orderId, cartItems);
 
                 // Send confirmation email
-                string recipientEmail = guestEmail;
-                if (!string.IsNullOrEmpty(recipientEmail))
+                // Generate email content
+                var emailContent = new StringBuilder();
+                emailContent.AppendLine("Thank you for your order!");
+                emailContent.AppendLine($"Order ID: {orderId}");
+                emailContent.AppendLine($"Order Date: {DateTime.Now}");
+                emailContent.AppendLine($"Total Price: {newOrder.TotalPrice:C}");
+                emailContent.AppendLine();
+                emailContent.AppendLine("Order Details:");
+                emailContent.AppendLine("--------------------------------------------------");
+
+                // Add regular products to email
+                if (cartItems.Any(item => !item.IsCustom))
+                {
+                    emailContent.AppendLine("Regular Products:");
+                    foreach (var item in cartItems.Where(i => !i.IsCustom))
+                    {
+                        emailContent.AppendLine($"- Product ID: {item.Product.ProductID}");
+                        emailContent.AppendLine($"  Product Name: {item.Product.ProductCode}");
+                        emailContent.AppendLine($"  Quantity: {item.Quantity}");
+                        emailContent.AppendLine($"  Price per Unit: {item.Product.Price:C}");
+                        emailContent.AppendLine($"  Subtotal: {item.Quantity * (item.Product.Price ?? 0):C}");
+                        emailContent.AppendLine("--------------------------------------------------");
+                    }
+                }
+
+                // Add custom products to email
+                if (cartItems.Any(item => item.IsCustom))
+                {
+                    emailContent.AppendLine("Custom Products:");
+                    foreach (var item in cartItems.Where(i => i.IsCustom))
+                    {
+                        var customProduct = item.CustomProduct;
+                        emailContent.AppendLine($"- Product Code: {customProduct.ProductCode}");
+                        emailContent.AppendLine($"  Fabric ID: {customProduct.FabricID}");
+                        emailContent.AppendLine($"  Lining ID: {customProduct.LiningID}");
+                        emailContent.AppendLine($"  Quantity: {item.Quantity}");
+                        emailContent.AppendLine($"  Customization Price per Unit: {item.Price:C}");
+                        emailContent.AppendLine($"  Subtotal: {item.Quantity * item.Price:C}");
+                        emailContent.AppendLine($"  Picked Style Options: {string.Join(", ", customProduct.PickedStyleOptions.Select(o => o.StyleOptionID))}");
+                        emailContent.AppendLine("--------------------------------------------------");
+                    }
+
+                    if (subFee > 0)
+                    {
+                        emailContent.AppendLine("--------------------------------------------------");
+                        emailContent.AppendLine("Additional Surcharge:");
+                        emailContent.AppendLine(surchargeNote);
+                        emailContent.AppendLine($"Surcharge Amount: {subFee:C} per unit for custom products exceeding standard measurements.");
+                        emailContent.AppendLine("--------------------------------------------------");
+                    }
+                }
+
+                // Include footer
+                emailContent.AppendLine();
+                emailContent.AppendLine("Thank you for shopping with us!");
+                emailContent.AppendLine("If you have any questions, please contact our support team.");
+
+                // Send the email
+                if (!string.IsNullOrEmpty(guestEmail))
                 {
                     var emailRequest = new EmailRequest
                     {
-                        To = recipientEmail,
+                        To = guestEmail,
                         Subject = "Order Confirmation",
-                        Content = $"Thank you for your order! Your Order ID is: {orderId}."
+                        Content = emailContent.ToString()
                     };
                     await _emailHelper.SendEmailAsync(emailRequest);
                 }
-
                 // Clear the cart
                 await _addCartRepository.RemoveAllFromCartAsync(id);
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "736955928462",
+    "project_id": "vesttour-bf00c",
+    "storage_bucket": "vesttour-bf00c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736955928462:android:ee910bd4007e793b379edf",
+        "android_client_info": {
+          "package_name": "com.example.mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJX318m91u9jXfd8FbHVI5QhpDRCErlEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

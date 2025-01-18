@@ -3,6 +3,8 @@ import 'package:mobileapp/screens/booking_screen.dart';
 import 'package:mobileapp/screens/managebooking_screen.dart';
 import 'package:mobileapp/screens/measurement_screen.dart';
 import 'package:mobileapp/screens/order_screen.dart';
+import 'package:mobileapp/screens/userinfo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -11,7 +13,12 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   int _currentIndex = 3; // Start with Profile as the selected index
-
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('auth_token');
+    // Điều hướng về trang đăng nhập
+    Navigator.pushReplacementNamed(context, '/');
+  }
   void _onBottomNavTap(int index) {
     setState(() {
       _currentIndex = index;
@@ -49,7 +56,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserDetailScreen(),
+                  ),
+                );
+
+              },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -95,19 +110,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Divider(),
             _buildListTile('Following (5)', '', trailing: Text('Edit')),
             SizedBox(height: 8),
-            Container(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  _buildFollowingImage('https://via.placeholder.com/100'),
-                  _buildFollowingImage('https://via.placeholder.com/100'),
-                  _buildFollowingImage('https://via.placeholder.com/100'),
-                  _buildFollowingImage('https://via.placeholder.com/100'),
-                  _buildFollowingImage('https://via.placeholder.com/100'),
-                ],
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  await logout();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Màu đỏ
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Log Out',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
             ),
+            SizedBox(height: 16),
           ],
         ),
       ),

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../../models/cart.dart';
 class ApiServicesCart {
-  static const String baseUrl = "http://165.22.243.162:8080/api/AddCart";
+  static const String baseUrl = "https://vesttour.xyz/api/AddCart";
   // Define the getAuthToken method here
   static Future<String?> getAuthToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,6 +38,7 @@ class ApiServicesCart {
   }
   static Future<bool> createCart({
     required int userId,
+
      required int fabricId,
     required int liningId,
     required int measurementId,
@@ -140,10 +141,10 @@ class ApiServicesCart {
 
 
   // Retrieve the list of carts
-  static Future<Map<String, dynamic>> getCartList() async {
+  Future<Map<String, dynamic>> fetchCartList() async {
     try {
-      String? authToken = await getAuthToken();
-      final url = Uri.parse("$baseUrl/mycart");
+      String? authToken = await getAuthToken(); // Lấy token
+      final url = Uri.parse("https://vesttour.xyz/api/AddCart/mycart");
 
       final response = await http.get(
         url,
@@ -152,52 +153,84 @@ class ApiServicesCart {
           'Content-Type': 'application/json',
         },
       );
-
-
+      print('Response body: ${response.body}');
       if (response.statusCode == 200) {
-        // Phân tích dữ liệu JSON từ phản hồi
-        Map<String, dynamic> data = json.decode(response.body);
-        print("Dữ liệu trả về từ API: $data");
-        return data; // Trả về dữ liệu giỏ hàng
+        return json.decode(response.body); // Parse JSON
       } else {
-        // Xử lý lỗi HTTP
         throw Exception('Failed to load cart. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      // Xử lý ngoại lệ khi gọi API
-      print('Error fetching cart: $e');
-      throw Exception('Error fetching cart');
+      throw Exception('Error fetching cart: $e');
     }
   }
 
 
-  static Future<bool> confirmOrder(Cart cart) async {
-    String? authToken = await getAuthToken();
-    final String url = "$baseUrl/confirmorder";
-
+  static Future<Map<String, dynamic>> confirmOrder({
+    String? userName,
+    String? userEmail,
+    String? userPhone,
+    String? address,
+    required double depositFee,
+    required double shippingFee,
+    required String deliveryMethod, // "Pick up" or "Delivery"
+    required int storeId,
+  }) async {
     try {
+      // Get the auth token if needed
+      String? authToken = await getAuthToken();
+      String encodedUserName = Uri.encodeComponent(userName!);
+      String encodedUserEmail = Uri.encodeComponent(userEmail!);
+      String encodedAddress = Uri.encodeComponent(address!);
+      String encodedMethod = Uri.encodeComponent(deliveryMethod);
+
+      // Build the URL with parameters
+      final String url =
+          "https://vesttour.xyz/api/AddCart/confirmorder?guestName=$userName&guestEmail=$userEmail&guestAddress=$address&guestPhone=$userPhone&deposit=$depositFee&shippingfee=$shippingFee&deliverymethod=$deliveryMethod&storeId=$storeId";
+
+      // Send the POST request
       final response = await http.post(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Bearer $authToken',
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $authToken",
         },
-        body: jsonEncode(cart.toJson()),
       );
-
+      print('Response Status: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      // Check the response from the API
       if (response.statusCode == 200) {
-        // Parse response to check success
-        final data = jsonDecode(response.body);
-        return data['success'] ?? false; // Check for a 'success' key in API response
+        // Successfully confirmed the order
+        print("Order confirmed successfully: ${response.body}");
+
+        // Parse the response body
+        final Map<String, dynamic> responseData = json.decode(response.body);
+
+        // Extract orderId from the response
+        if (responseData['orderId'] != null) {
+          int orderId = responseData['orderId'];
+          print("Order ID: $orderId");
+
+          // Return a map containing success status and the orderId
+          return {
+            'success': true,
+            'orderId': orderId,
+          };
+        } else {
+          // If orderId is missing from the response
+          return {'success': false, 'orderId': null};
+        }
       } else {
-        print('Failed to confirm order: ${response.statusCode}');
-        return false;
+        // Failed to confirm the order
+        print("Failed to confirm order: ${response.statusCode}");
+        return {'success': false, 'orderId': null};
       }
     } catch (e) {
-      print('Error confirming order: $e');
-      return false;
+      // Handle error
+      print("Error confirming order: $e");
+      return {'success': false, 'orderId': null};
     }
   }
+
   static Future<bool> deleteProductFromCart(String authToken, String productCode, int userId) async {
     try {
       final url = Uri.parse("$baseUrl/remove/$productCode?userId=$userId");
@@ -268,5 +301,6 @@ class ApiServicesCart {
       return false;
     }
   }
+
 
 }

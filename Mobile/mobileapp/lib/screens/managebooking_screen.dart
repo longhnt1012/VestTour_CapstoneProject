@@ -38,7 +38,7 @@ class _BookingsScreenState extends State<ManageBookingsScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to load bookings';
+        _errorMessage = 'You dont have booking appoinment' ;
         _isLoading = false;
       });
     }
@@ -53,7 +53,6 @@ class _BookingsScreenState extends State<ManageBookingsScreen> {
       return null; // Return null if any error occurs
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +69,7 @@ class _BookingsScreenState extends State<ManageBookingsScreen> {
           final booking = _bookings[index];
 
           return FutureBuilder<Store?>(
-            future: _getStoreDetails(booking.storeId!), // Lấy thông tin cửa hàng từ storeId
+            future: _getStoreDetails(booking.storeId!), // Fetch store details using storeId
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -82,15 +81,63 @@ class _BookingsScreenState extends State<ManageBookingsScreen> {
                 String storeAddress = store?.address ?? 'Unknown Address';
 
                 return Card(
-                  child: ListTile(
-                    title: Text(storeName),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  margin: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Stack(
                       children: [
-                        Text('Address: $storeAddress'),
-                        Text('Date: ${booking.bookingDate ?? 'No date'}'),
-                        Text('Time: ${booking.time ?? 'No time'}'),
-                        Text('Service: ${booking.service ?? 'No service'}'),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    storeName,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                // Status displayed in top-right
+                                Positioned(
+                                  right: 10,
+                                  top: 5,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: _getStatusColor(booking.status),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      booking.status ?? 'Pending',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Text('Address: $storeAddress'),
+                            SizedBox(height: 4),
+                            Text('Date: ${booking.bookingDate ?? 'No date'}'),
+                            SizedBox(height: 4),
+                            Text('Time: ${booking.time ?? 'No time'}'),
+                            SizedBox(height: 4),
+                            Text('Service: ${booking.service ?? 'No service'}'),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -103,5 +150,17 @@ class _BookingsScreenState extends State<ManageBookingsScreen> {
         },
       ),
     );
+  }
+
+// Function to determine the status color
+  Color _getStatusColor(String? status) {
+    switch (status) {
+      case 'Pending':
+        return Colors.pink; // Pink for pending
+      case 'Confirmed':
+        return Colors.green; // Green for confirmed
+      default:
+        return Colors.grey; // Grey for other statuses
+    }
   }
 }

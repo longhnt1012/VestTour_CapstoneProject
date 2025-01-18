@@ -216,8 +216,6 @@ class _CartScreenState extends State<CartScreen> {
       print('Error: $e');
     }
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -234,6 +232,9 @@ class _CartScreenState extends State<CartScreen> {
           } else if (snapshot.hasData) {
             final cartItems = snapshot.data!['cartItems'] as List;
             final cartTotal = snapshot.data!['cartTotal'];
+
+            // Check if the cart is empty or null
+            bool isCartEmpty = cartItems.isEmpty || cartTotal == null;
 
             return Stack(
               children: [
@@ -323,34 +324,6 @@ class _CartScreenState extends State<CartScreen> {
                                               }
                                             },
                                           ),
-                                         /* FutureBuilder<List<StyleOption>?>(
-                                            future: getStyleOptions(
-                                              item['customProduct']['pickedStyleOptions']
-                                                  .map<int>((option) => option['styleOptionID'])
-                                                  .toList(),
-                                            ),
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                                return CircularProgressIndicator();
-                                              } else if (snapshot.hasError) {
-                                                return Text('Error: ${snapshot.error}');
-                                              } else if (snapshot.hasData) {
-                                                final styleOptions = snapshot.data!;
-                                                return ListView.builder(
-                                                  itemCount: styleOptions.length,
-                                                  itemBuilder: (context, index) {
-                                                    final styleOption = styleOptions[index];
-                                                    return ListTile(
-                                                      title: Text(styleOption.optionType!),
-                                                      subtitle: Text(styleOption.optionValue!),
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                return Text('No style options found');
-                                              }
-                                            },
-                                          )*/
                                         ],
                                         Text('Price: \$${item['price'] ?? 'N/A'}'),
                                         Row(
@@ -399,11 +372,14 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: isCartEmpty
+                              ? null // Disable button if the cart is empty
+                              : () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CheckoutScreen(cartTotal: cartTotal)),
+                                builder: (context) => CheckoutScreen(cartTotal: cartTotal),
+                              ),
                             );
                           },
                           child: Text('Checkout'),
@@ -412,10 +388,8 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                 ),
-
               ],
             );
-
           } else {
             return Center(child: Text('Cart is empty'));
           }
@@ -436,6 +410,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+
 
   Future<String?> getAuthToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

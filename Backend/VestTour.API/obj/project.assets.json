@@ -7744,19 +7744,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {}
+    "C:\\Users\\ACER\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
+      "projectUniqueName": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
       "projectName": "VestTour.API",
-      "projectPath": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.API\\obj\\",
+      "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.API\\VestTour.API.csproj",
+      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7771,11 +7776,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
-              "projectPath": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj"
+            "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj": {
+              "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Repository\\VestTour.Repository.csproj"
             },
-            "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {
-              "projectPath": "C:\\Users\\Dell\\Documents\\GitHub\\Capstone_Group22\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj"
+            "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj": {
+              "projectPath": "D:\\FPT University\\Semester_9_2024\\C#\\MinhNhut\\VestTour_CapstoneProject\\Backend\\VestTour.Service\\VestTour.Service.csproj"
             }
           }
         }
@@ -7784,11 +7789,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7853,7 +7853,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

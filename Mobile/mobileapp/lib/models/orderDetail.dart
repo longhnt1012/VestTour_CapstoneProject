@@ -1,9 +1,8 @@
-
 class OrderDetails {
   int? orderId;
   int? productId;
   int? quantity;
-  int? price;
+  double? price;
 
   OrderDetails({this.orderId, this.productId, this.quantity, this.price});
 

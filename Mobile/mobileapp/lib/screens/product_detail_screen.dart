@@ -146,7 +146,9 @@ class ProductDetailScreen extends StatelessWidget {
                       product.productCode ?? 'N/A',
                       style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
+
                     const SizedBox(height: 8),
+
                     FutureBuilder<String?>(
                       future: _fetchCategoryName(product.categoryID),
                       builder: (context, snapshot) {
@@ -168,6 +170,40 @@ class ProductDetailScreen extends StatelessWidget {
                     Text(
                       '${product.price?.toStringAsFixed(2) ?? 'N/A'} USD (Tax Incl.)',
                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Wrap(
+                      spacing: 8.0, // Khoảng cách giữa các ô size
+                      children: ['S', 'M', 'L', 'XL'].map(
+                            (size) {
+                          final isAvailable = product.size?.contains(size) ?? false;
+                          return GestureDetector(
+                            onTap: isAvailable
+                                ? () {
+                              // Xử lý sự kiện khi size khả dụng được chọn
+                              print('Selected size: $size');
+                            }
+                                : null, // Không làm gì khi size không khả dụng
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white, // Màu nền chung
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Text(
+                                size,
+                                style: TextStyle(
+                                  color: isAvailable ? Colors.black : Colors.grey, // Màu chữ
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  decoration: isAvailable
+                                      ? TextDecoration.none // Không gạch khi có
+                                      : TextDecoration.lineThrough, // Gạch khi không có
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ).toList(),
                     ),
                   ],
                 ),

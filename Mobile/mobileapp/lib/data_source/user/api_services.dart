@@ -67,4 +67,114 @@ class ApiService {
       return null;
     }
   }
+
+
+
+
+  /// Lấy zodiac dựa trên ngày sinh
+  Future<Map<String, dynamic>?> getZodiac(String dateOfBirth) async {
+    final String endpoint =
+        "https://vesttour.xyz/api/User/get-zodiac?birthDate=$dateOfBirth";
+
+    try {
+      final response = await http.get(Uri.parse(endpoint));
+
+      if (response.statusCode == 200) {
+        // Parse JSON response
+        final Map<String, dynamic> data = json.decode(response.body);
+        print('$data');
+
+        // Trả về cả "zodiacSign" và "suggestedColors"
+        return {
+          'zodiacSign': data['zodiacSign'],
+          'suggestedColors': data['suggestedColors']
+        };
+      } else {
+        print("Failed to fetch zodiac. Status code: ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      print("Error while fetching zodiac: $e");
+      return null;
+    }
+  }
+  Future<Map<String, dynamic>> forgotPassword(String email) async {
+    String url="https://vesttour.xyz/api/User/forgot-password";
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': email,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body); // Trả về dữ liệu nhận được
+    } else {
+      throw Exception('Failed to send request');
+    }
+  }
+  Future<Map<String, dynamic>> resetPassword(String token, String newPassword) async {
+    String url="https://vesttour.xyz/api/User/reset-password";
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'token': token, 'newPassword': newPassword}),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);  // Dữ liệu trả về sau khi reset mật khẩu thành công
+    } else {
+      throw Exception('Failed to reset password');
+    }
+  }
+  Future<User?> getUserProfile(int userId) async {
+    final userId = await getUserIdFromSharedPreferences();
+    final url = Uri.parse("$baseUrl/User/$userId");
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // Parse the JSON data into a User object
+        final Map<String, dynamic> data = json.decode(response.body);
+        return User.fromJson(data);
+      } else {
+        // Handle other status codes
+        print("Failed to fetch user. Status code: ${response.statusCode}");
+        return null;
+      }
+    } catch (error) {
+      // Handle connection or parsing errors
+      print("Error fetching user by ID: $error");
+      return null;
+    }
+  }
+  Future<bool> updateUser(int userId, Map<String, dynamic> updatedData) async {
+    final url = Uri.parse('https://vesttour.xyz/api/User/$userId');
+    try {
+
+      final authToken = await getAuthToken();
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken', // Nếu cần
+        },
+        body: jsonEncode(updatedData),
+      );
+
+      if (response.statusCode == 204) {
+        return true; // Update thành công
+      } else {
+        print('Error: ${response.statusCode}, ${response.body}');
+        return false; // Lỗi từ server
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false; // Lỗi từ client
+    }
+  }
+
 }

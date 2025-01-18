@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mobileapp/models/orderDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/order.dart';
 
-class ApiServices {
-  static const String baseUrl = "http://165.22.243.162:8080/api/Orders/user";
+class ApiServicesOrder {
+  static const String baseUrl = "https://vesttour.xyz/api/Orders/user";
 
   // Fetch auth token from SharedPreferences
   static Future<String?> getAuthToken() async {
@@ -54,6 +55,29 @@ class ApiServices {
     } catch (e) {
       print("An error occurred while fetching orders: $e");
       return [];
+    }
+  }
+  static Future<List<OrderDetails>?> getOrderDetails(int? orderId) async {
+    final url = Uri.parse('https://vesttour.xyz/api/Orders/$orderId/details');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['orderDetails'] != null) {
+          return (data['orderDetails'] as List)
+              .map((item) => OrderDetails.fromJson(item))
+              .toList();
+        } else {
+          return [];
+        }
+      } else {
+        throw Exception('Failed to load order details');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the request
+      throw Exception('Failed to load order details: $error');
     }
   }
 }

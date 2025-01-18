@@ -38,6 +38,7 @@ class ApiService {
   /// Fetch measurements for the user
   static Future<Measurement?> getMeasurementForUser() async {
     try {
+      String? authToken = await getAuthToken();
       final int? userId = await getUserIdFromSharedPreferences();
 
       if (userId == null) {
@@ -50,7 +51,7 @@ class ApiService {
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer ${await getAuthToken()}",
+          'Authorization': 'Bearer $authToken',
         },
       );
 
@@ -71,7 +72,7 @@ class ApiService {
   static Future<http.Response> postMeasurement(Map<String, dynamic> measurementData) async {
     final String url = 'http://165.22.243.162:8080/api/Measurement';
     final int? userId = await getUserIdFromSharedPreferences();
-
+    String? authToken = await getAuthToken();
     if (userId == null) {
       print("User ID is null.");
 
@@ -81,7 +82,7 @@ class ApiService {
       final response = await http.post(
         Uri.parse(url),
         headers: { "Content-Type": "application/json",
-          "Authorization": "Bearer ${await getAuthToken()}"},
+      'Authorization': 'Bearer $authToken',},
         body: jsonEncode(measurementData),
       );
 
@@ -100,12 +101,13 @@ class ApiService {
 
   static Future<bool> updateMeasurement(int measurementId, Map<String, dynamic> data) async {
     final url = Uri.parse("http://165.22.243.162:8080/api/Measurement/$measurementId");
-
+    String? authToken = await getAuthToken();
     try {
       final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken',
         },
         body: jsonEncode(data),
       );

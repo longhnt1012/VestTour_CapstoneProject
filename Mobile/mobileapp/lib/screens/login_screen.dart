@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapp/screens/forgot_password.dart';
 import 'package:mobileapp/screens/register_screen.dart';
 
 import '../data_source/login/api_services.dart';
@@ -140,6 +141,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Forgot Password Link
                     TextButton(
                       onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen(),
+                            )
+                        );
                         // Navigate to Forgot Password screen
                         print("Forgot Password tapped");
                       },

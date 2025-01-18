@@ -24,7 +24,7 @@ class _BookingScreenState extends State<BookingScreen> {
     'assets/images/storehanoi.jpg', // Replace with actual image paths
     'assets/images/storedanang.jpg', // Replace with actual image paths
   ];
-  List<String> _services = ['Tailor', 'Return', 'Exchange', 'Fix']; // List of services
+  List<String> _services = ['Tailor', 'Exchange', 'Fix']; // List of services
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _BookingScreenState extends State<BookingScreen> {
   Future<void> _fetchStores() async {
     List<Store> stores = await ApiServices.getAllStores();
     setState(() {
-      _stores = stores.where((store) => store.name != null).toList();
+      _stores = stores.where((store) => store.name != null && store.status =="Active").toList();
     });
   }
 

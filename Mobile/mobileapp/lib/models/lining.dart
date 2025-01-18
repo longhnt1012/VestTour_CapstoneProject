@@ -2,13 +2,15 @@ class Lining {
   int? liningId;
   String? liningName;
   String? imageUrl;
+  String? status;
 
-  Lining({this.liningId, this.liningName, this.imageUrl});
+  Lining({this.liningId, this.liningName, this.imageUrl, this.status});
 
   Lining.fromJson(Map<String, dynamic> json) {
     liningId = json['liningId'];
     liningName = json['liningName'];
     imageUrl = json['imageUrl'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -16,6 +18,7 @@ class Lining {
     data['liningId'] = this.liningId;
     data['liningName'] = this.liningName;
     data['imageUrl'] = this.imageUrl;
+    data['status'] = this.status;
     return data;
   }
 }

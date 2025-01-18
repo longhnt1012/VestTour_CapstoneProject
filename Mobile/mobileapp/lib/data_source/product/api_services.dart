@@ -5,7 +5,7 @@ import '../../models/product.dart';
 
 class ApiServicesProduct {
   // Define the base URL for the API
-  static const String _baseUrl = 'http://165.22.243.162:8080/api/Product';
+  static const String _baseUrl = 'https://vesttour.xyz/api/Product';
 
   // Method to fetch the list of products with isCustom = false
   Future<List<Product>> getProductsCustomFalse() async {

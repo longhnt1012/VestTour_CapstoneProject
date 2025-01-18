@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundColor: Color.fromARGB(208, 255, 113, 98),
+              backgroundColor: Color(0xFFD2B48C),
               child: Icon(icon, size: 30, color: Colors.black),
             ),
             SizedBox(height: 8),

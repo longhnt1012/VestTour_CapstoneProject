@@ -26,7 +26,7 @@ class _CustomVestScreenState extends State<CustomVestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Customize Your Vest"),
+        title: Text("Customize Your Suit"),
         backgroundColor:Color(0xFFD2B48C),
       ),
       body: SingleChildScrollView(  // Wrap the content with SingleChildScrollView

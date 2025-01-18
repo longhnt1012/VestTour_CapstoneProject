@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/data_source/cart/api_services.dart';
 import 'package:mobileapp/data_source/lining/api_services.dart';
+import 'package:mobileapp/data_source/measurement/api_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data_source/fabrics/api_services.dart';
 import '../models/fabric.dart';
 import '../models/lining.dart';
+import '../models/measurement.dart';
 import 'cart_screen.dart'; // Import CartScreen to route there
 
 class LiningScreen extends StatefulWidget {
@@ -26,7 +28,7 @@ class _LiningScreenState extends State<LiningScreen> {
   int? selectedLiningId;
   int? userId;
   int? measurementId;
-
+  Measurement? _measurement;
   @override
   void initState() {
     super.initState();
@@ -37,9 +39,13 @@ class _LiningScreenState extends State<LiningScreen> {
   }
 
   Future<void> _loadMeasurementId() async {
-    final prefs = await SharedPreferences.getInstance();
+    final measurement = await ApiService.getMeasurementForUser();
     setState(() {
-      measurementId = prefs.getInt('measurementId');
+      _measurement = measurement;
+      if (measurement != null) {
+        // Populate the form fields
+      measurementId=measurement.measurementId;
+      }
     });
   }
 
@@ -47,6 +53,7 @@ class _LiningScreenState extends State<LiningScreen> {
     final _userId = await ApiServicesCart.getUserIdFromSharedPreferences();
     setState(() {
       userId = _userId; // Assign userId value
+
     });
   }
 

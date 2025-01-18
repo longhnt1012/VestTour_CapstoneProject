@@ -1,5 +1,3 @@
-import 'package:mobileapp/models/product.dart';
-
 import 'orderDetail.dart';
 
 class Order {
@@ -7,7 +5,6 @@ class Order {
   int? userID;
   int? storeId;
   int? voucherId;
-  int? shipperPartnerId;
   String? orderDate;
   String? shippedDate;
   String? note;
@@ -16,11 +13,14 @@ class Order {
   String? guestName;
   String? guestEmail;
   String? guestAddress;
-  List<Product>? products;
+  String? guestPhone;
   double? totalPrice;
   double? deposit;
   double? shippingFee;
   String? deliveryMethod;
+  double? revenueShare;
+  String? shipStatus;
+  int? shipperPartnerId;
   List<OrderDetails>? orderDetails;
 
   Order(
@@ -28,7 +28,6 @@ class Order {
         this.userID,
         this.storeId,
         this.voucherId,
-        this.shipperPartnerId,
         this.orderDate,
         this.shippedDate,
         this.note,
@@ -37,11 +36,14 @@ class Order {
         this.guestName,
         this.guestEmail,
         this.guestAddress,
-        this.products,
+        this.guestPhone,
         this.totalPrice,
         this.deposit,
         this.shippingFee,
         this.deliveryMethod,
+        this.revenueShare,
+        this.shipStatus,
+        this.shipperPartnerId,
         this.orderDetails});
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -49,7 +51,6 @@ class Order {
     userID = json['userID'];
     storeId = json['storeId'];
     voucherId = json['voucherId'];
-    shipperPartnerId = json['shipperPartnerId'];
     orderDate = json['orderDate'];
     shippedDate = json['shippedDate'];
     note = json['note'];
@@ -58,16 +59,14 @@ class Order {
     guestName = json['guestName'];
     guestEmail = json['guestEmail'];
     guestAddress = json['guestAddress'];
-    if (json['products'] != null) {
-      products = <Product>[];
-      json['products'].forEach((v) {
-        products!.add(new Product.fromJson(v));
-      });
-    }
+    guestPhone = json['guestPhone'];
     totalPrice = json['totalPrice'];
     deposit = json['deposit'];
     shippingFee = json['shippingFee'];
     deliveryMethod = json['deliveryMethod'];
+    revenueShare = json['revenueShare'];
+    shipStatus = json['shipStatus'];
+    shipperPartnerId = json['shipperPartnerId'];
     if (json['orderDetails'] != null) {
       orderDetails = <OrderDetails>[];
       json['orderDetails'].forEach((v) {
@@ -82,7 +81,6 @@ class Order {
     data['userID'] = this.userID;
     data['storeId'] = this.storeId;
     data['voucherId'] = this.voucherId;
-    data['shipperPartnerId'] = this.shipperPartnerId;
     data['orderDate'] = this.orderDate;
     data['shippedDate'] = this.shippedDate;
     data['note'] = this.note;
@@ -91,16 +89,19 @@ class Order {
     data['guestName'] = this.guestName;
     data['guestEmail'] = this.guestEmail;
     data['guestAddress'] = this.guestAddress;
-    if (this.products != null) {
-      data['products'] = this.products!.map((v) => v.toJson()).toList();
-    }
+    data['guestPhone'] = this.guestPhone;
     data['totalPrice'] = this.totalPrice;
     data['deposit'] = this.deposit;
     data['shippingFee'] = this.shippingFee;
     data['deliveryMethod'] = this.deliveryMethod;
+    data['revenueShare'] = this.revenueShare;
+    data['shipStatus'] = this.shipStatus;
+    data['shipperPartnerId'] = this.shipperPartnerId;
     if (this.orderDetails != null) {
       data['orderDetails'] = this.orderDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
+
+

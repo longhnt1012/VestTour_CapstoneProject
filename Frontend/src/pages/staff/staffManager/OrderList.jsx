@@ -50,6 +50,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import BankingPayment from '../../../assets/img/elements/bankingPayment.jpg'
+import { toast } from "react-toastify";
 
 const BASE_URL = "https://vesttour.xyz/api"; // Update this to match your API URL
 const EXCHANGE_API_KEY = '6aa988b722d995b95e483312';
@@ -143,6 +144,170 @@ const validateShippedDate = (date) => {
     return 'Delivery date cannot be in the past';
   }
   return '';
+};
+
+// Tạo một utility function để xử lý error messages
+const getErrorMessage = (error) => {
+  if (!error.response) {
+    return 'Network error - Please check your connection';
+  }
+
+  const { status, data } = error.response;
+
+  // Xử lý các trường hợp lỗi 400 cụ thể
+  if (status === 400) {
+    // Kiểm tra message từ API
+    if (data?.message) {
+      switch (data.message) {
+        case 'INVALID_VOUCHER':
+          return 'This voucher is not valid or has expired';
+        case 'INSUFFICIENT_QUANTITY':
+          return 'Some products are out of stock';
+        case 'INVALID_MEASUREMENT':
+          return 'Please check measurement details';
+        case 'INVALID_ADDRESS':
+          return 'Please provide a valid delivery address';
+        case 'INVALID_PAYMENT':
+          return 'Payment information is incorrect';
+        default:
+          return data.message; // Sử dụng message từ API nếu có
+      }
+    }
+    
+    // Xử lý validation errors
+    if (data?.errors) {
+      const errorMessages = Object.values(data.errors).flat();
+      return errorMessages[0] || 'Please check your input';
+    }
+
+    return 'Please check your input information';
+  }
+
+  // Xử lý các status code khác
+  switch (status) {
+    case 401:
+      return 'Your session has expired. Please login again';
+    case 403:
+      return 'You do not have permission to perform this action';
+    case 404:
+      return 'The requested information could not be found';
+    case 500:
+      return 'Something went wrong. Please try again later';
+    default:
+      return 'An error occurred. Please try again';
+  }
+};
+
+// Cập nhật API interceptor
+api.interceptors.response.use(
+  response => response,
+  error => {
+    const errorMessage = getErrorMessage(error);
+    
+    // Set snackbar message với thông báo thân thiện
+    setSnackbarMessage(errorMessage);
+    setSnackbarSeverity('error');
+    setSnackbarOpen(true);
+
+    // Log chi tiết lỗi cho development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API Error:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        error: error
+      });
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Cập nhật component ProductTable để nhận thêm props
+const ProductTable = ({ 
+  products = [], 
+  customProducts = [], 
+  onRemoveProduct, 
+  onRemoveCustomProduct,
+  fabrics = [],
+  styleOptions = [],
+  linings = []
+}) => {
+  if (products.length === 0 && customProducts.length === 0) {
+    return (
+      <Paper sx={{ p: 3, mt: 2, textAlign: 'center' }}>
+        <Typography color="text.secondary">
+          No products added yet. Click "Add Products" or "Add Custom Product" to begin.
+        </Typography>
+      </Paper>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Product Code</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell>Details</TableCell>
+            <TableCell>Quantity</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Total</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {products.map((product, index) => (
+            <TableRow key={`regular-${index}`}>
+              <TableCell>{product.productCode}</TableCell>
+              <TableCell>Regular</TableCell>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
+              <TableCell>${product.price}</TableCell>
+              <TableCell>${product.price * product.quantity}</TableCell>
+              <TableCell>
+                <IconButton onClick={() => onRemoveProduct(index)} color="error">
+                  <Delete />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+
+          {customProducts.map((product, index) => (
+            <TableRow key={`custom-${index}`}>
+              <TableCell>{product.productCode}</TableCell>
+              <TableCell>Custom</TableCell>
+              <TableCell>
+                <div>
+                  <strong>Fabric:</strong> {fabrics.find(f => f.fabricID === product.fabricID)?.fabricName}<br />
+                  <strong>Lining:</strong> {linings.find(l => l.liningId === product.liningID)?.liningName}<br />
+                  <strong>Style Options:</strong><br />
+                  {product.pickedStyleOptions.map(style => 
+                    styleOptions.find(s => s.styleOptionId === style.styleOptionID)?.optionValue
+                  ).join(', ')}
+                  {/* Chỉ hiển thị note khi có nội dung */}
+                  {product.note && product.note.trim() && (
+                    <>
+                      <br />
+                      <strong>Note:</strong> {product.note}
+                    </>
+                  )}
+                </div>
+              </TableCell>
+              <TableCell>{product.quantity}</TableCell>
+              <TableCell>${product.price}</TableCell>
+              <TableCell>${product.price * product.quantity}</TableCell>
+              <TableCell>
+                <IconButton onClick={() => onRemoveCustomProduct(index)} color="error">
+                  <Delete />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 };
 
 const OrderList = () => {
@@ -246,6 +411,11 @@ const OrderList = () => {
   const [isLoadingDeposits, setIsLoadingDeposits] = useState(false);
   // Thêm state để theo dõi việc cần refresh data
   const [refreshData, setRefreshData] = useState(false);
+  // Thêm state để lưu shipping fee gốc
+  const [originalShippingFee, setOriginalShippingFee] = useState(0);
+  const [customNote, setCustomNote] = useState('');
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [isLoadingVouchers, setIsLoadingVouchers] = useState(false);
 
   const handleDateFilterChange = (event) => {
     setDateFilter(event.target.value);
@@ -312,70 +482,82 @@ const OrderList = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+    
     const fetchVouchers = async () => {
+      setIsLoadingVouchers(true);
       try {
-        const response = await api.get('/Voucher/valid');
-        console.log('Valid Vouchers:', response.data);
+        const response = await api.get('/Voucher/valid', {
+          signal: controller.signal
+        });
         setVouchers(response.data);
       } catch (error) {
-        console.error('Error fetching vouchers:', error);
-        setSnackbarMessage('Error loading vouchers');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        if (!error.name === 'AbortError') {
+          console.error('Error fetching vouchers:', error);
+          toast.error('Error loading vouchers');
+        }
+      } finally {
+        setIsLoadingVouchers(false);
       }
     };
 
     fetchVouchers();
+    
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    
     const fetchProducts = async () => {
+      setIsLoadingProducts(true);
       try {
-        const response = await api.get('/Product/products/custom-false');
+        const response = await api.get('/Product/products/custom-false', {
+          signal: controller.signal
+        });
         setProducts(response.data);
       } catch (error) {
-        console.error('Error fetching products:', error);
-        setSnackbarMessage('Error loading products');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        if (!error.name === 'AbortError') {
+          console.error('Error fetching products:', error);
+          toast.error('Error loading products');
+        }
+      } finally {
+        setIsLoadingProducts(false);
       }
     };
     fetchProducts();
+    
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    
     const fetchCustomData = async () => {
       try {
-        // Fetch fabrics
-        const fabricsResponse = await api.get('/Fabrics');
-        setFabrics(Array.isArray(fabricsResponse.data) ? fabricsResponse.data : []);
-        console.log('Fabrics data:', fabricsResponse.data); // Thêm log để debug
-  
-        // Fetch linings
-        const liningsResponse = await api.get('/linings');
-        const liningsData = liningsResponse.data?.data || [];
-        console.log('Linings data:', liningsData);
-        setLinings(liningsData);
-  
-        // Fetch style options
-        const styleOptionsResponse = await api.get('/StyleOption');
-        setStyleOptions(Array.isArray(styleOptionsResponse.data) ? styleOptionsResponse.data : []);
-        console.log('Style options data:', styleOptionsResponse.data); // Thêm log để debug
-  
+        const [fabricsRes, liningsRes, styleOptionsRes] = await Promise.all([
+          api.get('/Fabrics'),
+          api.get('/linings'),
+          api.get('/StyleOption')
+        ]);
+        
+        setFabrics(Array.isArray(fabricsRes.data) ? fabricsRes.data : []);
+        setLinings(liningsRes.data?.data || []);
+        setStyleOptions(Array.isArray(styleOptionsRes.data) ? styleOptionsRes.data : []);
+        
       } catch (error) {
         console.error('Error fetching custom data:', error);
-        // Đặt giá trị mặc định là mảng rỗng khi có lỗi
         setFabrics([]);
         setLinings([]);
         setStyleOptions([]);
-        setSnackbarMessage('Error loading custom data');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        toast.error('Error loading custom data');
       }
     };
   
     fetchCustomData();
-  }, []);
+    
+    return () => controller.abort();
+  }, []); // Empty dependency array since this should only run once
 
   useEffect(() => {
     const fetchMeasurements = async () => {
@@ -538,8 +720,17 @@ const OrderList = () => {
   };
 
   const handleCreateOrder = async () => {
-    setIsCreatingOrder(true);
     try {
+      const validationErrors = validateOrderForm();
+      if (Object.keys(validationErrors).length > 0) {
+        // Hiển thị tất cả các lỗi
+        Object.values(validationErrors).forEach(error => {
+          toast.error(error);
+        });
+        return;
+      }
+
+      setIsCreatingOrder(true);
       // Validation checks...
 
       // Format regular products
@@ -645,14 +836,28 @@ const OrderList = () => {
     }
   };
 
+  // Thêm hàm tính shippedDate
+  const calculateShippedDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 4); // Thêm 4 ngày
+    return date.toISOString().split('T')[0]; // Format về YYYY-MM-DD
+  };
+
+  // Cập nhật lại hàm handleCreateFormChange
   const handleCreateFormChange = (field, value) => {
     if (field === 'shippedDate') {
+      // Nếu không có giá trị được chọn, set mặc định là 4 ngày sau
+      if (!value) {
+        value = calculateShippedDate();
+      }
+      
+      // Validate ngày giao hàng
       const dateError = validateShippedDate(value);
       setValidationErrors(prev => ({
         ...prev,
         shippedDate: dateError
       }));
-      if (dateError) return; // Don't update if date is invalid
+      if (dateError) return;
     }
     
     setCreateOrderForm(prev => ({
@@ -661,68 +866,114 @@ const OrderList = () => {
     }));
   };
 
+  // Thêm useEffect để set shippedDate mặc định khi mở form
+  useEffect(() => {
+    if (open) {
+      setCreateOrderForm(prev => ({
+        ...prev,
+        shippedDate: calculateShippedDate()
+      }));
+    }
+  }, [open]);
+
   const findNearestStore = (address) => {
-    const nearest = stores.reduce((prev, curr) => {
-      return prev;
-    }, stores[0]);
-    setNearestStore(nearest);
+    if (!address || !stores.length) return;
+
+    try {
+      // Lọc các store trong cùng district
+      const storesInDistrict = stores.filter(store => 
+        store.districtID === parseInt(address.districtId)
+      );
+
+      // Nếu có store trong district, hiển thị chúng đầu tiên
+      if (storesInDistrict.length > 0) {
+        setStores([...storesInDistrict, ...stores.filter(store => 
+          !storesInDistrict.includes(store)
+        )]);
+      }
+
+      // Chỉ reset nearestStore nếu chưa có store nào được chọn
+      if (!nearestStore) {
+        setNearestStore(null);
+        setCreateOrderForm(prev => ({
+          ...prev,
+          storeId: 0
+        }));
+      }
+
+    } catch (error) {
+      console.error('Error processing stores:', error);
+    }
   };
 
+  // Sửa lại hàm calculateShippingFee
   const calculateShippingFee = async (addressData) => {
     console.log('Calculating Shipping Fee with data:', addressData);
     
     if (!addressData?.wardCode || !addressData?.districtId || !nearestStore) {
-        console.log('Missing required data:', {
-            wardCode: addressData?.wardCode,
-            districtId: addressData?.districtId,
-            nearestStore: nearestStore
-        });
-        setCreateOrderForm(prev => ({
-            ...prev,
-            shippingFee: 2
-        }));
-        return;
+      console.log('Missing required data');
+      const defaultFee = 2;
+      setOriginalShippingFee(defaultFee);
+      setCreateOrderForm(prev => ({
+        ...prev,
+        shippingFee: defaultFee
+      }));
+      return;
     }
 
     try {
-        const shippingPayload = {
-            serviceId: 0,
-            insuranceValue: 0,
-            coupon: "",
-            toWardCode: addressData.wardCode,
-            toDistrictId: parseInt(addressData.districtId),
-            fromDistrictId: nearestStore.districtID,
-            weight: 0,
-            length: 0,
-            width: 0,
-            height: 0,
-            shopCode: nearestStore.storeCode
-        };
+      const shippingPayload = {
+        serviceId: 0,
+        insuranceValue: 0,
+        coupon: "",
+        toWardCode: addressData.wardCode,
+        toDistrictId: parseInt(addressData.districtId),
+        fromDistrictId: nearestStore.districtID,
+        weight: 0,
+        length: 0,
+        width: 0,
+        height: 0,
+        shopCode: nearestStore.storeCode
+      };
 
-        console.log('Shipping Fee Payload:', shippingPayload);
+      console.log('Shipping Fee Payload:', shippingPayload);
 
-        const response = await axios.post(
-            'https://vesttour.xyz/api/Shipping/calculate-fee',
-            shippingPayload
-        );
+      const response = await axios.post(
+        'https://vesttour.xyz/api/Shipping/calculate-fee',
+        shippingPayload
+      );
 
-        if (response.data) {
-            console.log('Shipping Fee Response (VND):', response.data.total);
-            const shippingFeeVND = response.data.total || 0;
-            const shippingFeeUSD = await convertVNDToUSD(shippingFeeVND);
-            console.log('Shipping Fee (USD):', shippingFeeUSD);
-            setCreateOrderForm(prev => ({
-                ...prev,
-                shippingFee: shippingFeeUSD
-            }));
+      if (response.data) {
+        console.log('Shipping Fee Response (VND):', response.data.total);
+        const shippingFeeVND = response.data.total || 0;
+        const shippingFeeUSD = await convertVNDToUSD(shippingFeeVND);
+        console.log('Shipping Fee (USD):', shippingFeeUSD);
+        
+        // Lưu shipping fee gốc
+        setOriginalShippingFee(shippingFeeUSD);
+        
+        // Áp dụng giảm giá nếu có voucher FREESHIP
+        const currentVoucher = vouchers.find(v => v.voucherId === createOrderForm.voucherId);
+        let finalShippingFee = shippingFeeUSD;
+        
+        if (currentVoucher?.voucherCode?.includes('FREESHIP')) {
+          const shippingDiscount = shippingFeeUSD * currentVoucher.discountNumber;
+          finalShippingFee = Math.max(0, shippingFeeUSD - shippingDiscount);
         }
-    } catch (error) {
-        console.error('Error calculating shipping fee:', error);
+
         setCreateOrderForm(prev => ({
-            ...prev,
-            shippingFee: 2
+          ...prev,
+          shippingFee: finalShippingFee
         }));
-        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error('Error calculating shipping fee:', error);
+      const defaultFee = 2;
+      setOriginalShippingFee(defaultFee);
+      setCreateOrderForm(prev => ({
+        ...prev,
+        shippingFee: defaultFee
+      }));
     }
   };
 
@@ -778,24 +1029,42 @@ const OrderList = () => {
     }
   };
 
+  const calculateCustomProductPrice = (fabricId, styleOptions, measurementDetails) => {
+    // Lấy giá vải
+    const fabric = fabrics.find(f => f.fabricID === fabricId);
+    let basePrice = fabric ? fabric.price : 0;
+
+    // Cộng thêm giá của các style options (nếu có)
+    const optionsPrice = styleOptions.reduce((sum, option) => {
+      const styleOption = styleOptions.find(so => so.styleOptionId === option.styleOptionID);
+      return sum + (styleOption?.additionalPrice || 0);
+    }, 0);
+
+    // Tính phí phụ thu dựa trên measurement
+    let additionalCharge = 0;
+    if (measurementDetails) {
+      if (measurementDetails.height > 190 || measurementDetails.weight > 100) {
+        additionalCharge = 20;
+      } else if (measurementDetails.height > 180 && measurementDetails.height <= 190 || 
+                measurementDetails.weight > 85 && measurementDetails.weight <= 100) {
+        additionalCharge = 10;
+      }
+    }
+
+    // Tổng giá = giá vải + giá options + phí phụ thu size
+    const totalPrice = basePrice + optionsPrice + additionalCharge;
+
+    return {
+      price: totalPrice,
+      additionalCharges: {
+        sizeCharge: additionalCharge
+      }
+    };
+  };
+
   const handleAddCustomProduct = async () => {
     try {
-      // Validation
-      if (!selectedFabric) {
-        throw new Error('Please select a fabric');
-      }
-      if (!selectedLining) {
-        throw new Error('Please select a lining');
-      }
-      if (selectedStyleOptions.length === 0) {
-        throw new Error('Please select at least one style option');
-      }
-      if (!measurementId) {
-        throw new Error('Please select a measurement');
-      }
-      if (customQuantity < 1) {
-        throw new Error('Quantity must be greater than 0');
-      }
+      // Validation checks...
 
       // Fetch measurement details
       const measurementResponse = await api.get(`/Measurement/${measurementId}`);
@@ -808,11 +1077,17 @@ const OrderList = () => {
         measurementDetails
       );
 
-      // Tạo note về phụ phí (nếu có)
+      // Chỉ thêm additionalNote nếu có phụ phí size
       let additionalNote = '';
       if (priceDetails.additionalCharges.sizeCharge > 0) {
         additionalNote = `An additional fee of $${priceDetails.additionalCharges.sizeCharge}.00 per unit has been applied due to exceeding standard measurements.`;
       }
+
+      // Kết hợp note từ người dùng và additional note (nếu có)
+      const finalNote = [
+        customNote, // Note từ người dùng (nếu có)
+        additionalNote // Note về phụ phí (nếu có)
+      ].filter(Boolean).join('\n'); // Lọc bỏ các giá trị empty và join bằng xuống dòng
 
       // Create new custom product
       const newCustomProduct = {
@@ -823,18 +1098,16 @@ const OrderList = () => {
         measurementID: parseInt(measurementId),
         quantity: customQuantity,
         price: priceDetails.price,
-        note: additionalNote, // Remove service charge note, only keep size charge if applicable
+        note: finalNote || null, // Chỉ set note nếu có nội dung
         pickedStyleOptions: selectedStyleOptions.map(option => ({
           styleOptionID: option.styleOptionId,
-          additionalPrice: option.additionalPrice || 0
         }))
       };
 
       // Update form state
       setCreateOrderForm(prev => ({
         ...prev,
-        customProducts: [...prev.customProducts, newCustomProduct],
-        note: prev.note + (additionalNote ? additionalNote : '')
+        customProducts: [...prev.customProducts, newCustomProduct]
       }));
 
       // Reset selections
@@ -842,6 +1115,7 @@ const OrderList = () => {
       setSelectedLining(null);
       setSelectedStyleOptions([]);
       setCustomQuantity(1);
+      setCustomNote('');
       setOpenCustomDialog(false);
 
       // Show success message
@@ -923,60 +1197,51 @@ const OrderList = () => {
   }, []);
 
   // Function to handle payment form submission
-  const handlePaymentSubmit = async (event) => {
-    event.preventDefault();
-    
-    // Validate payment date
-    const dateError = validatePaymentDate(paymentDate);
-    if (dateError) {
-      setValidationErrors(prev => ({
-        ...prev,
-        paymentDate: dateError
-      }));
-      setSnackbarMessage('Please fill in all required fields correctly');
-      setSnackbarSeverity('error');
-      setSnackbarOpen(true);
-      return;
-    }
-
-    const paymentPayload = {
-      orderId: createdOrderId,
-      userId: userId,
-      method: method, 
-      paymentDate: paymentDate,
-      paymentDetails: paymentDetails,
-      amount: amount // Sử dụng amount trực tiếp, không tính lại
-    };
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Payment Submit triggered');
 
     try {
-      const response = await api.post('/Payments', paymentPayload);
-      console.log('Payment created successfully:', response.data);
-      setSnackbarMessage('Payment created successfully');
-      setSnackbarSeverity('success');
-
-      // Update order payment status if full payment
-      if (paymentDetails === "Paid full") {
-        await api.put(`/Orders/SetPaidTrue/${createdOrderId}`);
+      // Validate dữ liệu
+      if (!createdOrderId) {
+        toast.error('Order ID is required');
+        return;
       }
 
-      // Update payments state
-      setPayments(prevPayments => ({
-        ...prevPayments,
-        [createdOrderId]: method
-      }));
+      if (!method) {
+        toast.error('Please select payment method');
+        return;
+      }
 
-      // Trigger data refresh
-      setRefreshData(prev => !prev);
+      if (!paymentDate) {
+        toast.error('Payment date is required');
+        return;
+      }
+
+      // Tạo payload
+      const paymentPayload = {
+        orderId: createdOrderId,
+        userId: userId || null,
+        amount: amount,
+        method: method,
+        paymentDate: paymentDate,
+        paymentDetails: paymentDetails
+      };
+
+      console.log('Sending payment payload:', paymentPayload);
+
+      const response = await api.post('/Payments', paymentPayload);
       
-      // Reset form
-      resetForm();
+      if (response.data) {
+        toast.success('Payment created successfully');
+        setOpenPaymentDialog(false);
+        setRefreshData(prev => !prev);
+      }
+
     } catch (error) {
-      console.error('Error creating payment:', error);
-      setSnackbarMessage('Failed to create payment');
-      setSnackbarSeverity('error');
+      console.error('Payment creation error:', error);
+      toast.error(getErrorMessage(error));
     }
-    setSnackbarOpen(true);
-    setOpenPaymentDialog(false);
   };
 
   // Call fetchUnpaidOrders in useEffect to load unpaid orders on component mount
@@ -1277,121 +1542,69 @@ const OrderList = () => {
     setOpen(false);
   };
 
-  // Thêm hàm tính tổng tiền
+  // Sửa lại hàm calculateTotalAmount
   const calculateTotalAmount = () => {
-    // Tính tổng tiền regular products
+    // Tính tổng giá sản phẩm thường
     const productTotal = selectedProducts.reduce((sum, product) => 
       sum + (product.price * product.quantity), 0);
-    console.log('Regular Products Total:', productTotal);
 
-    // Tính tổng tiền custom products
+    // Tính tổng giá sản phẩm tùy chỉnh
     const customProductTotal = createOrderForm.customProducts.reduce((sum, product) => 
       sum + (product.price * product.quantity), 0);
-    console.log('Custom Products Total:', customProductTotal);
 
-    // Tổng tiền trước khi áp dụng voucher
-    let totalBeforeVoucher = productTotal + customProductTotal;
-    console.log('Total Before Voucher:', totalBeforeVoucher);
+    // Tổng giá trước khi áp dụng voucher
+    let subtotal = productTotal + customProductTotal;
 
-    // Áp dụng voucher
-    let totalAfterVoucher = totalBeforeVoucher;
+    // Áp dụng voucher BIGSALE nếu có
     if (createOrderForm.voucherId) {
       const voucher = vouchers.find(v => v.voucherId === createOrderForm.voucherId);
-      console.log('Selected Voucher:', voucher);
-      
-      if (voucher) {
-        // Kiểm tra loại voucher và áp dụng giảm giá
-        if (voucher.voucherCode?.includes('BIGSALE')) {
-          const discount = totalBeforeVoucher * voucher.discountNumber;
-          totalAfterVoucher = totalBeforeVoucher - discount;
-          console.log('Discount Amount:', discount);
-        } else if (voucher.voucherCode?.includes('FREESHIP')) {
-          // Xử lý FREESHIP riêng
-          createOrderForm.shippingFee = 0;
-        }
+      if (voucher?.voucherCode?.includes('BIGSALE')) {
+        const discount = subtotal * voucher.discountNumber;
+        subtotal = Math.max(0, subtotal - discount);
       }
     }
-    console.log('Total After Voucher:', totalAfterVoucher);
 
-    // Cộng phí ship
-    const shippingFee = createOrderForm.shippingFee || 0;
-    console.log('Shipping Fee:', shippingFee);
-    
-    const finalTotal = totalAfterVoucher + shippingFee;
-    console.log('Final Total:', finalTotal);
+    // Cộng phí ship (đã được tính giảm giá nếu có FREESHIP voucher)
+    const finalTotal = subtotal + (createOrderForm.shippingFee || 0);
 
     return finalTotal;
   };
 
-  // Chuyển calculateCustomProductPrice thành hàm sync
-  const calculateCustomProductPrice = (fabricId, styleOptions, measurementDetails) => {
-    // Lấy giá vải
-    const fabric = fabrics.find(f => f.fabricID === fabricId);
-    let basePrice = fabric ? fabric.price : 0;
+  // Sửa lại hàm handleVoucherChange
+  const handleVoucherChange = async (_, selectedVoucher) => {
+    try {
+      console.log('Selected Voucher:', selectedVoucher); // Debug log
+      console.log('Original Shipping Fee:', originalShippingFee); // Debug log
+      
+      // Reset shipping fee về giá gốc trước khi áp dụng voucher mới
+      let newShippingFee = originalShippingFee;
 
-    // Cộng thêm giá của các style options (nếu có)
-    const optionsPrice = styleOptions.reduce((sum, option) => {
-      const styleOption = styleOptions.find(so => so.styleOptionId === option.styleOptionID);
-      return sum + (styleOption?.additionalPrice || 0);
-    }, 0);
-
-    // Tính phí phụ thu dựa trên measurement
-    let additionalCharge = 0;
-    if (measurementDetails) {
-      if (measurementDetails.height > 190 || measurementDetails.weight > 100) {
-        additionalCharge = 20;
-      } else if (measurementDetails.height > 180 && measurementDetails.height <= 190 || 
-                measurementDetails.weight > 85 && measurementDetails.weight <= 100) {
-        additionalCharge = 10;
+      if (!selectedVoucher) {
+        // Nếu không chọn voucher, reset về giá trị gốc
+        setCreateOrderForm(prev => ({
+          ...prev,
+          voucherId: 0,
+          shippingFee: originalShippingFee
+        }));
+        return;
       }
-    }
 
-    // Tổng giá = giá vải + giá options + phí phụ thu size
-    const totalPrice = basePrice + optionsPrice + additionalCharge;
-
-    return {
-      price: totalPrice,
-      additionalCharges: {
-        sizeCharge: additionalCharge
-      }
-    };
-  };
-
-  // Thêm useEffect để cập nhật deposit amount
-  useEffect(() => {
-    const totalAmount = calculateTotalAmount();
-    setCreateOrderForm(prev => ({
-      ...prev,
-      totalPrice: totalAmount,
-      deposit: isDeposit ? Math.round(totalAmount * 0.5) : totalAmount
-    }));
-  }, [selectedProducts, createOrderForm.customProducts, createOrderForm.shippingFee, createOrderForm.voucherId, isDeposit]);
-
-  // Thêm hàm handleVoucherChange vào trong component OrderList
-  const handleVoucherChange = (_, newValue) => {
-    console.log('Selected New Voucher:', newValue);
-    
-    // Cập nhật voucherId trong form
-    setCreateOrderForm(prev => ({
-      ...prev,
-      voucherId: newValue ? newValue.voucherId : null
-    }));
-
-    // Reset shipping fee nếu là FREESHIP voucher
-    if (newValue?.voucherCode?.includes('FREESHIP')) {
+      // Cập nhật voucherId trong form
       setCreateOrderForm(prev => ({
         ...prev,
-        shippingFee: 0
+        voucherId: selectedVoucher.voucherId,
+        // Nếu là voucher FREESHIP, tính giảm giá shipping, ngược lại giữ shipping fee gốc
+        shippingFee: selectedVoucher.voucherCode?.includes('FREESHIP') 
+          ? Math.max(0, originalShippingFee * (1 - selectedVoucher.discountNumber))
+          : originalShippingFee
       }));
-    }
 
-    // Tự động cập nhật tổng tiền và deposit
-    const totalAmount = calculateTotalAmount();
-    setCreateOrderForm(prev => ({
-      ...prev,
-      totalPrice: totalAmount,
-      deposit: isDeposit ? Math.round(totalAmount * 0.5) : totalAmount
-    }));
+      console.log('New Shipping Fee:', newShippingFee); // Debug log
+
+    } catch (error) {
+      console.error('Error applying voucher:', error);
+      toast.error('Failed to apply voucher');
+    }
   };
 
   // First, add this new function to group style options by type
@@ -1404,6 +1617,82 @@ const OrderList = () => {
       return acc;
     }, {});
   }, [styleOptions]);
+
+  const handleDeliveryMethodChange = (event) => {
+    const newMethod = event.target.value;
+    
+    // Reset shipping fee và address khi chuyển sang pick up
+    if (newMethod === 'Pick up') {
+      setCreateOrderForm(prev => ({
+        ...prev,
+        deliveryMethod: newMethod,
+        shippingFee: 0,
+        guestAddress: '',
+        voucherId: null // Reset voucher when switching to pick up
+      }));
+      setOriginalShippingFee(0);
+      setResetAddress(true);
+    } else {
+      setCreateOrderForm(prev => ({
+        ...prev,
+        deliveryMethod: newMethod,
+      }));
+      setResetAddress(false);
+    }
+  };
+
+  // Thêm hàm handleRemoveProduct
+  const handleRemoveProduct = (index) => {
+    // Remove from selectedProducts array
+    const newSelectedProducts = selectedProducts.filter((_, i) => i !== index);
+    setSelectedProducts(newSelectedProducts);
+
+    // Update createOrderForm
+    setCreateOrderForm(prev => ({
+      ...prev,
+      products: newSelectedProducts
+    }));
+  };
+
+  const validateOrderForm = () => {
+    const errors = {};
+    
+    if (!createOrderForm.storeId) {
+      errors.store = 'Please select a store';
+    }
+    
+    if (!createOrderForm.shippedDate) {
+      errors.shippedDate = 'Please select a delivery date';
+    }
+    
+    if (createOrderForm.deliveryMethod === 'Delivery' && !createOrderForm.guestAddress) {
+      errors.address = 'Please enter delivery address';
+    }
+    
+    if (selectedProducts.length === 0 && createOrderForm.customProducts.length === 0) {
+      errors.products = 'Please add at least one product';
+    }
+
+    return errors;
+  };
+
+  // Thêm xử lý khi không có dữ liệu
+  const renderNoDataMessage = (message) => (
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      p: 3 
+    }}>
+      <Typography variant="h6" color="text.secondary" gutterBottom>
+        {message}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Data will appear here once available
+      </Typography>
+    </Box>
+  );
 
   if (loading) return <CircularProgress />;
   if (error) return <Typography color="error">{error}</Typography>;
@@ -1613,48 +1902,62 @@ const OrderList = () => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {filterOrders(currentOrders).map((order) => (
-              <TableRow key={order.orderId} hover>
-                <TableCell>{order.orderId}</TableCell>
-                <TableCell>{order.guestName}</TableCell>
-                <TableCell>{order.status || 'Pending'}</TableCell>
-                <TableCell>
-                  {payments[order.orderId]?.method}
-                </TableCell>
-                <TableCell>{payments[order.orderId]?.paymentDetails}</TableCell>
-                <TableCell>{new Date(order.orderDate).toLocaleDateString()}</TableCell>
-                <TableCell>{order.totalPrice ? order.totalPrice.toFixed(2) : "0.00"}$</TableCell>
-                <TableCell>
-                  {order.balancePayment ? (
-                    <Typography
-                      color={order.balancePayment > 0 ? "error" : "success"}
-                      fontWeight="bold"
-                    >
-                      ${order.balancePayment.toFixed(2)}
-                    </Typography>
-                  ) : (
-                    "$0.00"
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Tooltip title="View Details">
-                    <IconButton onClick={() => handleViewDetails(order.orderId)} sx={{ color: "primary.main" }}>
-                      <Visibility />
-                    </IconButton>
-                  </Tooltip>
-                  {/* {order.balancePayment > 0 && (
-                    <Tooltip title="Process Payment">
-                      <IconButton 
-                        onClick={() => handleCreatePayment(order)}
-                        color="primary"
+            {filterOrders(currentOrders).length > 0 ? (
+              filterOrders(currentOrders).map((order) => (
+                <TableRow key={order.orderId} hover>
+                  <TableCell>{order.orderId}</TableCell>
+                  <TableCell>{order.guestName}</TableCell>
+                  <TableCell>{order.status || 'Pending'}</TableCell>
+                  <TableCell>
+                    {payments[order.orderId]?.method}
+                  </TableCell>
+                  <TableCell>{payments[order.orderId]?.paymentDetails}</TableCell>
+                  <TableCell>{new Date(order.orderDate).toLocaleDateString()}</TableCell>
+                  <TableCell>{order.totalPrice ? order.totalPrice.toFixed(2) : "0.00"}$</TableCell>
+                  <TableCell>
+                    {order.balancePayment ? (
+                      <Typography
+                        color={order.balancePayment > 0 ? "error" : "success"}
+                        fontWeight="bold"
                       >
-                        <Payment />
+                        ${order.balancePayment.toFixed(2)}
+                      </Typography>
+                    ) : (
+                      "$0.00"
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip title="View Details">
+                      <IconButton onClick={() => handleViewDetails(order.orderId)} sx={{ color: "primary.main" }}>
+                        <Visibility />
                       </IconButton>
                     </Tooltip>
-                  )} */}
+                    {/* {order.balancePayment > 0 && (
+                      <Tooltip title="Process Payment">
+                        <IconButton 
+                          onClick={() => handleCreatePayment(order)}
+                          color="primary"
+                        >
+                          <Payment />
+                        </IconButton>
+                      </Tooltip>
+                    )} */}
+                    {/* <IconButton 
+                      onClick={() => handleRemoveProduct(index)}
+                      color="error"
+                    >
+                      <Delete />
+                    </IconButton> */}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={9} align="center">
+                  {renderNoDataMessage("No orders found")}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -1869,21 +2172,7 @@ const OrderList = () => {
                 loadingText="Loading stores..."
                 noOptionsText="No stores found"
               /> */}
-              <Autocomplete
-                options={vouchers.filter(voucher => voucher.status === "OnGoing")}
-                getOptionLabel={(option) => `${option.voucherCode} - ${option.description}` || ''}
-                value={vouchers.find(voucher => voucher.voucherId === createOrderForm.voucherId) || null}
-                onChange={handleVoucherChange}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Select Voucher"
-                    margin="normal"
-                    variant="outlined"
-                    fullWidth
-                  />
-                )}
-              />
+             
               {/* <TextField
                 label="Shipper Partner ID"
                 type="number"
@@ -1896,25 +2185,7 @@ const OrderList = () => {
                 select
                 label="Delivery Method"
                 value={createOrderForm.deliveryMethod}
-                onChange={(e) => {
-                  const method = e.target.value;
-                  setCreateOrderForm(prev => ({
-                    ...prev,
-                    deliveryMethod: method,
-                    shippedDate: method === 'Pick up' ? '' : prev.shippedDate,
-                    shippingFee: method === 'Pick up' ? 0 : prev.shippingFee
-                  }));
-                  
-                  // Reset deposit nếu chuyển sang Delivery
-                  if (method === 'Delivery') {
-                    setIsDeposit(false);
-                    const totalAmount = calculateTotalAmount();
-                    setCreateOrderForm(prev => ({
-                      ...prev,
-                      deposit: totalAmount // Set deposit bằng full amount
-                    }));
-                  }
-                }}
+                onChange={handleDeliveryMethodChange}
                 fullWidth
                 margin="normal"
               >
@@ -1925,8 +2196,8 @@ const OrderList = () => {
               {createOrderForm.deliveryMethod === 'Delivery' && (
                 <>
                   <Autocomplete
-                    options={stores}
-                    getOptionLabel={(option) => option.name || ''}
+                    options={stores || []}
+                    getOptionLabel={(option) => option?.name || ''}
                     value={nearestStore || null}
                     onChange={(_, newValue) => {
                       setNearestStore(newValue);
@@ -1942,23 +2213,24 @@ const OrderList = () => {
                         margin="normal"
                         variant="outlined"
                         fullWidth
-                        helperText="Select the nearest store"
+                        helperText={stores?.length ? "Select the nearest store" : "No stores available"}
                       />
                     )}
                     renderOption={(props, option) => (
-                      <li {...props}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <Typography variant="body1">{option.name}</Typography>
-                          <Typography variant="caption" color="textSecondary">
-                            {option.address}
-                          </Typography>
-                        </div>
-                      </li>
+                      option ? (
+                        <li {...props}>
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <Typography variant="body1">{option.name || 'Unnamed Store'}</Typography>
+                            <Typography variant="caption" color="textSecondary">
+                              {option.address || 'No address available'}
+                            </Typography>
+                          </div>
+                        </li>
+                      ) : null
                     )}
-                    isOptionEqualToValue={(option, value) => option.storeId === value.storeId}
-                    loading={stores.length === 0}
+                    noOptionsText="No stores available"
+                    loading={isLoadingProducts}
                     loadingText="Loading stores..."
-                    noOptionsText="No stores found"
                   />
 
                   {nearestStore && (
@@ -2006,8 +2278,8 @@ const OrderList = () => {
 
               {createOrderForm.deliveryMethod === 'Pick up' && (
                 <Autocomplete
-                  options={stores}
-                  getOptionLabel={(option) => option.name || ''}
+                  options={stores || []}
+                  getOptionLabel={(option) => option?.name || ''}
                   value={nearestStore || null}
                   onChange={(_, newValue) => {
                     setNearestStore(newValue);
@@ -2023,23 +2295,24 @@ const OrderList = () => {
                       margin="normal"
                       variant="outlined"
                       fullWidth
-                      helperText="Select the nearest store"
+                      helperText={stores?.length ? "Select the nearest store" : "No stores available"}
                     />
                   )}
                   renderOption={(props, option) => (
-                    <li {...props}>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant="body1">{option.name}</Typography>
-                        <Typography variant="caption" color="textSecondary">
-                          {option.address}
-                        </Typography>
-                      </div>
-                    </li>
+                    option ? (
+                      <li {...props}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <Typography variant="body1">{option.name || 'Unnamed Store'}</Typography>
+                          <Typography variant="caption" color="textSecondary">
+                            {option.address || 'No address available'}
+                          </Typography>
+                        </div>
+                      </li>
+                    ) : null
                   )}
-                  isOptionEqualToValue={(option, value) => option.storeId === value.storeId}
-                  loading={stores.length === 0}
+                  noOptionsText="No stores available"
+                  loading={isLoadingProducts}
                   loadingText="Loading stores..."
-                  noOptionsText="No stores found"
                 />
               )}
               <TextField
@@ -2085,7 +2358,7 @@ const OrderList = () => {
                   />
 
                   {/* Hiển thị số tiền deposit (chỉ để xem) */}
-                  <TextField
+                  {/* <TextField
                     label="Deposit Amount"
                     value={createOrderForm.deposit || 0}
                     disabled
@@ -2094,7 +2367,7 @@ const OrderList = () => {
                     InputProps={{
                       startAdornment: <InputAdornment position="start">$</InputAdornment>,
                     }}
-                  />
+                  /> */}
                 </>
               )}
 
@@ -2109,77 +2382,22 @@ const OrderList = () => {
                 Add Products
               </Button>
 
-              {selectedProducts.length > 0 && (
-                <TableContainer component={Paper} sx={{ mt: 2, mb: 2 }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Product Code</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Details</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Price</TableCell>
-                        <TableCell>Total</TableCell>
-                        <TableCell>Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {/* Regular Products */}
-                      {selectedProducts.map((product, index) => (
-                        <TableRow key={`regular-${index}`}>
-                          <TableCell>{product.productCode}</TableCell>
-                          <TableCell>Regular</TableCell>
-                          <TableCell>{product.name}</TableCell>
-                          <TableCell>{product.quantity}</TableCell>
-                          <TableCell>${product.price}</TableCell>
-                          <TableCell>${product.price * product.quantity}</TableCell>
-                          <TableCell>
-                            <IconButton onClick={() => handleRemoveProduct(index)}>
-                              <Delete />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                      
-                      {/* Custom Products */}
-                      {createOrderForm.customProducts.map((product, index) => {
-                        const fabric = fabrics.find(f => f.fabricID === product.fabricID);
-                        return (
-                          <TableRow key={`custom-${index}`}>
-                            <TableCell>{product.productCode}</TableCell>
-                            <TableCell>Custom</TableCell>
-                            <TableCell>
-                              <div>
-                                <strong>Fabric:</strong> {fabric?.fabricName}<br />
-                                <strong>Style Options:</strong><br />
-                                {product.pickedStyleOptions.map((option, i) => (
-                                  <span key={i}>
-                                    {styleOptions.find(so => so.styleOptionId === option.styleOptionID)?.optionValue}<br />
-                                  </span>
-                                ))}
-                                {product.note && (
-                                  <>
-                                    <br />
-                                    <strong>Note:</strong> {product.note}
-                                  </>
-                                )}
-                              </div>
-                            </TableCell>
-                            <TableCell>{product.quantity}</TableCell>
-                            <TableCell>${product.price}</TableCell>
-                            <TableCell>${product.price * product.quantity}</TableCell>
-                            <TableCell>
-                              <IconButton onClick={() => handleRemoveCustomProduct(index)}>
-                                <Delete />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
+              <ProductTable 
+                products={selectedProducts || []}
+                customProducts={createOrderForm.customProducts || []}
+                onRemoveProduct={handleRemoveProduct}
+                onRemoveCustomProduct={(index) => {
+                  const newCustomProducts = (createOrderForm.customProducts || [])
+                    .filter((_, i) => i !== index);
+                  setCreateOrderForm(prev => ({
+                    ...prev,
+                    customProducts: newCustomProducts
+                  }));
+                }}
+                fabrics={fabrics || []}
+                styleOptions={styleOptions || []}
+                linings={linings || []}
+              />
 
               {/* Dialog để thêm sản phẩm */}
               <Dialog 
@@ -2257,7 +2475,7 @@ const OrderList = () => {
                 Add Custom Product
               </Button>
 
-              {createOrderForm.customProducts.length > 0 && (
+              {/* {createOrderForm.customProducts.length > 0 && (
                 <TableContainer component={Paper} sx={{ mt: 2, mb: 2 }}>
                   <Table>
                     <TableHead>
@@ -2304,7 +2522,7 @@ const OrderList = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-              )}
+              )} */}
 
               {/* Dialog cho custom product */}
               <Dialog 
@@ -2581,12 +2799,37 @@ const OrderList = () => {
                             />
                           </ListItem>
                         )}
+                        
                       </List>
                     </Grid>
                   </Grid>
                 </Paper>
               )}
-
+              <Autocomplete
+                options={vouchers.filter(voucher => {
+                  // Only show valid vouchers
+                  const isValid = voucher.status === "OnGoing";
+                  
+                  // If delivery method is Pick up, filter out FREESHIP vouchers
+                  if (createOrderForm.deliveryMethod === 'Pick up') {
+                    return isValid && !voucher.voucherCode.includes('FREESHIP');
+                  }
+                  
+                  return isValid;
+                })}
+                getOptionLabel={(option) => `${option.voucherCode} - ${option.description}` || ''}
+                value={vouchers.find(voucher => voucher.voucherId === createOrderForm.voucherId) || null}
+                onChange={handleVoucherChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select Voucher"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              />
               <Button
                 variant="contained"
                 color="primary"
@@ -2604,7 +2847,15 @@ const OrderList = () => {
       <Dialog open={openPaymentDialog} onClose={() => setOpenPaymentDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>Create Payment</DialogTitle>
         <DialogContent>
-          <form onSubmit={handlePaymentSubmit}>
+          <Box 
+            component="form" 
+            onSubmit={(e) => {
+              console.log('Form submitted'); // Debug log
+              handlePaymentSubmit(e);
+            }}
+            noValidate
+            sx={{ mt: 2 }}
+          >
             <TextField
               label="Order ID"
               value={createdOrderId || ''} 
@@ -2638,7 +2889,8 @@ const OrderList = () => {
               margin="normal"
             >
               <MenuItem value="Cash">Cash</MenuItem>
-              <MenuItem value="Banking">Banking Payment</MenuItem>
+              <MenuItem value="Banking">Internet Banking</MenuItem>
+              <MenuItem value="Visa">Visa Card</MenuItem>
             </TextField>
             {method === 'Banking' && (
               <div>
@@ -2675,10 +2927,20 @@ const OrderList = () => {
               <MenuItem value="Paid full">Paid full</MenuItem>
               <MenuItem value="Make deposit 50%">Make deposit 50%</MenuItem>
             </TextField>
-            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button 
+              type="submit"
+              variant="contained" 
+              color="primary"
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              onClick={(e) => {
+                console.log('Payment button clicked'); // Debug log
+                handlePaymentSubmit(e);
+              }}
+            >
               Create Payment
             </Button>
-          </form>
+          </Box>
         </DialogContent>
       </Dialog>
 
@@ -2751,6 +3013,7 @@ const OrderList = () => {
             </>
           )}
         </DialogContent>
+
         <DialogActions>
           <Button onClick={() => setRemainingPaymentDialog(false)}>Cancel</Button>
           <Button 

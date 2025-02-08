@@ -313,7 +313,7 @@ const Checkout = () => {
         districtId: addressData?.districtId,
         nearestStore: nearestStore
       });
-      setShippingFee(2);
+      setShippingFee(1);
       return;
     }
 
@@ -348,7 +348,7 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error('Lỗi tính phí vận chuyển:', error);
-      setShippingFee(2);
+      setShippingFee(1);
     }
   };
 
@@ -495,9 +495,7 @@ const Checkout = () => {
             errors.push('Please enter a valid email address');
         }
 
-        if (!guestPhone.trim()) {
-            errors.push('Please enter your phone number');
-        } else if (!/^\d{10}$/.test(guestPhone)) {
+        if (guestPhone.trim() && !/^\d{10}$/.test(guestPhone)) {
             errors.push('Please enter a valid phone number (10 digits)');
         }
 
@@ -671,14 +669,14 @@ const Checkout = () => {
 
                     <div className="form-group">
                       <label>
-                        Phone Number <span className="required">*</span>
+                        Phone Number {/* Removed required asterisk */}
                       </label>
                       <input
                         type="text"
-                        placeholder="Enter your phone number"
+                        placeholder="Enter your phone number (optional)"
                         value={guestPhone}
                         onChange={(e) => setGuestPhone(e.target.value)}
-                        required
+                        // Removed required attribute
                       />
                     </div>
 

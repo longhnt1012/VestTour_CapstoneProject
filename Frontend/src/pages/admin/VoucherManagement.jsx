@@ -126,6 +126,11 @@ const VoucherManagement = () => {
       return false;
     }
 
+    if (discountNumber <= 0 || discountNumber >= 1) {
+      setError("Discount number must be greater than 0 and less than 1");
+      return false;
+    }
+
     return true;
   };
 
@@ -408,6 +413,11 @@ const VoucherManagement = () => {
                 onChange={handleChange}
                 variant="outlined"
                 style={{ marginRight: "1rem" }}
+                inputProps={{
+                  step: "0.01",
+                  min: "0",
+                  max: "1",
+                }}
               />
               <TextField
                 label="Start Date"

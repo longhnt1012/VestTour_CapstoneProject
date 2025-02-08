@@ -60,11 +60,12 @@ const CustomLining = () => {
   const [error, setError] = useState(null);
   const [selectedLining, setSelectedLining] = useState(null);
   const userId = localStorage.getItem("userID");
-  const measurementId = localStorage.getItem("measurementId");
+  const measurementId = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   useEffect(() => {
+    getMeasurementByUserId(userId);
     const fetchLinings = async () => {
       try {
         const response = await fetch("https://vesttour.xyz/api/Linings");
@@ -108,6 +109,21 @@ const CustomLining = () => {
     });
   };
 
+  const getMeasurementByUserId = async (userId) => {
+    try {
+      const response = await fetch(`https://vesttour.xyz/api/Measurement/user/${userId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch measurements");
+      }
+      const data = await response.json();
+      console.log("Fetched measurements:", data);
+      return data.measurementId; // Trả về measurementId
+    } catch (error) {
+      console.error("Error fetching measurements:", error);
+      return null; // Trả về null nếu có lỗi
+    }
+  };
+
   const handleNextClick = async () => {
     try {
       // Kiểm tra đăng nhập
@@ -125,16 +141,12 @@ const CustomLining = () => {
         return;
       }
 
+      const measurementID = await getMeasurementByUserId(userId);
       // Kiểm tra measurementId
-      // const measurementId = localStorage.getItem("measurementId");
-      // if (!measurementId) {
-      //   // Nếu chưa có measurementId, chuyển đến trang measureGuest
-      //   toast.info("Please complete your measurements first");
-      //   // Lưu trạng thái hiện tại để quay lại sau
-      //   localStorage.setItem("returnToCustomization", "true");
-      //   navigate("/measure-guest");
-      //   return;
-      // }
+      if (!measurementID) {
+        toast.info("Please complete your measurements first");
+        return;
+      }
 
       const payload = {
         userId: parseInt(userID),
@@ -143,7 +155,7 @@ const CustomLining = () => {
           categoryID: 5,
           fabricID: completeSuit.fabricId,
           liningID: completeSuit.lining.id,
-          measurementID: parseInt(measurementId),
+          measurementID: parseInt(measurementID),
           pickedStyleOptions: completeSuit.styles.map(style => ({
             styleOptionID: style.id
           })),
